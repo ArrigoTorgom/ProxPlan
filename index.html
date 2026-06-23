@@ -96,7 +96,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .time-compact{font-size:10px;padding:3px 6px;border-radius:4px;border-left:3px solid #22c55e;background:#f0fdf4;color:#15803d;line-height:1.4;cursor:pointer;}
 .time-compact:hover{background:#dcfce7;}
 .tc-proj{color:#6b7280;font-size:9px;}
-.task-due-pill{font-size:10px;padding:3px 6px;border-radius:4px;border-left:3px solid var(--med);background:var(--med-bg);color:var(--text);line-height:1.3;overflow:hidden;cursor:pointer;transition:opacity .12s;}
+.task-due-pill{font-size:10px;padding:3px 6px 3px 6px;border-radius:4px;border-left:3px solid var(--med);background:var(--med-bg);color:var(--text);line-height:1.3;overflow:hidden;cursor:pointer;transition:opacity .12s;position:relative;}
+.pill-check{position:absolute;top:2px;right:2px;background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:3px;font-size:9px;padding:0 3px;line-height:1.5;cursor:pointer;opacity:0;transition:opacity .15s;color:var(--muted);}
+.task-due-pill:hover .pill-check{opacity:1;}
+.pill-check:hover{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important;}
 .task-due-pill:hover{opacity:.8;}
 .task-due-pill.high{border-color:var(--high);background:var(--high-bg);}
 .task-due-pill.low{border-color:var(--low);background:var(--low-bg);}
@@ -155,6 +158,7 @@ body.split-mode .tasks-wrap{max-width:100%;}
 .card{background:var(--card);border-radius:10px;padding:18px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid var(--border);}
 .card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:14px;}
 .project-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:12px;min-height:24px;}
+.sm-select{padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--card);color:var(--text);cursor:pointer;}
 .project-tag{display:flex;align-items:center;justify-content:space-between;gap:6px;background:#f0f4ff;border:1px solid #c7d4ff;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap;overflow:hidden;}
 .project-tag button{background:none;border:none;cursor:pointer;color:#9ba3b2;font-size:16px;line-height:1;}
 .project-tag button:hover{color:#c0392b;}
@@ -277,6 +281,19 @@ body.split-mode .tasks-wrap{max-width:100%;}
 .pri-badge.medium{background:var(--med-bg);color:#b45309;}
 .pri-badge.low{background:var(--low-bg);color:var(--low);}
 .task-body{flex:1;min-width:0;}
+.subtask-list{margin:4px 0 2px 2px;display:flex;flex-direction:column;gap:2px;}
+.subtask-row{display:flex;align-items:center;gap:6px;padding:2px 0;}
+.subtask-cb{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:background .1s,border-color .1s;}
+.subtask-cb.done{background:var(--primary);border-color:var(--primary);color:#fff;}
+.subtask-title{font-size:12px;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.subtask-title.done-txt{text-decoration:line-through;color:var(--muted);}
+.subtask-del{background:none;border:none;cursor:pointer;color:transparent;font-size:13px;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
+.subtask-row:hover .subtask-del{color:#bbb;}
+.subtask-del:hover{color:var(--high)!important;}
+.subtask-add-row{display:flex;gap:4px;margin-top:4px;align-items:center;}
+.subtask-add-row input{flex:1;font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text);outline:none;}
+.subtask-add-row input:focus{border-color:var(--primary);}
+.subtask-count{font-size:10px;color:var(--muted);margin-left:4px;}
 .task-title{font-size:13px;line-height:1.4;word-break:break-word;}
 .task-row.is-done .task-title{text-decoration:line-through;color:var(--muted);}
 .task-meta{display:flex;gap:8px;margin-top:3px;align-items:center;flex-wrap:wrap;}
@@ -599,6 +616,23 @@ body.app-dark .event-pill.manual{background:rgba(124,58,237,.18)!important;borde
   </div>
 </div>
 
+<div id="projectEditModal" class="ev-modal-overlay" style="display:none">
+  <div class="ev-modal" style="max-width:360px">
+    <div class="ev-modal-title">Edit Project</div>
+    <input type="hidden" id="peOrigName">
+    <div class="ev-field-label">Project Name <span style="color:var(--high)">*</span></div>
+    <input id="peName" class="ev-input" type="text" placeholder="Project name…">
+    <div class="ev-field-label">Project / Tender Code</div>
+    <input id="peCode" class="ev-input" type="text" placeholder="e.g. T-2024-042">
+    <div class="ev-field-label">Activity Type</div>
+    <input id="peActivity" class="ev-input" type="text" placeholder="e.g. Engineering, Admin, BD…">
+    <div class="ev-modal-actions">
+      <button class="btn secondary-btn" onclick="closeProjectEdit()">Cancel</button>
+      <button class="btn primary-btn" onclick="saveProjectEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
 <div id="quickTaskModal" class="ev-modal-overlay">
   <div class="ev-modal">
     <div class="ev-modal-title" id="qtModalTitle">Add Task</div>
@@ -726,6 +760,7 @@ body.app-dark .event-pill.manual{background:rgba(124,58,237,.18)!important;borde
     <div class="card-title">Log History</div>
     <div class="history-controls">
       <input type="text" id="historySearch" placeholder="Filter by project…" oninput="renderHistory()">
+      <select id="historyPeriod" class="sm-select" onchange="renderHistory()" title="Filter by period"><option value="all">All time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select>
       <button class="btn secondary-btn sm" onclick="exportCSV()">Export CSV</button>
     </div>
     <table class="log-table">
@@ -1018,7 +1053,7 @@ function renderCalendarEvents(events){
       parts.push('<div class="divider-label">Tasks</div>');
       due.forEach(function(t){
         var cls=t.done?'done':t.priority;
-        parts.push('<div class="task-due-pill '+cls+'" onclick="openTaskEditModal(\''+t.id+'\')" style="cursor:pointer" title="'+escH(t.title)+'"><span class="td-title'+(t.done?' td-done-txt':'')+'">'+escH(t.title)+'</span><span class="td-proj">'+escH(t.project)+'</span></div>');
+        parts.push('<div class="task-due-pill '+cls+'" onclick="openTaskEditModal(\''+t.id+'\')" title="'+escH(t.title)+'">'+(t.done?'':'<button class="pill-check" onclick="event.stopPropagation();quickCompleteTask(\''+t.id+'\')" title="Mark complete">✓</button>')+'<span class="td-title'+(t.done?' td-done-txt':'')+'">'+escH(t.title)+'</span><span class="td-proj">'+escH(t.project)+'</span></div>');
       });
     }
     el.innerHTML=parts.length?parts.join(''):'<div class="cal-msg">—</div>';
@@ -1053,17 +1088,20 @@ function openTimeLogForDay(ds){
 // ── Projects ──
 function getTrackerData(){try{return JSON.parse(localStorage.getItem('tenderTracker')||'{}');}catch(e){return{};}}
 function saveTrackerData(d){localStorage.setItem('tenderTracker',JSON.stringify(d));}
-function getProjects(){return getTrackerData().projects||[];}
+function getProjects(){return (getTrackerData().projects||[]).map(function(p){return typeof p==='string'?{name:p,code:'',activityType:''}:p;});}
 function getLogs(){return getTrackerData().logs||[];}
 function saveProjects(p){var d=getTrackerData();d.projects=p;saveTrackerData(d);}
 function saveLogs(l){var d=getTrackerData();d.logs=l;saveTrackerData(d);}
 function getLogsForDate(ds){return getLogs().find(function(l){return l.date===ds;})||null;}
 
-function addProject(){var inp=document.getElementById('newProjectInput');var name=inp.value.trim();if(!name)return;var p=getProjects();if(p.includes(name)){inp.value='';return;}p.push(name);saveProjects(p);inp.value='';renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
-function removeProject(name){if(!confirm('Remove "'+name+'" from active projects?'))return;saveProjects(getProjects().filter(function(p){return p!==name;}));renderProjects();renderAllocGrid();renderSummary();}
-function renderProjects(){var p=getProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(n,i){return'<div class="project-tag" style="border-color:'+COLORS[i%COLORS.length]+'40;background:'+COLORS[i%COLORS.length]+'12"><span style="color:'+COLORS[i%COLORS.length]+';font-weight:700;font-size:11px">●</span>'+escH(n)+'<button onclick="removeProject(\''+escA(n)+'\')" title="Remove">×</button></div>';}).join('');}
+function addProject(){var inp=document.getElementById('newProjectInput');var name=inp.value.trim();if(!name)return;var p=getProjects();if(p.some(function(x){return x.name===name;})){inp.value='';return;}p.push({name:name,code:'',activityType:''});saveProjects(p);inp.value='';renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
+function removeProject(name){if(!confirm('Remove "'+name+'" from active projects?'))return;saveProjects(getProjects().filter(function(p){return p.name!==name;}));renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
+function openProjectEdit(name){var p=getProjects();var proj=p.find(function(x){return x.name===name;});if(!proj)return;document.getElementById('peOrigName').value=proj.name;document.getElementById('peName').value=proj.name;document.getElementById('peCode').value=proj.code||'';document.getElementById('peActivity').value=proj.activityType||'';document.getElementById('projectEditModal').style.display='flex';}
+function closeProjectEdit(){document.getElementById('projectEditModal').style.display='none';}
+function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();if(!newName)return;var p=getProjects();var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]={name:newName,code:code,activityType:activity};saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);}closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
+function renderProjects(){var p=getProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var meta='';if(proj.code)meta+=' <span style="color:var(--muted);font-size:11px">['+escH(proj.code)+']</span>';if(proj.activityType)meta+=' <span style="color:var(--muted);font-size:11px">·'+escH(proj.activityType)+'</span>';return'<div class="project-tag" style="border-color:'+COLORS[i%COLORS.length]+'40;background:'+COLORS[i%COLORS.length]+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')"><span style="color:'+COLORS[i%COLORS.length]+';font-weight:700;font-size:11px">●</span>'+escH(proj.name)+meta+'<button onclick="event.stopPropagation();removeProject(\''+escA(proj.name)+'\');" title="Remove" style="margin-left:4px">×</button></div>';}).join('');}
 function setMode(m){trackerMode=m;document.getElementById('btnPct').classList.toggle('active',m==='pct');document.getElementById('btnHrs').classList.toggle('active',m==='hrs');document.getElementById('totalHrsRow').style.display=m==='hrs'?'flex':'none';renderAllocGrid();}
-function renderAllocGrid(){var p=getProjects();var grid=document.getElementById('allocGrid');var tr=document.getElementById('totalRow');if(p.length===0){grid.innerHTML='<div class="no-projects">Add projects above to start logging</div>';tr.style.display='none';return;}tr.style.display='flex';grid.innerHTML=p.map(function(n,i){var unit=trackerMode==='pct'?'%':'h';return'<div class="alloc-row"><span class="alloc-label" title="'+escH(n)+'">'+escH(n)+'</span><div class="alloc-input-wrap"><input type="number" class="alloc-input" data-project="'+escA(n)+'" min="0" max="'+(trackerMode==='pct'?100:24)+'" step="'+(trackerMode==='pct'?5:0.5)+'" value="0" oninput="updateTotal()"><span class="alloc-unit">'+unit+'</span></div><div class="alloc-bar-wrap"><div class="alloc-bar" id="bar_'+i+'" style="width:0%;background:'+COLORS[i%COLORS.length]+'"></div></div></div>';}).join('');updateTotal();}
+function renderAllocGrid(){var p=getProjects();var grid=document.getElementById('allocGrid');var tr=document.getElementById('totalRow');if(p.length===0){grid.innerHTML='<div class="no-projects">Add projects above to start logging</div>';tr.style.display='none';return;}tr.style.display='flex';grid.innerHTML=p.map(function(proj,i){var n=proj.name;var unit=trackerMode==='pct'?'%':'h';return'<div class="alloc-row"><span class="alloc-label" title="'+escH(n)+'">'+escH(n)+'</span><div class="alloc-input-wrap"><input type="number" class="alloc-input" data-project="'+escA(n)+'" min="0" max="'+(trackerMode==='pct'?100:24)+'" step="'+(trackerMode==='pct'?5:0.5)+'" value="0" oninput="updateTotal()"><span class="alloc-unit">'+unit+'</span></div><div class="alloc-bar-wrap"><div class="alloc-bar" id="bar_'+i+'" style="width:0%;background:'+COLORS[i%COLORS.length]+'"></div></div></div>';}).join('');updateTotal();}
 function updateTotal(){var inp=document.querySelectorAll('.alloc-input');var total=0;inp.forEach(function(i){total+=parseFloat(i.value)||0;});var d=document.getElementById('totalDisplay');if(trackerMode==='pct'){d.textContent=total.toFixed(0)+'%';d.className='total-display '+(Math.abs(total-100)<0.5?'ok':total>100?'warn':'');}else{d.textContent=total.toFixed(1)+'h';d.className='total-display ok';}inp.forEach(function(i,idx){var v=parseFloat(i.value)||0;var pct=trackerMode==='pct'?Math.min(v,100):(total>0?v/total*100:0);var b=document.getElementById('bar_'+idx);if(b)b.style.width=pct+'%';});}
 function syncHours(){updateTotal();}
 // ── Timesheet draft autosave ──
@@ -1119,7 +1157,7 @@ function applyDraftOrLog(date){
 
 function saveEntry(){var p=getProjects();if(p.length===0)return;var date=document.getElementById('entryDate').value;if(!date){alert('Please select a date.');return;}var notes=document.getElementById('entryNotes').value.trim();var inp=document.querySelectorAll('.alloc-input');var allocs={};var totalHrs=parseFloat(document.getElementById('totalHoursInput').value)||8;inp.forEach(function(i){var v=parseFloat(i.value)||0;if(v>0){var proj=i.dataset.project;allocs[proj]=trackerMode==='pct'?{pct:v,hrs:parseFloat((v/100*totalHrs).toFixed(2))}:{hrs:v,pct:null};}});if(Object.keys(allocs).length===0){alert('Enter time for at least one project.');return;}var logs=getLogs();var ex=logs.findIndex(function(l){return l.date===date;});var entry={date:date,mode:trackerMode,totalHrs:trackerMode==='hrs'?totalHrs:null,allocs:allocs,notes:notes,saved:Date.now()};if(ex>=0){if(!confirm('An entry for this date already exists. Overwrite it?'))return;logs[ex]=entry;}else logs.push(entry);logs.sort(function(a,b){return b.date.localeCompare(a.date);});saveLogs(logs);document.querySelectorAll('.alloc-input').forEach(function(i){i.value=0;});document.getElementById('entryNotes').value='';updateTotal();var msg=document.getElementById('saveMsg');msg.classList.add('show');setTimeout(function(){msg.classList.remove('show');},2000);clearDraft();renderHistory();renderSummary();renderCalendarShell();loadCalendarEvents();checkLogReminder();}
 function deleteEntry(idx){if(!confirm('Delete this entry?'))return;var logs=getLogs();logs.splice(idx,1);saveLogs(logs);renderHistory();renderSummary();renderCalendarShell();loadCalendarEvents();checkLogReminder();}
-function renderHistory(){var search=(document.getElementById('historySearch').value||'').toLowerCase();var logs=getLogs();if(search)logs=logs.filter(function(l){return Object.keys(l.allocs).some(function(p){return p.toLowerCase().includes(search);});});var tbody=document.getElementById('historyBody');if(logs.length===0){tbody.innerHTML='<tr><td colspan="4"><div class="empty-state">No entries yet</div></td></tr>';return;}tbody.innerHTML=logs.map(function(l,i){var badges=Object.entries(l.allocs).map(function(e){return'<span class="badge">'+escH(e[1].pct!==null?e[0]+' '+e[1].pct+'%':e[0]+' '+e[1].hrs+'h')+'</span>';}).join('');return'<tr><td style="white-space:nowrap;font-weight:500;cursor:pointer;color:var(--primary)" onclick="openTimeLogForDay(\''+l.date+'\')">'+formatDate(l.date)+'</td><td>'+badges+'</td><td style="color:var(--muted);font-size:12px">'+escH(l.notes||'')+'</td><td><button class="del-entry" onclick="deleteEntry('+i+')" title="Delete">×</button></td></tr>';}).join('');}
+function renderHistory(){var search=(document.getElementById('historySearch').value||'').toLowerCase();var period=(document.getElementById('historyPeriod')?document.getElementById('historyPeriod').value:'all');var now=new Date();var cutoff=null;if(period!=='all'){cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-parseInt(period));}var logs=getLogs();if(cutoff)logs=logs.filter(function(l){return new Date(l.date)>=cutoff;});if(search)logs=logs.filter(function(l){return Object.keys(l.allocs).some(function(p){return p.toLowerCase().includes(search);});});var tbody=document.getElementById('historyBody');if(logs.length===0){tbody.innerHTML='<tr><td colspan="4"><div class="empty-state">No entries yet</div></td></tr>';return;}tbody.innerHTML=logs.map(function(l,i){var badges=Object.entries(l.allocs).map(function(e){var lbl=e[1].pct!==null?e[0]+' '+e[1].pct+'% ('+parseFloat(e[1].hrs||0).toFixed(1)+'h)':e[0]+' '+(e[1].hrs||0)+'h';return'<span class="badge">'+escH(lbl)+'</span>';}).join('');return'<tr><td style="white-space:nowrap;font-weight:500;cursor:pointer;color:var(--primary)" onclick="openTimeLogForDay(\''+l.date+'\')">'+formatDate(l.date)+'</td><td>'+badges+'</td><td style="color:var(--muted);font-size:12px">'+escH(l.notes||'')+'</td><td><button class="del-entry" onclick="deleteEntry('+i+')" title="Delete">×</button></td></tr>';}).join('');}
 function renderSummary(){var period=document.getElementById('sumPeriod').value;var now=new Date();var cutoff=null;if(period!=='all'){cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-parseInt(period));}var logs=getLogs().filter(function(l){return!cutoff||new Date(l.date)>=cutoff;});var totals={};logs.forEach(function(l){Object.entries(l.allocs).forEach(function(e){totals[e[0]]=(totals[e[0]]||0)+(e[1].hrs||0);});});var grid=document.getElementById('summaryGrid');var entries=Object.entries(totals).sort(function(a,b){return b[1]-a[1];});if(entries.length===0){grid.innerHTML='<div class="empty-state">No data for this period</div>';return;}var maxVal=entries[0][1];var projects=getProjects();grid.innerHTML=entries.map(function(e){var pct=maxVal>0?e[1]/maxVal*100:0;var idx=projects.indexOf(e[0]);var color=COLORS[idx>=0?idx%COLORS.length:0];return'<div class="sum-row"><span class="sum-label" title="'+escH(e[0])+'">'+escH(e[0])+'</span><div class="sum-bar-wrap"><div class="sum-bar" style="width:'+pct+'%;background:'+color+'"></div></div><span class="sum-val">'+e[1].toFixed(1)+'h</span></div>';}).join('');}
 function exportCSV(){var logs=getLogs();if(logs.length===0){alert('No data to export.');return;}var projects=Array.from(new Set(logs.flatMap(function(l){return Object.keys(l.allocs);}))).sort();var header=['Date'].concat(projects).concat(['Total Hours','Notes']);var rows=logs.map(function(l){var total=Object.values(l.allocs).reduce(function(s,v){return s+(v.hrs||0);},0);return[l.date].concat(projects.map(function(p){return l.allocs[p]?(l.allocs[p].hrs||0).toFixed(2):'0';})).concat([total.toFixed(2),(l.notes||'').replace(/"/g,'""')]);});var csv=[header].concat(rows).map(function(r){return r.map(function(c){return'"'+c+'"';}).join(',');}).join('\n');var blob=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tender-time-log.csv';a.click();}
 
@@ -1133,7 +1171,7 @@ function getTasksForDate(ds){return getTasks().filter(function(t){return t.dueDa
 function dueDateLabel(due){if(!due)return null;var today=todayStr();if(due<today)return{text:'Overdue · '+formatDate(due),cls:'overdue'};if(due===today)return{text:'Due today',cls:'due-today'};var diff=Math.ceil((new Date(due+' 00:00:00')-new Date(today+' 00:00:00'))/86400000);if(diff<=3)return{text:'Due '+formatDate(due),cls:'due-today'};return{text:formatDate(due),cls:''};}
 function selectPriority(pri){selectedPriority=pri;document.querySelectorAll('.pri-btn').forEach(function(b){b.className='pri-btn'+(b.dataset.pri===pri?' active-'+pri:'');});}
 function toggleNotesInput(){var el=document.getElementById('newTaskNotes');el.classList.toggle('open');if(el.classList.contains('open'))el.focus();}
-function populateTaskProjectSelect(){var p=getProjects();var sel=document.getElementById('newTaskProject');if(!sel)return;var cur=sel.value;var opts=p.map(function(n){return'<option value="'+escH(n)+'"'+(n===cur?' selected':'')+'>'+escH(n)+'</option>';});if(!p.includes('General'))opts.push('<option value="General"'+(cur==='General'?' selected':'')+'>General (unassigned)</option>');sel.innerHTML=opts.length?opts.join(''):'<option value="General">General (unassigned)</option>';}
+function populateTaskProjectSelect(){var p=getProjects();var sel=document.getElementById('newTaskProject');if(!sel)return;var cur=sel.value;var names=p.map(function(x){return x.name;});var opts=names.map(function(n){return'<option value="'+escH(n)+'"'+(n===cur?' selected':'')+'>'+escH(n)+'</option>';});if(!names.includes('General'))opts.push('<option value="General"'+(cur==='General'?' selected':'')+'>General (unassigned)</option>');sel.innerHTML=opts.length?opts.join(''):'<option value="General">General (unassigned)</option>';}
 function addTask(){var title=document.getElementById('newTaskTitle').value.trim();var project=suggestProject(title)||'General';var due=document.getElementById('newTaskDue').value;var notes=document.getElementById('newTaskNotes').value.trim();if(!title){document.getElementById('newTaskTitle').focus();return;}createTask(project,title,selectedPriority,due,notes);document.getElementById('newTaskTitle').value='';document.getElementById('newTaskDue').value='';document.getElementById('newTaskNotes').value='';document.getElementById('newTaskNotes').classList.remove('open');renderTasksPanel();renderCalendarShell();loadCalendarEvents();renderPlannerTasks();}
 function quickAddTask(proj,inputId){var inp=document.getElementById(inputId);var title=inp.value.trim();if(!title)return;createTask(proj,title,'medium','','');inp.value='';renderTasksPanel();renderCalendarShell();loadCalendarEvents();renderPlannerTasks();}
 function toggleTaskDone(id){toggleDone(id);renderTasksPanel();renderCalendarShell();loadCalendarEvents();renderPlannerTasks();}
@@ -1216,7 +1254,7 @@ function renderTmcInto(el,yr,mo,readOnly,fixedCells){
 function renderTasksPanel(){
   renderTasksSummary();
   renderTaskMonthCal();
-  var projects=getProjects();
+  var projects=getProjects().map(function(p){return p.name;});
   var container=document.getElementById('taskGroupsContainer');
   var allTasks=getTasks();
   if(projects.length===0&&allTasks.length===0){container.innerHTML='<div class="card"><div class="empty-state">No tasks yet. Add one above.</div></div>';return;}
@@ -1248,12 +1286,12 @@ function renderTasksPanel(){
     var countCls=overdueCount>0?'task-count overdue':'task-count';
     var countLabel=overdueCount>0?openCount+' open · '+overdueCount+' overdue':openCount+' open';
     var qaId='qa_'+project.replace(/\W/g,'_');
-    visible=visible.map(function(t){return _quickNoteStates[t.id]?Object.assign({},t,{quickNoteOpen:true}):t;});
+    visible=visible.map(function(t){return Object.assign({},t,{quickNoteOpen:!!_quickNoteStates[t.id],subtaskAddOpen:!!_subtaskAddOpen[t.id]});});
     var taskRows=visible.length===0
       ?'<div class="project-empty">'+(filter==='done'?'No completed tasks':'No open tasks')+'</div>'
       :visible.map(function(t){
         var isDone=t.done;var due=dueDateLabel(t.dueDate);
-        return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">📝 '+escH(t.notes.slice(0,50))+(t.notes.length>50?'…':'')+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
+        var subs=t.subtasks||[];var subsDone=subs.filter(function(s){return s.done;}).length;var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span><button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')">×</button></div>';}).join('')+'</div>':'';var subAddHtml=t.subtaskAddOpen?'<div class="subtask-add-row"><input id="sta_'+t.id+'" placeholder="Subtask…" type="text"><button class="btn primary-btn sm" onclick="addSubtask(\''+t.id+'\',\'sta_'+t.id+'\')">Add</button><button class="btn secondary-btn sm" onclick="_subtaskAddOpen[\''+t.id+'\']=false;renderTasksPanel()">×</button></div>':'';var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+subCount+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">📝 '+escH(t.notes.slice(0,50))+(t.notes.length>50?'…':'')+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+subHtml+subAddHtml+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
       }).join('');
     return'<div class="project-group"><div class="project-group-header"><span class="project-group-name">'+escH(project)+'</span><span class="'+countCls+'">'+countLabel+'</span><div class="task-filter"><button class="'+(filter==='active'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'active\')">Active</button><button class="'+(filter==='all'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'all\')">All</button><button class="'+(filter==='done'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'done\')">Done</button></div></div><div class="project-group-body">'+taskRows+'</div><div class="group-quick-add"><input type="text" id="'+qaId+'" placeholder="+ Quick add task to '+escH(project)+'…" onkeydown="if(event.key===\'Enter\') quickAddTask(\''+escA(project)+'\',\''+qaId+'\')"><button class="btn sm secondary-btn" onclick="quickAddTask(\''+escA(project)+'\',\''+qaId+'\')">Add</button></div></div>';
   }).join('');
@@ -1261,7 +1299,7 @@ function renderTasksPanel(){
 
 // ── Project suggestion ──
 function suggestProject(title){
-  var projects=getProjects();
+  var projects=getProjects().map(function(p){return p.name;});
   if(!title||projects.length===0)return null;
   var words=title.toLowerCase().split(/\W+/).filter(function(w){return w.length>3;});
   var best=null;var bestScore=0;
@@ -1595,6 +1633,12 @@ function initAppearance(){
 
 // ── Quick note ──
 var _quickNoteStates={};
+var _subtaskAddOpen={};
+function openSubtaskAdd(id){_subtaskAddOpen[id]=true;renderTasksPanel();requestAnimationFrame(function(){var inp=document.getElementById('sta_'+id);if(inp){inp.focus();inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addSubtask(id,'sta_'+id);}if(e.key==='Escape'){_subtaskAddOpen[id]=false;renderTasksPanel();}});}});}
+function addSubtask(taskId,inputId){var inp=document.getElementById(inputId);if(!inp)return;var title=inp.value.trim();if(!title)return;var tasks=getTasks();var idx=tasks.findIndex(function(t){return t.id===taskId;});if(idx<0)return;if(!tasks[idx].subtasks)tasks[idx].subtasks=[];tasks[idx].subtasks.push({id:'st_'+Date.now(),title:title,done:false});saveTasks(tasks);inp.value='';renderTasksPanel();}
+function toggleSubtask(taskId,subId){var tasks=getTasks();var t=tasks.find(function(x){return x.id===taskId;});if(!t||!t.subtasks)return;var s=t.subtasks.find(function(x){return x.id===subId;});if(s)s.done=!s.done;saveTasks(tasks);renderTasksPanel();}
+function deleteSubtask(taskId,subId){var tasks=getTasks();var t=tasks.find(function(x){return x.id===taskId;});if(!t||!t.subtasks)return;t.subtasks=t.subtasks.filter(function(x){return x.id!==subId;});saveTasks(tasks);renderTasksPanel();}
+function quickCompleteTask(id){toggleDone(id);renderTasksPanel();renderCalendarShell();loadCalendarEvents();renderPlannerTasks();}
 function openQuickNote(id){
   _quickNoteStates[id]=true;
   renderTasksPanel();
@@ -1639,7 +1683,7 @@ function openTaskEditModal(id){
   document.getElementById('qtDue').value=t.dueDate||'';
   document.getElementById('qtNotes').value=t.notes||'';
   document.getElementById('qtSuggest').classList.remove('show');
-  var projects=getProjects();
+  var projects=getProjects().map(function(p){return p.name;});
   var genOpt=projects.includes('General')?'':'<option value="General">General (unassigned)</option>';
   document.getElementById('qtProject').innerHTML=projects.map(function(p){return'<option value="'+escH(p)+'"'+(p===t.project?' selected':'')+'>'+escH(p)+'</option>';}).join('')+genOpt;
   // select current project or General
