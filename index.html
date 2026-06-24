@@ -645,6 +645,15 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
     <button class="btn secondary-btn sm" onclick="importAllData()">Import / restore</button>
     <span style="font-size:11px;color:var(--muted)">Data is stored in this browser — keep the file path consistent.</span>
   </div>
+
+  <!-- Version & Feedback -->
+  <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9</span>
+      <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
+    </div>
+    <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
+  </div>
 </div>
 
 <div id="eventModal" class="ev-modal-overlay">
@@ -958,43 +967,41 @@ function loadPlanner(){var raw=localStorage.getItem(plannerKey(currentMonday));v
 function autoFillLastWeek(){
   var el=document.getElementById('sec-lastWeek');
   var existing=el.innerText.trim();
-  if(existing&&!confirm('Add last week summary to this section?'))return;
+  if(existing&&!confirm('Replace last week summary?'))return;
   var prevMonday=new Date(currentMonday);prevMonday.setDate(prevMonday.getDate()-7);
   var prevSunday=new Date(currentMonday);prevSunday.setDate(prevSunday.getDate()-1);
   var wStart=isoDate(prevMonday),wEnd=isoDate(prevSunday);
+  var today=todayStr();
   var parts=[];
-  // Planner notes from last week
-  var prevData=null;try{prevData=JSON.parse(localStorage.getItem(plannerKey(prevMonday))||'{}');}catch(e){prevData={};}
-  var prevPriority=(prevData.priority?stripHtml(prevData.priority):'').trim();
-  var prevThisWeek=(prevData.thisWeek?stripHtml(prevData.thisWeek):'').trim();
-  if(prevPriority)parts.push('Priority last week: '+prevPriority);
-  if(prevThisWeek)parts.push('In progress: '+prevThisWeek);
-  // Completed tasks (by doneAt or dueDate)
-  var doneTasks=getTasks().filter(function(t){
-    if(!t.done)return false;
+  // Overdue deliverables — tasks past due date still open
+  var overdue=getTasks().filter(function(t){return!t.done&&t.dueDate&&t.dueDate<today;});
+  if(overdue.length>0){
+    parts.push('⚠ Overdue deliverables:');
+    overdue.forEach(function(t){parts.push('  • '+t.title+(t.project&&t.project!=='General'?' ['+t.project+']':'')+(t.dueDate?' (due '+formatDate(t.dueDate)+')':''));});
+  }
+  // Completed high-priority tasks last week
+  var highDone=getTasks().filter(function(t){
+    if(!t.done||t.priority!=='high')return false;
     if(t.doneAt){var ds=isoDate(new Date(t.doneAt));return ds>=wStart&&ds<=wEnd;}
     return t.dueDate&&t.dueDate>=wStart&&t.dueDate<=wEnd;
   });
-  if(doneTasks.length>0)parts.push('Completed: '+doneTasks.map(function(t){
-    return t.title+(t.project&&t.project!=='General'?' ('+t.project+')':'');
-  }).join(', '));
-  // Still open tasks due last week
-  var overdue=getTasks().filter(function(t){return!t.done&&t.dueDate&&t.dueDate>=wStart&&t.dueDate<=wEnd;});
-  if(overdue.length>0)parts.push('Follow up: '+overdue.map(function(t){return t.title;}).join(', '));
-  // Time log — top projects last week
-  var logs=getLogs().filter(function(e){return e.date>=wStart&&e.date<=wEnd;});
-  if(logs.length>0){
-    var projHrs={};
-    logs.forEach(function(e){Object.keys(e.allocs||{}).forEach(function(p){projHrs[p]=(projHrs[p]||0)+(e.allocs[p].hrs||0);});});
-    var top=Object.keys(projHrs).sort(function(a,b){return projHrs[b]-projHrs[a];});
-    if(top.length>0)parts.push('Time logged: '+top.slice(0,3).map(function(p){return p+' '+projHrs[p].toFixed(1)+'h';}).join(', '));
+  if(highDone.length>0){
+    parts.push('✓ High-priority completed:');
+    highDone.forEach(function(t){parts.push('  • '+t.title+(t.project&&t.project!=='General'?' ['+t.project+']':''));});
   }
-  // Calendar events from last week
-  var evts=getManualEvents().filter(function(e){return e.date>=wStart&&e.date<=wEnd;});
-  if(evts.length>0)parts.push('Meetings: '+evts.map(function(e){return e.title;}).join(', '));
-  if(parts.length===0){alert('No data found from last week.');return;}
-  // Insert as plain editable text
-  el.innerText=existing?(existing+'\n\n'+parts.join('\n')):parts.join('\n');
+  // New projects added (no doneAt — check by created date is not stored; use projects with no logs as proxy)
+  // Instead: projects added to active list that have zero timesheet history
+  var allProj=getActiveProjects();
+  var logs=getLogs();
+  var newProj=allProj.filter(function(p){
+    return!logs.some(function(l){return l.allocs&&l.allocs[p.name];});
+  });
+  if(newProj.length>0){
+    parts.push('+ New projects:');
+    newProj.forEach(function(p){parts.push('  • '+p.name+(p.code?' ['+p.code+']':''));});
+  }
+  if(parts.length===0){alert('Nothing to summarise — no overdue tasks, high-priority completions or new projects found.');return;}
+  el.innerText=parts.join('\n');
   scheduleSave();
 }
 
