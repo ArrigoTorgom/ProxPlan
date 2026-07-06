@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.5] — 2026-07-06
+
+### Changed
+- **Links & Resources column resize** — replaced the range slider in the card header with a draggable column separator (⋮) in the table header row; drag directly on the border between Label and URL columns to resize; width persists in localStorage
+
+---
+
 ## [0.9.4] — 2026-07-03
 
 ### Fixed
