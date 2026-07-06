@@ -58,7 +58,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .editable{flex:1;font-size:12.5px;line-height:1.6;outline:none;overflow-y:auto;color:var(--text);white-space:pre-wrap;word-break:break-word;min-height:0;}
 .editable:empty::before{content:attr(data-ph);color:#c4c9d4;pointer-events:none;font-style:italic;font-size:12px;}
 .section-tasks{flex-shrink:0;display:flex;flex-wrap:wrap;gap:3px;padding-top:5px;margin-top:4px;border-top:1px dashed #e0e8f5;overflow:hidden;max-height:52px;}
-.section-tasks:empty{display:none;padding:0;margin:0;border:none;}
+.section-tasks:empty{display:none;padding:0;margin:0;border:none;}.stask-empty{font-size:11px;color:var(--muted);font-style:italic;opacity:.75;padding:1px 0;}
 .stask-chip{font-size:10px;padding:2px 7px;border-radius:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;cursor:pointer;line-height:1.5;border:1px solid transparent;}
 .stask-chip.high{background:var(--high-bg);color:var(--high);border-color:#f5b8b7;}
 .stask-chip.medium{background:var(--med-bg);color:#b45309;border-color:#f5d9a0;}
@@ -655,7 +655,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.3</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.4</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
@@ -742,6 +742,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
         <button class="autofill-btn" onclick="autoFillLastWeek()" title="Auto-fill from last week's notes &amp; overdue tasks">↺</button>
       </div>
       <div class="editable" contenteditable="true" spellcheck="false" id="sec-lastWeek" data-ph="What carried over from last week? Pending follow-ups…"></div>
+      <div class="section-tasks" id="stasks-lastWeek"></div>
     </div>
     <div class="section-card">
       <div class="section-label">Priority</div>
@@ -943,6 +944,7 @@ function switchTab(tab){
 
 function getMonday(date){var d=new Date(date);d.setHours(0,0,0,0);var day=d.getDay();d.setDate(d.getDate()-(day===0?6:day-1));return d;}
 function isoDate(date){return date.toISOString().slice(0,10);}
+function localIsoDate(d){return d.toLocaleDateString('en-CA',{timeZone:TZ});}
 function localDateStr(iso){return new Date(iso).toLocaleDateString('en-CA',{timeZone:TZ});}
 function localTime(iso){return new Date(iso).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:TZ});}
 function getWeekNum(m){var d=new Date(Date.UTC(m.getFullYear(),m.getMonth(),m.getDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));var y=new Date(Date.UTC(d.getUTCFullYear(),0,1));return Math.ceil(((d-y)/86400000+1)/7);}
@@ -955,6 +957,12 @@ function stripHtml(h){return h.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(
 
 // ── Planner ──
 function plannerKey(m){return'planner-'+isoDate(m);}
+// Normalise contenteditable empty state so :empty::before placeholder fires
+document.querySelectorAll('.editable[data-ph]').forEach(function(el){
+  el.addEventListener('input',function(){
+    if(el.innerHTML==='<br>'||el.innerHTML==='<br/>'||el.innerHTML==='<div><br></div>'||el.innerHTML.trim()==='')el.innerHTML='';
+  });
+});
 function savePlanner(){var k=plannerKey(currentMonday);var d={};PLAN_SECTIONS.forEach(function(s){d[s]=document.getElementById('sec-'+s).innerHTML;});localStorage.setItem(k,JSON.stringify(d));}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(savePlanner,700);}
 function loadPlanner(){var raw=localStorage.getItem(plannerKey(currentMonday));var d=raw?JSON.parse(raw):{};PLAN_SECTIONS.forEach(function(s){document.getElementById('sec-'+s).innerHTML=d[s]||'';});}
@@ -965,7 +973,7 @@ function autoFillLastWeek(){
   if(existing&&!confirm('Replace last week summary?'))return;
   var prevMonday=new Date(currentMonday);prevMonday.setDate(prevMonday.getDate()-7);
   var prevSunday=new Date(currentMonday);prevSunday.setDate(prevSunday.getDate()-1);
-  var wStart=isoDate(prevMonday),wEnd=isoDate(prevSunday);
+  var wStart=localIsoDate(prevMonday),wEnd=localIsoDate(prevSunday);
   var today=todayStr();
   var parts=[];
   // Overdue deliverables — tasks past due date still open
@@ -1003,26 +1011,31 @@ function autoFillLastWeek(){
 function renderPlannerTasks(){
   var tasks=getTasks();
   var today=todayStr();
-  var wStart=isoDate(currentMonday);
+  var wStart=localIsoDate(currentMonday);
   var fri=new Date(currentMonday);fri.setDate(fri.getDate()+4);
-  var wEnd=isoDate(fri);
+  var wEnd=localIsoDate(fri);
   var hor=new Date(fri);hor.setDate(hor.getDate()+22);
-  var hEnd=isoDate(hor);
-  var priorityTasks=tasks.filter(function(t){return !t.done&&t.priority==='high'&&t.dueDate&&t.dueDate<=wEnd;});
-  var thisWeekTasks=tasks.filter(function(t){return !t.done&&t.dueDate&&t.dueDate>=wStart&&t.dueDate<=wEnd;});
+  var hEnd=localIsoDate(hor);
+  var overdueTasks=tasks.filter(function(t){return !t.done&&t.dueDate&&t.dueDate<wStart;});
+  var priorityTasks=tasks.filter(function(t){return !t.done&&t.priority==='high'&&(!t.dueDate||t.dueDate<=wEnd);});
+  var priorityIds=priorityTasks.reduce(function(m,t){m[t.id]=1;return m;},{});
+  var thisWeekTasks=tasks.filter(function(t){return !t.done&&t.dueDate&&t.dueDate>=wStart&&t.dueDate<=wEnd&&!priorityIds[t.id];});
   var horizonTasks=tasks.filter(function(t){return !t.done&&t.dueDate&&t.dueDate>wEnd&&t.dueDate<=hEnd;});
-  function chips(id,list){
+  function chips(id,list,emptyMsg){
     var el=document.getElementById(id);if(!el)return;
-    if(list.length===0){el.innerHTML='';return;}
-    el.innerHTML=list.slice(0,8).map(function(t){
-      var isOver=t.dueDate<today;
+    if(list.length===0){el.innerHTML='<span class="stask-empty">'+emptyMsg+'</span>';return;}
+    var show=list.slice(0,8);
+    var more=list.length-show.length;
+    el.innerHTML=show.map(function(t){
+      var isOver=t.dueDate&&t.dueDate<today;
       var label=t.title.length>28?t.title.slice(0,27)+'…':t.title;
       return'<span class="stask-chip '+t.priority+(isOver?' overdue-chip':'')+'" title="'+escH(t.project+': '+t.title+(t.dueDate?' · '+formatDate(t.dueDate):''))+'" onclick="switchTab(\'tasks\')">'+escH(label)+'</span>';
-    }).join('');
+    }).join('')+(more?'<span class="stask-chip low" style="cursor:default">+'+more+' more</span>':'');
   }
-  chips('stasks-priority',priorityTasks);
-  chips('stasks-thisWeek',thisWeekTasks);
-  chips('stasks-horizon',horizonTasks);
+  chips('stasks-lastWeek',overdueTasks,'No overdue tasks — all caught up');
+  chips('stasks-priority',priorityTasks,'No high-priority tasks');
+  chips('stasks-thisWeek',thisWeekTasks,'No tasks due this week');
+  chips('stasks-horizon',horizonTasks,'Nothing on the horizon yet');
 }
 
 function checkLogReminder(){
@@ -1030,7 +1043,7 @@ function checkLogReminder(){
   var d=new Date(today+' 00:00:00');
   var dow=d.getDay();
   if(dow===0||dow===6)return; // weekend
-  var isCurrentWeek=(today>=isoDate(currentMonday)&&today<=isoDate(new Date(currentMonday.getTime()+4*86400000)));
+  var isCurrentWeek=(today>=localIsoDate(currentMonday)&&today<=localIsoDate(new Date(currentMonday.getTime()+4*86400000)));
   if(!isCurrentWeek)return;
   var hasLog=!!getLogsForDate(today);
   var el=document.getElementById('logReminder');

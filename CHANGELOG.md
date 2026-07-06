@@ -5,6 +5,23 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.4] — 2026-07-03
+
+### Fixed
+- **Planner section pills — timezone bug** — week boundaries (This Week / On the Horizon) were calculated in UTC, shifting them one day early for SAST users; Friday tasks appeared in On the Horizon and Sunday appeared as the week start. All date comparisons now use local SAST timezone via `localIsoDate()`
+- **Last Week & Follow Ups placeholder text** — clearing the editable section left a residual `<br>` tag that prevented the grey italic placeholder from reappearing; normalised on every keystroke
+
+### Added
+- **Task pills on all planner section cards** — each card now shows relevant tasks as coloured chips below the notes area:
+  - *Last Week & Follow Ups* — overdue tasks (due before the current week, not yet done)
+  - *Priority* — high-priority tasks due this week or earlier, plus high-priority tasks with no due date
+  - *This Week* — medium/low-priority tasks due within the displayed week (high-priority tasks are shown in Priority only — no duplication)
+  - *On the Horizon* — tasks due in the three weeks after the displayed week
+- **Empty state text on all pill sections** — when no tasks qualify, each section shows a descriptive italic message instead of collapsing silently (e.g. "No overdue tasks — all caught up", "No tasks due this week")
+- **+N more indicator** — when more than 8 tasks qualify for a section, a grey chip shows the count of hidden tasks
+
+---
+
 ## [0.9.3] — 2026-06-30
 
 ### Removed
