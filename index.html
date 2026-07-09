@@ -83,7 +83,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .day-unlogged{font-size:10px;color:#f97316;font-weight:500;}
 .log-edit-btn{font-size:10px;padding:1px 6px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--primary);font-weight:600;transition:background .1s;display:none;flex-shrink:0;}
 .day-head:hover .log-edit-btn{display:block;}
-.log-edit-btn.has-log{display:block;color:#22c55e;border-color:#bbf7d0;}
+.log-edit-btn:hover{background:var(--primary-light);color:var(--primary);}.log-edit-btn.has-log{display:block;color:#22c55e;border-color:#bbf7d0;}
 .log-edit-btn.has-log:hover{background:#f0fdf4;}
 .day-events{padding:5px 6px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;flex:1;}
 .event-pill{display:block;text-decoration:none;font-size:10px;padding:3px 6px;border-radius:4px;border-left:3px solid var(--primary);background:var(--primary-light);color:var(--text);line-height:1.3;transition:opacity .12s;overflow:hidden;word-break:break-word;}
@@ -140,7 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ev-modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;}
 
 /* Time log reminder banner */
-.user-rem-zone{margin-bottom:8px;}.user-reminder{display:flex;align-items:center;gap:8px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 14px;margin-bottom:6px;font-size:12px;color:#c2410c;}.user-reminder:last-child{margin-bottom:0;}.user-reminder .ur-text{flex:1;}.user-reminder .ur-title{font-weight:600;}.user-reminder .ur-sub{opacity:.7;font-size:11px;margin-left:5px;}.user-reminder button{background:none;border:1px solid #f97316;border-radius:5px;color:#c2410c;cursor:pointer;padding:3px 10px;font-size:11px;}.user-reminder button:hover{background:#fff3e0;}.user-reminder .ur-dismiss{border-color:var(--border);color:var(--muted);margin-left:4px;}.rem-stack{position:relative;margin-bottom:18px;}.rem-stack-peek{position:absolute;border-radius:8px;background:#fff7ed;border:1px solid #fed7aa;}.rem-stack-peek.p1{bottom:-6px;left:8px;right:8px;height:34px;opacity:.6;z-index:0;}.rem-stack-peek.p2{bottom:-12px;left:16px;right:16px;height:34px;opacity:.35;z-index:-1;}.rem-stack-front{position:relative;z-index:1;cursor:pointer;}.rem-stack-count{font-size:10px;font-weight:700;background:#fed7aa;color:#c2410c;border-radius:10px;padding:1px 7px;margin-left:6px;flex-shrink:0;}.rem-stack.expanded{margin-bottom:8px;}.rem-stack.expanded .rem-stack-peek{display:none;}.rem-collapse-hint{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-bottom:4px;cursor:pointer;user-select:none;font-size:10px;color:var(--muted);padding-right:14px;}.rem-chev{display:inline-block;width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);}.rem-day-btn{font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}.rem-day-btn.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary);}.rem-mgr-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}.rem-mgr-item:last-child{border-bottom:none;}.rem-mgr-title{flex:1;font-weight:500;color:var(--text);}.rem-mgr-meta{font-size:11px;color:var(--muted);}
+.user-rem-zone{margin-bottom:8px;}.user-reminder{display:flex;align-items:center;gap:8px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 14px;margin-bottom:6px;font-size:12px;color:#c2410c;}.user-reminder:last-child{margin-bottom:0;}.user-reminder .ur-text{flex:1;}.user-reminder .ur-title{font-weight:600;}.user-reminder .ur-sub{opacity:.7;font-size:11px;margin-left:5px;}.user-reminder button{background:none;border:1px solid #f97316;border-radius:5px;color:#c2410c;cursor:pointer;padding:3px 10px;font-size:11px;}.user-reminder button:hover{background:#fff3e0;}.user-reminder .ur-dismiss{border-color:var(--border);color:var(--muted);margin-left:4px;}.rem-stack{position:relative;margin-bottom:18px;}.rem-stack-peek{position:absolute;border-radius:8px;background:#fff7ed;border:1px solid #fed7aa;}.rem-stack-peek.p1{bottom:-6px;left:8px;right:8px;height:34px;z-index:0;}.rem-stack-peek.p2{bottom:-12px;left:16px;right:16px;height:34px;z-index:-1;}.rem-stack-front{position:relative;z-index:1;cursor:pointer;}.rem-stack-count{font-size:10px;font-weight:700;background:#fed7aa;color:#c2410c;border-radius:10px;padding:1px 7px;margin-left:6px;flex-shrink:0;}.rem-stack.expanded{margin-bottom:8px;cursor:pointer;padding-top:2px;}.rem-stack.expanded .rem-stack-peek{display:none;}.rem-day-btn{font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}.rem-day-btn.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary);}.rem-mgr-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}.rem-mgr-item:last-child{border-bottom:none;}.rem-mgr-title{flex:1;font-weight:500;color:var(--text);}.rem-mgr-meta{font-size:11px;color:var(--muted);}
 
 /* Tracker */
 .tracker-wrap{}
@@ -452,11 +452,13 @@ body.app-dark .task-add-card{background:#1a2c35!important;}
 body.app-dark .tmc-wrap,body.app-dark .tmc-combined{background:var(--card)!important;}
 body.app-dark .log-table th{background:#1c2e3a!important;}
 body.app-dark .event-pill.manual{background:rgba(124,58,237,.18)!important;border-left-color:#a78bfa!important;color:var(--text)!important;}
-body.app-dark .rem-stack-peek{background:rgba(247,146,30,.07)!important;border-color:rgba(247,146,30,.2)!important;}
-body.app-dark .user-reminder{background:rgba(247,146,30,.08)!important;border-color:rgba(247,146,30,.22)!important;color:#f7921e!important;}body.app-dark .user-reminder button{border-color:rgba(247,146,30,.35)!important;color:#f7921e!important;}body.app-dark .user-reminder button:hover{background:rgba(247,146,30,.12)!important;}body.app-dark .rem-stack-count{background:rgba(247,146,30,.18)!important;color:#f7921e!important;  .user-reminder{background:rgba(247,146,30,.08)!important;border-color:rgba(247,146,30,.22)!important;color:#f7921e!important;}
+body.app-dark .rem-stack-peek{background:#1e2c22!important;border-color:rgba(247,146,30,.25)!important;}body.app-dark .rem-stack-peek.p2{background:#1a2820!important;}
+body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,146,30,.3)!important;color:#f7921e!important;}body.app-dark .user-reminder button{border-color:rgba(247,146,30,.35)!important;color:#f7921e!important;}body.app-dark .user-reminder button:hover{background:rgba(247,146,30,.12)!important;}body.app-dark .rem-stack-count{background:rgba(247,146,30,.18)!important;color:#f7921e!important;  .user-reminder{background:#1f2d1a!important;border-color:rgba(247,146,30,.3)!important;color:#f7921e!important;}
   .user-reminder button{border-color:rgba(247,146,30,.35)!important;color:#f7921e!important;}
   .user-reminder button:hover{background:rgba(247,146,30,.12)!important;}
   .rem-stack-count{background:rgba(247,146,30,.18)!important;color:#f7921e!important;}
+  .rem-stack-peek{background:#1e2c22!important;border-color:rgba(247,146,30,.25)!important;}
+  .rem-stack-peek.p2{background:#1a2820!important;}
 }
 /* force light (override system dark) */
 @media(prefers-color-scheme:dark){
@@ -659,7 +661,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.12</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.13</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
@@ -857,7 +859,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
         <option value="weekly">Weekly</option>
         <option value="monthly">Monthly</option>
       </select>
-      <button id="remAddBtn" class="btn secondary-btn sm" onclick="addUserReminder()" style="white-space:nowrap">+ Add</button>
+      <button id="remAddBtn" class="btn primary-btn sm" onclick="addUserReminder()" style="white-space:nowrap">Add</button>
     </div>
     <div id="remDateRow" style="display:flex;gap:6px;align-items:center;margin-bottom:8px">
       <label style="font-size:11px;color:var(--muted)">Date</label>
@@ -1825,11 +1827,11 @@ function renderReminderBanner(){
   var due=getReminders().filter(isReminderDue);
   if(!due.length){zone.innerHTML='';_remBannerExpanded=false;return;}
   function remCard(r){
-    return'<div class="user-reminder" onclick="event.stopPropagation()">'
+    return'<div class="user-reminder">'
       +'<span>⏰</span>'
       +'<div class="ur-text"><span class="ur-title">'+escH(r.title)+'</span><span class="ur-sub">· '+remRecurDesc(r)+'</span></div>'
-      +'<button onclick="snoozeReminder(\''+r.id+'\')">Snooze</button>'
-      +'<button class="ur-dismiss" onclick="dismissReminder(\''+r.id+'\')">Dismiss</button>'
+      +'<button onclick="event.stopPropagation();snoozeReminder(\''+r.id+'\')">Snooze</button>'
+      +'<button class="ur-dismiss" onclick="event.stopPropagation();dismissReminder(\''+r.id+'\')">Dismiss</button>'
       +'</div>';
   }
   if(due.length===1){zone.innerHTML=remCard(due[0]);return;}
@@ -1846,8 +1848,7 @@ function renderReminderBanner(){
       +'<span class="rem-stack-count">+' +(due.length-1)+' more</span>'
       +'</div></div>';
   } else {
-    zone.innerHTML='<div class="rem-stack expanded">'
-      +'<div class="rem-collapse-hint" onclick="toggleRemBanner()"><span class="rem-chev" style="transform:rotate(-135deg);margin-top:3px"></span>hide</div>'
+    zone.innerHTML='<div class="rem-stack expanded" onclick="toggleRemBanner()">'
       +due.map(remCard).join('')
       +'</div>';
   }
@@ -1855,11 +1856,17 @@ function renderReminderBanner(){
 function toggleRemBanner(){_remBannerExpanded=!_remBannerExpanded;renderReminderBanner();}
 function dismissReminder(id){
   var today=todayStr();
-  var arr=getReminders().map(function(r){
-    if(r.id===id){if(!r.dismissedDates)r.dismissedDates=[];if(r.dismissedDates.indexOf(today)<0)r.dismissedDates.push(today);}
-    return r;
-  });
-  saveReminders(arr);renderReminderBanner();
+  var arr=getReminders();
+  var rem=arr.find(function(r){return r.id===id;});
+  if(rem&&rem.recur==='none'){
+    arr=arr.filter(function(r){return r.id!==id;});
+  } else {
+    arr=arr.map(function(r){
+      if(r.id===id){if(!r.dismissedDates)r.dismissedDates=[];if(r.dismissedDates.indexOf(today)<0)r.dismissedDates.push(today);}
+      return r;
+    });
+  }
+  saveReminders(arr);renderReminderBanner();renderReminderMgr();renderTasksSummary();
 }
 function snoozeReminder(id){
   var d=new Date();d.setDate(d.getDate()+1);
@@ -1953,7 +1960,7 @@ function addUserReminder(){
   if(titleEl)titleEl.value='';
   document.querySelectorAll('.rem-day-btn').forEach(function(b){b.classList.remove('active');});
   var btn=document.getElementById('remAddBtn');
-  if(btn)btn.textContent='+ Add';
+  if(btn)btn.textContent='Add';
   renderReminderMgr();renderReminderBanner();
   toggleRemPanel(true);
 }
@@ -2141,6 +2148,7 @@ attachDraftListeners();
 // Restore any draft for today on load
 (function(){applyDraftOrLog(todayStr());})();
 document.getElementById('newTaskTitle').addEventListener('keydown',function(e){if(e.key==='Enter')addTask();});
+document.getElementById('remTitleInput').addEventListener('keydown',function(e){if(e.key==='Enter')addUserReminder();});
 document.getElementById('evTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveManualEvent();});
 ['evDate','evStart','evEnd','evNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveManualEvent();});});
 document.getElementById('eventModal').addEventListener('click',function(e){if(e.target===this)closeEventModal();});

@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.13] — 2026-07-09
+
+### Fixed
+- **Reminder cards — dark mode** — banner and peek cards now use solid opaque backgrounds consistent with the rest of the dark theme; no longer clashes with surrounding cards
+- **Reminder stack — collapse** — clicking anywhere on the expanded stack (outside Snooze / Dismiss buttons) collapses it back to the deck view; "hide" button removed for cleaner UI
+- **Reminder stack — peek cards** — all peek cards use identical colour in light mode; bottom card no longer appears darker than the others
+- **Reminder — one-time dismissal** — dismissing a once-off reminder removes it from the list entirely; recurring reminders remain until manually deleted
+- **Reminder form** — Add button matches the primary orange style used on all other Add buttons; "+" prefix removed for consistency; Enter key submits the form
+- **+ Log hover** — the `+ Log` button in the weekly calendar now highlights on hover, consistent with `+ Event` and `+ Task`
+
+---
+
 ## [0.9.12] — 2026-07-09
 
 ### Added
