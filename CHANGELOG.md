@@ -5,10 +5,34 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
-## [0.9.5] — 2026-07-06
+## [0.9.12] — 2026-07-09
+
+### Added
+- **Reminder stack (Planner tab)** — when multiple reminders are due, they appear as a deck of cards: front card shows the first reminder with a `+N more` badge and ghost cards peeking behind; click to expand the full list with individual Snooze / Dismiss controls; a chevron + "hide" collapses back to the stack
 
 ### Changed
-- **Links & Resources column resize** — replaced the range slider in the card header with a draggable column separator (⋮) in the table header row; drag directly on the border between Label and URL columns to resize; width persists in localStorage
+- **Reminder count in To Do summary bar** — 🔔 chip added alongside Open / Done counts; click to toggle the reminder manager panel open without scrolling; panel is hidden by default
+
+---
+
+## [0.9.10] — 2026-07-09
+
+### Changed
+- **Reminder form compact layout** — title input, frequency dropdown, and Add button now sit on a single row; title field fills available width automatically
+
+---
+
+## [0.9.9] — 2026-07-08
+
+### Added
+- **Reminders** — set one-time or recurring reminders (daily / weekly by day-of-week / monthly by day-of-month); active reminders appear as amber banners above the Planner section cards; dismiss clears for the day, snooze defers until tomorrow
+- **Reminder management in To Do tab** — reminder manager card (add, edit, remove) sits below the task list in the To Do left column for easy access at any screen width
+- **Log hours reminder unified** — "Log your hours" now appears through the same banner system as all user reminders; auto-hides once hours have been logged for the day; can be snoozed, dismissed, edited, or removed like any reminder
+
+### Changed
+- **Timesheet layout** — Log Time entry form moved to the left column (alongside Active Projects); Hours by Project chart moved to the right column (alongside Log History)
+- **Chart type toggle** — Hours by Project supports Bar and Pie views toggled from the card header; selection persists in localStorage
+- **Links & Resources column resize** — replaced the range slider with a draggable column separator (⋮) in the table header row; width persists in localStorage
 
 ---
 
