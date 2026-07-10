@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.26] — 2026-07-10
+
+### Changed
+- **Timesheet — Activity toggle icon** — replaced diamond glyph with a Tabler tag icon (`ti-tag`) plus an inline pill-shaped switch indicator; pill slides and turns accent-coloured when activity badges are on, muted when off
+
+---
+
+## [0.9.25] — 2026-07-10
+
+### Added
+- **Timesheet — Replicon grid export** — "By Week (Replicon)" export option produces a CSV grid with columns Task / Project / Billing / Activity followed by day columns (Mon–Sun) and a Total; rows are grouped by ISO week with a label row ("Week 28: 6 Jul – 10 Jul"); blank Task and Billing columns left intentionally for manual Replicon entry
+
+---
+
+## [0.9.24] — 2026-07-10
+
+### Added
+- **Timesheet — Activity toggle in log history** — header of the Log History card now has an "Activity" toggle button; activity labels are hidden by default in log badges (saves space) and can be shown on demand; preference persists in localStorage
+
+---
+
 ## [0.9.23] — 2026-07-10
 
 ### Fixed
