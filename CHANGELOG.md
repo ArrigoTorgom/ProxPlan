@@ -5,6 +5,14 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.23] — 2026-07-10
+
+### Fixed
+- **Timesheet — Export button** — Export modal was non-responsive; `openExportModal` and `doExport` function definitions were missing from the script block despite the button and modal HTML being present
+- **Timesheet — Log Time input heights** — activity autocomplete field now matches the height of the hours input (`padding: 7px 10px`, `font-size: 13px`) so all inputs in each project row sit at a consistent vertical height
+
+---
+
 ## [0.9.22] — 2026-07-10
 
 ### Added

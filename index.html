@@ -171,7 +171,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .alloc-input-wrap input:focus{border-color:var(--primary);}
 .alloc-unit{font-size:13px;color:var(--muted);width:28px;}
 .alloc-act-wrap{position:relative;flex-shrink:0;}
-.alloc-activity-input{font-size:11px;padding:4px 8px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);outline:none;width:160px;}
+.alloc-activity-input{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;width:160px;}
 .alloc-activity-input:focus{border-color:var(--primary);}
 .act-dropdown{position:absolute;top:calc(100% + 2px);left:0;min-width:200px;background:var(--card);border:1px solid var(--border);border-radius:8px;max-height:200px;overflow-y:auto;z-index:200;display:none;box-shadow:0 4px 16px rgba(0,0,0,.12);}
 .act-dropdown.open{display:block;}
@@ -683,7 +683,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.22</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.23</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
@@ -2394,6 +2394,8 @@ function initSpellcheckToggle(){
 }
 
 
+function openExportModal(){document.getElementById('exportModal').style.display='flex';}
+function doExport(){var mode=document.querySelector('input[name="exportMode"]:checked').value;document.getElementById('exportModal').style.display='none';if(mode==='period')exportCSV();else exportByWeek();}
 function isoWeekNum(dateStr){var d=new Date(dateStr);d.setHours(0,0,0,0);d.setDate(d.getDate()+3-(d.getDay()+6)%7);var w1=new Date(d.getFullYear(),0,4);return[d.getFullYear(),1+Math.round(((d-w1)/864e5-3+(w1.getDay()+6)%7)/7)];}
 function weekBounds(wn,yr){var jan4=new Date(yr,0,4);var dow=(jan4.getDay()+6)%7;var mon=new Date(jan4);mon.setDate(jan4.getDate()-dow+(wn-1)*7);var fri=new Date(mon);fri.setDate(mon.getDate()+4);return{mon:mon,fri:fri};}
 function fmtShort(d){var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear();}
