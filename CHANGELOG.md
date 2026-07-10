@@ -5,6 +5,34 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.22] — 2026-07-10
+
+### Added
+- **Timesheet — Export modal** — "Export CSV" button replaced with "Export" which opens a modal with two options: *Full period list* (flat CSV matching the selected duration, same as before) and *By Week — Replicon* (one row per project/activity entry, grouped by ISO week with labels like "Week 28: 6 Jul – 10 Jul 2026", ready to copy into Replicon week by week)
+
+---
+
+## [0.9.14–0.9.21] — 2026-07-10
+
+### Added
+- **Projects — multi-tag support** — Project Tags field (formerly Activity Type) accepts comma-separated values; each tag renders as a separate badge on the project detail panel
+- **Projects — search** — search bar filters the sidebar by project name, tender code, and tags simultaneously
+- **Timesheet — pie chart layout** — legend left, chart right; chart fills available width responsively; capped at 50% of card width; bar/pie toggle persists in localStorage
+- **Timesheet — Activity per project** — each project row in Log Time has a searchable activity autocomplete field (42-item list); activity saved per project per day, shown in log history badges and included in CSV export
+- **Timesheet — Log Time layout** — activity field appears before hours input (label → activity → hours → bar)
+- **Settings — Activity List management** — upload a CSV (one activity per row) to replace the dropdown list; download the current list; persists across data resets
+
+### Changed
+- **Projects — "Activity Type" renamed to "Project Tags"** in the Edit Project modal
+- **Timesheet — Today button removed** from the date picker row; the calendar's native Today shortcut remains
+
+### Fixed
+- **Projects — summary height** — description textarea auto-expands on every render (no longer collapses on task toggles or link edits)
+- **Projects — Links & Resources column width** — dragged width re-applied after every panel re-render
+- **Deploy script** — corrected MSAL injection so main app JS stays inside its `<script>` block (previously ejected JS rendered as visible text)
+
+---
+
 ## [0.9.13] — 2026-07-09
 
 ### Fixed
