@@ -5,6 +5,54 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.27] — 2026-07-21
+
+### Added
+- **Timesheet — Multiple activities per project (continued)** — `+ Activity` button now appears as a circled `+` on hover at the right edge of the activity pill; hidden by default to save vertical space, revealed on row hover
+- **Reminders — once-only persistence** — one-time reminders now remain in the banner until explicitly dismissed, even after their scheduled date elapses; previously they disappeared at midnight
+
+### Changed
+- **Timesheet — Log Time layout** — Working Hours input moved to the top control bar (right of the Activity toggle), visible only in `hrs` mode; top bar order is now: Date → %/hrs → Activity toggle → Working Hours
+- **Timesheet — Subtotal row** — "Subtotal" label and total figure are right-aligned together at the bottom of the alloc grid; OT amount (`+1.5h OT`) now appears on a separate line below the subtotal rather than inline (was causing row height misalignment)
+- **Projects — Link column** — "Label" column heading renamed to "Link"; link anchor now matches column width; description input has a rounded pill border that highlights on focus
+- **Reminders — sort order fixed** — one-time reminders now reliably sort first in the banner (a `0` priority value was falsy in JS, causing them to fall to the bottom; corrected to non-zero values so once > monthly > weekly > daily)
+
+### Fixed
+- **Timesheet — project rows horizontal** — a missing closing `</div>` in `renderAllocGrid` caused all project rows to share the same container, rendering side-by-side instead of stacked; corrected DOM structure
+- **Timesheet — extra activities multiplying on toggle** — toggling activities off and on caused extra lines to double (3 → 6 → 9); root cause was the malformed DOM above; added a global pre-clear in `_loadExtras` as a safety net
+- **Timesheet — OT row not hidden on mode switch** — switching from `hrs` to `%` mode left the OT figure visible; `updateTotal` in `%` mode now explicitly hides the OT row
+- **Timesheet — OT row not hidden on clear** — `clearEntry` now hides the OT row alongside resetting other fields
+- **Code hygiene** — removed dead CSS: `.tracker-wrap{}` (empty rule), `.total-display` (unused class with three sub-rules), `.total-row-tr .alloc-label` (selector targeting a node that no longer exists); unified Working Hours input padding to match other pill inputs (7px)
+
+---
+
+### Added (earlier in 0.9.27 session)
+- **Timesheet — Multiple activities per project** — each project row in Log Time now has a `+ Activity` button that adds a second (or third…) activity line with its own hours and activity field; total project hours is the sum of all lines; Replicon export outputs a separate row per activity line
+- **Timesheet — Hours by Activity chart** — `Activity` button added to the Hours chart toggle; aggregates logged hours across all activity tags (including extra lines) for a cross-project activity breakdown
+- **Timesheet — Activity toggle on Log Time** — pill toggle on the Log Time card shows/hides activity fields; pill is orange when activity fields are visible, muted when hidden; preference persists in localStorage
+- **Timesheet — Overtime tracking** — the Working Hours field (default 8h) sets the standard day threshold; hours logged above it appear as an OT badge (`+1.5h OT`) in the total row and Log History
+- **Settings tab** — Settings moved from a header gear dropdown to a dedicated tab with a gear icon, consistent with the rest of the navigation
+- **Reminders — version update notice** — a one-time reminder is created automatically when ProXPlan updates to a new version, prompting you to check the changelog in Settings
+
+### Changed
+- **Timesheet — toggle standard** — Activity toggle on Log Time, Activity toggle on Log History, and chart type buttons (Bar / Pie / Activity) all use the same pill-button style; active selection is accent-coloured
+- **Timesheet — Replicon export** — column header row now appears once per week section instead of duplicating; extra activity lines per project each generate their own export row
+- **Timesheet — Progress bars removed** — per-project allocation bars removed from the Log Time rows; the Hours by Project chart remains
+- **Reminders — priority order** — in the banner and manager, one-time reminders appear first, then monthly → weekly → daily (least frequent = most prominent)
+- **Projects — search includes archived** — searching in the Projects tab now surfaces archived projects inline with an `archived` tag badge; no need to expand the archived section manually
+- **Settings — backup labels** — "Export all data" renamed to "Export data backup"; "Import / restore" renamed to "Restore from backup"
+- **To Do — calendar heavy-week highlight** — the weekly highlight now marks the current week only (today's row) rather than any week with 3+ tasks due
+
+### Fixed
+- **Timesheet — delete entry** — delete button was silently failing because the date value was passed as arithmetic (`2026-07-10` evaluated to `2009`); now correctly quoted
+- **Timesheet — draft lost on tab switch** — switching away from the Timesheet tab now saves the draft automatically so in-progress entries are not lost
+- **Timesheet — hours input clears zero on focus** — the `0` placeholder clears when you click into a hours field so you can type without backspacing; restores `0` on blur if left empty
+- **Timesheet — activity Tab key selection** — pressing Tab while the activity dropdown is open now selects the first suggestion and advances focus
+- **Dark mode — reminder banner** — reminder banners now use the card background in manual dark mode and respect system dark mode preference; previously rendered with a light background in dark environments
+- **Timesheet — Hours by Activity** — `renderSummary` now includes extra activity lines when computing per-project totals
+
+---
+
 ## [0.9.26] — 2026-07-10
 
 ### Changed
