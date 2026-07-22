@@ -5,6 +5,24 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.27.1] — 2026-07-22
+
+### Changed
+- **Timesheet — Log History badges** — extra activity lines are now shown as individual tags in the history table (e.g. `ProjectA 2.0h · Design` + `ProjectA 1.0h · Meeting`) rather than concatenated into a single project badge
+- **Settings — First day of week** — manual Mon/Sun toggle removed; the calendar now auto-detects the first day of the week from your OS/system locale using the `Intl.Locale` API (falls back to Monday on unsupported environments)
+- **Hours by Activity chart** — untagged hours now appear under `(unassigned)` instead of `(no activity)`
+
+### Fixed
+- **Timesheet — project re-order resets mode to %** — moving a project up/down in the Log Time card called `applyDraftOrLog` without first saving the current draft, causing the mode to fall back to the `%` default; the draft is now saved before the grid re-renders
+- **Weekly planner — Sunday first-day-of-week shifts columns** — `getMonday` was returning Sunday when the first-day setting was Sunday, causing all weekday column headers to be off by one day (Monday shown as Tuesday etc.); the weekly planner always displays Mon–Fri and is no longer affected by the locale first-day setting
+- **Timesheet — extra activity draft race condition** — `addExtraLine` called `saveDraft` on each programmatic insertion during log restore, saving incomplete intermediate states; a `_loadingExtras` flag now suppresses mid-loop saves and a single `saveDraft` fires after all extras are fully restored
+- **Timesheet — Log History activity toggle removes extras** — toggling activity OFF now shows one combined-total badge per project (primary + all extra hours summed); toggling ON shows individual badges per activity line; previously toggling OFF displayed only primary hours, hiding extras entirely
+- **Timesheet — extras saved with wrong hours in % mode** — extra activity lines logged in `%` mode were saving the raw percentage value as `hrs` (e.g. 30% stored as 30h); extras now store both `pct` and the correctly converted hours value
+- **To Do — monthly calendar ignores system first day of week** — locale detection now extracts the region code from `navigator.language` (e.g. `us` from `en-US`) and matches against a curated list of Sunday-first regions, replacing the less reliable full language-string regex; falls back to Monday for unrecognised regions
+- **Timesheet — activity dropdown covers + button** — the add-extra-activity button (`+`) was hidden behind the activity suggestion dropdown (z-index 9999); button z-index raised to 10000 so it stays visible and clickable while a dropdown is open
+
+---
+
 ## [0.9.27] — 2026-07-21
 
 ### Added
