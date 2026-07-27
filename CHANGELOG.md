@@ -5,6 +5,95 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.28.9] — 2026-07-27
+
+### Fixed
+- **Timesheet — Log Time card restored to V0.9.28.2 layout** — reverted to the working `alloc-act-col` structure from V0.9.28.2 as the base, then re-applied the V0.9.28.3+ button improvements (`task-act-btn`, `loadLogForDate`) on top; this resolved the persistent vertical stacking regression introduced in V0.9.28.8
+- **Timesheet — Log Time hours input showing "NaN"** — a `+\n+` pattern in the `renderAllocGrid` JS string concatenation caused JavaScript to parse the second `+` as a unary operator, converting the `alloc-input-wrap` HTML string to `NaN` instead of concatenating it; fixed by removing the newline between the two operators
+- **Timesheet — projects rendering horizontally instead of vertically** — the `alloc-row` div was missing its closing `</div>` tag, causing each project row to nest inside the previous one; closing tag added
+- **Timesheet — extra activity lines offset left vs primary row** — `addExtraLine` was inserting the activity input without the `alloc-act-col` wrapper, misaligning it from the primary row; wrapper added; a `padding-right: 24px` rule on the primary alloc-line (matching the `rm-extra-btn` width + gap of extra lines) ensures all rows align flush on both sides
+
+---
+
+## [0.9.28.8] — 2026-07-27
+
+### Fixed
+- **Timesheet — Log Time card layout reverted to V0.9.27 structure** — the `alloc-act-col` wrapper div introduced during V0.9.28.4 CSS recovery was the root cause of the persistent vertical stacking; it was removed entirely; `alloc-act-wrap` is now a direct flex child of `alloc-line` (matching the original V0.9.27 structure that worked correctly); `.alloc-lines` reverted from `flex-shrink:0` to `flex:1;min-width:0;` so the lines section correctly fills available row space; `.add-extra-btn` reverted to a simple `+ Activity` text link (no longer absolute-positioned) and is now positioned as a sibling after the `alloc-line` inside `alloc-lines`; `addExtraLine` updated to `insertBefore(btn)` (inserts new extra line before the `+ Activity` button) and restores activity-first order in the extra line HTML; all V0.9.28.x edit/delete button features (Log History `task-act-btn` style, `loadLogForDate`, Projects link buttons) are unchanged
+
+---
+
+## [0.9.28.7] — 2026-07-27
+
+### Fixed
+- **Timesheet — Log Time card alloc CSS consolidated** — the alloc CSS was fragmented across two separate locations in the normal zone (original block at ~pos 16 KB and a recovery-injected block at ~pos 43 KB) plus duplicate copies in the dark-mode media block; all rules are now unified in a single block, ensuring correct cascade and specificity; added missing `.alloc-extra-input` light-mode rule (extra activity lines were unstyled in light mode); removed `justify-content:flex-end` from `.alloc-line` (items now left-aligned within the row); `.alloc-act-col` simplified to `flex-direction:row`
+
+---
+
+## [0.9.28.6] — 2026-07-27
+
+### Fixed
+- **Timesheet — Log Time card alloc-line horizontal layout** — activity input and hours input were stacking vertically in some configurations; root cause was (a) missing explicit `flex-direction:row;flex-wrap:nowrap` on `.alloc-line`, (b) missing `flex:0 0 auto` on `.alloc-act-col` allowing it to expand unpredictably, and (c) an unclosed `@media(prefers-color-scheme:dark)` block that trapped all CSS from `.alloc-input` through `.no-projects` inside the dark-mode query, leaving those rules absent in light mode; a stray backslash in the same block was also removed
+- **Projects — quick task priority indicator moved to right side** — the coloured priority dot on tasks in the Projects tab sidebar was previously rendered at the left edge of the row before the checkbox; it is now rendered immediately after the task title on the right side, with spacing from the title and before the due date badge
+
+---
+
+## [0.9.28.4] — 2026-07-24
+
+### Fixed
+- **CSS corruption recovery** — a prior patch accidentally deleted ~35 KB of CSS (everything from `.alloc-act-wrap` through `.no-projects`, plus `.task-row`, `.task-act-btn`, `.proj-link-row/url/desc-txt`, `.log-table`, `.history-controls`, `.pie-wrap`, `.col-chart`, `.act-dropdown`, and more); all rules have been restored and a mangled `.proj-link-row:hover` fragment has been corrected
+
+---
+
+## [0.9.28.3] — 2026-07-24
+
+### Fixed
+- **Timesheet — Log History Edit loads blank form** — the Edit button was calling `openTimeLogForDay` which prioritises any existing draft for that date over the saved log; if a draft was present (e.g. after clearing an entry) the form would load empty; a new `loadLogForDate` function always loads the saved log directly, bypassing the draft
+- **Timesheet — Log History Edit requires date change first** — when the Log Time card already shows the target date, clicking Edit had no visible effect because `applyDraftOrLog` detected no date change; `loadLogForDate` forces the log to reload regardless of current date state
+- **Projects — link Edit/Delete buttons pull left when no description** — the buttons were only right-aligned because the `flex:1` description span was conditionally rendered; the span is now always rendered (empty when no description), keeping buttons pinned to the right edge at all times
+
+### Changed
+- **Timesheet — Log History & Projects tab action buttons** — Edit and Delete buttons now use the same `task-act-btn` styling as the To Do tab (small bordered pill, muted by default, orange hover for Edit, red hover for Delete), replacing the previous custom pill button styles
+
+---
+
+## [0.9.28.2] — 2026-07-24
+
+### Added
+- **Timesheet — Log History edit button** — each history row now has an "Edit" button that loads that day's hours and activities back into the Log Time card (same behaviour as clicking Edit in the weekly calendar); the Delete button remains
+
+### Changed
+- **Projects — link action buttons** — Edit and Delete buttons on link rows are now styled as small pill buttons (orange outline for Edit, red outline for Delete) matching the app button style, replacing the previous symbol-only buttons
+- **Version update reminder** — the in-app reminder message no longer includes the specific version number; it now reads "New features! Open Settings > Changelog to see what's new." so the message stays relevant without needing per-release updates
+
+---
+
+## [0.9.28.1] — 2026-07-24
+
+### Changed
+- **Projects — Links & Resources** — links are now added and edited via a modal (Label, URL, Description); the card shows a clean list of clickable hyperlinks with optional description text; the old inline description input and drag-to-resize column are removed
+- **Projects — Add task** — reverted from modal button back to inline text input with an Add button; tasks can be typed and added without leaving the project detail view; Enter key submits
+- **Version update reminder** — the in-app "new version" reminder now correctly fires on V0.9.28 (was still referencing V0.9.27)
+
+### Reverted
+- **To Do — subtask input auto-close on blur** — removed the click-out-to-close behaviour introduced in V0.9.28; the blur handler interrupted multi-subtask entry; subtask input still closes on Escape or Enter
+
+---
+
+## [0.9.28] — 2026-07-24
+
+### Added
+- **Projects — Add project from Projects tab** — a `+` button now appears beside the "Active Projects" heading in the left sidebar; clicking it opens the same Add/Edit Project modal as the Timesheet tab, so projects can be created without switching tabs
+
+### Changed
+- **Replicon export — clean number format** — hours values in the Replicon export no longer show trailing zeros (e.g. `2` instead of `2.00`, `5.5` instead of `5.50`); zero-hour cells are exported as blank
+
+### Fixed
+- **Timesheet — weekly calendar missing extra activity hours** — days with multiple activity lines per project were only counting primary hours in the calendar "⏱ Xh" badge; total now sums primary + all extra lines per project across all allocations
+- **To Do — subtask input closes on click-out** — clicking anywhere outside the new-subtask input field now dismisses it cleanly (previously required pressing Escape or Enter)
+- **Projects — archived projects not selectable** — clicking an archived project in the sidebar had no effect; the `onclick` handler was broken due to a string-quoting error in the template; archived projects are now clickable and load their detail view correctly
+
+---
+
 ## [0.9.27.1] — 2026-07-22
 
 ### Changed
