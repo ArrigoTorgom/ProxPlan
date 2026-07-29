@@ -170,7 +170,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .proj-move-btn{background:none;border:none;cursor:pointer;padding:0 2px;font-size:9px;color:var(--muted);line-height:1.2;opacity:.5;}
 .proj-move-btn:hover{opacity:1;color:var(--primary);}
 .alloc-label{flex:1 1 auto;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;min-width:40px;}
-.alloc-act-wrap{position:relative;flex-shrink:0;z-index:1;}.alloc-act-wrap:focus-within{z-index:50;}.alloc-lines{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:0;}.alloc-act-col{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;}.alloc-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}.alloc-line:not(.alloc-extra-line){padding-right:24px;}.add-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1.5px solid var(--primary);background:var(--bg);color:var(--primary);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:0;z-index:10000;flex-shrink:0;}.add-extra-btn:hover{opacity:1;}.alloc-row:hover .add-extra-btn{opacity:1;}.rm-extra-btn{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0 1px 0;}.rm-extra-btn:hover{border-color:var(--high);color:var(--high);}
+.alloc-act-wrap{position:relative;flex-shrink:0;z-index:1;}.alloc-act-wrap:focus-within{z-index:50;}.alloc-lines{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:0;}.alloc-act-col{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;}.alloc-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}.alloc-line{padding-right:24px;}.add-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1.5px solid var(--primary);background:var(--bg);color:var(--primary);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:0;z-index:60;flex-shrink:0;}.add-extra-btn:hover{opacity:1;}.alloc-row:hover .add-extra-btn{opacity:1;}.rm-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0 1px 0;z-index:60;opacity:0;transition:opacity .15s;}.rm-extra-btn:hover{opacity:1;border-color:var(--high);color:var(--high);}.alloc-extra-line:hover .rm-extra-btn{opacity:1;}
 .alloc-activity-input{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;width:160px;}
 .alloc-activity-input:focus{border-color:var(--primary);}
 .alloc-input-wrap{display:flex;align-items:center;gap:4px;}
@@ -458,19 +458,8 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-link-url{font-size:12px;color:var(--primary);flex-shrink:0;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;}
 .proj-link-desc-txt{font-size:12px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:8px;}
 .proj-link-url:hover{text-decoration:underline;}
-.proj-link-del{background:none;border:1px solid var(--high);border-radius:6px;cursor:pointer;padding:2px 9px;font-size:11px;color:var(--high);transition:background .12s,color .12s;flex-shrink:0;line-height:1.7;}.proj-link-del:hover{background:var(--high);color:#fff;}'
-Removed.
-JS RC: 0 OK
-
-loadLogForDate: True
-task-act-btn in history: True
-task-act-btn del in history: True
-task-act-btn in links: True
-desc span always: True
-V0.9.28.9: True
-Saved.
-"}]}]}, "uuid": "40c66331-400e-4ddd-be23-4a8200dfff83", "timestamp": "2026-07-24T11:51:23.801Z", "toolUseResult": [{"type": "text", "text": "Found proj-link CSS block:
-'.proj-link-edit{background:none;border:1px solid var(--primary);border-radius:6px;cursor:pointer;padding:2px 9px;font-size:11px;color:var(--primary);transition:background .12s,color .12s;flex-shrink:0;line-height:1.7;}.proj-link-edit:hover{background:var(--primary);color:#fff;}
+.proj-link-del{background:none;border:1px solid var(--high);border-radius:6px;cursor:pointer;padding:2px 9px;font-size:11px;color:var(--high);transition:background .12s,color .12s;flex-shrink:0;line-height:1.7;}.proj-link-del:hover{background:var(--high);color:#fff;}
+.proj-link-edit{background:none;border:1px solid var(--primary);border-radius:6px;cursor:pointer;padding:2px 9px;font-size:11px;color:var(--primary);transition:background .12s,color .12s;flex-shrink:0;line-height:1.7;}.proj-link-edit:hover{background:var(--primary);color:#fff;}
 
 .total-row-tr{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:10px;border-top:1px solid #f0f0f5;}.subtotal-label{font-size:13px;color:var(--muted);margin-right:2px;}
 .total-num{font-weight:600;font-size:14px;}
@@ -1045,7 +1034,7 @@ Saved.
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.28.9</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.28.10</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
@@ -1360,7 +1349,7 @@ function saveProjects(p){var d=getTrackerData();d.projects=p;saveTrackerData(d);
 function saveLogs(l){var d=getTrackerData();d.logs=l;saveTrackerData(d);}
 function getLogsForDate(ds){return getLogs().find(function(l){return l.date===ds;})||null;}
 
-function addProject(){var inp=document.getElementById('newProjectInput');var name=inp.value.trim();if(!name)return;var p=getActiveProjects();if(p.some(function(x){return x.name===name;})){alert('A project named "'+name+'" already exists.');inp.value='';return;}var allP=getProjects();allP.push({name:name,code:'',activityType:''});saveProjects(allP);inp.value='';renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
+function addProject(){var inp=document.getElementById('newProjectInput');var name=inp.value.trim();if(!name)return;var p=getActiveProjects();if(p.some(function(x){return x.name===name;})){alert('A project named "'+name+'" already exists.');inp.value='';return;}var allP=getProjects();allP.push({name:name,code:'',activityType:''});saveProjects(allP);inp.value='';var date=document.getElementById('entryDate').value;saveDraft();renderProjects();renderAllocGrid();if(date)applyDraftOrLog(date);renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
 function removeProject(name){if(!confirm('Remove "'+name+'" from active projects?'))return;saveProjects(getProjects().filter(function(p){return p.name!==name;}));renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
 function archiveProject(name){
   var p=getProjects();
@@ -1382,7 +1371,7 @@ function restoreProject(name){
 function openProjectEdit(name){var p=getProjects();var proj=p.find(function(x){return x.name===name;});if(!proj)return;document.getElementById('peOrigName').value=proj.name;document.getElementById('peName').value=proj.name;document.getElementById('peCode').value=proj.code||'';document.getElementById('peActivity').value=proj.activityType||'';var t=document.getElementById('projModalTitle');if(t)t.textContent='Edit Project';document.getElementById('projectEditModal').style.display='flex';}
 function openAddProjectModal(){document.getElementById('peOrigName').value='';document.getElementById('peName').value='';document.getElementById('peCode').value='';document.getElementById('peActivity').value='';var t=document.getElementById('projModalTitle');if(t)t.textContent='Add Project';document.getElementById('projectEditModal').style.display='flex';}
 function closeProjectEdit(){document.getElementById('projectEditModal').style.display='none';}
-function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();if(!newName)return;var p=getProjects();if(!origName){if(p.find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity});saveProjects(p);closeProjectEdit();_selectedProject=newName;renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
+function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();if(!newName)return;var p=getProjects();if(!origName){if(p.find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity});saveProjects(p);closeProjectEdit();_selectedProject=newName;renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
 function renderProjects(){var p=getActiveProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){return'<div class="project-tag" style="border-color:'+COLORS[i%COLORS.length]+'40;background:'+COLORS[i%COLORS.length]+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')"><span style="color:'+COLORS[i%COLORS.length]+';font-weight:700;font-size:11px">●</span>'+escH(proj.name)+'<button onclick="event.stopPropagation();removeProject(\''+escA(proj.name)+'\');" title="Remove" style="margin-left:4px">×</button></div>';}).join('');}
 function setMode(m){
   var prev=trackerMode;
@@ -1402,26 +1391,35 @@ function setMode(m){
   var tu=document.getElementById('totalUnit');if(tu)tu.textContent=unit;
   updateTotal();
 }
+var _openActDropdown=null;
+function positionActDropdown(){
+  if(!_openActDropdown)return;
+  var rect=_openActDropdown.inp.getBoundingClientRect();
+  _openActDropdown.dd.style.top=(rect.bottom+2)+'px';
+  _openActDropdown.dd.style.left=rect.left+'px';
+}
+window.addEventListener('scroll',positionActDropdown,true);
+window.addEventListener('resize',positionActDropdown);
 function showActDropdown(inp){
   var val=inp.value.toLowerCase().trim();
   var dd=inp.nextElementSibling;
   var filtered=val?ACTIVITIES.filter(function(a){return a.toLowerCase().indexOf(val)>=0;}):ACTIVITIES.slice();
-  if(!filtered.length){dd.classList.remove('open');return;}
+  if(!filtered.length){dd.classList.remove('open');_openActDropdown=null;return;}
   dd.innerHTML=filtered.map(function(a){return'<div class="act-opt" onmousedown="selectActivity(event,this)">'+escH(a)+'</div>';}).join('');
-  var rect=inp.getBoundingClientRect();
-  dd.style.top=(rect.bottom+2)+'px';
-  dd.style.left=rect.left+'px';
-  dd.style.minWidth=Math.max(rect.width,180)+'px';
+  dd.style.minWidth=Math.max(inp.offsetWidth,180)+'px';
   dd.classList.add('open');
+  _openActDropdown={dd:dd,inp:inp};
+  positionActDropdown();
 }
 function selectActivity(ev,el){
   ev.preventDefault();
   var inp=el.parentNode.previousElementSibling;
   inp.value=el.textContent;
   el.parentNode.classList.remove('open');
+  _openActDropdown=null;
   saveDraft();
 }
-function closeActDropdown(inp){var dd=inp.nextElementSibling;if(dd)dd.classList.remove('open');}
+function closeActDropdown(inp){var dd=inp.nextElementSibling;if(dd)dd.classList.remove('open');if(_openActDropdown&&_openActDropdown.inp===inp)_openActDropdown=null;}
 function loadActivitiesCSV(input){
   var file=input.files[0];if(!file)return;
   var reader=new FileReader();
@@ -1493,9 +1491,8 @@ function addExtraLine(btn,proj){
   var step=trackerMode==='pct'?5:0.5;
   var div=document.createElement('div');
   div.className='alloc-line alloc-extra-line';
-  div.innerHTML='<div class="alloc-act-col">'+_makeActivityInput(proj)+'</div>'
-    +'<div class="alloc-input-wrap"><input type="number" class="alloc-extra-input" data-project="'+proj+'" min="0" max="'+max+'" step="'+step+'" value="0" oninput="updateTotal()" onfocus="if(parseFloat(this.value)===0)this.value=\'\'" onblur="if(this.value===\'\')this.value=\'0\'"><span class="alloc-unit">'+unit+'</span></div>'
-    +'<button class="rm-extra-btn" onclick="rmExtraLine(this)" title="Remove">-</button>';
+  div.innerHTML='<div class="alloc-act-col">'+_makeActivityInput(proj)+'<button class="rm-extra-btn" onclick="rmExtraLine(this)" title="Remove">-</button></div>'
+    +'<div class="alloc-input-wrap"><input type="number" class="alloc-extra-input" data-project="'+proj+'" min="0" max="'+max+'" step="'+step+'" value="0" oninput="updateTotal()" onfocus="if(parseFloat(this.value)===0)this.value=\'\'" onblur="if(this.value===\'\')this.value=\'0\'"><span class="alloc-unit">'+unit+'</span></div>';
   lines.appendChild(div);
   if(_simpleLog){var aw=div.querySelector('.alloc-act-wrap');if(aw)aw.style.display='none';}
   div.querySelector('.alloc-extra-input').focus();
@@ -2315,6 +2312,7 @@ function saveQuickTask(){
   closeQuickTaskModal();
   renderCalendarShell();loadCalendarEvents();renderPlannerTasks();
   if(currentTab==='tasks')renderTasksPanel();
+  if(currentTab==='projects')renderProjectsTab();
 }
 
 // ── Data export / import ──

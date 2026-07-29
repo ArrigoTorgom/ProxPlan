@@ -5,6 +5,21 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.28.10] — 2026-07-29
+
+### Fixed
+- **Corrupted CSS block from a prior patch session** — a stray fragment of terminal/transcript output (dated 2026-07-24) had been pasted into the stylesheet between the `.proj-link-del` and `.proj-link-edit` rules instead of clean CSS; removed
+- **Timesheet — remove-activity button (`-`) sat on the far right of extra lines** — moved into the same absolutely-positioned slot as the add-activity button (`+`), at the seam between the activity and hours/% inputs, and resized 18px→20px to match; `.alloc-line{padding-right:24px}` now applies to all lines (not just the primary) so extra lines stay pixel-aligned with the primary row now that both use the same spacing mechanism
+- **Timesheet — adding a new project wiped extra activity lines on other rows** — `addProject()` rebuilt the alloc grid via `renderAllocGrid()` without saving/restoring the current draft, unlike `moveProjOrder()` which already did this correctly; now saves the draft first and restores it (`applyDraftOrLog`) after rebuilding
+- **Projects — renaming a project orphaned its existing tasks** — `saveProjectEdit()` already migrated timesheet log allocations from the old project name to the new one, but never updated `plannerTasks`; tasks silently dropped out of the Tasks tab and Projects detail view after a rename since nothing matched the old name anymore. Tasks now migrate the same way logs do
+- **Projects — editing a task's priority/due date/etc. required switching tabs to see the change** — `saveQuickTask()` (shared by the Add Task modal and the Projects tab's Edit button) refreshed the Tasks tab after saving but had no equivalent branch for the Projects tab; added `renderProjectsTab()` when `currentTab==='projects'`
+- **Timesheet — `+`/`-` activity buttons rendered on top of the sticky header and other page chrome while scrolling** — both buttons had `z-index:10000` with no ancestor establishing a stacking context, so they compared directly against every positioned element on the page instead of just their own row; lowered to a small, locally-scoped value
+- **Timesheet — activity input/dropdown visually covered the `+`/`-` buttons while focused** — `.alloc-act-wrap:focus-within` raises to `z-index:50`, higher than the buttons; raised the buttons above that so they always stay on top regardless of focus state
+- **Timesheet — activity dropdown detached from its input while scrolling, then (after the first fix) clipped against the Log Time card with an unwanted scrollbar** — `.act-dropdown` was originally `position:fixed` with coordinates computed once and never updated on scroll; switching it to `position:absolute` fixed the detachment but made it a real layout descendant of `.alloc-grid`, whose `overflow-x:auto` implicitly forces `overflow-y:auto` too (a CSS spec cross-axis coupling rule) — reverted to `position:fixed`, which naturally escapes ancestor overflow-clipping, and added active repositioning on `scroll`/`resize` while open to keep it correctly anchored
+- **Timesheet — remove-activity button was always visible instead of fading in on hover like the add button** — now fades in the same way, but scoped to hovering its own line (`.alloc-extra-line:hover`) rather than the whole project row
+
+---
+
 ## [0.9.28.9] — 2026-07-27
 
 ### Fixed
