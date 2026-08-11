@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.29] — 2026-08-11
+
+### Added
+- **Projects — photos & screenshots** — each project now has a Photos card; upload via the "+ Add" button, images are auto-resized (max 1600px) and compressed to JPEG before being stored in IndexedDB (a much larger quota than the `localStorage` used elsewhere in the app). Click a thumbnail to view it full-size in an in-app lightbox (closable via the × button, clicking the backdrop, or Escape) — no more opening a new browser tab. Photos are local to this browser/device only and are **not** included in the Export/Restore JSON backup (a note on the card says so)
+- **Meeting reminders for in-app events** — the Add/Edit Event modal now has a "Remind me on this day" checkbox; checking it creates a linked entry in the existing reminder system (same banner, same Reminder Manager, tagged `(meeting)`), and stays in sync automatically if the event is later edited or deleted. Scoped to events created in ProXPlan only — Outlook-sourced events aren't covered yet
+
+### Fixed
+- **Timesheet — reordering projects sometimes needed two clicks** — `moveProjOrder()` swapped adjacent positions in the full project list (including archived projects), so if an archived project sat between two active ones, the first click silently swapped with the invisible archived neighbour instead of the visible one; it now finds the adjacent *active* project directly, so a single click always produces a visible reorder
+- **Planner — weekly productivity tip was cycling on Thursday instead of Monday** — the rotation was bucketed by days-since-Jan-1 of the current year, so the flip day tracked whatever weekday Jan 1 fell on (a Thursday in 2026); now anchored to the app's Monday-of-week calculation, so it always changes exactly on Monday regardless of the year
+
+---
+
 ## [0.9.28.10] — 2026-07-29
 
 ### Fixed

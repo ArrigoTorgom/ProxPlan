@@ -699,6 +699,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
     </div>
     <div class="ev-field-label">Notes (optional)</div>
     <input id="evNotes" class="ev-input" type="text" placeholder="Location, dial-in, context…">
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);margin-top:2px;cursor:pointer"><input type="checkbox" id="evRemind" style="margin:0;cursor:pointer"> Remind me on this day</label>
     <div class="ev-modal-actions">
       <button class="btn secondary-btn" onclick="closeEventModal()">Cancel</button>
       <button class="btn primary-btn" onclick="saveManualEvent()">Save</button>
@@ -720,6 +721,13 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
       <button class="btn secondary-btn" onclick="closeProjectEdit()">Cancel</button>
       <button class="btn primary-btn" onclick="saveProjectEdit()">Save</button>
     </div>
+  </div>
+</div>
+
+<div id="photoLightbox" class="ev-modal-overlay" onclick="if(event.target===this)closePhotoLightbox()">
+  <div style="position:relative;max-width:92vw;max-height:90vh">
+    <button onclick="closePhotoLightbox()" title="Close" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;border:none;background:#fff;color:#233b46;font-size:16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;padding:0;z-index:1">&#215;</button>
+    <img id="photoLightboxImg" src="" style="max-width:92vw;max-height:90vh;display:block;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.35)">
   </div>
 </div>
 
@@ -1034,7 +1042,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.28.10</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.29</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
@@ -1333,11 +1341,14 @@ function getProjects(){return (getTrackerData().projects||[]).map(function(p){re
 function getActiveProjects(){return getProjects().filter(function(p){return!p.archived;});}
 function moveProjOrder(name,dir){
   var projects=getProjects();
-  var idx=projects.findIndex(function(p){return p.name===name;});
-  if(idx<0)return;
-  var sw=idx+dir;
-  if(sw<0||sw>=projects.length)return;
-  var tmp=projects[idx];projects[idx]=projects[sw];projects[sw]=tmp;
+  var activeIdx=[];
+  projects.forEach(function(p,i){if(!p.archived)activeIdx.push(i);});
+  var pos=activeIdx.findIndex(function(i){return projects[i].name===name;});
+  if(pos<0)return;
+  var swPos=pos+dir;
+  if(swPos<0||swPos>=activeIdx.length)return;
+  var i1=activeIdx[pos],i2=activeIdx[swPos];
+  var tmp=projects[i1];projects[i1]=projects[i2];projects[i2]=tmp;
   saveProjects(projects);
   var date=document.getElementById('entryDate').value;
   saveDraft();
@@ -1773,6 +1784,12 @@ function renderProjectDetail(name){
       +'<div class="proj-card-title">Summary</div>'
       +'<textarea class="proj-desc-area" id="projDesc_'+escH(name)+'" placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\');autoResizeProjDesc(this)" spellcheck="false">'+escH(proj.description||'')+'</textarea>'
     +'</div>'
+        +'<div class="proj-card">'
+      +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Photos</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="document.getElementById(\'projPhotoInput_'+escH(name)+'\').click()">+ Add</button></div>'
+      +'<input type="file" accept="image/*" multiple id="projPhotoInput_'+escH(name)+'" style="display:none" onchange="addProjectImages(\''+escA(name)+'\',this.files);this.value=\'\'">'
+      +'<div id="projImages_'+escH(name)+'" style="display:flex;flex-wrap:wrap;gap:8px">Loading…</div>'
+      +'<div style="font-size:10px;color:var(--muted);margin-top:6px">Stored locally in this browser — not included in Export/Restore backups.</div>'
+    +'</div>'
     +'<div class="proj-card">'
       +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Links & Resources</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="openAddLinkModal(\''+escA(name)+'\')">+ Add</button></div>'
       +linksHtml
@@ -1784,6 +1801,7 @@ function renderProjectDetail(name){
       +(openTasks.length>0?'<div style="margin-top:8px"><a href="#" style="font-size:12px;color:var(--primary)" onclick="event.preventDefault();switchTab(\'tasks\')">View all in To Do →</a></div>':'')
     +'</div>';
   setTimeout(function(){var ta=document.getElementById('projDesc_'+name);if(ta)autoResizeProjDesc(ta);},0);
+  renderProjectImages(name);
   document.documentElement.style.setProperty('--link-label-w',_linkLabelW+'px');
 }
 ;
@@ -1890,8 +1908,106 @@ function updateLinkDesc(inp){
   saveProjects(projects);
 }
 
+// -- Project Photos (IndexedDB -- local to this browser, not included in JSON backup) --
+var _imgDB=null;
+function openImagesDB(){
+  if(_imgDB)return Promise.resolve(_imgDB);
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB){reject(new Error('IndexedDB unavailable'));return;}
+    var req=indexedDB.open('proxplanImages',1);
+    req.onupgradeneeded=function(e){
+      var db=e.target.result;
+      if(!db.objectStoreNames.contains('images')){
+        var store=db.createObjectStore('images',{keyPath:'id',autoIncrement:true});
+        store.createIndex('project','project',{unique:false});
+      }
+    };
+    req.onsuccess=function(e){_imgDB=e.target.result;resolve(_imgDB);};
+    req.onerror=function(){reject(req.error);};
+  });
+}
+function _resizeImageFile(file,maxDim,quality){
+  return new Promise(function(resolve,reject){
+    var img=new Image();
+    var url=URL.createObjectURL(file);
+    img.onload=function(){
+      URL.revokeObjectURL(url);
+      var w=img.width,h=img.height;
+      var scale=Math.min(1,maxDim/Math.max(w,h));
+      var cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale));
+      var canvas=document.createElement('canvas');
+      canvas.width=cw;canvas.height=ch;
+      canvas.getContext('2d').drawImage(img,0,0,cw,ch);
+      canvas.toBlob(function(blob){blob?resolve(blob):reject(new Error('toBlob failed'));},'image/jpeg',quality);
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);reject(new Error('Image load failed'));};
+    img.src=url;
+  });
+}
+function addProjectImages(projectName,fileList){
+  var files=Array.from(fileList||[]).filter(function(f){return f.type.indexOf('image/')===0;});
+  if(!files.length)return;
+  openImagesDB().then(function(db){
+    var promises=files.map(function(f){
+      return _resizeImageFile(f,1600,0.82).then(function(blob){
+        return new Promise(function(res,rej){
+          var tx=db.transaction('images','readwrite');
+          tx.objectStore('images').add({project:projectName,name:f.name,type:'image/jpeg',blob:blob,added:Date.now()});
+          tx.oncomplete=function(){res();};
+          tx.onerror=function(){rej(tx.error);};
+        });
+      });
+    });
+    Promise.all(promises).then(function(){renderProjectImages(projectName);}).catch(function(e){alert('Could not save image(s): '+e.message);});
+  }).catch(function(e){alert('Photo storage is unavailable in this browser: '+e.message);});
+}
+function getProjectImages(projectName){
+  return openImagesDB().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction('images','readonly');
+      var idx=tx.objectStore('images').index('project');
+      var req=idx.getAll(projectName);
+      req.onsuccess=function(){resolve(req.result||[]);};
+      req.onerror=function(){reject(req.error);};
+    });
+  });
+}
+function deleteProjectImage(id,projectName){
+  openImagesDB().then(function(db){
+    var tx=db.transaction('images','readwrite');
+    tx.objectStore('images').delete(id);
+    tx.oncomplete=function(){renderProjectImages(projectName);};
+  });
+}
+var _projImgUrls=[];
+function renderProjectImages(projectName){
+  var el=document.getElementById('projImages_'+projectName);
+  if(!el)return;
+  getProjectImages(projectName).then(function(records){
+    _projImgUrls.forEach(function(u){URL.revokeObjectURL(u);});
+    _projImgUrls=[];
+    if(!records.length){el.innerHTML='<div class="proj-empty">No photos yet.</div>';return;}
+    el.innerHTML=records.map(function(r){
+      var url=URL.createObjectURL(r.blob);
+      _projImgUrls.push(url);
+      return '<div style="position:relative;width:88px;height:88px;border-radius:8px;overflow:hidden;border:1px solid var(--border)">'
+        +'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openPhotoLightbox(\''+url+'\')">'
+        +'<button onclick="deleteProjectImage('+r.id+',\''+escA(projectName)+'\')" title="Delete" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:11px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0">\u00d7</button>'
+        +'</div>';
+    }).join('');
+  }).catch(function(){el.innerHTML='<div class="proj-empty">Photo storage unavailable in this browser.</div>';});
+}
+function openPhotoLightbox(url){
+  document.getElementById('photoLightboxImg').src=url;
+  document.getElementById('photoLightbox').classList.add('open');
+}
+function closePhotoLightbox(){
+  document.getElementById('photoLightbox').classList.remove('open');
+  document.getElementById('photoLightboxImg').src='';
+}
+
 // Version-update one-time reminder
-(function(){var V='V0.9.28';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.9.29';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -2427,8 +2543,9 @@ function renderReminderMgr(){
   if(!arr.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);font-style:italic">No reminders set</div>';return;}
   el.innerHTML=arr.map(function(r){
     var sys=r.id==='log-hours';
+    var tag=sys?' <span style="font-size:10px;color:var(--muted)">(system)</span>':(r.isEventReminder?' <span style="font-size:10px;color:var(--muted)">(meeting)</span>':'');
     return'<div class="rem-mgr-item">'
-      +'<span class="rem-mgr-title">'+escH(r.title)+(sys?' <span style="font-size:10px;color:var(--muted)">(system)</span>':'')+' </span>'
+      +'<span class="rem-mgr-title">'+escH(r.title)+tag+' </span>'
       +'<span class="rem-mgr-meta">'+remRecurDesc(r)+'</span>'
       +'<button class="btn secondary-btn sm" style="margin-left:4px" onclick="editReminder(\''+r.id+'\')" >Edit</button>'
       +'<button class="btn secondary-btn sm" style="margin-left:4px" onclick="deleteReminder(\''+r.id+'\')" >Remove</button>'
@@ -2581,6 +2698,7 @@ function openAddEvent(date){
   document.getElementById('evStart').value='';
   document.getElementById('evEnd').value='';
   document.getElementById('evNotes').value='';
+  document.getElementById('evRemind').checked=false;
   document.getElementById('eventModal').classList.add('open');
   setTimeout(function(){document.getElementById('evTitle').focus();},50);
 }
@@ -2597,25 +2715,46 @@ function openEditEvent(id){
   document.getElementById('evStart').value=ev.startTime||'';
   document.getElementById('evEnd').value=ev.endTime||'';
   document.getElementById('evNotes').value=ev.notes||'';
+  document.getElementById('evRemind').checked=!!ev.remind;
   document.getElementById('eventModal').classList.add('open');
   setTimeout(function(){document.getElementById('evTitle').focus();},50);
+}
+function syncEventReminder(ev){
+  if(!ev)return;
+  var remId='evrem_'+ev.id;
+  var reminders=getReminders().filter(function(r){return r.id!==remId;});
+  if(ev.remind){
+    reminders.push({id:remId,title:'Meeting: '+ev.title+(ev.startTime?' at '+ev.startTime:''),recur:'none',date:ev.date,dismissedDates:[],snoozedUntil:null,isEventReminder:true});
+  }
+  saveReminders(reminders);
+}
+function removeEventReminder(eventId){
+  saveReminders(getReminders().filter(function(r){return r.id!==('evrem_'+eventId);}));
 }
 function saveManualEvent(){
   var title=document.getElementById('evTitle').value.trim();
   if(!title){document.getElementById('evTitle').focus();return;}
   var date=document.getElementById('evDate').value||currentEventDate;
+  var remind=document.getElementById('evRemind').checked;
+  var startTime=document.getElementById('evStart').value;
+  var endTime=document.getElementById('evEnd').value;
+  var notes=document.getElementById('evNotes').value.trim();
   var evs=getManualEvents();
+  var savedEv;
   if(editingEventId){
-    evs=evs.map(function(e){return e.id===editingEventId?Object.assign({},e,{title:title,date:date,startTime:document.getElementById('evStart').value,endTime:document.getElementById('evEnd').value,notes:document.getElementById('evNotes').value.trim()}):e;});
+    evs=evs.map(function(e){if(e.id!==editingEventId)return e;savedEv=Object.assign({},e,{title:title,date:date,startTime:startTime,endTime:endTime,notes:notes,remind:remind});return savedEv;});
   } else {
-    evs.push({id:Date.now().toString(),date:date,title:title,startTime:document.getElementById('evStart').value,endTime:document.getElementById('evEnd').value,notes:document.getElementById('evNotes').value.trim()});
+    savedEv={id:Date.now().toString(),date:date,title:title,startTime:startTime,endTime:endTime,notes:notes,remind:remind};
+    evs.push(savedEv);
   }
   saveManualEvents(evs);
-  closeEventModal();renderCalendarShell();loadCalendarEvents();
+  syncEventReminder(savedEv);
+  closeEventModal();renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
 }
 function deleteManualEvent(id){
   saveManualEvents(getManualEvents().filter(function(e){return e.id!==id;}));
-  renderCalendarShell();loadCalendarEvents();
+  removeEventReminder(id);
+  renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
 }
 
 
@@ -2644,10 +2783,10 @@ var ETF_RULES=[
   "Single-handle every task — start, stay focused, and finish before moving on."
 ];
 function getEtfRuleIndex(){
-  var d=new Date();var jan=new Date(d.getFullYear(),0,1);
-  var week=Math.floor((d-jan)/(7*24*3600*1000));
+  var mon=getMonday(new Date());var epoch=new Date(2020,0,6);
+  var week=Math.floor((mon-epoch)/(7*24*3600*1000));
   var stored=localStorage.getItem('etfRuleOffset');
-  return (week+(stored?parseInt(stored):0))%ETF_RULES.length;
+  return ((week+(stored?parseInt(stored):0))%ETF_RULES.length+ETF_RULES.length)%ETF_RULES.length;
 }
 function cycleEtfRule(){
   var cur=getEtfRuleIndex();
@@ -2698,7 +2837,7 @@ document.getElementById('eventModal').addEventListener('click',function(e){if(e.
 document.getElementById('qtTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});
 ['qtDue','qtNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});});
 document.getElementById('quickTaskModal').addEventListener('click',function(e){if(e.target===this)closeQuickTaskModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();}});
 ['msalClientId','msalTenantId'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('keydown',function(e){if(e.key==='Enter')saveAndConnect();});});
 initAppearance();
 initDevGate();
