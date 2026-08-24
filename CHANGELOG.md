@@ -5,6 +5,24 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.30] — 2026-08-24
+
+### Added
+- **Project Groups** — create, rename, and delete groups via the new "Manage Groups" modal (Projects tab sidebar), or create one inline from any filter dropdown's "+ New Group…" option. Assign a project to a group from the existing Edit Project modal; new projects default to whichever group is currently active. A synced filter dropdown appears in Timesheet, Tasks, and Projects — picking a group in any one updates all three. Filtering is comprehensive: Timesheet's project list, allocation grid, hours summary, and log history (down to individual allocations within a day, not just whole rows); Tasks tab's task groups and open/done/overdue counts (General/unassigned tasks always stay visible, since they don't belong to any project); Projects tab's sidebar (active and archived). Reordering projects respects the active filter too, so it won't skip over an out-of-group project
+- **Projects tab task list now matches the To Do tab exactly** — same task-count/overdue badge, Active/All/Done filter, subtask display and add, hover-revealed Edit/Sub/Note/Delete actions, and quick-add row. Built by extracting a single shared `renderProjectTaskGroupHtml()` used by both tabs, instead of maintaining two parallel implementations
+- **Header redesign** — the logo is now a CSS mask (droplet shape, coloured via the active palette variable) instead of a flat coloured image, so it automatically follows whichever colour palette is selected in Settings; paired with a "Pro *x* Plan" wordmark where the "x" renders in italic serif, accent-coloured, matching a design spec provided for the refresh
+
+### Changed
+- Projects tab's task group header no longer repeats the project name — redundant when the page's own title already shows it. The To Do tab still shows it, since it lists multiple project groups together on one screen
+- Quick-add task inputs, in both the Projects tab and the To Do tab, now keep focus after adding a task, so multiple tasks can be added in a row without re-clicking into the field each time
+
+### Fixed
+- **Task, subtask, reminder, and manual-event IDs could collide** — all four were generated from `Date.now()` alone with no other entropy, so creating two of the same kind within the same millisecond (easy to trigger with fast task entry, not just automated testing) silently merged their identities — toggling or deleting one affected both. All four now include a random suffix, matching the fix already applied earlier to project-group IDs
+- **Projects tab sidebar's per-project task count didn't update live** when completing or deleting a task from within that project's own detail view — it only caught up on the next full sidebar render
+- **Group-filter dropdowns could fire their change handler unexpectedly on some page loads**, which could pop open an unwanted "new group" prompt — hardened `renderGroupFilters()` to detach the change handler while rebuilding the dropdown's options, then reattach it, so no spurious event can fire regardless of the underlying cause
+
+---
+
 ## [0.9.29] — 2026-08-11
 
 ### Added
