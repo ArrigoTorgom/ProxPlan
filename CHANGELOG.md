@@ -5,6 +5,17 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.31] — 2026-08-25
+
+### Added
+- **Compact header on narrow screens** (≤920px wide) — tab bar drops its text labels in favour of icon-only buttons (each keeps a tooltip via `title`), the week indicator shortens to "Week ##" (date range hidden), and the Planner calendar's weekday headers shorten to Mon/Tue/Wed/Thu/Fri. Together these stop the Today button and week-nav arrows from being pushed off-screen at narrow widths
+
+### Fixed
+- **Weekday headers in the Planner calendar could render blank** — a leftover base CSS rule (`.dn-short{display:none}`) was declared *after* the responsive media query in the stylesheet, so it always won the cascade and suppressed the abbreviated weekday text regardless of screen width; reordered so the responsive rule takes effect correctly at narrow widths
+- **Projects tab — adding a task via Enter key or the Add button could silently do nothing** — confirmed resolved by the stale-sidebar and spurious-dropdown-onchange fixes shipped in 0.9.30
+
+---
+
 ## [0.9.30] — 2026-08-24
 
 ### Added
