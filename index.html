@@ -1073,7 +1073,10 @@ var GRAPH_SCOPES=['Calendars.Read'];
 var GRAPH_BASE='https://graph.microsoft.com/v1.0';
 
 function switchTab(tab){
-  if(currentTab==='tracker')saveDraft();
+  var prevTab=currentTab;
+  if(prevTab==='tracker')saveDraft();
+  if(prevTab==='tasks'&&tab!=='tasks'){var tgc=document.getElementById('taskGroupsContainer');if(tgc)tgc.innerHTML='';}
+  if(prevTab==='projects'&&tab!=='projects'){var pd=document.getElementById('projDetail');if(pd)pd.innerHTML='';}
   currentTab=tab;
   document.body.classList.remove('tab-planner','tab-tasks','tab-tracker');
   document.body.classList.add('tab-'+tab);

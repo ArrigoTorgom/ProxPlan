@@ -12,7 +12,7 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ### Fixed
 - **Weekday headers in the Planner calendar could render blank** — a leftover base CSS rule (`.dn-short{display:none}`) was declared *after* the responsive media query in the stylesheet, so it always won the cascade and suppressed the abbreviated weekday text regardless of screen width; reordered so the responsive rule takes effect correctly at narrow widths
-- **Projects tab — adding a task via Enter key or the Add button could silently do nothing** — confirmed resolved by the stale-sidebar and spurious-dropdown-onchange fixes shipped in 0.9.30
+- **Projects tab — adding a task to a project's detail view via Enter key or the Add button could silently do nothing** — the To Do tab and the Projects tab's project-detail view both render the same shared task-group component, including its quick-add input, using an ID derived only from the project name; since both tabs' panels stayed in the DOM after being visited (just hidden), the two quick-add inputs shared one ID, and `getElementById` always resolved to whichever copy rendered first — usually the hidden, empty one in the To Do tab — so anything typed into the visible field on the Projects tab was read from the wrong, empty input. The same collision affected the "Add subtask" and "Add note" inputs for any task visible in both tabs at once. Fixed by clearing the Tasks/Projects panel's rendered content when navigating away from it, so only one copy of these IDs ever exists in the DOM at a time
 
 ---
 
