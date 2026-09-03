@@ -5,6 +5,60 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.9.37] — 2026-09-03
+
+### Changed
+- **Week badge text weight now matches the tab bar** — was font-weight 600, is now 500, same as "This Week"/"Timesheet"/etc., for visual consistency across the header
+
+---
+
+## [0.9.36] — 2026-09-03
+
+### Fixed
+- **Week picker could open off-screen on the right in compact mode** — it was centered under the badge with no awareness of viewport edges, so on narrow screens it could extend past the right edge (or, after a first fix attempt, the left edge). Now measures its own size against the viewport when opening and clamps its position to stay fully on-screen with an 8px margin, at any width
+
+### Changed
+- **Week badge text and calendar icon are now white**, matching the rest of the app's colour-on-orange styling, instead of the dark navy used in the initial version
+
+---
+
+## [0.9.35] — 2026-09-03
+
+### Changed
+- **Week picker restyled to match the approved design** — the calendar badge is now a solid orange pill (icon + "Week 36 · date range", collapsing to just the week number in compact mode) and the prev/next arrows are borderless icon buttons, replacing the earlier translucent/bordered look
+- **Week picker now shows a real calendar grid** instead of the browser's native week-number spinner — click any week row to jump to it, with Today and month prev/next controls. Always shows Sunday as the first column, independent of locale
+
+### Fixed
+- **Native `<input type="week">` icons silently failed** — an earlier attempt used the Tabler icon webfont for the arrows and calendar glyph; the font never actually loaded in testing, leaving invisible buttons. Replaced with the same inline-SVG icon approach already used for the tab bar, which has no external dependency
+- **Week-picker's active/selected row could highlight the wrong week** — the grid computed each row's Monday from its leftmost (Sunday) cell, but a Sunday belongs to the *previous* business week, not the one visually sharing its row; now anchored on the row's Monday cell instead
+
+---
+
+## [0.9.34] — 2026-09-03
+
+### Changed
+- **Week navigation redesigned** — the prev/next arrows and week label now sit inside a single calendar badge; clicking it opens a small picker with a "Today" shortcut and a native week selector, so you can jump straight to any week instead of clicking through arrows one at a time. The standalone "Today" button is gone, replaced by that picker's shortcut. Closes on Escape or clicking outside
+
+---
+
+## [0.9.33] — 2026-09-02
+
+### Added
+- **Calendar import (.ics)** — Settings → Import Calendar lets you upload a `.ics` file (exported from Outlook, Google Calendar, or Apple Calendar) and adds each event as a Planner meeting. Handles all-day events, UTC timestamps (converted to local time), and folded/escaped text per the iCalendar spec. Re-importing the same file updates matching events (matched by their calendar UID) instead of creating duplicates — safe to re-run whenever the source calendar changes. Runs entirely client-side; no account connection or sign-in required, unlike the retired Outlook integration
+
+---
+
+## [0.9.32] — 2026-09-02
+
+### Added
+- **Per-project colour picker** — the Edit/Add Project modal now has a "Colour" swatch picker (Settings → Projects, or the Manage Projects sidebar), letting you assign one of the app's 8 palette colours to a specific project instead of relying on its automatic position-in-list colour. An "Auto" (striped) swatch clears the override and reverts to the automatic assignment. Applies consistently everywhere a project gets a colour: the Projects tab sidebar dot, the project detail header, the Timesheet's Active Projects tags, and the Timesheet's Hours-by-Project chart
+
+### Removed
+- **Appearance colour palette picker** (Settings → Appearance) — removed; the Theme (Light/System/Dark) toggle remains
+- **Outlook Calendar integration** (Settings, developer-gated) — removed for now, including the Azure/MSAL sign-in flow and Graph calendar sync. May return in a different form — see the "Import calendar" discussion for what's being considered instead
+
+---
+
 ## [0.9.31] — 2026-08-25
 
 ### Added
