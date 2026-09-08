@@ -5,6 +5,56 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.11.4] — 2026-09-08
+
+### Fixed
+- **Task row items didn't sit on the same horizontal line** — the Edit/Sub/Note/Delete action buttons were slightly taller than the checkbox, priority badge and title, so despite all sharing the same top position they visually hung a couple pixels lower. Buttons now match the others' height so the whole row reads as evenly aligned
+
+---
+
+## [0.11.3] — 2026-09-08
+
+### Added
+- **Collapsible Projects sidebar** — the Active Projects list can now be toggled closed, at any window width, not just on narrow screens. On desktop, collapsing it hands the full width to the project detail pane, with a "☰ Projects" button to bring it back; the choice persists across reloads. On narrow screens the sidebar now starts closed by default and opens as a slide-in drawer with a tap-outside-to-close backdrop, closing itself automatically once you pick a project (or press Escape) so you land straight on the detail view instead of having to scroll past the list first
+
+---
+
+## [0.11.2] — 2026-09-08
+
+### Changed
+- **Task row action-button overlay refined** — dropped the card-style backdrop behind the Edit/Sub/Note/Delete buttons in compact mode, and vertically centered the group against the row instead of pinning it to the top
+
+---
+
+## [0.11.1] — 2026-09-08
+
+### Fixed
+- **Task rows wrapped titles one letter per line on narrow screens** — the Edit/Sub/Note/Delete action buttons always reserved their full width in the row's layout even while hidden (only shown on hover), squeezing the title column down to almost nothing on narrow screens. In compact mode (≤920px) the actions now float as an overlay in the corner of the row instead of taking up space, so the title gets the full row width. Unchanged at normal desktop widths
+
+---
+
+## [0.11.0] — 2026-09-08
+
+### Added
+- **Two-way Project Photos sync** (Settings → Sync → Photo backup folder, Chrome/Edge only) — connect a folder (point it at the same OneDrive-synced location as the data sync, or a different one) and Project Photos are backed up and restored automatically: adding or deleting a photo pushes the change immediately, no separate upload step, and photos added or removed on another device show up here the same way. Each photo becomes its own file in the folder, alongside a small manifest that tracks what exists and what's been removed, so unrelated text edits never cause every photo to re-upload. Checked on load and when you switch back to the tab, same as the existing data sync
+- A small, permanent internal record is kept of anything deleted through this sync, so a device that's been offline for a while doesn't accidentally bring back a photo that was deliberately removed elsewhere
+
+### Changed
+- The Photos card's note and the main Sync section's description are updated to reflect that photos can now be covered by sync — the JSON Export/Restore backup still excludes them (unchanged), but folder-sync, once connected, does not
+
+---
+
+## [0.10.0] — 2026-09-08
+
+### Added
+- **Cross-device sync via a local file** (Settings → Sync, Chrome/Edge only) — click "Connect sync file" and choose a location inside a folder that OneDrive (or a similar service) syncs; ProxPlan then keeps that file automatically up to date with your data, and OneDrive carries it to your other devices. On each load (and when you switch back to the tab), the app checks the file for anything newer than what it already has and pulls it in; edits here get written back to the file a couple of seconds after you stop typing. A "Sync now" button forces an immediate check, and "Disconnect" forgets the file without touching it on disk. Project photos aren't included (same limitation the manual Export already had) — this is called out in both the new Sync section and the Photos card
+- Two rolling before-overwrite snapshots are kept internally (IndexedDB) as a manual recovery path in the rare case a sync pull picks the wrong side of a conflict (e.g. two devices with clocks out of sync)
+
+### Fixed
+- **Manual "Export data backup" was missing several real settings** — `plannerProjectGroups`, `plannerActiveGroup`, `plannerDarkMode`, `plannerChartType`, `plannerChartView`, `plannerTimeDraft`, `plannerSimpleLog`, `plannerShowActivity`, `etfRuleOffset`, and `plannerSeenVersion` were all live, in-use keys that the export's hand-maintained key list had never been updated to include, while it still referenced `plannerMsalCfg`, a key nothing writes to anymore since the Outlook integration was removed. Export (and the new sync feature, which share the same underlying code) now scan all of your actual stored data instead of relying on a fixed list, so this can't drift out of date again
+
+---
+
 ## [0.9.37] — 2026-09-03
 
 ### Changed

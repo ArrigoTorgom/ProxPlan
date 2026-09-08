@@ -221,7 +221,7 @@ body.app-dark .act-opt:hover{background:rgba(247,146,30,.15);}
 .proj-archived-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;border-top:1px solid var(--border);margin-top:4px;}
 .proj-archived-header:hover{background:var(--bg);}
 .archived-item{opacity:.7;}
-@media(max-width:700px){.projects-wrap{grid-template-columns:1fr;}}
+@media(max-width:700px){.projects-wrap{grid-template-columns:1fr;}.projects-wrap:not(.proj-sidebar-collapsed) #projSidebar{position:fixed;top:0;left:0;bottom:0;width:260px;z-index:850;border-radius:0;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,.25);}.projects-wrap:not(.proj-sidebar-collapsed) ~ #projSidebarBackdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:800;}}
 .sort-bar{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
 .sort-btn{background:none;border:1px solid var(--border);border-radius:14px;padding:3px 12px;font-size:11px;cursor:pointer;color:var(--muted);transition:all .12s;}
 .sort-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:600;}
@@ -235,7 +235,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
 .task-quick-note textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;resize:none;min-height:44px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);}
 .task-quick-note textarea:focus{border-color:var(--primary);}
 .task-quick-note-actions{display:flex;gap:5px;justify-content:flex-end;}
-.task-row.note-open .task-actions{visibility:visible;}
+.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:5;}}
 .group-quick-add{display:flex;gap:6px;padding:6px 16px 10px;align-items:center;border-top:1px solid #f0f0f5;margin-top:4px;}
 .project-group.empty-group .group-quick-add{border-top:none;padding-top:0;padding-bottom:8px;}
 .group-quick-add input{flex:1;border:1px solid transparent;border-radius:6px;padding:5px 8px;font-size:12px;background:var(--bg);outline:none;color:var(--text);}
@@ -439,7 +439,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-nav-item.active{background:var(--primary-light);border-left-color:var(--primary);font-weight:600;}
 .proj-nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .proj-nav-meta{font-size:10px;color:var(--muted);margin-left:auto;flex-shrink:0;}
-.proj-main{display:flex;flex-direction:column;gap:12px;min-width:0;overflow:hidden;}
+.proj-main{display:flex;flex-direction:column;gap:12px;}.proj-main-col{min-width:0;overflow:hidden;}.proj-main-toolbar{display:none;margin-bottom:10px;}.proj-main-toolbar.visible{display:block;}.proj-main-toolbar button{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--text);cursor:pointer;}.projects-wrap.proj-sidebar-collapsed{grid-template-columns:1fr;}.projects-wrap.proj-sidebar-collapsed .proj-sidebar{display:none;}.proj-sidebar-backdrop{display:none;}
 .proj-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;overflow:hidden;min-width:0;}
 .proj-card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
 .proj-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;}
@@ -577,7 +577,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .task-due.due-today{color:var(--today-text);font-weight:600;}
 .task-notes-txt{font-size:11px;color:var(--muted);font-style:italic;}
 .task-actions{visibility:hidden;display:flex;gap:4px;flex-shrink:0;margin-top:1px;align-items:center;}
-.task-act-btn{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--muted);font-weight:500;transition:background .1s,color .1s;white-space:nowrap;line-height:1.6;}
+.task-act-btn{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--muted);font-weight:500;transition:background .1s,color .1s;white-space:nowrap;line-height:1.2;}
 .task-act-btn:hover{background:var(--primary-light);color:var(--primary);}
 .task-act-btn.del{color:var(--muted);}
 .task-act-btn.del:hover{background:var(--high-bg);color:var(--high);border-color:#f5b8b7;}
@@ -587,7 +587,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .task-quick-note textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;resize:none;min-height:44px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);}
 .task-quick-note textarea:focus{border-color:var(--primary);}
 .task-quick-note-actions{display:flex;gap:5px;justify-content:flex-end;}
-.task-row.note-open .task-actions{visibility:visible;}
+.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:5;}}
 .group-quick-add{display:flex;gap:6px;padding:6px 16px 10px;align-items:center;border-top:1px solid #f0f0f5;margin-top:4px;}
 .project-group.empty-group .group-quick-add{border-top:none;padding-top:0;padding-bottom:8px;}
 .group-quick-add input{flex:1;border:1px solid transparent;border-radius:6px;padding:5px 8px;font-size:12px;background:var(--bg);outline:none;color:var(--text);}
@@ -966,16 +966,20 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 </div><!-- end main-panels -->
 <div class="tab-panel" id="panelProjects">
 <div class="projects-wrap" id="projectsWrap">
-  <div class="proj-sidebar">
-    <div class="proj-sidebar-header">Active Projects<button onclick="openAddProjectModal()" title="Add project" style="background:none;border:none;color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;padding:0 0 0 6px;line-height:1;margin-left:auto">+</button></div>
+  <div class="proj-sidebar" id="projSidebar">
+    <div class="proj-sidebar-header">Active Projects<button onclick="toggleProjSidebar()" title="Collapse sidebar" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0 4px;line-height:1;margin-left:auto">◀</button><button onclick="openAddProjectModal()" title="Add project" style="background:none;border:none;color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;padding:0 0 0 6px;line-height:1">+</button></div>
     <div style="padding:8px 10px;border-bottom:1px solid var(--border)"><input id="projSearchInput" type="text" placeholder="Search projects…" oninput="filterProjNav(this.value)" style="width:100%;box-sizing:border-box;font-size:12px;padding:5px 9px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);outline:none" spellcheck="false"></div>
     <div style="padding:8px 10px;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:center"><select id="groupFilterProjects" class="sm-select" style="flex:1" onchange="handleGroupFilterChange(this)"></select><button onclick="openGroupsModal()" title="Manage groups" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 7px;font-size:11px;color:var(--muted);cursor:pointer">Manage</button></div>
     <div id="projNavList"></div>
   </div>
-  <div class="proj-main" id="projDetail">
-    <div class="proj-none">Select a project from the list to view details.</div>
+  <div class="proj-main-col" id="projMainCol">
+    <div class="proj-main-toolbar" id="projMainToolbar"><button onclick="toggleProjSidebar()">☰ Projects</button></div>
+    <div class="proj-main" id="projDetail">
+      <div class="proj-none">Select a project from the list to view details.</div>
+    </div>
   </div>
 </div>
+<div class="proj-sidebar-backdrop" id="projSidebarBackdrop" onclick="toggleProjSidebar()"></div>
 
 </div>
 
@@ -1033,16 +1037,25 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
     </div>
   </div>
 
+  <!-- Sync -->
+  <div style="border-top:1px solid var(--border);margin:14px 0 0;padding-top:12px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px">Sync</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Keep your data backed up to a file you choose - point it at a folder OneDrive (or similar) syncs to follow you across devices. Chrome or Edge only.</div>
+    <div id="syncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project Photos in sync too, added and removed automatically as you use the Photos card.</div>
+    <div id="photoSyncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
+  </div>
+
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.9.37</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.4</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.9.37%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.4%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1092,6 +1105,8 @@ function initSettings(){
   document.querySelectorAll('.dow-btn').forEach(function(b){b.classList.toggle('active',parseInt(b.dataset.dow)===_firstDow);});
   var bfn=document.getElementById('backupFilename');
   if(bfn)bfn.value=localStorage.getItem('plannerBackupName')||'';
+  renderSyncStatus();
+  renderPhotoSyncStatus();
 }
 
 function getMonday(date){var d=new Date(date);d.setHours(0,0,0,0);var day=d.getDay();d.setDate(d.getDate()-(day===0?6:day-1));return d;}
@@ -1530,6 +1545,24 @@ function positionActDropdown(){
 }
 window.addEventListener('scroll',positionActDropdown,true);
 window.addEventListener('resize',positionActDropdown);
+var _projSidebarOpen=(function(){try{var v=localStorage.getItem('plannerProjSidebarOpen');return v===null?(window.innerWidth>700):(v==='1');}catch(e){return true;}})();
+function applyProjSidebarState(){
+  var wrap=document.getElementById('projectsWrap');var toolbar=document.getElementById('projMainToolbar');
+  if(!wrap)return;
+  if(_projSidebarOpen){wrap.classList.remove('proj-sidebar-collapsed');if(toolbar)toolbar.classList.remove('visible');}
+  else{wrap.classList.add('proj-sidebar-collapsed');if(toolbar)toolbar.classList.add('visible');}
+}
+function toggleProjSidebar(){
+  _projSidebarOpen=!_projSidebarOpen;
+  try{localStorage.setItem('plannerProjSidebarOpen',_projSidebarOpen?'1':'0');}catch(e){}
+  applyProjSidebarState();
+}
+window.addEventListener('resize',function(){
+  if(localStorage.getItem('plannerProjSidebarOpen')===null){
+    _projSidebarOpen=window.innerWidth>700;
+    applyProjSidebarState();
+  }
+});
 function showActDropdown(inp){
   var val=inp.value.toLowerCase().trim();
   var dd=inp.nextElementSibling;
@@ -1859,7 +1892,7 @@ function renderProjectsTab(){
 }
 
 
-function selectProject(name){_selectedProject=name;renderProjectsTab();}
+function selectProject(name){_selectedProject=name;renderProjectsTab();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}
 function renderProjectDetail(name){
   var projects=getProjects();
   var proj=projects.find(function(p){return p.name===name;});
@@ -1902,7 +1935,7 @@ function renderProjectDetail(name){
       +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Photos</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="document.getElementById(\'projPhotoInput_'+escH(name)+'\').click()">+ Add</button></div>'
       +'<input type="file" accept="image/*" multiple id="projPhotoInput_'+escH(name)+'" style="display:none" onchange="addProjectImages(\''+escA(name)+'\',this.files);this.value=\'\'">'
       +'<div id="projImages_'+escH(name)+'" style="display:flex;flex-wrap:wrap;gap:8px">Loading…</div>'
-      +'<div style="font-size:10px;color:var(--muted);margin-top:6px">Stored locally in this browser — not included in Export/Restore backups.</div>'
+      +'<div style="font-size:10px;color:var(--muted);margin-top:6px">Stored locally in this browser — not included in Export/Restore JSON backups. Automatically backed up if you connect a photo backup folder in Settings.</div>'
     +'</div>'
     +'<div class="proj-card">'
       +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Links & Resources</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="openAddLinkModal(\''+escA(name)+'\')">+ Add</button></div>'
@@ -2018,19 +2051,27 @@ function updateLinkDesc(inp){
   saveProjects(projects);
 }
 
-// -- Project Photos (IndexedDB -- local to this browser, not included in JSON backup) --
+// -- Project Photos (IndexedDB -- can also be backed up to a synced folder, see photo sync below) --
+function _newUid(){
+  if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;var v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});
+}
 var _imgDB=null;
 function openImagesDB(){
   if(_imgDB)return Promise.resolve(_imgDB);
   return new Promise(function(resolve,reject){
     if(!window.indexedDB){reject(new Error('IndexedDB unavailable'));return;}
-    var req=indexedDB.open('proxplanImages',1);
+    var req=indexedDB.open('proxplanImages',2);
     req.onupgradeneeded=function(e){
       var db=e.target.result;
+      var store;
       if(!db.objectStoreNames.contains('images')){
-        var store=db.createObjectStore('images',{keyPath:'id',autoIncrement:true});
+        store=db.createObjectStore('images',{keyPath:'id',autoIncrement:true});
         store.createIndex('project','project',{unique:false});
+      } else {
+        store=e.target.transaction.objectStore('images');
       }
+      if(!store.indexNames.contains('uid'))store.createIndex('uid','uid',{unique:false});
     };
     req.onsuccess=function(e){_imgDB=e.target.result;resolve(_imgDB);};
     req.onerror=function(){reject(req.error);};
@@ -2058,17 +2099,20 @@ function addProjectImages(projectName,fileList){
   var files=Array.from(fileList||[]).filter(function(f){return f.type.indexOf('image/')===0;});
   if(!files.length)return;
   openImagesDB().then(function(db){
+    var newRecords=[];
     var promises=files.map(function(f){
       return _resizeImageFile(f,1600,0.82).then(function(blob){
         return new Promise(function(res,rej){
+          var record={project:projectName,name:f.name,type:'image/jpeg',blob:blob,added:Date.now(),uid:_newUid()};
           var tx=db.transaction('images','readwrite');
-          tx.objectStore('images').add({project:projectName,name:f.name,type:'image/jpeg',blob:blob,added:Date.now()});
+          var addReq=tx.objectStore('images').add(record);
+          addReq.onsuccess=function(){record.id=addReq.result;newRecords.push(record);};
           tx.oncomplete=function(){res();};
           tx.onerror=function(){rej(tx.error);};
         });
       });
     });
-    Promise.all(promises).then(function(){renderProjectImages(projectName);}).catch(function(e){alert('Could not save image(s): '+e.message);});
+    Promise.all(promises).then(function(){renderProjectImages(projectName);photoSyncPushRecords(newRecords);}).catch(function(e){alert('Could not save image(s): '+e.message);});
   }).catch(function(e){alert('Photo storage is unavailable in this browser: '+e.message);});
 }
 function getProjectImages(projectName){
@@ -2082,11 +2126,11 @@ function getProjectImages(projectName){
     });
   });
 }
-function deleteProjectImage(id,projectName){
+function deleteProjectImage(id,uid,projectName){
   openImagesDB().then(function(db){
     var tx=db.transaction('images','readwrite');
     tx.objectStore('images').delete(id);
-    tx.oncomplete=function(){renderProjectImages(projectName);};
+    tx.oncomplete=function(){renderProjectImages(projectName);if(uid)photoSyncTombstoneRecord(uid);};
   });
 }
 var _projImgUrls=[];
@@ -2102,7 +2146,7 @@ function renderProjectImages(projectName){
       _projImgUrls.push(url);
       return '<div style="position:relative;width:88px;height:88px;border-radius:8px;overflow:hidden;border:1px solid var(--border)">'
         +'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;cursor:pointer" onclick="openPhotoLightbox(\''+url+'\')">'
-        +'<button onclick="deleteProjectImage('+r.id+',\''+escA(projectName)+'\')" title="Delete" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:11px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0">\u00d7</button>'
+        +'<button onclick="deleteProjectImage('+r.id+',\''+escA(r.uid||'')+'\',\''+escA(projectName)+'\')" title="Delete" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:11px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0">\u00d7</button>'
         +'</div>';
     }).join('');
   }).catch(function(){el.innerHTML='<div class="proj-empty">Photo storage unavailable in this browser.</div>';});
@@ -2116,8 +2160,207 @@ function closePhotoLightbox(){
   document.getElementById('photoLightboxImg').src='';
 }
 
+// -- Project Photos folder sync (File System Access API directory handle, two-way, Chrome/Edge only) --
+function getPhotoDirHandle(){
+  return openSyncDB().then(function(db){
+    return new Promise(function(resolve){
+      var tx=db.transaction('handles','readonly');
+      var req=tx.objectStore('handles').get('photosDir');
+      req.onsuccess=function(){resolve(req.result?req.result.handle:null);};
+      req.onerror=function(){resolve(null);};
+    });
+  }).catch(function(){return null;});
+}
+var _photoSyncNeedsReconnect=false;
+var _photoSyncLastSyncedAt=null;
+async function connectPhotoSync(){
+  if(!window.showDirectoryPicker){alert('Photo sync requires Chrome or Edge.');return;}
+  try{
+    var handle=await window.showDirectoryPicker({mode:'readwrite'});
+    var db=await openSyncDB();
+    await new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').put({id:'photosDir',handle:handle});
+      tx.oncomplete=resolve;tx.onerror=function(){reject(tx.error);};
+    });
+    await reconcilePhotoSync();
+  }catch(e){if(e&&e.name!=='AbortError')alert('Could not connect photo backup folder: '+e.message);}
+  renderPhotoSyncStatus();
+}
+async function disconnectPhotoSync(){
+  try{
+    var db=await openSyncDB();
+    await new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').delete('photosDir');
+      tx.oncomplete=resolve;tx.onerror=function(){reject(tx.error);};
+    });
+  }catch(e){}
+  _photoSyncNeedsReconnect=false;_photoSyncLastSyncedAt=null;
+  renderPhotoSyncStatus();
+}
+async function _getPhotoManifest(dirHandle){
+  try{
+    var fh=await dirHandle.getFileHandle('manifest.json',{create:false});
+    var file=await fh.getFile();
+    var text=await file.text();
+    var m=JSON.parse(text);
+    if(!m||!Array.isArray(m.entries))return{savedAt:0,entries:[]};
+    return m;
+  }catch(e){return{savedAt:0,entries:[]};}
+}
+async function _writePhotoManifest(dirHandle,manifest){
+  var fh=await dirHandle.getFileHandle('manifest.json',{create:true});
+  var writable=await fh.createWritable();
+  await writable.write(JSON.stringify(manifest,null,2));
+  await writable.close();
+}
+function _photoManifestStampGet(){return Number(_origGetItem.call(localStorage,'_photoManifestStamp')||0);}
+function _photoManifestStampSet(v){_origSetItem.call(localStorage,'_photoManifestStamp',String(v));}
+function _photoManifestUpsert(manifest,entry){
+  var idx=manifest.entries.findIndex(function(e){return e.uid===entry.uid;});
+  if(idx>=0)manifest.entries[idx]=entry;else manifest.entries.push(entry);
+}
+var _photoManifestQueue=Promise.resolve();
+function queuePhotoManifestMutation(mutatorFn){
+  return _photoManifestQueue=_photoManifestQueue.catch(function(){}).then(function(){
+    return _doManifestReadModifyWrite(mutatorFn).catch(function(e){console.error(e);});
+  });
+}
+async function _doManifestReadModifyWrite(mutatorFn){
+  var dirHandle=await getPhotoDirHandle();if(!dirHandle)return;
+  var perm=await dirHandle.queryPermission({mode:'readwrite'});
+  if(perm!=='granted'){_photoSyncNeedsReconnect=true;renderPhotoSyncStatus();return;}
+  var manifest=await _getPhotoManifest(dirHandle);
+  mutatorFn(manifest);
+  manifest.savedAt=Date.now();
+  await _writePhotoManifest(dirHandle,manifest);
+  _photoManifestStampSet(manifest.savedAt);
+  _photoSyncNeedsReconnect=false;_photoSyncLastSyncedAt=manifest.savedAt;
+  renderPhotoSyncStatus();
+}
+async function photoSyncPushRecords(records){
+  if(!records||!records.length)return;
+  var dirHandle=await getPhotoDirHandle();if(!dirHandle)return;
+  var perm=await dirHandle.queryPermission({mode:'readwrite'});
+  if(perm!=='granted'){_photoSyncNeedsReconnect=true;renderPhotoSyncStatus();return;}
+  var uploaded=[];
+  for(var i=0;i<records.length;i++){
+    var r=records[i];
+    if(!r.uid){
+      r.uid=_newUid();
+      try{var db=await openImagesDB();var tx=db.transaction('images','readwrite');tx.objectStore('images').put(r);}catch(e){}
+    }
+    try{
+      var fh=await dirHandle.getFileHandle(r.uid+'.jpg',{create:true});
+      var writable=await fh.createWritable();
+      await writable.write(r.blob);
+      await writable.close();
+      uploaded.push(r);
+    }catch(e){}
+  }
+  if(!uploaded.length)return;
+  queuePhotoManifestMutation(function(manifest){
+    uploaded.forEach(function(r){
+      _photoManifestUpsert(manifest,{uid:r.uid,project:r.project,name:r.name,added:r.added,deleted:null});
+    });
+  });
+}
+async function photoSyncTombstoneRecord(uid){
+  var dirHandle=await getPhotoDirHandle();if(!dirHandle)return;
+  queuePhotoManifestMutation(function(manifest){
+    var idx=manifest.entries.findIndex(function(e){return e.uid===uid;});
+    if(idx>=0){manifest.entries[idx].deleted=Date.now();}
+    else{manifest.entries.push({uid:uid,project:'',name:'',added:Date.now(),deleted:Date.now()});}
+  });
+  try{await dirHandle.removeEntry(uid+'.jpg');}catch(e){}
+}
+var _photoSyncRunning=false;
+async function reconcilePhotoSync(){
+  if(_photoSyncRunning)return;
+  _photoSyncRunning=true;
+  try{
+    var dirHandle=await getPhotoDirHandle();if(!dirHandle){_photoSyncRunning=false;return;}
+    var perm=await dirHandle.queryPermission({mode:'readwrite'});
+    if(perm!=='granted'){_photoSyncNeedsReconnect=true;renderPhotoSyncStatus();_photoSyncRunning=false;return;}
+    _photoSyncNeedsReconnect=false;
+    var manifest=await _getPhotoManifest(dirHandle);
+    var localStamp=_photoManifestStampGet();
+    var db=await openImagesDB();
+    var allLocal=await new Promise(function(resolve,reject){
+      var tx=db.transaction('images','readonly');
+      var req=tx.objectStore('images').getAll();
+      req.onsuccess=function(){resolve(req.result||[]);};
+      req.onerror=function(){reject(req.error);};
+    });
+    var localByUid={};
+    allLocal.forEach(function(r){if(r.uid)localByUid[r.uid]=r;});
+    var touchedProjects={};
+    if(manifest.savedAt>localStamp){
+      for(var i=0;i<manifest.entries.length;i++){
+        var entry=manifest.entries[i];
+        var localRec=localByUid[entry.uid];
+        if(entry.deleted){
+          if(localRec){
+            await new Promise(function(resolve){var tx2=db.transaction('images','readwrite');tx2.objectStore('images').delete(localRec.id);tx2.oncomplete=resolve;tx2.onerror=resolve;});
+            touchedProjects[localRec.project]=true;
+          }
+        } else if(!localRec){
+          try{
+            var fh=await dirHandle.getFileHandle(entry.uid+'.jpg',{create:false});
+            var file=await fh.getFile();
+            var record={project:entry.project,name:entry.name,type:'image/jpeg',blob:file,added:entry.added,uid:entry.uid};
+            await new Promise(function(resolve,reject){var tx3=db.transaction('images','readwrite');tx3.objectStore('images').add(record);tx3.oncomplete=resolve;tx3.onerror=function(){reject(tx3.error);};});
+            touchedProjects[entry.project]=true;
+          }catch(e){}
+        }
+      }
+    }
+    var toPush=[];
+    allLocal.forEach(function(r){
+      if(!r.uid){toPush.push(r);}
+      else{
+        var found=manifest.entries.some(function(e){return e.uid===r.uid;});
+        if(!found)toPush.push(r);
+      }
+    });
+    if(toPush.length)photoSyncPushRecords(toPush);
+    if(manifest.savedAt>localStamp)_photoManifestStampSet(manifest.savedAt);
+    if(_selectedProject&&touchedProjects[_selectedProject]){
+      var lb=document.getElementById('photoLightbox');
+      if(lb&&lb.classList.contains('open'))closePhotoLightbox();
+      renderProjectImages(_selectedProject);
+    }
+    _photoSyncLastSyncedAt=Date.now();
+    renderPhotoSyncStatus();
+  }catch(e){}
+  _photoSyncRunning=false;
+}
+function renderPhotoSyncStatus(){
+  var el=document.getElementById('photoSyncStatusRow');if(!el)return;
+  if(!window.showDirectoryPicker){el.innerHTML='<span style="font-size:12px;color:var(--muted)">Not available in this browser.</span>';return;}
+  getPhotoDirHandle().then(function(handle){
+    if(!handle){
+      el.innerHTML='<button class="btn secondary-btn sm" onclick="connectPhotoSync()">Connect photo folder</button>';
+      return;
+    }
+    if(_photoSyncNeedsReconnect){
+      el.innerHTML='<button class="btn secondary-btn sm" style="color:var(--high);border-color:var(--high)" onclick="reconcilePhotoSync()">Permission needed - click to resume sync</button> <button class="btn secondary-btn sm" onclick="disconnectPhotoSync()">Disconnect</button>';
+      return;
+    }
+    var when=_photoSyncLastSyncedAt?new Date(_photoSyncLastSyncedAt).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'--';
+    el.innerHTML='<span style="font-size:12px;color:var(--muted)">Synced - last synced '+when+'</span> <button class="btn secondary-btn sm" onclick="reconcilePhotoSync()">Sync now</button> <button class="btn secondary-btn sm" onclick="disconnectPhotoSync()">Disconnect</button>';
+  });
+}
+if(window.showDirectoryPicker){
+  document.addEventListener('visibilitychange',function(){
+    if(_syncBootDone&&document.visibilityState==='visible')reconcilePhotoSync();
+  });
+  window.addEventListener('focus',function(){if(_syncBootDone)reconcilePhotoSync();});
+}
+
 // Version-update one-time reminder
-(function(){var V='V0.9.37';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.11.4';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -2743,19 +2986,8 @@ function addUserReminder(){
 }
 
 function exportAllData(){
-  var data={version:1,exported:new Date().toISOString()};
-  var fixedKeys=['tenderTracker','plannerTasks','plannerManualEvents','plannerMsalCfg','plannerLinkLabelW','plannerReminders','plannerActivities'];
-  fixedKeys.forEach(function(k){
-    var v=localStorage.getItem(k);
-    if(v!==null){try{data[k]=JSON.parse(v);}catch(e){data[k]=v;}}
-  });
-  for(var i=0;i<localStorage.length;i++){
-    var k=localStorage.key(i);
-    if(k&&k.startsWith('planner-20')&&!data.hasOwnProperty(k)){
-      var v=localStorage.getItem(k);
-      if(v!==null){try{data[k]=JSON.parse(v);}catch(e){data[k]=v;}}
-    }
-  }
+  var data=buildSyncPayload();
+  data.exported=new Date(data.savedAt).toISOString();
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -2776,7 +3008,7 @@ function importAllData(){
         if(!data.version){alert('Invalid backup file.');return;}
         if(!confirm('This will overwrite all current planner data. Continue?'))return;
         Object.keys(data).forEach(function(k){
-          if(k==='version'||k==='exported')return;
+          if(k==='version'||k==='exported'||k==='savedAt')return;
           var v=data[k];
           localStorage.setItem(k,typeof v==='string'?v:JSON.stringify(v));
         });
@@ -2787,6 +3019,180 @@ function importAllData(){
     reader.readAsText(file);
   };
   input.click();
+}
+
+// -- Cross-device sync via a local file (File System Access API, Chrome/Edge only) --
+var SYNC_INTERNAL_KEYS=['_syncStamp','_photoManifestStamp'];
+function buildSyncPayload(){
+  var data={version:1,savedAt:Date.now()};
+  for(var i=0;i<localStorage.length;i++){
+    var k=localStorage.key(i);
+    if(!k||SYNC_INTERNAL_KEYS.indexOf(k)>=0)continue;
+    var v=localStorage.getItem(k);
+    if(v!==null){try{data[k]=JSON.parse(v);}catch(e){data[k]=v;}}
+  }
+  return data;
+}
+var _syncDB=null;
+function openSyncDB(){
+  if(_syncDB)return Promise.resolve(_syncDB);
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB){reject(new Error('IndexedDB unavailable'));return;}
+    var req=indexedDB.open('proxplanSync',1);
+    req.onupgradeneeded=function(e){
+      var db=e.target.result;
+      if(!db.objectStoreNames.contains('handles'))db.createObjectStore('handles',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('snapshots'))db.createObjectStore('snapshots',{keyPath:'id'});
+    };
+    req.onsuccess=function(e){_syncDB=e.target.result;resolve(_syncDB);};
+    req.onerror=function(){reject(req.error);};
+  });
+}
+function getSyncHandle(){
+  return openSyncDB().then(function(db){
+    return new Promise(function(resolve){
+      var tx=db.transaction('handles','readonly');
+      var req=tx.objectStore('handles').get('dataFile');
+      req.onsuccess=function(){resolve(req.result?req.result.handle:null);};
+      req.onerror=function(){resolve(null);};
+    });
+  }).catch(function(){return null;});
+}
+function snapshotBeforeOverwrite(){
+  return openSyncDB().then(function(db){
+    return new Promise(function(resolve){
+      var tx=db.transaction('snapshots','readwrite');
+      var store=tx.objectStore('snapshots');
+      var getReq=store.get('backup-1');
+      getReq.onsuccess=function(){
+        var prevBackup1=getReq.result;
+        if(prevBackup1)store.put({id:'backup-2',data:prevBackup1.data,savedAt:prevBackup1.savedAt});
+        store.put({id:'backup-1',data:buildSyncPayload(),savedAt:Date.now()});
+        resolve();
+      };
+      getReq.onerror=function(){resolve();};
+    });
+  }).catch(function(){});
+}
+var _syncNeedsReconnect=false;
+var _syncLastSyncedAt=null;
+async function connectSyncFile(){
+  if(!window.showSaveFilePicker){alert('Sync via local file requires Chrome or Edge.');return;}
+  try{
+    var handle=await window.showSaveFilePicker({suggestedName:'proxplan-data.json',types:[{description:'ProxPlan data',accept:{'application/json':['.json']}}]});
+    var db=await openSyncDB();
+    await new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').put({id:'dataFile',handle:handle});
+      tx.oncomplete=resolve;tx.onerror=function(){reject(tx.error);};
+    });
+    await writeSyncFile(true);
+  }catch(e){if(e&&e.name!=='AbortError')alert('Could not connect sync file: '+e.message);}
+  renderSyncStatus();
+}
+async function disconnectSyncFile(){
+  try{
+    var db=await openSyncDB();
+    await new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').delete('dataFile');
+      tx.oncomplete=resolve;tx.onerror=function(){reject(tx.error);};
+    });
+  }catch(e){}
+  _syncNeedsReconnect=false;_syncLastSyncedAt=null;
+  renderSyncStatus();
+}
+async function writeSyncFile(force){
+  var handle=await getSyncHandle();if(!handle)return;
+  try{
+    var perm=await handle.queryPermission({mode:'readwrite'});
+    if(perm!=='granted'&&force)perm=await handle.requestPermission({mode:'readwrite'});
+    if(perm!=='granted'){_syncNeedsReconnect=true;renderSyncStatus();return;}
+    var payload=buildSyncPayload();
+    var writable=await handle.createWritable();
+    await writable.write(JSON.stringify(payload,null,2));
+    await writable.close();
+    _origSetItem.call(localStorage,'_syncStamp',String(payload.savedAt));
+    _syncNeedsReconnect=false;_syncLastSyncedAt=payload.savedAt;
+  }catch(e){}
+  renderSyncStatus();
+}
+async function readSyncFile(){
+  var handle=await getSyncHandle();if(!handle)return false;
+  try{
+    var perm=await handle.queryPermission({mode:'read'});
+    if(perm!=='granted'){_syncNeedsReconnect=true;renderSyncStatus();return false;}
+    var file=await handle.getFile();
+    var text=await file.text();
+    var remote;try{remote=JSON.parse(text);}catch(e){return false;}
+    var localStamp=Number(_origGetItem.call(localStorage,'_syncStamp')||0);
+    if(!remote.savedAt||remote.savedAt<=localStamp)return false;
+    await snapshotBeforeOverwrite();
+    _applyingRemoteSync=true;
+    Object.keys(remote).forEach(function(k){
+      if(k==='version'||k==='exported'||k==='savedAt')return;
+      var v=remote[k];
+      localStorage.setItem(k,typeof v==='string'?v:JSON.stringify(v));
+    });
+    _origSetItem.call(localStorage,'_syncStamp',String(remote.savedAt));
+    _applyingRemoteSync=false;
+    _syncLastSyncedAt=remote.savedAt;
+    return true;
+  }catch(e){_applyingRemoteSync=false;return false;}
+}
+function _syncIsSafeToReload(){
+  var ae=document.activeElement;
+  if(ae){
+    if(ae.classList&&(ae.classList.contains('alloc-input')||ae.classList.contains('alloc-activity-input')||ae.classList.contains('alloc-extra-input')))return false;
+    if(ae.id==='entryNotes'||ae.id==='totalHoursInput')return false;
+    if(ae.classList&&ae.classList.contains('editable'))return false;
+  }
+  var em=document.getElementById('eventModal');if(em&&em.classList.contains('open'))return false;
+  var qtm=document.getElementById('quickTaskModal');if(qtm&&qtm.classList.contains('open'))return false;
+  return true;
+}
+async function syncNow(){
+  var applied=await readSyncFile();
+  if(applied&&_syncIsSafeToReload()){location.reload();return;}
+  await writeSyncFile(true);
+}
+async function _syncOnFocusOrVisible(){
+  if(!_syncBootDone)return;
+  var handle=await getSyncHandle();if(!handle)return;
+  var applied=await readSyncFile();
+  if(applied&&_syncIsSafeToReload())location.reload();
+}
+function renderSyncStatus(){
+  var el=document.getElementById('syncStatusRow');if(!el)return;
+  if(!window.showSaveFilePicker){el.innerHTML='<span style="font-size:12px;color:var(--muted)">Not available in this browser.</span>';return;}
+  getSyncHandle().then(function(handle){
+    if(!handle){
+      el.innerHTML='<button class="btn secondary-btn sm" onclick="connectSyncFile()">Connect sync file</button>';
+      return;
+    }
+    if(_syncNeedsReconnect){
+      el.innerHTML='<button class="btn secondary-btn sm" style="color:var(--high);border-color:var(--high)" onclick="writeSyncFile(true)">Permission needed - click to resume sync</button> <button class="btn secondary-btn sm" onclick="disconnectSyncFile()">Disconnect</button>';
+      return;
+    }
+    var when=_syncLastSyncedAt?new Date(_syncLastSyncedAt).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):'--';
+    el.innerHTML='<span style="font-size:12px;color:var(--muted)">Synced - last synced '+when+'</span> <button class="btn secondary-btn sm" onclick="syncNow()">Sync now</button> <button class="btn secondary-btn sm" onclick="disconnectSyncFile()">Disconnect</button>';
+  });
+}
+var _syncBootDone=false,_applyingRemoteSync=false,_syncWriteTimer=null;
+var _origSetItem=Storage.prototype.setItem;
+var _origGetItem=Storage.prototype.getItem;
+if(window.showSaveFilePicker){
+  localStorage.setItem=function(key,value){
+    _origSetItem.call(localStorage,key,value);
+    if(key==='_syncStamp'||_applyingRemoteSync||!_syncBootDone)return;
+    clearTimeout(_syncWriteTimer);
+    _syncWriteTimer=setTimeout(function(){writeSyncFile(false);},2000);
+  };
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible')_syncOnFocusOrVisible();
+    else writeSyncFile(false);
+  });
+  window.addEventListener('focus',_syncOnFocusOrVisible);
 }
 
 
@@ -3020,13 +3426,22 @@ document.getElementById('eventModal').addEventListener('click',function(e){if(e.
 document.getElementById('qtTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});
 ['qtDue','qtNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});});
 document.getElementById('quickTaskModal').addEventListener('click',function(e){if(e.target===this)closeQuickTaskModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();}});
-initAppearance();
-renderPlanner();
-renderEtfRule();
-renderProjects();
-renderGroupFilters();
-initSpellcheckToggle();
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
+(async function(){
+  if(window.showSaveFilePicker){
+    var _bootHandle=await getSyncHandle();
+    if(_bootHandle){await readSyncFile();}
+  }
+  _syncBootDone=true;
+  initAppearance();
+  renderPlanner();
+  renderEtfRule();
+  renderProjects();
+  renderGroupFilters();
+  applyProjSidebarState();
+  initSpellcheckToggle();
+  if(window.showDirectoryPicker)reconcilePhotoSync();
+})();
 
 // ── Dark mode ──
 function applyDarkMode(mode){
