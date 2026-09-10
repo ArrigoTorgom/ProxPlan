@@ -5,6 +5,41 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.11.12] — 2026-09-10
+
+### Changed
+- **Project order in Log Time is now drag-to-reorder** instead of click up/down arrows — grab the handle next to a project and drop it where you want. Works correctly alongside project group filters, and the new order is saved the same way the old arrows did
+
+---
+
+## [0.11.11] — 2026-09-10
+
+### Fixed
+- **Replicon CSV export showed garbled dashes when opened in Excel** (e.g. "1 Jun 2026 â€œ 5 Jun 2026" instead of "1 Jun 2026 – 5 Jun 2026") — the file was valid UTF-8 but had no byte-order mark, so Excel guessed the wrong encoding. Both the "Full period list" and "By Week — Replicon" exports now include a UTF-8 BOM so special characters render correctly
+- **Replicon export rows weren't sorted** — projects/activities within each week now sort alphabetically instead of following insertion order
+
+### Added
+- **Choose which weeks to include in the Replicon export** — selecting "By Week — Replicon" now shows a checklist of every week with logged time (most recent first, all checked by default) with "All"/"None" shortcuts, instead of always exporting every week on record
+
+---
+
+## [0.11.10] — 2026-09-10
+
+### Fixed
+- **Log History column widths weren't bound to the card, so dragging could push Notes off-screen** — the resize handles now cap against the card's actual width, scaling the Date and Allocations columns down together to keep Notes at a usable minimum instead of letting the table overflow
+
+---
+
+## [0.11.9] — 2026-09-10
+
+### Added
+- **Resizable Date and Allocations columns on the Timesheet Log History table** — drag the edge of either column header to adjust its width; the setting persists across reloads
+
+### Changed
+- **Timesheet Log History Edit/Delete buttons are now a hover overlay**, matching the To Do task rows — they no longer take up their own column, so Notes gets the freed-up width
+
+---
+
 ## [0.11.8] — 2026-09-10
 
 ### Added
