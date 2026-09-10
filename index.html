@@ -235,7 +235,7 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
 .task-quick-note textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;resize:none;min-height:44px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);}
 .task-quick-note textarea:focus{border-color:var(--primary);}
 .task-quick-note-actions{display:flex;gap:5px;justify-content:flex-end;}
-.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:5;}}
+.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:8px;right:12px;z-index:5;}}
 .group-quick-add{display:flex;gap:6px;padding:6px 16px 10px;align-items:center;border-top:1px solid #f0f0f5;margin-top:4px;}
 .project-group.empty-group .group-quick-add{border-top:none;padding-top:0;padding-bottom:8px;}
 .group-quick-add input{flex:1;border:1px solid transparent;border-radius:6px;padding:5px 8px;font-size:12px;background:var(--bg);outline:none;color:var(--text);}
@@ -441,7 +441,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-nav-meta{font-size:10px;color:var(--muted);margin-left:auto;flex-shrink:0;}
 .proj-main{display:flex;flex-direction:column;gap:12px;}.proj-main-col{min-width:0;overflow:hidden;}.proj-main-toolbar{display:none;margin-bottom:10px;}.proj-main-toolbar.visible{display:block;}.proj-main-toolbar button{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--text);cursor:pointer;}.projects-wrap.proj-sidebar-collapsed{grid-template-columns:1fr;}.projects-wrap.proj-sidebar-collapsed .proj-sidebar{display:none;}.proj-sidebar-backdrop{display:none;}
 .proj-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;overflow:hidden;min-width:0;}
-.proj-card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.proj-card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}.proj-card-toggle{background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;padding:2px 6px 2px 0;line-height:1;flex-shrink:0;}.proj-card.collapsed .proj-card-body{display:none;}
 .proj-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;}
 .proj-name{font-size:18px;font-weight:700;color:var(--text);}
 .proj-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;min-width:0;overflow:hidden;}
@@ -575,7 +575,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .task-due{font-size:11px;color:var(--muted);}
 .task-due.overdue{color:var(--high);font-weight:600;}
 .task-due.due-today{color:var(--today-text);font-weight:600;}
-.task-notes-txt{font-size:11px;color:var(--muted);font-style:italic;}
+.task-notes-txt{font-size:11px;color:var(--muted);font-style:italic;min-width:0;word-break:break-word;}
 .task-actions{visibility:hidden;display:flex;gap:4px;flex-shrink:0;margin-top:1px;align-items:center;}
 .task-act-btn{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--muted);font-weight:500;transition:background .1s,color .1s;white-space:nowrap;line-height:1.2;}
 .task-act-btn:hover{background:var(--primary-light);color:var(--primary);}
@@ -587,7 +587,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .task-quick-note textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;resize:none;min-height:44px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);}
 .task-quick-note textarea:focus{border-color:var(--primary);}
 .task-quick-note-actions{display:flex;gap:5px;justify-content:flex-end;}
-.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:50%;transform:translateY(-50%);right:12px;z-index:5;}}
+.task-row.note-open .task-actions{visibility:visible;}@media(max-width:920px){.task-row{position:relative;}.task-actions{position:absolute;top:8px;right:12px;z-index:5;}}
 .group-quick-add{display:flex;gap:6px;padding:6px 16px 10px;align-items:center;border-top:1px solid #f0f0f5;margin-top:4px;}
 .project-group.empty-group .group-quick-add{border-top:none;padding-top:0;padding-bottom:8px;}
 .group-quick-add input{flex:1;border:1px solid transparent;border-radius:6px;padding:5px 8px;font-size:12px;background:var(--bg);outline:none;color:var(--text);}
@@ -967,8 +967,8 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 <div class="tab-panel" id="panelProjects">
 <div class="projects-wrap" id="projectsWrap">
   <div class="proj-sidebar" id="projSidebar">
-    <div class="proj-sidebar-header">Active Projects<button onclick="toggleProjSidebar()" title="Collapse sidebar" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0 4px;line-height:1;margin-left:auto">◀</button><button onclick="openAddProjectModal()" title="Add project" style="background:none;border:none;color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;padding:0 0 0 6px;line-height:1">+</button></div>
-    <div style="padding:8px 10px;border-bottom:1px solid var(--border)"><input id="projSearchInput" type="text" placeholder="Search projects…" oninput="filterProjNav(this.value)" style="width:100%;box-sizing:border-box;font-size:12px;padding:5px 9px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);outline:none" spellcheck="false"></div>
+    <div class="proj-sidebar-header">Active Projects<button onclick="toggleProjSidebar()" title="Collapse sidebar" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0 4px;line-height:1;margin-left:auto;display:flex;align-items:center">☰</button><button onclick="openAddProjectModal()" title="Add project" style="background:none;border:none;color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;padding:0 0 0 6px;line-height:1">+</button></div>
+    <div style="padding:8px 10px;border-bottom:1px solid var(--border)"><div style="position:relative"><input id="projSearchInput" type="text" placeholder="Search projects…" oninput="filterProjNav(this.value)" style="width:100%;box-sizing:border-box;font-size:12px;padding:5px 24px 5px 9px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);outline:none" spellcheck="false"><button id="projSearchClear" onclick="clearProjSearch()" title="Clear search" style="display:none;position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;line-height:1;padding:2px 5px">&#215;</button></div></div>
     <div style="padding:8px 10px;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:center"><select id="groupFilterProjects" class="sm-select" style="flex:1" onchange="handleGroupFilterChange(this)"></select><button onclick="openGroupsModal()" title="Manage groups" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 7px;font-size:11px;color:var(--muted);cursor:pointer">Manage</button></div>
     <div id="projNavList"></div>
   </div>
@@ -1049,13 +1049,13 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.4</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.8</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.4%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.8%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1843,8 +1843,8 @@ function deleteEntry(date){if(!confirm('Delete this entry?'))return;var logs=get
 // ── Projects Tab ─────────────────────────────────────────────────────────────
 var _selectedProject=null;
 var _archivedExpanded=false;
-var _projSearch='';
-function filterProjNav(q){_projSearch=q.toLowerCase().trim();renderProjectsTab();setTimeout(function(){var inp=document.getElementById('projSearchInput');if(inp){inp.value=q;inp.focus();}},0);}
+var _projSearch='';var _projCardCollapsed=(function(){try{return JSON.parse(localStorage.getItem('plannerProjCardCollapsed')||'{}');}catch(e){return{};}})();function toggleProjCard(cardId){_projCardCollapsed[cardId]=!_projCardCollapsed[cardId];try{localStorage.setItem('plannerProjCardCollapsed',JSON.stringify(_projCardCollapsed));}catch(e){}renderProjectDetail(_selectedProject);}
+function filterProjNav(q){_projSearch=q.toLowerCase().trim();renderProjectsTab();setTimeout(function(){var inp=document.getElementById('projSearchInput');if(inp){inp.value=q;inp.focus();}var btn=document.getElementById('projSearchClear');if(btn)btn.style.display=q?'block':'none';},0);}function clearProjSearch(){var inp=document.getElementById('projSearchInput');if(inp)inp.value='';filterProjNav('');}
 function renderProjectsTab(){
   var allProjects=getProjects();
   var active=allProjects.filter(function(p){return!p.archived;});
@@ -1927,19 +1927,25 @@ function renderProjectDetail(name){
         +'</div>'
       +'</div>'
     +'</div>'
-    +'<div class="proj-card">'
-      +'<div class="proj-card-title">Summary</div>'
+    +'<div class="proj-card'+(_projCardCollapsed.summary?' collapsed':'')+'">'
+      +'<div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard('+"'summary'"+')" title="'+(_projCardCollapsed.summary?'Expand':'Collapse')+'">'+(_projCardCollapsed.summary?'▸':'▾')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard('+"'summary'"+')">Summary</span></div>'
+      +'<div class="proj-card-body">'
       +'<textarea class="proj-desc-area" id="projDesc_'+escH(name)+'" placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\');autoResizeProjDesc(this)" spellcheck="false">'+escH(proj.description||'')+'</textarea>'
+      +'</div>'
     +'</div>'
-        +'<div class="proj-card">'
-      +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Photos</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="document.getElementById(\'projPhotoInput_'+escH(name)+'\').click()">+ Add</button></div>'
+        +'<div class="proj-card'+(_projCardCollapsed.photos?' collapsed':'')+'">'
+      +'<div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard('+"'photos'"+')" title="'+(_projCardCollapsed.photos?'Expand':'Collapse')+'">'+(_projCardCollapsed.photos?'▸':'▾')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard('+"'photos'"+')">Photos</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="document.getElementById(\'projPhotoInput_'+escH(name)+'\').click()">+ Add</button></div>'
+      +'<div class="proj-card-body">'
       +'<input type="file" accept="image/*" multiple id="projPhotoInput_'+escH(name)+'" style="display:none" onchange="addProjectImages(\''+escA(name)+'\',this.files);this.value=\'\'">'
       +'<div id="projImages_'+escH(name)+'" style="display:flex;flex-wrap:wrap;gap:8px">Loading…</div>'
       +'<div style="font-size:10px;color:var(--muted);margin-top:6px">Stored locally in this browser — not included in Export/Restore JSON backups. Automatically backed up if you connect a photo backup folder in Settings.</div>'
+      +'</div>'
     +'</div>'
-    +'<div class="proj-card">'
-      +'<div class="proj-links-hdr">'+'<span class="proj-card-title" style="margin-bottom:0">Links & Resources</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="openAddLinkModal(\''+escA(name)+'\')">+ Add</button></div>'
+    +'<div class="proj-card'+(_projCardCollapsed.links?' collapsed':'')+'">'
+      +'<div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard('+"'links'"+')" title="'+(_projCardCollapsed.links?'Expand':'Collapse')+'">'+(_projCardCollapsed.links?'▸':'▾')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard('+"'links'"+')">Links & Resources</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="openAddLinkModal(\''+escA(name)+'\')">+ Add</button></div>'
+      +'<div class="proj-card-body">'
       +linksHtml
+      +'</div>'
     +'</div>'
     +renderProjectTaskGroupHtml(name,true)
     +'<div style="text-align:center;margin:6px 0 10px"><a href="#" style="font-size:12px;color:var(--primary)" onclick="event.preventDefault();switchTab(\'tasks\')">View all in To Do →</a></div>';
@@ -2360,7 +2366,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.11.4';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.11.8';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -2601,7 +2607,7 @@ function makeFlatTaskRow(t){
   var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';
   var priLabel=t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1);
   var dueHtml=due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'';
-  var notesHtml=t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">&#128221; '+escH(t.notes.slice(0,50))+(t.notes.length>50?'&#8230;':'')+'</span>':'';
+  var notesHtml=t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">'+escH(t.notes)+'</span>':'';
   var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){
     return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</div>'
       +'<span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span>'
@@ -2651,7 +2657,7 @@ function renderProjectTaskGroupHtml(project,hideName){
       ?'<div class="project-empty">'+(filter==='done'?'No completed tasks':'No open tasks')+'</div>'
       :visible.map(function(t){
         var isDone=t.done;var due=dueDateLabel(t.dueDate);
-        var subs=t.subtasks||[];var subsDone=subs.filter(function(s){return s.done;}).length;var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span><button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')">×</button></div>';}).join('')+'</div>':'';var subAddHtml=t.subtaskAddOpen?'<div class="subtask-add-row"><input id="sta_'+t.id+'" placeholder="Subtask…" type="text"><button class="btn primary-btn sm" onclick="addSubtask(\''+t.id+'\',\'sta_'+t.id+'\')">Add</button><button class="btn secondary-btn sm" onclick="_subtaskAddOpen[\''+t.id+'\']=false;_refreshTaskViews()">×</button></div>':'';var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+subCount+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">📝 '+escH(t.notes.slice(0,50))+(t.notes.length>50?'…':'')+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+subHtml+subAddHtml+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
+        var subs=t.subtasks||[];var subsDone=subs.filter(function(s){return s.done;}).length;var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span><button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')">×</button></div>';}).join('')+'</div>':'';var subAddHtml=t.subtaskAddOpen?'<div class="subtask-add-row"><input id="sta_'+t.id+'" placeholder="Subtask…" type="text"><button class="btn primary-btn sm" onclick="addSubtask(\''+t.id+'\',\'sta_'+t.id+'\')">Add</button><button class="btn secondary-btn sm" onclick="_subtaskAddOpen[\''+t.id+'\']=false;_refreshTaskViews()">×</button></div>':'';var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+subCount+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">'+escH(t.notes)+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+subHtml+subAddHtml+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
       }).join('');
     return'<div class="project-group"><div class="project-group-header"><span class="'+(hideName?'proj-card-title' : 'project-group-name')+'" style="'+(hideName?'margin-bottom:0;flex:1':'')+'">'+(hideName?'Tasks':escH(project))+'</span><span class="'+countCls+'">'+countLabel+'</span><div class="task-filter"><button class="'+(filter==='active'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'active\')">Active</button><button class="'+(filter==='all'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'all\')">All</button><button class="'+(filter==='done'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'done\')">Done</button></div></div><div class="project-group-body">'+taskRows+'</div><div class="group-quick-add"><input type="text" id="'+qaId+'" placeholder="+ Quick add task to '+escH(project)+'…" onkeydown="if(event.key===\'Enter\') quickAddTask(\''+escA(project)+'\',\''+qaId+'\')"><button class="btn sm secondary-btn" onclick="quickAddTask(\''+escA(project)+'\',\''+qaId+'\')">Add</button></div></div>';
 }

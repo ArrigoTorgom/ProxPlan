@@ -5,6 +5,39 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.11.8] — 2026-09-10
+
+### Added
+- **Clear ("×") button on the project search box** — appears once you start typing, clears the search and refocuses the field in one click
+- **Collapsible Summary/Photos/Links & Resources cards** on the project detail page — click the title or the arrow next to it to minimise a card down to just its header. The collapsed/expanded state is shared across all projects and persists across reloads
+
+---
+
+## [0.11.7] — 2026-09-10
+
+### Changed
+- **Removed the memo icon in front of task notes** in the task list — the note text now displays on its own
+
+---
+
+## [0.11.6] — 2026-09-10
+
+### Fixed
+- **Compact-mode task action buttons sat flush against the top of the row, with no breathing room** — the overlay was positioned relative to the row's outer edge instead of its padding, so it lost the vertical padding every other element in the row keeps. It now sits at the same offset as on wide screens
+- **Task notes were always cut to 50 characters**, even when the row had plenty of room to show the whole thing. Notes now display in full and wrap onto additional lines as needed, in both the flat (Due Date/Priority) task list and the per-project task list
+
+---
+
+## [0.11.5] — 2026-09-10
+
+### Changed
+- **Projects sidebar collapse button** now uses the same "☰" icon as the reopen button (was a "◀" arrow), and lines up vertically with the "+" add-project button next to it
+
+### Fixed
+- **Compact-mode task action buttons (Edit/Sub/Note/Delete) covered the subtask delete button** when a task's subtasks were expanded — the overlay was vertically centered against the whole row (including subtasks), so on a task with subtasks it dropped down over the subtask list. It's now top-aligned instead, same as on wide screens, so it only ever sits over the task's own title row
+
+---
+
 ## [0.11.4] — 2026-09-08
 
 ### Fixed
