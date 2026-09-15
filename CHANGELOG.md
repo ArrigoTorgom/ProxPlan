@@ -5,6 +5,42 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.11.19] — 2026-09-18
+
+### Changed
+- **Removed the Link button from the Summary formatting toolbar** — it wasn't behaving reliably, so it's gone rather than left half-working
+- **Edit/Delete on project links are now hover-only**, matching how task row actions already behave, instead of always taking up space next to every link
+
+### Added
+- **Edit button for subtasks** — a small pencil next to each subtask (visible on hover, same treatment as the delete "x") turns the title into an editable field, so a typo no longer means delete-and-redo
+
+---
+
+## [0.11.18] — 2026-09-18
+
+### Added
+- **Rich-text formatting for the project Summary field** — a small toolbar (Bold, Italic, Underline, Highlight, Link, bullet/numbered lists, Clear formatting) sits above Summary, letting you format the description instead of it being plain text only. Existing plain-text summaries are unaffected and continue to display exactly as before
+
+### Fixed
+- **Highlighted summary text was unreadable in dark mode** — the yellow highlight background doesn't change with the theme, but the text color did, leaving light text on a light-yellow background. Highlighted text now always renders in a dark, readable color regardless of theme
+
+---
+
+## [0.11.17] — 2026-09-15
+
+### Fixed
+- **Collapsing a Summary/Photos/Links card on one project collapsed it on every other project too** — the collapsed/expanded state is now tracked per project instead of shared globally, while still persisting across reloads
+
+---
+
+## [0.11.16] — 2026-09-15
+
+### Changed
+- **Renamed the app from "Pro x Plan" to "Planner"** in the header and browser tab title — the droplet logo is unchanged
+- **Favicon and home-screen icon reverted to the droplet mark alone**, dropping the small "x" that was layered onto it
+
+---
+
 ## [0.11.15] — 2026-09-15
 
 ### Changed
