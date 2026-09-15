@@ -185,13 +185,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .total-hrs-row input{width:80px;border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;outline:none;text-align:right;}
 /* ── Alloc Grid (Log Time card) ────────────────────── */
 .alloc-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;overflow-x:auto;}
-.alloc-row{display:flex;flex-direction:row;align-items:flex-start;gap:8px;}
+.alloc-row{display:flex;flex-direction:row;align-items:flex-start;gap:8px;position:relative;}
 .proj-drag-handle{cursor:grab;color:var(--muted);font-size:14px;line-height:1;flex-shrink:0;margin-top:6px;padding:2px 4px;user-select:none;touch-action:none;letter-spacing:-2px;opacity:.5;}
 .proj-drag-handle:hover{opacity:1;color:var(--primary);}
 .proj-drag-handle:active{cursor:grabbing;}
 .alloc-row.dragging{opacity:.4;}
-.alloc-row.drag-over-top{box-shadow:inset 0 2px 0 var(--primary);}
-.alloc-row.drag-over-bottom{box-shadow:inset 0 -2px 0 var(--primary);}
+.alloc-row.drop-top::before,.alloc-row.drop-bottom::before{content:'';position:absolute;left:4px;right:4px;height:2px;background:var(--primary);border-radius:1px;z-index:5;}
+.alloc-row.drop-top::before{top:-1px;}
+.alloc-row.drop-bottom::before{bottom:-1px;}
 .alloc-label{flex:1 1 auto;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;min-width:40px;}
 .alloc-act-wrap{position:relative;flex-shrink:0;z-index:1;}.alloc-act-wrap:focus-within{z-index:50;}.alloc-lines{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:0;}.alloc-act-col{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;}.alloc-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}.alloc-line{padding-right:24px;}.add-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1.5px solid var(--primary);background:var(--bg);color:var(--primary);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:0;z-index:60;flex-shrink:0;}.add-extra-btn:hover{opacity:1;}.alloc-row:hover .add-extra-btn{opacity:1;}.rm-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0 1px 0;z-index:60;opacity:0;transition:opacity .15s;}.rm-extra-btn:hover{opacity:1;border-color:var(--high);color:var(--high);}.alloc-extra-line:hover .rm-extra-btn{opacity:1;}
 .alloc-activity-input{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;width:160px;}
@@ -1052,13 +1053,13 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.12</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.15</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.12%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.15%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1393,7 +1394,7 @@ function startProjDrag(e,name){
   if(!startRow)return;
   startRow.classList.add('dragging');
   var targetName=null,targetBefore=true;
-  function clearIndicators(){rows.forEach(function(r){r.classList.remove('drag-over-top','drag-over-bottom');});}
+  function clearIndicators(){rows.forEach(function(r){r.classList.remove('drop-top','drop-bottom');});}
   function onMove(ev){
     var overRow=rows.find(function(r){
       if(r===startRow)return false;
@@ -1404,7 +1405,7 @@ function startProjDrag(e,name){
     if(overRow){
       var rect=overRow.getBoundingClientRect();
       var before=ev.clientY<rect.top+rect.height/2;
-      overRow.classList.add(before?'drag-over-top':'drag-over-bottom');
+      overRow.classList.add(before?'drop-top':'drop-bottom');
       targetName=overRow.dataset.project;
       targetBefore=before;
     } else {
@@ -1795,51 +1796,13 @@ function applyDraftOrLog(date){
     });
     return;
   }
-  // No draft, no log — clear hours, restore last activities
+  // No draft, no log for this date — clear the form for a fresh entry
   document.querySelectorAll('.alloc-input').forEach(function(i){i.value=0;});
+  document.querySelectorAll('.alloc-activity-input').forEach(function(i){i.value='';});
   document.querySelectorAll('.alloc-extra-line').forEach(function(el){el.remove();});
   document.getElementById('entryNotes').value='';
   document.getElementById('totalHoursInput').value=8;
   updateTotal();
-  _restoreLastActivities();
-}
-function _restoreLastActivities(){
-  var logs=getLogs();
-  if(!logs.length)return;
-  var sorted=logs.slice().sort(function(a,b){return b.date.localeCompare(a.date);});
-  var actMap={};
-  sorted.forEach(function(log){
-    Object.entries(log.allocs||{}).forEach(function(e){
-      var proj=e[0];var alloc=e[1];
-      if(!actMap[proj]){
-        var primaryAct=(alloc.activity||'').trim();
-        var extras=(alloc.extras||[]).map(function(x){return{activity:(x.activity||'').trim()};});
-        actMap[proj]={activity:primaryAct,extras:extras};
-      }
-    });
-  });
-  document.querySelectorAll('.alloc-row[data-project]').forEach(function(row){
-    var proj=row.dataset.project;
-    var data=actMap[proj];
-    if(!data)return;
-    var primaryAct=row.querySelector('.alloc-activity-input');
-    if(primaryAct&&!primaryAct.value&&data.activity)primaryAct.value=data.activity;
-    if(data.extras&&data.extras.length){
-      var addBtn=row.querySelector('.add-extra-btn');
-      if(!addBtn)return;
-      data.extras.forEach(function(ex){
-        if(!ex.activity)return;
-        addExtraLine(addBtn,proj);
-        var lines=row.querySelectorAll('.alloc-extra-line');
-        var lastLine=lines[lines.length-1];
-        if(!lastLine)return;
-        var ea=lastLine.querySelector('.alloc-activity-input');
-        if(ea)ea.value=ex.activity;
-        var ei=lastLine.querySelector('.alloc-extra-input');
-        if(ei)ei.value=0;
-      });
-    }
-  });
 }
 
 function saveEntry(){
@@ -2409,7 +2372,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.11.12';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.11.15';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{

@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.11.15] — 2026-09-15
+
+### Changed
+- **Reverted project reorder back to a line-based drop indicator** — the placeholder-gap slot from the previous release felt jittery in real use. Back to a single accent line, now drawn as its own raised layer instead of an inset shadow, so it stays a clean unbroken line instead of getting cut where it crosses behind the activity/hours fields
+
+---
+
+## [0.11.14] — 2026-09-15
+
+### Changed
+- **Project reorder now opens a placeholder slot instead of drawing a line** — dragging a project shows a dashed orange gap between rows at the drop point (Trello/Notion-style) instead of a line that got visually cut where it passed behind the activity/hours fields
+
+---
+
+## [0.11.13] — 2026-09-15
+
+### Fixed
+- **Log Time silently re-applied yesterday's activities and extra activity lines to a brand-new day** — opening a date with no saved entry and no in-progress draft used to look up your most recent activity choice per project (including any extra split lines) and pre-fill them, effectively turning your last entry into a running template. A fresh day now starts genuinely blank; an in-progress draft for today, or reopening a day you already logged, still shows exactly what you entered, unchanged
+
+---
+
 ## [0.11.12] — 2026-09-10
 
 ### Changed
