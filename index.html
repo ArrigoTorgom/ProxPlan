@@ -133,6 +133,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .td-proj{font-size:9px;color:var(--muted);display:block;}
 .divider-label{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#bbb;padding:4px 6px 2px;font-weight:600;}
 .cal-msg{font-size:11px;color:#ccc;padding:10px 6px;text-align:center;}
+
+.planned-card{display:flex;align-items:baseline;gap:5px;font-size:10px;padding:3px 6px;border-radius:4px;border-left:3px solid var(--chip-color,var(--primary));background:var(--chip-bg,var(--primary-light));line-height:1.3;cursor:pointer;transition:opacity .12s;overflow:hidden;word-break:break-word;}
+.planned-card:hover{opacity:.82;}
+.planned-hrs{font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0;color:var(--text);}
+.planned-body{min-width:0;overflow:hidden;}
+.planned-proj{font-weight:600;color:var(--text);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.planned-goal{color:var(--muted);font-style:italic;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .add-ev-btn{font-size:10px;padding:1px 6px;border-radius:4px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--muted);font-weight:500;transition:background .1s;display:none;flex-shrink:0;}
 .day-head:hover .add-ev-btn{display:block;}
 .add-ev-btn:hover{background:var(--primary-light);color:var(--primary);}
@@ -159,6 +166,69 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ev-time-row>div{flex:1;}
 .ev-time-row .ev-input{margin-bottom:0;}
 .ev-modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;}
+.import-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--primary-light);border:1px solid var(--primary);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
+.import-row.disabled{background:var(--bg);border-color:var(--border);}
+.import-text{font-size:12px;color:var(--text);}
+.import-text b{color:var(--primary);}
+.import-row.disabled .import-text{color:var(--muted);}
+.dp-overlay{position:fixed;inset:0;background:rgba(20,30,35,.4);display:none;align-items:flex-start;justify-content:center;z-index:900;padding:36px 16px;overflow-y:auto;}
+.dp-overlay.open{display:flex;}
+.dp-modal{background:var(--card);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.22);width:100%;max-width:560px;overflow:hidden;}
+.dp-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.dp-nav-btn{background:none;border:1px solid var(--border);border-radius:6px;width:26px;height:26px;cursor:pointer;color:var(--muted);font-size:13px;display:flex;align-items:center;justify-content:center;}
+.dp-nav-btn:hover{color:var(--primary);border-color:var(--primary);}
+.dp-title{flex:1;min-width:0;}
+.dp-title .n{font-size:16px;font-weight:700;color:var(--text);}
+.dp-title .d{font-size:12px;color:var(--muted);}
+.dp-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:2px 4px;}
+.dp-close:hover{color:var(--text);}
+.dp-hint{font-size:11px;color:var(--muted);padding:8px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-style:italic;}
+.dp-body{display:flex;max-height:56vh;overflow-y:auto;}
+.dp-hours{width:44px;flex-shrink:0;position:relative;border-right:1px solid var(--border);}
+.dp-hour-label{position:absolute;right:6px;font-size:10px;color:var(--muted);transform:translateY(-6px);}
+.dp-grid{position:relative;flex:1;cursor:crosshair;user-select:none;}
+.dp-gridline{position:absolute;left:0;right:0;border-top:1px solid var(--border);}
+.dp-gridline.half{border-top-style:dashed;opacity:.6;}
+.dp-now{position:absolute;left:0;right:0;height:0;border-top:2px solid var(--high);z-index:5;}
+.dp-now::before{content:'';position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--high);}
+.dp-block{position:absolute;left:6px;right:6px;border-radius:5px;border-left:3px solid var(--blk-color,var(--primary));background:var(--blk-bg,var(--primary-light));padding:3px 6px;font-size:11px;line-height:1.3;overflow:hidden;cursor:grab;z-index:2;color:var(--text);}
+.dp-block:active{cursor:grabbing;}
+.dp-block.selected{outline:2px solid var(--text);outline-offset:-2px;}
+.dp-block .t{font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-block .g{color:var(--muted);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-block .rt{font-size:9px;color:var(--muted);}
+.dp-resize{position:absolute;left:0;right:0;bottom:0;height:6px;cursor:ns-resize;}
+.dp-ghost{position:absolute;left:6px;right:6px;border-radius:5px;border:1.5px dashed var(--primary);background:var(--primary-light);opacity:.7;z-index:3;pointer-events:none;}
+.dp-meeting{position:absolute;left:6px;right:6px;border-radius:5px;border-left:3px solid #7c3aed;background:#f5f3ff;padding:3px 6px;font-size:11px;line-height:1.3;overflow:hidden;cursor:pointer;z-index:2;}
+.dp-meeting.assigned{border-left-color:var(--blk-color,#7c3aed);background:var(--blk-bg,#f5f3ff);}
+.dp-meeting .t{font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-meeting .g{color:#7c3aed;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dp-meeting.assigned .g{color:var(--blk-color,#7c3aed);}
+.dp-meeting .rt{font-size:9px;color:var(--muted);}
+.dp-editor{border-top:1px solid var(--border);padding:12px 16px;background:var(--bg);display:none;flex-direction:column;gap:8px;}
+.dp-editor.open{display:flex;}
+.dp-editor-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+.dp-editor select,.dp-editor input{font-size:12.5px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);outline:none;font-family:inherit;}
+.dp-editor select:focus,.dp-editor input:focus{border-color:var(--primary);}
+.dp-editor-row{display:flex;gap:6px;align-items:center;}
+.dp-editor-row>input{flex:1;min-width:0;}
+.dp-editor-time{font-size:11px;color:var(--muted);flex:0 0 auto;white-space:nowrap;}
+.dp-editor-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:2px;}
+.dp-btn{font-size:11.5px;padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-weight:600;}
+.dp-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;}
+.dp-btn.primary:hover{opacity:.9;}
+.dp-btn.danger{color:var(--high);border-color:#f5b8b7;margin-right:auto;}
+.dp-btn.danger:hover{background:var(--high-bg);}
+.dp-btn:not(.primary):not(.danger):hover{background:var(--border);}
+.tour-overlay{position:fixed;inset:0;z-index:1100;display:none;pointer-events:auto;}
+.tour-overlay.open{display:block;}
+.tour-spotlight{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px rgba(20,30,35,.65);pointer-events:none;z-index:1101;transition:top .2s,left .2s,width .2s,height .2s;}
+.tour-card{position:fixed;width:300px;max-width:calc(100vw - 24px);background:var(--card);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.32);padding:16px;z-index:1102;}
+.tour-card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.tour-card-text{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px;}
+.tour-card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.tour-progress{font-size:11px;color:var(--muted);flex-shrink:0;}
+.tour-card-actions{display:flex;gap:6px;}
 
 /* Time log reminder banner */
 .user-rem-zone{margin-bottom:8px;}.user-reminder{display:flex;align-items:center;gap:8px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:8px 14px;margin-bottom:6px;font-size:12px;color:#c2410c;}.user-reminder:last-child{margin-bottom:0;}.user-reminder .ur-text{flex:1;}.user-reminder .ur-title{font-weight:600;}.user-reminder .ur-sub{opacity:.7;font-size:11px;margin-left:5px;}.user-reminder button{background:none;border:1px solid #f97316;border-radius:5px;color:#c2410c;cursor:pointer;padding:3px 10px;font-size:11px;}.user-reminder button:hover{background:#fff3e0;}.user-reminder .ur-dismiss{border-color:var(--border);color:var(--muted);margin-left:4px;}.rem-stack{position:relative;margin-bottom:18px;}.rem-stack-peek{position:absolute;border-radius:8px;background:#fff7ed;border:1px solid #fed7aa;}.rem-stack-peek.p1{bottom:-6px;left:8px;right:8px;height:34px;z-index:0;}.rem-stack-peek.p2{bottom:-12px;left:16px;right:16px;height:34px;z-index:-1;}.rem-stack-front{position:relative;z-index:1;cursor:pointer;}.rem-stack-count{font-size:10px;font-weight:700;background:#fed7aa;color:#c2410c;border-radius:10px;padding:1px 7px;margin-left:6px;flex-shrink:0;}.rem-stack.expanded{margin-bottom:8px;cursor:pointer;padding-top:2px;}.rem-stack.expanded .rem-stack-peek{display:none;}.rem-day-btn{font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}.rem-day-btn.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary);}.rem-mgr-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}.rem-mgr-item:last-child{border-bottom:none;}.rem-mgr-title{flex:1;font-weight:500;color:var(--text);}.rem-mgr-meta{font-size:11px;color:var(--muted);}
@@ -168,7 +238,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:14px;}
 .project-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:12px;min-height:24px;}
 .sm-select{padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--card);color:var(--text);cursor:pointer;}
-.project-tag{display:flex;align-items:center;justify-content:space-between;gap:6px;background:#f0f4ff;border:1px solid #c7d4ff;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap;overflow:hidden;}
+.project-tag{display:flex;align-items:center;justify-content:center;gap:6px;background:#f0f4ff;border:1px solid #c7d4ff;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap;overflow:hidden;}
 .project-tag button{background:none;border:none;cursor:pointer;color:#9ba3b2;font-size:16px;line-height:1;}
 .project-tag button:hover{color:#c0392b;}
 .add-row{display:flex;gap:8px;}
@@ -454,7 +524,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-desc-area{width:100%;box-sizing:border-box;border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;padding:8px 10px;font-size:13px;line-height:1.5;color:var(--text);background:var(--bg);min-height:56px;font-family:inherit;outline:none;transition:border-color .15s;}
 .proj-summary-wrap{border-radius:6px;overflow:hidden;}
 
-.proj-desc-area:focus{border-color:var(--primary);}
+.proj-desc-block:focus-within .proj-desc-toolbar,.proj-desc-block:focus-within .proj-desc-area{border-color:var(--primary);}
 .proj-desc-area:empty::before{content:attr(data-placeholder);color:var(--muted);pointer-events:none;}
 .proj-desc-area ul,.proj-desc-area ol{margin:6px 0;padding-left:20px;}
 .proj-desc-area mark{background:#fff2a8;color:inherit;border-radius:2px;padding:0 1px;}.proj-desc-area [style*="rgb(255, 242, 168)"]{color:#233b46;}
@@ -732,10 +802,47 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
     </div>
     <div class="ev-field-label">Notes (optional)</div>
     <input id="evNotes" class="ev-input" type="text" placeholder="Location, dial-in, context…">
+    <div class="ev-field-label">Project (optional)</div>
+    <select id="evProj" class="ev-input"></select>
+    <div style="font-size:10.5px;color:var(--muted);margin:-6px 0 10px;line-height:1.4">Assign a project to include this meeting's hours in Log Time's "Import from planned hours."</div>
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);margin-top:2px;cursor:pointer"><input type="checkbox" id="evRemind" style="margin:0;cursor:pointer"> Remind me on this day</label>
     <div class="ev-modal-actions">
       <button class="btn secondary-btn" onclick="closeEventModal()">Cancel</button>
       <button class="btn primary-btn" onclick="saveManualEvent()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="dayPlanOverlay" class="dp-overlay">
+  <div class="dp-modal">
+    <div class="dp-head">
+      <button class="dp-nav-btn" onclick="dpShiftDay(-1)" title="Previous day">&#8249;</button>
+      <div class="dp-title"><div class="n" id="dpDayName"></div><div class="d" id="dpDayDate"></div></div>
+      <button class="dp-nav-btn" onclick="dpShiftDay(1)" title="Next day">&#8250;</button>
+      <button class="btn secondary-btn sm" onclick="openAddEvent(dpDate)">+ Meeting</button>
+      <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
+    </div>
+    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block to move it, or its bottom edge to resize.</span></div>
+    <div class="dp-body">
+      <div class="dp-hours" id="dpHours"></div>
+      <div class="dp-grid" id="dpGrid"></div>
+    </div>
+    <div class="dp-editor" id="dpEditor"></div>
+  </div>
+</div>
+
+<div id="tourOverlay" class="tour-overlay">
+  <div class="tour-spotlight" id="tourSpotlight"></div>
+  <div class="tour-card" id="tourCard">
+    <div class="tour-card-title" id="tourTitle"></div>
+    <div class="tour-card-text" id="tourText"></div>
+    <div class="tour-card-foot">
+      <span class="tour-progress" id="tourProgress"></span>
+      <div class="tour-card-actions">
+        <button class="dp-btn" onclick="skipTour()">Skip</button>
+        <button class="dp-btn" id="tourBackBtn" onclick="tourBack()">Back</button>
+        <button class="dp-btn primary" id="tourNextBtn" onclick="tourNext()">Next</button>
+      </div>
     </div>
   </div>
 </div>
@@ -860,7 +967,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
       <button class="btn secondary-btn" onclick="addProject()">Add</button>
     </div>
   </div>
-  <div class="card">
+  <div class="card" id="tourLogTimeCard">
     <div class="card-title">Log Time</div>
     <div class="date-mode-row">
       <input type="date" id="entryDate">
@@ -872,6 +979,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
       <div id="totalHrsRow" style="display:none;align-items:center;gap:6px;flex-shrink:0;margin-left:4px"><span style="font-size:12px;color:var(--muted)">Working Hours</span><div style="display:flex;align-items:center;gap:4px"><input type="number" id="totalHoursInput" min="0" max="24" step="0.5" value="8" oninput="syncHours()" style="width:52px;border:1px solid var(--border);border-radius:8px;padding:7px 8px;font-size:13px;outline:none;text-align:right;background:var(--bg);color:var(--text)"><span style="font-size:13px;color:var(--muted)">h</span></div></div>
 
     </div>
+    <div id="importPlannedRow"></div>
     <div class="alloc-grid" id="allocGrid"></div>
     <div class="total-row-tr" id="totalRow" style="display:none">
       <span class="subtotal-label">Subtotal</span>
@@ -1069,13 +1177,14 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.11.19</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.12.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
+      <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.11.19%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.12.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1318,13 +1427,14 @@ function renderCalendarShell(){
       ?'<div class="day-logged">⏱ '+totalH.toFixed(1)+'h</div>'
       :(isPast?'<div class="day-unlogged">Not logged</div>':'');
     var editBtn='<button class="log-edit-btn'+(hasLog?' has-log':'')+'" onclick="event.stopPropagation();openTimeLogForDay(\''+ds+'\')">'+(hasLog?'Edit':'+ Log')+'</button>';
-    var addEvBtn='<button class="add-ev-btn" onclick="event.stopPropagation();openAddEvent(\''+ds+'\')" title="Add event">+ Event</button>';
+    var addEvBtn='<button class="add-ev-btn" style="color:#7c3aed;border-color:#ddd6fe" onclick="event.stopPropagation();openAddEvent(\''+ds+'\')" title="Add event">+ Event</button>';
     var addTaskBtn='<button class="add-ev-btn" style="color:#22c55e;border-color:#bbf7d0" onclick="event.stopPropagation();openQuickTask(\''+ds+'\')" title="Add task due this day">+ Task</button>';
+    var planBtn='<button class="add-ev-btn" onclick="event.stopPropagation();openDayPlan(\''+ds+'\')" title="Plan time blocks">+ Plan</button>';
     return'<div class="day-col'+(isT?' today':'')+(unlogged?' unlogged':'')+'" data-date="'+ds+'">'
       +'<div class="day-head" onclick="openTimeLogForDay(\''+ds+'\')">'
       +'<div class="day-name"><span class="dn-full">'+name+'</span><span class="dn-short">'+name.slice(0,3)+'</span></div>'
       +'<div class="day-num">'+dayNum+'</div>'
-      +'<div class="day-meta">'+metaHtml+editBtn+addEvBtn+addTaskBtn+'</div>'
+      +'<div class="day-meta">'+metaHtml+editBtn+addEvBtn+addTaskBtn+planBtn+'</div>'
       +'</div>'
       +'<div class="day-events" id="ev-'+ds+'"><div class="cal-msg">—</div></div>'
       +'</div>';
@@ -1339,6 +1449,16 @@ function renderCalendarEvents(events){
   Object.keys(byDate).forEach(function(date){
     var el=document.getElementById('ev-'+date);if(!el)return;
     var parts=[];
+    var _blks=getBlocksForDate(date);
+    var _logForBlks=getLogsForDate(date);
+    var _hasLoggedHrs=_logForBlks&&Object.keys(_logForBlks.allocs).length>0;
+    if(_blks.length>0&&!_hasLoggedHrs){
+      parts.push('<div class="divider-label">Planned</div>');
+      _blks.slice().sort(function(a,b){return a.start-b.start;}).forEach(function(b){
+        var c=projColorForName(b.proj);
+        parts.push('<div class="planned-card" style="--chip-color:'+c+';--chip-bg:'+dpHexToRgba(c,0.13)+'" onclick="openDayPlan(\''+date+'\',\''+b.id+'\')"><span class="planned-hrs">'+(b.dur/60)+'h</span><span class="planned-body"><span class="planned-proj">'+escH(b.proj)+'</span>'+(b.goal?'<span class="planned-goal">'+escH(b.goal)+'</span>':'')+'</span></div>');
+      });
+    }
     // Manual events (sorted by start time)
     var manualEvs=getManualEvents().filter(function(e){return e.date===date;});
     manualEvs.sort(function(a,b){return(a.startTime||'').localeCompare(b.startTime||'');});
@@ -1395,6 +1515,261 @@ function openTimeLogForDay(ds){
   document.getElementById('entryDate').value=ds;
   switchTab('tracker');
   applyDraftOrLog(ds);
+}
+
+// -- Time Blocking (Day Plan) --
+function getTimeBlocksData(){try{return JSON.parse(localStorage.getItem('plannerTimeBlocks')||'{}');}catch(e){return{};}}
+function saveTimeBlocksData(obj){localStorage.setItem('plannerTimeBlocks',JSON.stringify(obj));}
+function getBlocksForDate(ds){return(getTimeBlocksData()[ds]||[]).slice();}
+function setBlocksForDate(ds,arr){var all=getTimeBlocksData();if(arr.length)all[ds]=arr;else delete all[ds];saveTimeBlocksData(all);}
+function projColorForName(name){var ps=getProjects();var idx=ps.findIndex(function(p){return p.name===name;});return projColor(idx>=0?ps[idx]:null,idx<0?0:idx);}
+function dpHexToRgba(hex,a){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return'rgba('+r+','+g+','+b+','+a+')';}
+function evMinFromTime(hhmm){var p=(hhmm||'').split(':');return(parseInt(p[0])||0)*60+(parseInt(p[1])||0);}
+function dpBlockTotalsForDate(ds){
+  var totals={};
+  getBlocksForDate(ds).forEach(function(b){totals[b.proj]=(totals[b.proj]||0)+b.dur/60;});
+  getManualEvents().filter(function(e){return e.date===ds&&e.proj&&e.startTime&&e.endTime;}).forEach(function(e){
+    var s=evMinFromTime(e.startTime),en=evMinFromTime(e.endTime);
+    if(en>s)totals[e.proj]=(totals[e.proj]||0)+(en-s)/60;
+  });
+  return totals;
+}
+
+var DP_GRID_START=7*60,DP_GRID_END=19*60,DP_HOUR_PX=44,DP_PX_PER_MIN=DP_HOUR_PX/60,DP_SNAP=15;
+var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null;
+
+function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
+function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
+function dpPersist(){setBlocksForDate(dpDate,dpBlocks);}
+
+function openDayPlan(ds,blockId){
+  dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;
+  document.getElementById('dayPlanOverlay').classList.add('open');
+  renderDayPlan();
+}
+function closeDayPlan(){
+  if(!dpDate)return;
+  document.getElementById('dayPlanOverlay').classList.remove('open');
+  dpDate=null;dpBlocks=[];dpSelectedBlock=null;dpNewRange=null;
+  renderCalendarShell();
+  var ed=document.getElementById('entryDate');
+  if(ed)renderImportRow(ed.value);
+}
+function dpShiftDay(delta){
+  var d=new Date(dpDate+'T00:00:00');d.setDate(d.getDate()+delta);
+  dpDate=d.toLocaleDateString('en-CA',{timeZone:TZ});
+  dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;
+  renderDayPlan();
+}
+
+function renderDayPlan(){
+  var d=new Date(dpDate+'T00:00:00');
+  document.getElementById('dpDayName').textContent=d.toLocaleDateString('en-US',{weekday:'long',timeZone:TZ});
+  document.getElementById('dpDayDate').textContent=d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',timeZone:TZ});
+
+  var hoursEl=document.getElementById('dpHours');
+  var hrsHtml='';
+  for(var h=DP_GRID_START;h<=DP_GRID_END;h+=60){
+    hrsHtml+='<div class="dp-hour-label" style="top:'+((h-DP_GRID_START)*DP_PX_PER_MIN)+'px">'+dpFmtTime(h)+'</div>';
+  }
+  hoursEl.innerHTML=hrsHtml;
+  var totalPx=(DP_GRID_END-DP_GRID_START)*DP_PX_PER_MIN;
+  hoursEl.style.height=totalPx+'px';
+
+  var gridEl=document.getElementById('dpGrid');
+  gridEl.style.height=totalPx+'px';
+
+  var lines='';
+  for(var m=DP_GRID_START;m<=DP_GRID_END;m+=30){
+    var top=(m-DP_GRID_START)*DP_PX_PER_MIN;
+    lines+='<div class="dp-gridline'+(m%60?' half':'')+'" style="top:'+top+'px"></div>';
+  }
+  if(dpDate===todayStr()){
+    var nowD=new Date();var nowMin=nowD.getHours()*60+nowD.getMinutes();
+    if(nowMin>=DP_GRID_START&&nowMin<=DP_GRID_END){
+      lines+='<div class="dp-now" style="top:'+((nowMin-DP_GRID_START)*DP_PX_PER_MIN)+'px"></div>';
+    }
+  }
+
+  var blocksHtml=dpBlocks.map(function(b){
+    var c=projColorForName(b.proj);
+    var top=(b.start-DP_GRID_START)*DP_PX_PER_MIN,h=b.dur*DP_PX_PER_MIN;
+    var sel=dpSelectedBlock===b.id?' selected':'';
+    return'<div class="dp-block'+sel+'" style="top:'+top+'px;height:'+h+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
+      +'<div class="t">'+escH(b.proj)+'</div>'
+      +(b.goal?'<div class="g">'+escH(b.goal)+'</div>':'')
+      +'<div class="rt">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+'</div>'
+      +'<div class="dp-resize" onmousedown="dpStartResize(event,\''+b.id+'\')"></div>'
+    +'</div>';
+  }).join('');
+
+  var meetings=getManualEvents().filter(function(e){return e.date===dpDate&&e.startTime&&e.endTime;});
+  var meetingsHtml=meetings.map(function(mt){
+    var s=evMinFromTime(mt.startTime),en=evMinFromTime(mt.endTime);
+    if(en<=s)return'';
+    var top=(s-DP_GRID_START)*DP_PX_PER_MIN,h=(en-s)*DP_PX_PER_MIN;
+    var assigned=mt.proj?' assigned':'';
+    var mc=mt.proj?projColorForName(mt.proj):null;
+    var colorStyle=mc?';--blk-color:'+mc+';--blk-bg:'+dpHexToRgba(mc,0.15):'';
+    return'<div class="dp-meeting'+assigned+'" style="top:'+top+'px;height:'+h+'px'+colorStyle+'" onclick="openEditEvent(\''+mt.id+'\')">'
+      +'<div class="t">'+escH(mt.title)+'</div>'
+      +'<div class="g">'+(mt.proj?escH(mt.proj):'Unassigned')+'</div>'
+      +'<div class="rt">'+dpFmtTime(s)+' - '+dpFmtTime(en)+'</div>'
+    +'</div>';
+  }).join('');
+
+  var ghostHtml='';
+  if(dpNewRange){
+    var top2=(dpNewRange.start-DP_GRID_START)*DP_PX_PER_MIN,h2=dpNewRange.dur*DP_PX_PER_MIN;
+    ghostHtml='<div class="dp-ghost" style="top:'+top2+'px;height:'+h2+'px"></div>';
+  }
+
+  gridEl.innerHTML=lines+blocksHtml+meetingsHtml+ghostHtml;
+  gridEl.onmousedown=function(e){if(e.target===gridEl)dpStartCreate(e);};
+
+  renderDpEditor();
+}
+
+function dpMinFromEvent(e,rect){var y=e.clientY-rect.top;return dpSnap(DP_GRID_START+y/DP_PX_PER_MIN);}
+
+function dpStartCreate(e){
+  var rect=document.getElementById('dpGrid').getBoundingClientRect();
+  var startMin=dpMinFromEvent(e,rect);
+  function onMove(ev){
+    var curMin=dpMinFromEvent(ev,rect);
+    var lo=Math.min(startMin,curMin),hi=Math.max(startMin,curMin);
+    if(hi-lo<DP_SNAP)hi=lo+DP_SNAP;
+    dpNewRange={start:lo,dur:hi-lo};
+    renderDayPlan();
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    if(!dpNewRange)dpNewRange={start:startMin,dur:60};
+    dpSelectedBlock='new';
+    renderDayPlan();
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function dpStartMove(e,id){
+  e.stopPropagation();
+  if(e.target.classList.contains('dp-resize'))return;
+  var b=dpBlocks.find(function(x){return x.id===id;});
+  if(!b)return;
+  var startY=e.clientY,origStart=b.start,moved=false;
+  function onMove(ev){
+    var deltaMin=dpSnap((ev.clientY-startY)/DP_PX_PER_MIN);
+    if(Math.abs(ev.clientY-startY)>3)moved=true;
+    b.start=Math.max(DP_GRID_START,Math.min(DP_GRID_END-b.dur,origStart+deltaMin));
+    renderDayPlan();
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    if(moved){dpPersist();}
+    else{dpSelectedBlock=id;renderDayPlan();}
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function dpStartResize(e,id){
+  e.stopPropagation();e.preventDefault();
+  var b=dpBlocks.find(function(x){return x.id===id;});
+  if(!b)return;
+  var startY=e.clientY,origDur=b.dur;
+  function onMove(ev){
+    var deltaMin=dpSnap((ev.clientY-startY)/DP_PX_PER_MIN);
+    b.dur=Math.max(DP_SNAP,Math.min(DP_GRID_END-b.start,origDur+deltaMin));
+    renderDayPlan();
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    dpPersist();
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+
+function renderDpEditor(){
+  var el=document.getElementById('dpEditor');
+  if(!dpSelectedBlock){el.classList.remove('open');el.innerHTML='';return;}
+  var isNew=dpSelectedBlock==='new';
+  var b=isNew?{proj:'',goal:'',start:dpNewRange.start,dur:dpNewRange.dur}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  if(!b){dpSelectedBlock=null;el.classList.remove('open');el.innerHTML='';return;}
+  el.classList.add('open');
+  var projects=getActiveProjects();
+  var options='<option value="">Choose a project...</option>'+projects.map(function(p){
+    return'<option value="'+escA(p.name)+'"'+(p.name===b.proj?' selected':'')+'>'+escH(p.name)+'</option>';
+  }).join('');
+  el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'</div>'
+    +'<select id="dpProj" onkeydown="if(event.key===\'Enter\'){event.preventDefault();dpSaveEdit();}">'+options+'</select>'
+    +'<div class="dp-editor-row">'
+    +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onkeydown="if(event.key===\'Enter\'){event.preventDefault();dpSaveEdit();}">'
+    +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+'</span>'
+    +'</div>'
+    +'<div class="dp-editor-actions">'
+    +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
+    +'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button>'
+    +'<button class="dp-btn primary" onclick="dpSaveEdit()">'+(isNew?'Add block':'Save changes')+'</button>'
+    +'</div>';
+}
+function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
+function dpSaveEdit(){
+  var proj=document.getElementById('dpProj').value;
+  if(!proj)return;
+  var goal=document.getElementById('dpGoal').value.trim();
+  if(dpSelectedBlock==='new'){
+    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:proj,start:dpNewRange.start,dur:dpNewRange.dur,goal:goal});
+  } else {
+    var b=dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+    b.proj=proj;b.goal=goal;
+  }
+  dpPersist();
+  dpSelectedBlock=null;dpNewRange=null;
+  renderDayPlan();
+  renderCalendarShell();
+  var ed=document.getElementById('entryDate');
+  if(ed)renderImportRow(ed.value);
+}
+function dpDelete(){
+  dpBlocks=dpBlocks.filter(function(x){return x.id!==dpSelectedBlock;});
+  dpPersist();
+  dpSelectedBlock=null;
+  renderDayPlan();
+  renderCalendarShell();
+  var ed=document.getElementById('entryDate');
+  if(ed)renderImportRow(ed.value);
+}
+
+// -- Import planned hours into Log Time --
+function renderImportRow(date){
+  var el=document.getElementById('importPlannedRow');
+  if(!el)return;
+  var totals=dpBlockTotalsForDate(date);
+  var hrs=Object.values(totals).reduce(function(s,h){return s+h;},0);
+  var count=Object.keys(totals).length;
+  if(hrs<=0){
+    el.innerHTML='<div class="import-row disabled"><span class="import-text">No planned hours for this day yet</span></div>';
+    return;
+  }
+  el.innerHTML='<div class="import-row"><span class="import-text">Import from planned hours - <b>'+hrs.toFixed(1)+'h</b> across '+count+' project'+(count===1?'':'s')+'</span><button class="btn primary-btn sm" onclick="importPlannedIntoLog()">Import</button></div>';
+}
+function importPlannedIntoLog(){
+  var date=document.getElementById('entryDate').value;
+  var totals=dpBlockTotalsForDate(date);
+  var totalDayHrs=parseFloat(document.getElementById('totalHoursInput').value)||8;
+  document.querySelectorAll('.alloc-row[data-project]').forEach(function(row){
+    var proj=row.dataset.project;
+    if(!(proj in totals))return;
+    var hrs=totals[proj];
+    var input=row.querySelector('.alloc-input');
+    if(!input)return;
+    input.value=trackerMode==='pct'?(totalDayHrs>0?Math.round((hrs/totalDayHrs)*1000)/10:0):hrs;
+  });
+  updateTotal();
+  saveDraft();
 }
 
 // ── Projects ──
@@ -1552,7 +1927,6 @@ function saveLogs(l){var d=getTrackerData();d.logs=l;saveTrackerData(d);}
 function getLogsForDate(ds){return getLogs().find(function(l){return l.date===ds;})||null;}
 
 function addProject(){var inp=document.getElementById('newProjectInput');var name=inp.value.trim();if(!name)return;var p=getActiveProjects();if(p.some(function(x){return x.name===name;})){alert('A project named "'+name+'" already exists.');inp.value='';return;}var allP=getProjects();allP.push({name:name,code:'',activityType:''});saveProjects(allP);inp.value='';var date=document.getElementById('entryDate').value;saveDraft();renderProjects();renderAllocGrid();if(date)applyDraftOrLog(date);renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
-function removeProject(name){if(!confirm('Remove "'+name+'" from active projects?'))return;saveProjects(getProjects().filter(function(p){return p.name!==name;}));renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}}
 function archiveProject(name){
   var p=getProjects();
   var idx=p.findIndex(function(x){return x.name===name;});
@@ -1576,7 +1950,7 @@ function closeProjectEdit(){document.getElementById('projectEditModal').style.di
 function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(p.find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);closeProjectEdit();_selectedProject=newName;renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
 function renderColorSwatches(selected){var el=document.getElementById('peColorSwatches');if(!el)return;var html='<div class="palette-swatch'+(!selected?' active':'')+'" style="background:repeating-linear-gradient(45deg,#ccc,#ccc 3px,#fff 3px,#fff 6px)" title="Auto" onclick="selectPeColor(\'\')"></div>';html+=UNIQUE_COLORS.map(function(c){return'<div class="palette-swatch'+(selected===c?' active':'')+'" style="background:'+c+'" title="'+c+'" onclick="selectPeColor(\''+c+'\')"></div>';}).join('');el.innerHTML=html;}
 function selectPeColor(c){document.getElementById('peColor').value=c;renderColorSwatches(c);}
-function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span>'+escH(proj.name)+'<button onclick="event.stopPropagation();removeProject(\''+escA(proj.name)+'\');" title="Remove" style="margin-left:4px">×</button></div>';}).join('');}
+function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span>'+escH(proj.name)+'</div>';}).join('');}
 function setMode(m){
   var prev=trackerMode;
   trackerMode=m;
@@ -1772,6 +2146,7 @@ function _loadExtras(allocsData,mode,totalHrs){
 }
 
 function applyDraftOrLog(date){
+  renderImportRow(date);
   // Priority: unsaved draft (most recent edits) > saved log > clear form
   var draft=getDraft();
   if(draft&&draft.date===date){
@@ -1953,6 +2328,7 @@ function renderProjectDetail(name){
     +'<div class="proj-card'+(pc.summary?' collapsed':'')+'">'
       +'<div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard('+"'summary','"+escA(name)+"'"+')" title="'+(pc.summary?'Expand':'Collapse')+'">'+(pc.summary?'▸':'▾')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard('+"'summary','"+escA(name)+"'"+')">Summary</span></div>'
       +'<div class="proj-card-body">'
+      +'<div class="proj-desc-block">'
       +'<div class="proj-desc-toolbar">'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'bold\')" title="Bold"><svg viewBox="0 0 16 16"><path d="M5 3h5.5a3 3 0 0 1 0 6H5zM5 9h6a3.2 3.2 0 0 1 0 6H5z"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'italic\')" title="Italic"><svg viewBox="0 0 16 16"><path d="M9 3h5M6 13h5M11 3 8 13"/></svg></button>'
@@ -1966,6 +2342,7 @@ function renderProjectDetail(name){
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'removeFormat\')" title="Clear formatting"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg></button>'
       +'</div>'
       +'<div class="proj-desc-area" id="projDesc_'+escH(name)+'" contenteditable="true" data-placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\')" spellcheck="false">'+projDescToHtml(proj.description)+'</div>'
+      +'</div>'
       +'</div>'
     +'</div>'
         +'<div class="proj-card'+(pc.photos?' collapsed':'')+'">'
@@ -2412,7 +2789,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.11.19';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.12.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -3269,11 +3646,20 @@ function openAddEvent(date){
   document.getElementById('evEnd').value='';
   document.getElementById('evNotes').value='';
   document.getElementById('evRemind').checked=false;
+  populateEvProjSelect(null);
   document.getElementById('eventModal').classList.add('open');
   setTimeout(function(){document.getElementById('evTitle').focus();},50);
 }
 var editingEventId=null;
 function closeEventModal(){document.getElementById('eventModal').classList.remove('open');currentEventDate=null;editingEventId=null;document.getElementById('evModalTitle').textContent='Add Meeting';}
+function populateEvProjSelect(selected){
+  var sel=document.getElementById('evProj');
+  if(!sel)return;
+  var projects=getActiveProjects();
+  sel.innerHTML='<option value="">(No project)</option>'+projects.map(function(p){
+    return'<option value="'+escA(p.name)+'"'+(p.name===selected?' selected':'')+'>'+escH(p.name)+'</option>';
+  }).join('');
+}
 function openEditEvent(id){
   var ev=getManualEvents().find(function(e){return e.id===id;});
   if(!ev)return;
@@ -3286,6 +3672,7 @@ function openEditEvent(id){
   document.getElementById('evEnd').value=ev.endTime||'';
   document.getElementById('evNotes').value=ev.notes||'';
   document.getElementById('evRemind').checked=!!ev.remind;
+  populateEvProjSelect(ev.proj||null);
   document.getElementById('eventModal').classList.add('open');
   setTimeout(function(){document.getElementById('evTitle').focus();},50);
 }
@@ -3309,22 +3696,32 @@ function saveManualEvent(){
   var startTime=document.getElementById('evStart').value;
   var endTime=document.getElementById('evEnd').value;
   var notes=document.getElementById('evNotes').value.trim();
+  var proj=document.getElementById('evProj')?(document.getElementById('evProj').value||null):null;
   var evs=getManualEvents();
   var savedEv;
   if(editingEventId){
-    evs=evs.map(function(e){if(e.id!==editingEventId)return e;savedEv=Object.assign({},e,{title:title,date:date,startTime:startTime,endTime:endTime,notes:notes,remind:remind});return savedEv;});
+    evs=evs.map(function(e){if(e.id!==editingEventId)return e;savedEv=Object.assign({},e,{title:title,date:date,startTime:startTime,endTime:endTime,notes:notes,remind:remind,proj:proj});return savedEv;});
   } else {
-    savedEv={id:Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:date,title:title,startTime:startTime,endTime:endTime,notes:notes,remind:remind};
+    savedEv={id:Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:date,title:title,startTime:startTime,endTime:endTime,notes:notes,remind:remind,proj:proj};
     evs.push(savedEv);
   }
   saveManualEvents(evs);
   syncEventReminder(savedEv);
   closeEventModal();renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
+  if(dpDate===date)renderDayPlan();
+  var _ed=document.getElementById('entryDate');
+  if(_ed&&_ed.value===date)renderImportRow(date);
 }
 function deleteManualEvent(id){
+  var _ev=getManualEvents().find(function(e){return e.id===id;});
   saveManualEvents(getManualEvents().filter(function(e){return e.id!==id;}));
   removeEventReminder(id);
   renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
+  if(_ev){
+    if(dpDate===_ev.date)renderDayPlan();
+    var _ed2=document.getElementById('entryDate');
+    if(_ed2&&_ed2.value===_ev.date)renderImportRow(_ev.date);
+  }
 }
 
 // -- Calendar import (.ics) --
@@ -3484,7 +3881,8 @@ document.getElementById('eventModal').addEventListener('click',function(e){if(e.
 document.getElementById('qtTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});
 ['qtDue','qtNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});});
 document.getElementById('quickTaskModal').addEventListener('click',function(e){if(e.target===this)closeQuickTaskModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
+document.getElementById('dayPlanOverlay').addEventListener('click',function(e){if(e.target===this)closeDayPlan();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();closeDayPlan();skipTour();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
 (async function(){
   if(window.showSaveFilePicker){
     var _bootHandle=await getSyncHandle();
@@ -3498,10 +3896,86 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventM
   renderGroupFilters();
   applyProjSidebarState();
   initSpellcheckToggle();
+  var _bootEd=document.getElementById('entryDate');
+  if(_bootEd)renderImportRow(_bootEd.value);
   if(window.showDirectoryPicker)reconcilePhotoSync();
 })();
 
 // ── Dark mode ──
+var TOUR_STEPS=[
+  {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
+  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to reveal quick actions: + Log, + Event, + Task, + Plan."},
+  {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline where you can drag to block out time against a project, with an optional goal. Planned blocks show on the card until you log real hours for that day - then the log takes over."},
+  {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. If you've planned time or assigned a meeting to a project, an Import banner appears here so you can pull those hours in with one click - it never overwrites what you've already logged."},
+  {tab:'tracker',target:'#projectList',title:"Active Projects",text:"Add projects here, click a pill to edit its name, color or group. Projects are archived rather than deleted, so nothing is ever silently lost."},
+  {tab:'tasks',target:'.tasks-wrap',title:"To Do",text:"Tasks live here with priority, due dates, subtasks and optional reminders, including recurring ones."},
+  {tab:'projects',target:'#projectsWrap',title:"Projects",text:"Each project gets a rich Summary, Photos and Links, plus its own task list. Archive a project when you're done with it - Restore brings it straight back."},
+  {tab:'settings',target:'.dm-toggle',title:"Settings",text:"Switch appearance, import a calendar file, manage your activity list, and check what's new in the changelog. Restart this tour anytime from the button down here."},
+  {tab:null,target:null,title:"You're all set",text:"That's everything - explore at your own pace. Look for Take the tour in Settings if you want to run through this again.",isLast:true}
+];
+var _tourStep=0;
+var _tourActive=false;
+function startTour(){
+  _tourStep=0;_tourActive=true;
+  document.getElementById('tourOverlay').classList.add('open');
+  renderTourStep();
+}
+function skipTour(){
+  if(!_tourActive)return;
+  _tourActive=false;
+  document.getElementById('tourOverlay').classList.remove('open');
+  localStorage.setItem('plannerTourSeen','1');
+}
+function tourNext(){
+  if(_tourStep>=TOUR_STEPS.length-1){skipTour();return;}
+  _tourStep++;renderTourStep();
+}
+function tourBack(){
+  if(_tourStep<=0)return;
+  _tourStep--;renderTourStep();
+}
+function renderTourStep(){
+  var step=TOUR_STEPS[_tourStep];
+  if(step.tab&&currentTab!==step.tab)switchTab(step.tab);
+  document.getElementById('tourTitle').textContent=step.title;
+  document.getElementById('tourText').textContent=step.text;
+  document.getElementById('tourProgress').textContent=(_tourStep+1)+' of '+TOUR_STEPS.length;
+  document.getElementById('tourBackBtn').style.visibility=_tourStep===0?'hidden':'visible';
+  document.getElementById('tourNextBtn').textContent=(_tourStep===TOUR_STEPS.length-1)?'Finish':'Next';
+  requestAnimationFrame(positionTourSpotlight);
+}
+function positionTourSpotlight(){
+  if(!_tourActive)return;
+  var step=TOUR_STEPS[_tourStep];
+  var spot=document.getElementById('tourSpotlight');
+  var card=document.getElementById('tourCard');
+  var target=step.target?document.querySelector(step.target):null;
+  if(target){
+    var r=target.getBoundingClientRect();
+    var pad=8;
+    spot.style.top=(r.top-pad)+'px';
+    spot.style.left=(r.left-pad)+'px';
+    spot.style.width=(r.width+pad*2)+'px';
+    spot.style.height=(r.height+pad*2)+'px';
+    var cardW=300;
+    var cardTop=r.bottom+16;
+    if(cardTop+220>window.innerHeight)cardTop=Math.max(12,r.top-16-220);
+    var cardLeft=Math.min(Math.max(12,r.left),window.innerWidth-cardW-12);
+    card.style.transform='none';
+    card.style.top=cardTop+'px';
+    card.style.left=cardLeft+'px';
+  } else {
+    var cx=window.innerWidth/2,cy=window.innerHeight/2;
+    spot.style.top=cy+'px';
+    spot.style.left=cx+'px';
+    spot.style.width='0px';
+    spot.style.height='0px';
+    card.style.top='50%';
+    card.style.left='50%';
+    card.style.transform='translate(-50%,-50%)';
+  }
+}
+window.addEventListener('resize',function(){if(_tourActive)positionTourSpotlight();});
 function applyDarkMode(mode){
   document.body.classList.remove('app-dark','app-light');
   if(mode==='dark')document.body.classList.add('app-dark');

@@ -5,6 +5,62 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.12.0] — 2026-09-22
+
+### Added
+- **Guided tour** — a 9-step spotlight walkthrough covering the day-card actions, time-blocking, Log Time and Import, Active Projects, To Do, Projects, and Settings. Launch it anytime from "Take the tour" in Settings; Back/Next/Skip and Escape all work, and it remembers when you've seen it
+
+---
+
+## [0.11.25] — 2026-09-22
+
+### Fixed
+- **The orange focus highlight on the project Summary field only wrapped the text area, stopping at the formatting toolbar above it** — the toolbar and text area are now treated as one block, so the highlight surrounds the whole thing when you click in to edit
+
+---
+
+## [0.11.24] — 2026-09-22
+
+### Fixed
+- **Project names on Active Projects pills were right-aligned instead of centered** — a leftover effect of removing the old delete "×" button, which had been balancing the layout. Names are centered again
+
+---
+
+## [0.11.23] — 2026-09-22
+
+### Removed
+- **The hard-delete "×" on Active Projects pills is gone** — it permanently removed a project without cleaning up its logs, tasks, links, or planned time, silently orphaning that data. Archive (from the Projects tab) is now the only way to remove a project from active use, and it's fully reversible via Restore
+
+---
+
+## [0.11.22] — 2026-09-22
+
+### Changed
+- **"+ Event" button now uses a purple accent**, matching the purple used for meetings elsewhere on the day card and in the Day Plan timeline
+
+### Added
+- **Enter key adds/saves a block in the Day Plan editor** — no need to reach for the "Add block"/"Save changes" button
+- **Clicking outside the Day Plan modal closes it**, matching how other modals in the app already behave
+
+---
+
+## [0.11.21] — 2026-09-22
+
+### Changed
+- **"Plan+" moved into the day card's action row** — it now sits with "+ Log"/"+ Event"/"+ Task" (same hover-reveal, same style) instead of floating as a separate button in the corner
+- **The "Planned" section on a day card now hides once that day has logged hours** — once you've actually logged time, the card shows just the logged hours, not the earlier plan alongside it. The plan itself isn't touched, only its preview on the card
+
+---
+
+## [0.11.20] — 2026-09-22
+
+### Added
+- **Intentional time-blocking / work planning** — a new "Plan+" button on each day card in This Week opens an Outlook-style day timeline where you can drag to create, move, and resize blocks of planned time against a project, each block optionally tagged with a goal. Planned blocks show project colors and appear directly on the day card as well, alongside Meetings and Tasks
+- **Meetings can now be assigned to a project** — a new "Project (optional)" field on the Add/Edit Event modal lets a meeting's duration count toward that project's planned hours, shown on the Day Plan timeline in the project's color
+- **Import from planned hours in Log Time** — when a day has planned blocks (and/or project-assigned meetings), Log Time shows an "Import from planned hours" banner with the total; clicking Import fills the matching project rows with the planned hours (converted to % automatically in percentage mode). This only pre-fills the log entry — it never overwrites what you've already logged, and logging time never changes the plan, so planned vs. actual can be compared side by side
+
+---
+
 ## [0.11.19] — 2026-09-18
 
 ### Changed
