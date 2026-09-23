@@ -5,6 +5,30 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.12.3] — 2026-09-23
+
+### Fixed
+- **The "+ Add" button on Photos and Links & Resources stayed visible when the card was collapsed** — collapsing now hides it too, leaving just the toggle arrow and title on a clean single line
+
+---
+
+## [0.12.2] — 2026-09-23
+
+### Added
+- **Enter now saves/submits from any field inside any modal** — a single global rule replaces the old per-field wiring, so it now also works on Edit Project, Edit/Add Link, and the reminder date field, none of which supported it before. Any modal added in future gets this for free
+
+### Fixed
+- **Typing a multi-line note on Add/Edit Task submitted the task on every Enter** instead of starting a new line — Notes now uses Shift+Enter for a new line and plain Enter to save, matching the Quick Note field elsewhere in the app
+
+---
+
+## [0.12.1] — 2026-09-23
+
+### Fixed
+- **Long project names in the Timesheet tab's Active Projects pills were hard-cut with no indication there was more text** — the name now truncates with an ellipsis, and hovering a pill shows the full name as a tooltip
+
+---
+
 ## [0.12.0] — 2026-09-22
 
 ### Added

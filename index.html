@@ -239,6 +239,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .project-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:12px;min-height:24px;}
 .sm-select{padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--card);color:var(--text);cursor:pointer;}
 .project-tag{display:flex;align-items:center;justify-content:center;gap:6px;background:#f0f4ff;border:1px solid #c7d4ff;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap;overflow:hidden;}
+.project-tag-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
 .project-tag button{background:none;border:none;cursor:pointer;color:#9ba3b2;font-size:16px;line-height:1;}
 .project-tag button:hover{color:#c0392b;}
 .add-row{display:flex;gap:8px;}
@@ -515,7 +516,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-nav-meta{font-size:10px;color:var(--muted);margin-left:auto;flex-shrink:0;}
 .proj-main{display:flex;flex-direction:column;gap:12px;}.proj-main-col{min-width:0;overflow:hidden;}.proj-main-toolbar{display:none;margin-bottom:10px;}.proj-main-toolbar.visible{display:block;}.proj-main-toolbar button{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--text);cursor:pointer;}.projects-wrap.proj-sidebar-collapsed{grid-template-columns:1fr;}.projects-wrap.proj-sidebar-collapsed .proj-sidebar{display:none;}.proj-sidebar-backdrop{display:none;}
 .proj-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;overflow:hidden;min-width:0;}
-.proj-card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}.proj-card-toggle{background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;padding:2px 6px 2px 0;line-height:1;flex-shrink:0;}.proj-card.collapsed .proj-card-body{display:none;}
+.proj-card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}.proj-card-toggle{background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;padding:2px 6px 2px 0;line-height:1;flex-shrink:0;}.proj-card.collapsed .proj-card-body{display:none;}.proj-card.collapsed .proj-links-hdr .btn{display:none;}
 .proj-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;}
 .proj-name{font-size:18px;font-weight:700;color:var(--text);}
 .proj-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;min-width:0;overflow:hidden;}
@@ -874,7 +875,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
     <div class="ev-modal-title">Manage Project Groups</div>
     <div id="groupsMgrList" style="margin-bottom:10px"></div>
     <div style="display:flex;gap:6px;align-items:center">
-      <input id="newGroupNameInput" class="ev-input" type="text" placeholder="New group name…" style="margin-bottom:0;flex:1;min-width:0" onkeydown="if(event.key==='Enter')addGroupFromModal()">
+      <input id="newGroupNameInput" class="ev-input" type="text" placeholder="New group name…" style="margin-bottom:0;flex:1;min-width:0">
       <button class="btn primary-btn sm" onclick="addGroupFromModal()">Add</button>
       <button class="btn secondary-btn sm" onclick="closeGroupsModal()">Close</button>
     </div>
@@ -1177,14 +1178,14 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.12.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.12.3</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.12.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.12.3%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1704,9 +1705,9 @@ function renderDpEditor(){
     return'<option value="'+escA(p.name)+'"'+(p.name===b.proj?' selected':'')+'>'+escH(p.name)+'</option>';
   }).join('');
   el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'</div>'
-    +'<select id="dpProj" onkeydown="if(event.key===\'Enter\'){event.preventDefault();dpSaveEdit();}">'+options+'</select>'
+    +'<select id="dpProj">'+options+'</select>'
     +'<div class="dp-editor-row">'
-    +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onkeydown="if(event.key===\'Enter\'){event.preventDefault();dpSaveEdit();}">'
+    +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'">'
     +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+'</span>'
     +'</div>'
     +'<div class="dp-editor-actions">'
@@ -1920,7 +1921,7 @@ function renderGroupsMgrList(){
   var projects=getProjects();
   el.innerHTML=groups.map(function(g){
     var count=projects.filter(function(p){return p.groupId===g.id;}).length;
-    return'<div class="rem-mgr-item"><input type="text" value="'+escH(g.name)+'" style="flex:1;border:1px solid var(--border);border-radius:6px;padding:4px 7px;font-size:12px;background:var(--card);color:var(--text)" onchange="renameProjectGroup(\''+g.id+'\',this.value);renderGroupFilters()"><span title="'+count+' project'+(count!==1?'s':'')+'" style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;flex-shrink:0">'+count+'</span><button class="btn secondary-btn sm" style="margin-left:4px" onclick="deleteProjectGroup(\''+g.id+'\');renderGroupsMgrList()">Remove</button></div>';
+    return'<div class="rem-mgr-item"><input type="text" value="'+escH(g.name)+'" style="flex:1;border:1px solid var(--border);border-radius:6px;padding:4px 7px;font-size:12px;background:var(--card);color:var(--text)" onchange="renameProjectGroup(\''+g.id+'\',this.value);renderGroupFilters()" onkeydown="if(event.key===\'Enter\'){event.stopPropagation();this.blur();}"><span title="'+count+' project'+(count!==1?'s':'')+'" style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;flex-shrink:0">'+count+'</span><button class="btn secondary-btn sm" style="margin-left:4px" onclick="deleteProjectGroup(\''+g.id+'\');renderGroupsMgrList()">Remove</button></div>';
   }).join('');
 }
 function saveLogs(l){var d=getTrackerData();d.logs=l;saveTrackerData(d);}
@@ -1950,7 +1951,7 @@ function closeProjectEdit(){document.getElementById('projectEditModal').style.di
 function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(p.find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);closeProjectEdit();_selectedProject=newName;renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
 function renderColorSwatches(selected){var el=document.getElementById('peColorSwatches');if(!el)return;var html='<div class="palette-swatch'+(!selected?' active':'')+'" style="background:repeating-linear-gradient(45deg,#ccc,#ccc 3px,#fff 3px,#fff 6px)" title="Auto" onclick="selectPeColor(\'\')"></div>';html+=UNIQUE_COLORS.map(function(c){return'<div class="palette-swatch'+(selected===c?' active':'')+'" style="background:'+c+'" title="'+c+'" onclick="selectPeColor(\''+c+'\')"></div>';}).join('');el.innerHTML=html;}
 function selectPeColor(c){document.getElementById('peColor').value=c;renderColorSwatches(c);}
-function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span>'+escH(proj.name)+'</div>';}).join('');}
+function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')" title="'+escH(proj.name)+'"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span><span class="project-tag-name">'+escH(proj.name)+'</span></div>';}).join('');}
 function setMode(m){
   var prev=trackerMode;
   trackerMode=m;
@@ -2789,7 +2790,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.12.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.12.3';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -3874,15 +3875,23 @@ attachDraftListeners();
 // Restore any draft for today on load
 (function(){applyDraftOrLog(todayStr());})();
 document.getElementById('newTaskTitle').addEventListener('keydown',function(e){if(e.key==='Enter')addTask();});
-document.getElementById('remTitleInput').addEventListener('keydown',function(e){if(e.key==='Enter')addUserReminder();});
-document.getElementById('evTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveManualEvent();});
-['evDate','evStart','evEnd','evNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveManualEvent();});});
+['remTitleInput','remDateInput'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')addUserReminder();});});
 document.getElementById('eventModal').addEventListener('click',function(e){if(e.target===this)closeEventModal();});
-document.getElementById('qtTitle').addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});
-['qtDue','qtNotes'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')saveQuickTask();});});
 document.getElementById('quickTaskModal').addEventListener('click',function(e){if(e.target===this)closeQuickTaskModal();});
+document.getElementById('qtNotes').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveQuickTask();}});
 document.getElementById('dayPlanOverlay').addEventListener('click',function(e){if(e.target===this)closeDayPlan();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();closeDayPlan();skipTour();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
+// Global: Enter submits the focused input/select inside an open modal, via that modal's own primary button
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter'||e.shiftKey)return;
+  var t=e.target;
+  if(!t||(t.tagName!=='INPUT'&&t.tagName!=='SELECT'))return;
+  if(t.tagName==='INPUT'&&['checkbox','radio','button','file','color','range'].indexOf(t.type)!==-1)return;
+  var modal=t.closest('.ev-modal, .dp-modal, .link-edit-modal-inner');
+  if(!modal)return;
+  var btn=modal.querySelector('.primary-btn, .dp-btn.primary');
+  if(btn){e.preventDefault();btn.click();}
+});
 (async function(){
   if(window.showSaveFilePicker){
     var _bootHandle=await getSyncHandle();
@@ -4258,6 +4267,6 @@ function exportByWeek(){
     </div>
   </div>
 </div>
-<div id="linkEditModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;"><div style="background:var(--card);border-radius:12px;padding:24px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,.18)"><div id="linkModalTitle" style="font-weight:600;font-size:15px;margin-bottom:16px">Add Link</div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Label</label><input id="linkEditLabel" type="text" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:12px"><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">URL</label><input id="linkEditUrl" type="text" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:12px"><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description</label><input id="linkEditDesc" type="text" placeholder="Optional description…" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:16px"><div style="display:flex;gap:8px"><button class="btn primary-btn sm" onclick="saveLinkEdit()">Save</button><button class="btn secondary-btn sm" onclick="closeLinkEdit()">Cancel</button></div></div></div>
+<div id="linkEditModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;"><div class="link-edit-modal-inner" style="background:var(--card);border-radius:12px;padding:24px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,.18)"><div id="linkModalTitle" style="font-weight:600;font-size:15px;margin-bottom:16px">Add Link</div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Label</label><input id="linkEditLabel" type="text" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:12px"><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">URL</label><input id="linkEditUrl" type="text" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:12px"><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description</label><input id="linkEditDesc" type="text" placeholder="Optional description…" style="width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;margin-bottom:16px"><div style="display:flex;gap:8px"><button class="btn primary-btn sm" onclick="saveLinkEdit()">Save</button><button class="btn secondary-btn sm" onclick="closeLinkEdit()">Cancel</button></div></div></div>
 </body>
 </html>
