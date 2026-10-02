@@ -5,6 +5,53 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.13.3] — 2026-10-02
+
+### Fixed
+- **Editing an existing timesheet entry from Log History could silently load the wrong (zeroed) values instead of what you'd actually logged** — "Edit" set the new date before switching back to the Timesheet tab, and the tab-switch's own auto-save-draft step then mis-tagged your *current* on-screen form state as a draft for the date you were about to open, which then took priority over the real saved entry. Fixed by switching tabs first, so the draft is correctly attributed to whichever date was previously showing. This could make an edited entry appear to save fine but actually overwrite real hours with zeros — worth double-checking anything edited recently
+
+### Changed
+- **Week view's hover-note tooltip moved from the hours cell to the day column header** (e.g. "Mon 28") — the note belongs to the day, not to a specific project, so this avoids implying otherwise
+
+---
+
+## [0.13.2] — 2026-10-02
+
+### Changed
+- **Week view's ‹ Week N › navigator moved up into the Log History control row** — it now sits inline on the left, in the space the search/period filters leave open while hiding in Week view, instead of taking its own row above the table
+
+---
+
+## [0.13.1] — 2026-10-02
+
+### Changed
+- **Week view (renamed from "Replicon")** — the toggle now just says "Week"
+- **Switching to Week view no longer shifts the other Log History buttons left** — the search/period controls and the now-irrelevant Activity toggle hold their position instead of collapsing away, so List/Week/Export stay put
+
+### Added
+- **Daily total row in Week view** — a bold "Total" row at the bottom sums every project/activity row per day, plus a week grand total
+- **Hover a day's hours in Week view to see that day's log note** — cells with a note get a dotted underline and show the full note as a tooltip
+
+---
+
+## [0.13.0] — 2026-10-02
+
+### Added
+- **Replicon view for Log History** — a "List / Replicon" toggle next to the existing history list now shows a week-at-a-time breakdown (Week 40: 28 Sep – 2 Oct, one row per project + activity, hours by day, with a total column), reusing the same grouping already used for the "By Week — Replicon" CSV export. Prev/next arrows step through weeks
+- **Activity field on Day Plan blocks and on meetings** — both now have an optional Activity dropdown (same list as Log Time's own activity field). When you import planned hours into Log Time, the activity pulls through automatically alongside the hours, instead of just the hours on their own
+
+### Notes
+- If a project has planned blocks or meetings tagged with more than one distinct activity on the same day, Import currently carries through the first one found and sums all the hours together under it, rather than splitting them into separate activity lines — a deliberate simplification for now
+
+---
+
+## [0.12.4] — 2026-10-02
+
+### Fixed
+- **Reminder banner colors didn't match between "System" appearance and explicit Dark mode** — System mode was falling back to a generic blue-gray card color instead of the intended warm amber/orange "reminder" treatment, and was missing dark styling entirely for the Snooze/Dismiss buttons and the stacked-reminders count badge and peek layers. Also cleaned up a leftover malformed CSS block (a stray unclosed brace had silently swallowed a set of duplicate dark-mode reminder rules) found while tracking this down. All three appearance modes now render reminders identically where intended
+
+---
+
 ## [0.12.3] — 2026-09-23
 
 ### Fixed
