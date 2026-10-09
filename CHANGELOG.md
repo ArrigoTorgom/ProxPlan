@@ -5,6 +5,23 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.13.5] — 2026-10-09
+
+### Fixed
+- **Week view overlapped on small screens** — the ‹ Week N › navigator sat on top of the List/Week toggle when the Log History card was narrow. It's now a normal part of the control row, so it moves onto its own line instead of overlapping, while the List/Week/Export buttons keep their positions on wide screens
+
+### Changed
+- **On narrow cards the Week view's day headers shrink to single letters** (M T W T F S/S) so they no longer run into each other; wide cards keep the full names
+
+---
+
+## [0.13.4] — 2026-10-08
+
+### Changed
+- **Week view is more compact, giving Project and Activity names much more room** — day columns are narrower with the date stacked under the day name, hours are centred in their column, and Saturday and Sunday are combined into a single "Sat/Sun" column (their hours are summed; hover the header to see either day's note). No horizontal scrolling needed
+
+---
+
 ## [0.13.3] — 2026-10-02
 
 ### Fixed
