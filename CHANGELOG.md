@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.13.6] — 2026-10-09
+
+### Changed
+- **Week view rows are now vertically centred** — hours, project and activity text all line up in the middle of the row, so entries with two-line names no longer leave their hours sitting at the top
+
+---
+
 ## [0.13.5] — 2026-10-09
 
 ### Fixed
