@@ -197,7 +197,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .dp-block .t{font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .dp-block .g{color:var(--muted);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .dp-block .rt{font-size:9px;color:var(--muted);}
-.dp-resize{position:absolute;left:0;right:0;bottom:0;height:6px;cursor:ns-resize;}
+.dp-resize,.dp-resize-top{position:absolute;left:0;right:0;height:var(--hh,8px);cursor:ns-resize;display:flex;align-items:center;justify-content:center;z-index:3;}
+.dp-resize{bottom:0;}
+.dp-resize-top{top:0;}
+.dp-resize::after,.dp-resize-top::after{content:'';width:26px;height:3px;border-radius:2px;background:var(--blk-color,var(--primary));opacity:0;transition:opacity .12s;}
+.dp-resize:hover::after,.dp-resize-top:hover::after,.dp-resize.on::after,.dp-resize-top.on::after{opacity:.9;}
 .dp-ghost{position:absolute;left:6px;right:6px;border-radius:5px;border:1.5px dashed var(--primary);background:var(--primary-light);opacity:.7;z-index:3;pointer-events:none;}
 .dp-meeting{position:absolute;left:6px;right:6px;border-radius:5px;border-left:3px solid #7c3aed;background:#f5f3ff;padding:3px 6px;font-size:11px;line-height:1.3;overflow:hidden;cursor:pointer;z-index:2;}
 .dp-meeting.assigned{border-left-color:var(--blk-color,#7c3aed);background:var(--blk-bg,#f5f3ff);}
@@ -827,7 +831,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
       <button class="btn secondary-btn sm" onclick="openAddEvent(dpDate)">+ Meeting</button>
       <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
     </div>
-    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block to move it, or its bottom edge to resize.</span></div>
+    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block to move it, or drag its top or bottom edge to change the duration.</span></div>
     <div class="dp-body">
       <div class="dp-hours" id="dpHours"></div>
       <div class="dp-grid" id="dpGrid"></div>
@@ -889,6 +893,9 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 <div id="photoLightbox" class="ev-modal-overlay" onclick="if(event.target===this)closePhotoLightbox()">
   <div style="position:relative;max-width:92vw;max-height:90vh">
     <button onclick="closePhotoLightbox()" title="Close" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;border:none;background:#fff;color:#233b46;font-size:16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;padding:0;z-index:1">&#215;</button>
+    <button id="photoPrevBtn" onclick="photoLightboxStep(-1)" title="Previous photo (Left arrow)" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,.5);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0 0 2px;z-index:1">&#8249;</button>
+    <button id="photoNextBtn" onclick="photoLightboxStep(1)" title="Next photo (Right arrow)" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,.5);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0 0 2px;z-index:1">&#8250;</button>
+    <div id="photoCounter" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:2px 10px;border-radius:12px;display:none;z-index:1"></div>
     <img id="photoLightboxImg" src="" style="max-width:92vw;max-height:90vh;display:block;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.35)">
   </div>
 </div>
@@ -1197,14 +1204,14 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   <!-- Version & Feedback -->
   <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.13.6</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.15.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.13.6%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.15.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1561,10 +1568,11 @@ function dpBlockTotalsForDate(ds){
 }
 
 var DP_GRID_START=7*60,DP_GRID_END=19*60,DP_HOUR_PX=44,DP_PX_PER_MIN=DP_HOUR_PX/60,DP_SNAP=15;
-var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null;
+var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null;
 
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
 function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
+function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&m?' ':'')+(m?m+'m':'');}
 function dpPersist(){setBlocksForDate(dpDate,dpBlocks);}
 
 function openDayPlan(ds,blockId){
@@ -1620,11 +1628,13 @@ function renderDayPlan(){
     var c=projColorForName(b.proj);
     var top=(b.start-DP_GRID_START)*DP_PX_PER_MIN,h=b.dur*DP_PX_PER_MIN;
     var sel=dpSelectedBlock===b.id?' selected':'';
-    return'<div class="dp-block'+sel+'" style="top:'+top+'px;height:'+h+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
+    var hh=Math.max(3,Math.min(8,Math.floor(h/3)));
+    return'<div class="dp-block'+sel+'" title="'+escH(b.proj)+' ('+dpFmtDur(b.dur)+')" style="top:'+top+'px;height:'+h+'px;--hh:'+hh+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
+      +'<div class="dp-resize-top'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='top'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'top\')"></div>'
       +'<div class="t">'+escH(b.proj)+'</div>'
       +(b.goal?'<div class="g">'+escH(b.goal)+'</div>':'')
-      +'<div class="rt">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+'</div>'
-      +'<div class="dp-resize" onmousedown="dpStartResize(event,\''+b.id+'\')"></div>'
+      +'<div class="rt">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</div>'
+      +'<div class="dp-resize'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='bottom'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'bottom\')"></div>'
     +'</div>';
   }).join('');
 
@@ -1698,20 +1708,27 @@ function dpStartMove(e,id){
   document.addEventListener('mousemove',onMove);
   document.addEventListener('mouseup',onUp);
 }
-function dpStartResize(e,id){
+function dpStartResize(e,id,edge){
   e.stopPropagation();e.preventDefault();
   var b=dpBlocks.find(function(x){return x.id===id;});
   if(!b)return;
-  var startY=e.clientY,origDur=b.dur;
+  var startY=e.clientY,origStart=b.start,origEnd=b.start+b.dur;dpResizing={id:id,edge:edge};
   function onMove(ev){
     var deltaMin=dpSnap((ev.clientY-startY)/DP_PX_PER_MIN);
-    b.dur=Math.max(DP_SNAP,Math.min(DP_GRID_END-b.start,origDur+deltaMin));
+    if(edge==='top'){
+      var ns=Math.max(DP_GRID_START,Math.min(origEnd-DP_SNAP,origStart+deltaMin));
+      b.start=ns;b.dur=origEnd-ns;
+    }else{
+      b.dur=Math.max(DP_SNAP,Math.min(DP_GRID_END-origStart,(origEnd-origStart)+deltaMin));
+    }
     renderDayPlan();
   }
   function onUp(){
     document.removeEventListener('mousemove',onMove);
     document.removeEventListener('mouseup',onUp);
+    dpResizing=null;
     dpPersist();
+    renderDayPlan();
   }
   document.addEventListener('mousemove',onMove);
   document.addEventListener('mouseup',onUp);
@@ -1731,18 +1748,21 @@ function renderDpEditor(){
   var actOptions='<option value="">Choose an activity...</option>'+ACTIVITIES.map(function(a){
     return'<option value="'+escA(a)+'"'+(a===b.activity?' selected':'')+'>'+escH(a)+'</option>';
   }).join('');
+  var keep=(el.dataset.for===String(dpSelectedBlock)&&document.getElementById('dpProj'))?{p:document.getElementById('dpProj').value,a:document.getElementById('dpActivity').value,g:document.getElementById('dpGoal').value}:null;
   el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'</div>'
     +'<select id="dpProj">'+options+'</select>'
     +'<select id="dpActivity">'+actOptions+'</select>'
     +'<div class="dp-editor-row">'
     +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'">'
-    +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+'</span>'
+    +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'
     +'</div>'
     +'<div class="dp-editor-actions">'
     +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
     +'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button>'
     +'<button class="dp-btn primary" onclick="dpSaveEdit()">'+(isNew?'Add block':'Save changes')+'</button>'
     +'</div>';
+  el.dataset.for=String(dpSelectedBlock);
+  if(keep){document.getElementById('dpProj').value=keep.p;document.getElementById('dpActivity').value=keep.a;document.getElementById('dpGoal').value=keep.g;}
 }
 function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 function dpSaveEdit(){
@@ -2613,9 +2633,25 @@ function renderProjectImages(projectName){
     }).join('');
   }).catch(function(){el.innerHTML='<div class="proj-empty">Photo storage unavailable in this browser.</div>';});
 }
+var _lbIdx=0;
 function openPhotoLightbox(url){
-  document.getElementById('photoLightboxImg').src=url;
+  _lbIdx=Math.max(0,_projImgUrls.indexOf(url));
   document.getElementById('photoLightbox').classList.add('open');
+  showPhotoLightbox(url);
+}
+function showPhotoLightbox(url){
+  document.getElementById('photoLightboxImg').src=url;
+  var n=_projImgUrls.length,multi=n>1;
+  ['photoPrevBtn','photoNextBtn'].forEach(function(id){document.getElementById(id).style.display=multi?'flex':'none';});
+  var c=document.getElementById('photoCounter');
+  c.style.display=multi?'block':'none';
+  c.textContent=(_lbIdx+1)+' / '+n;
+}
+function photoLightboxStep(d){
+  var n=_projImgUrls.length;
+  if(n<2)return;
+  _lbIdx=(_lbIdx+d+n)%n;
+  showPhotoLightbox(_projImgUrls[_lbIdx]);
 }
 function closePhotoLightbox(){
   document.getElementById('photoLightbox').classList.remove('open');
@@ -2822,7 +2858,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.13.6';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.15.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -3991,6 +4027,12 @@ document.getElementById('quickTaskModal').addEventListener('click',function(e){i
 document.getElementById('qtNotes').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveQuickTask();}});
 document.getElementById('dayPlanOverlay').addEventListener('click',function(e){if(e.target===this)closeDayPlan();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();closeDayPlan();skipTour();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
+document.addEventListener('keydown',function(e){
+  var lb=document.getElementById('photoLightbox');
+  if(!lb||!lb.classList.contains('open'))return;
+  if(e.key==='ArrowLeft'){e.preventDefault();photoLightboxStep(-1);}
+  else if(e.key==='ArrowRight'){e.preventDefault();photoLightboxStep(1);}
+});
 // Global: Enter submits the focused input/select inside an open modal, via that modal's own primary button
 document.addEventListener('keydown',function(e){
   if(e.key!=='Enter'||e.shiftKey)return;

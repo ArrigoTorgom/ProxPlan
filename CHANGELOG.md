@@ -5,6 +5,38 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.15.0] — 2026-10-12
+
+### Added
+- **Previous / next buttons when viewing a project photo** — with a photo open you can now step through that project's other photos with ‹ and › buttons (or the left/right arrow keys) instead of closing and reopening each one. A small "2 / 5" counter shows where you are, and it wraps around at either end. The buttons stay hidden if a project only has one photo
+
+---
+
+## [0.14.2] — 2026-10-12
+
+### Changed
+- **Day Plan resize marker now appears only on the edge you're hovering or dragging** — instead of marking both the top and bottom of the selected block, a small grip shows on just the edge you're about to adjust (and stays while you drag). The selected block keeps its outline so it's still clear which of several adjacent blocks you're editing
+
+---
+
+## [0.14.1] — 2026-10-12
+
+### Changed
+- **Removed the grip marks from Day Plan block edges** — the top and bottom edges still resize by dragging (the cursor changes to a resize arrow when you hover them), just without the extra visual marker
+
+---
+
+## [0.14.0] — 2026-10-12
+
+### Added
+- **Drag to change a plan block's duration from either edge** — each block in the Day Plan now has a grip handle on its top and bottom edge (visible when you hover or select the block). Drag the bottom edge to end earlier or later, or the top edge to start earlier or later, in 15-minute steps with the opposite edge staying put. The new duration is saved as soon as you let go
+- **Durations are shown on blocks and in the editor**, e.g. "10AM - 11:30AM (1h 30m)", so you can see the length as you drag
+
+### Fixed
+- **Resizing or moving a block while the editor was open wiped whatever you'd typed in the project, activity or goal fields** — those now survive the drag
+
+---
+
 ## [0.13.6] — 2026-10-09
 
 ### Changed
