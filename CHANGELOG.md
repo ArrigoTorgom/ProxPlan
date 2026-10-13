@@ -5,6 +5,61 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.18.0] — 2026-10-13
+
+### Added
+- **Up Next in the header** — on every tab except This Week, the week indicator in the top right is replaced by an Up Next pill showing what's current or coming, e.g. "Design review in 25 min", "Now: Tender A · until 11AM", or the next task when nothing is scheduled. It looks ahead to tomorrow and the days after once today is finished, and shows "Day off" on leave days. Click it for Now, Next, and Suggested tasks; click a block or meeting to open it in the day plan. Updates every 30 seconds. On This Week the week arrows and picker are back as before
+- **Up Next panel in the Day Plan** — a side panel beside the timeline lists what's current and coming up, the free time left in the working day (8AM to 5PM, from now when viewing today), and suggested tasks ranked by overdue, due today, due soon, and priority. "+ Plan" drops a block for the task into the next free slot, using the task's project and title as the goal (if the task has no active project, the new-block form opens pre-filled so you can choose one). Tasks already planned that day drop off the suggestions. On narrow screens the panel sits under the timeline
+
+### Changed
+- **Overlapping plan items now sit side by side** — blocks and meetings that overlap in time share the width in separate columns instead of covering each other, so each can be clicked, dragged, or resized on its own. The day plan window is wider to fit the side panel
+
+---
+
+## [0.17.2] — 2026-10-13
+
+### Fixed
+- **Log History List/Week toggle out of sync** — the app remembers whether you last used List or Week view, but after reopening, the buttons always showed List as selected even when the Week view was displayed. The buttons now always match the view shown
+
+---
+
+## [0.17.1] — 2026-10-13
+
+### Added
+- **Project / Tender Codes in exports** — the By Week (Replicon) export now has a Code column next to Project, filled from each project's Project / Tender Code (including your leave cost code on leave rows). Projects without a code are left blank, and if none of the exported projects have a code the column is left out altogether. The full period list export shows the code in the project column headers, e.g. "Tender A [P123]"
+
+---
+
+## [0.17.0] — 2026-10-13
+
+### Added
+- **Leave balance** — set your starting balance and the date it applies to in Settings > Leave, and the app works out your balance from there: month-end accruals (days per month, or days per year spread over 12 months) minus leave taken since that date. Only the leave types ticked under "Count against the balance" are deducted, and public holidays never are. Leave on or before the "as at" date is assumed to be in your starting balance
+- **Leave chip on the Timesheet tab** (Log Time header) shows your balance today, plus the projected balance once leave you've booked ahead is taken, e.g. "Leave: 10.25 days (8.75 after booked)". It turns red if the balance goes negative and opens the Leave settings when clicked. Until a starting balance is entered it reads "Set up leave balance"
+- **Breakdown in Settings** — balance today, accrued since the as-at date, leave taken, booked ahead and the projected balance
+- **Green highlight for leave and public holidays** on the This Week day cards and on both To Do month calendars (hover a day to see what it is; the legend now includes Leave). Public holidays are highlighted even before you book them, and clicking an unbooked holiday on a day card opens the leave form already set to Public Holiday
+
+---
+
+## [0.16.1] — 2026-10-13
+
+### Changed
+- **Leave no longer appears as a project** — it is hidden from the project pills, Projects tab, allocation grid and dropdowns. Leave hours are still saved in your timesheet entries (and show in Log History and the Week view) against your leave cost code
+- **Log Time shows a read-only leave line** for any day with leave booked (type, hours, and an "Edit leave" button), and the day total includes those leave hours. Saving a half-day entry keeps the leave hours intact
+- **Leave is left out of the Hours by Project chart** (project and activity views)
+- A project can no longer be created or renamed to the same name as the hidden Leave project
+
+---
+
+## [0.16.0] — 2026-10-13
+
+### Added
+- **Leave settings (Settings tab)** — a new Leave section holds your leave cost code (defaults to P011 and can be changed any time), hours per leave day, your current leave balance with an "as at" date, and your accrual (days per month, or days per year spread over 12 months, credited at month end). You can also choose which leave types count against the balance (Vacation Leave by default). These feed the leave balance, which comes in the next update
+- **Log leave and public holidays so timesheet days are never blank** — a new "+ Leave" button on each day card (and "Log leave" in Settings) books leave to your Leave project in the timesheet with the leave type as the activity. Pick a type, a single day or a date range, and a full or half day. Ranges skip weekends and public holidays. A half day is added alongside any time you've already logged; a full day asks before replacing existing time (and is skipped, with a note, inside a multi-day range). Click the green leave marker on a day to change it or remove it
+- **Public holidays are pre-loaded for South Africa (2026 and 2027)** — a list in the Leave section shows which are booked, and "Book weekday holidays" records them to the same Leave cost code as Public Holiday, without counting them as leave
+- A "Leave" project is created automatically the first time you set up or log leave; it carries your leave cost code, and changing the cost code in Settings updates it
+
+---
+
 ## [0.15.0] — 2026-10-12
 
 ### Added
