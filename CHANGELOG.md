@@ -5,6 +5,57 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.19.1] — 2026-10-14
+
+### Changed
+- **Sync section has an icon** — it was the only Settings section without one, which pushed its title out of line with the others
+
+---
+
+## [0.19.0] — 2026-10-14
+
+### Changed
+- **Settings is now two columns, with collapsible sections** — Appearance, Import Calendar, Activity List and Backup sit on the left, and Leave and Sync on the right, each in its own card. Click a section's title (or press Enter or Space on it) to minimise or expand it; the app remembers which ones you've closed. Below 900px wide the columns stack into one
+- The Leave section's Public holidays list is its own collapsible part inside it, closed by default. Opening Leave settings from the leave chip on the Timesheet tab expands the section if it was minimised
+
+---
+
+## [0.18.5] — 2026-10-14
+
+### Fixed
+- **Week picker position stuck after resizing** — if the calendar was open (or the window was resized and the calendar opened again straight after), it kept the position it was given at the old screen width. It now re-aligns whenever the window width changes, between the centred layout on wide screens and the right-aligned one on narrow screens
+
+---
+
+## [0.18.4] — 2026-10-14
+
+### Changed
+- **Week picker dropdown lines up with the week pill on narrow screens** — at 920px wide and below, the calendar that opens from the week pill on This Week now has its right edge aligned with the pill, the same as the Up Next dropdown, and is kept inside the screen. On wider screens it stays centred under the pill
+
+---
+
+## [0.18.3] — 2026-10-14
+
+### Changed
+- **Up Next dropdown back to its original position** — it opens under the pill with its right edge lined up with the pill again, and the pointer and narrow-screen centring from 0.18.1 and 0.18.2 are removed. The compact pill on narrow screens stays
+
+---
+
+## [0.18.2] — 2026-10-14
+
+### Changed
+- **Up Next card is centred on narrow screens** — at 920px wide and below, the dropdown sits centred on the page with equal side margins, and its pointer still lines up under the pill. On wider screens it stays under the pill
+
+---
+
+## [0.18.1] — 2026-10-14
+
+### Changed
+- **Up Next pill is compact on narrow screens** — like the week pill on This Week, it shrinks to the status dot plus a short label ("5 min", "Now", "1PM", "Task") below 920px wide. The full title is still in the dropdown
+- **Up Next dropdown lines up with the pill** — the card is now centred under the pill as far as the screen edge allows, and a small pointer on the card's top edge sits directly under the pill
+
+---
+
 ## [0.18.0] — 2026-10-13
 
 ### Added
