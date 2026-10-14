@@ -5,6 +5,29 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.19.4] — 2026-10-14
+
+### Changed
+- **The guided tour covers everything added recently** — it's now 12 steps. Updated: This Week (the + Leave button and green leave and holiday days), Plan your day (resizing, overlapping blocks side by side, the Up Next panel and + Plan suggestions), Log Time (the leave line and balance chip), To Do (leave on the month calendars), Projects (flipping through photos), and Settings (two collapsible columns). New: Up Next in the header, Log History (List and Week views, CSV export with project codes), and Leave settings
+
+---
+
+## [0.19.3] — 2026-10-14
+
+### Fixed
+- **Header no longer shifts at the start of a scroll** — it sat 12px from the top but locked in at 8px, so it slid up 4px when you first scrolled. It now locks exactly where it sits, so only the page content moves
+
+---
+
+## [0.19.2] — 2026-10-14
+
+### Changed
+- **Settings section titles no longer have icons** — they're plain text now, to match the rest of the app
+- **Up Next dropdown has a single line above its buttons** — the last suggested task's underline and the line above the To Do list / Open day plan buttons were doubling up; only one remains
+- **Nothing shows above the header bar when you scroll** — the small gap above the sticky header used to let page content peek through; it's now filled so the page only shows from the header downwards
+
+---
+
 ## [0.19.1] — 2026-10-14
 
 ### Changed
