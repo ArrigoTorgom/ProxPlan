@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.19.6] — 2026-10-15
+
+### Added
+- **Meetings carry a purple Meeting tag in the day plan** — the same tag Up Next uses, shown beside the meeting title so meetings stand apart from planned blocks at a glance. Long titles are shortened to keep the tag visible; in the narrowest overlap columns it's hidden to save space
+
+---
+
+## [0.19.5] — 2026-10-15
+
+### Fixed
+- **Short blocks and meetings in the day plan are no longer cut off** — 30-minute items now spread across a single row (title, goal or project, and time side by side), and 45-minute to 1-hour items use two rows (title and time, then goal). Taller items look the same as before
+
+---
+
 ## [0.19.4] — 2026-10-14
 
 ### Changed
