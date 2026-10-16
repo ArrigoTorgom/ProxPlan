@@ -293,6 +293,12 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .alloc-row.drop-top::before,.alloc-row.drop-bottom::before{content:'';position:absolute;left:4px;right:4px;height:2px;background:var(--primary);border-radius:1px;z-index:5;}
 .alloc-row.drop-top::before{top:-1px;}
 .alloc-row.drop-bottom::before{bottom:-1px;}
+.proj-link-row{position:relative;}
+.proj-link-row .proj-drag-handle{margin-top:0;}
+.proj-link-row.dragging{opacity:.4;}
+.proj-link-row.drop-top::before,.proj-link-row.drop-bottom::before{content:'';position:absolute;left:0;right:0;height:2px;background:var(--primary);border-radius:1px;z-index:5;}
+.proj-link-row.drop-top::before{top:-1px;}
+.proj-link-row.drop-bottom::before{bottom:-1px;}
 .alloc-label{flex:1 1 auto;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;min-width:40px;}
 .alloc-act-wrap{position:relative;flex-shrink:0;z-index:1;}.alloc-act-wrap:focus-within{z-index:50;}.alloc-lines{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:0;}.alloc-act-col{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;}.alloc-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}.alloc-line{padding-right:24px;}.add-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1.5px solid var(--primary);background:var(--bg);color:var(--primary);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:0;z-index:60;flex-shrink:0;}.add-extra-btn:hover{opacity:1;}.alloc-row:hover .add-extra-btn{opacity:1;}.rm-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0 1px 0;z-index:60;opacity:0;transition:opacity .15s;}.rm-extra-btn:hover{opacity:1;border-color:var(--high);color:var(--high);}.alloc-extra-line:hover .rm-extra-btn{opacity:1;}
 .alloc-activity-input{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;width:160px;}
@@ -856,7 +862,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .set-sec.collapsed .set-sec-body,.set-sub.collapsed .set-sub-body{display:none;}
 .set-sub{margin-top:14px;border-top:1px solid var(--border);padding-top:10px;}
 .set-sub-body{margin-top:8px;}
-.header::before{content:'';position:absolute;left:0;right:0;top:-12px;height:12px;background:var(--bg);pointer-events:none;}
+.header::before{content:'';position:absolute;left:0;right:0;top:-14px;height:13px;background:var(--bg);pointer-events:none;}
 .dp-meeting .t{display:flex;align-items:center;gap:5px;}
 .dp-meeting .t .tt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dp-meeting .t .dp-tag{margin-left:0;flex-shrink:0;line-height:1.3;}
@@ -1318,7 +1324,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     </div>
   </div>
   <div class="card set-sec" data-sec="backup">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('backup')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('backup')}"><span class="set-chev"></span><span class="set-sec-title">Backup</span></div>
+    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('backup')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('backup')}"><span class="set-chev"></span><span class="set-sec-title">Backup &amp; Sync</span></div>
     <div class="set-sec-body">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
       <button class="btn secondary-btn sm" onclick="exportAllData()">Export data backup</button>
@@ -1329,6 +1335,12 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
       <input id="backupFilename" type="text" placeholder="planner-backup" style="border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:12px;outline:none;width:180px" oninput="localStorage.setItem('plannerBackupName',this.value)">
       <span style="font-size:11px;color:var(--muted)">.json — data stored in this browser</span>
     </div>
+      <div class="set-sub"><div class="set-sec-title" style="margin-bottom:8px">Sync</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Keep your data backed up to a file you choose - point it at a folder OneDrive (or similar) syncs to follow you across devices. Chrome or Edge only.</div>
+    <div id="syncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project Photos in sync too, added and removed automatically as you use the Photos card.</div>
+    <div id="photoSyncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1362,27 +1374,18 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     </div>
     </div>
   </div>
-  <div class="card set-sec" data-sec="sync">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('sync')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('sync')}"><span class="set-chev"></span><span class="set-sec-title">Sync</span></div>
-    <div class="set-sec-body">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Keep your data backed up to a file you choose - point it at a folder OneDrive (or similar) syncs to follow you across devices. Chrome or Edge only.</div>
-    <div id="syncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project Photos in sync too, added and removed automatically as you use the Photos card.</div>
-    <div id="photoSyncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
-    </div>
-  </div>
 </div>
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.19.6</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.20.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.19.6%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.20.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3128,7 +3131,7 @@ function renderProjectDetail(name){
   var today=todayStr();
   var links=proj.links||[];
   var linksHtml=links.length?links.map(function(lk,i){
-    return'<div class="proj-link-row"><a class="proj-link-url" href="'+escH(lk.url)+'" target="_blank" rel="noopener">'+escH(lk.label)+'</a>'+'<span class="proj-link-desc-txt">'+escH(lk.description||'')+'</span>'+'<div class="proj-link-actions"><button class="task-act-btn" onclick="editProjLink(\''+escA(name)+'\','+i+')" title="Edit">Edit</button><button class="task-act-btn del" onclick="deleteProjLink(\''+escA(name)+'\','+i+')">Delete</button></div></div>';
+    return'<div class="proj-link-row" data-link-idx="'+i+'">'+(links.length>1?'<div class="proj-drag-handle" onmousedown="startLinkRowDrag(event,\''+escA(name)+'\','+i+')" title="Drag to reorder">&#8942;&#8942;</div>':'')+'<a class="proj-link-url" href="'+escH(lk.url)+'" target="_blank" rel="noopener">'+escH(lk.label)+'</a>'+'<span class="proj-link-desc-txt">'+escH(lk.description||'')+'</span>'+'<div class="proj-link-actions"><button class="task-act-btn" onclick="editProjLink(\''+escA(name)+'\','+i+')" title="Edit">Edit</button><button class="task-act-btn del" onclick="deleteProjLink(\''+escA(name)+'\','+i+')">Delete</button></div></div>';
   }).join(''):'<div class="proj-empty">No links yet.</div>';
   var logs=getLogs();var totalHrs=0;logs.forEach(function(l){if(l.allocs&&l.allocs[name])totalHrs+=(l.allocs[name].hrs||0);});
   var i=projects.findIndex(function(p){return p.name===name;});
@@ -3248,6 +3251,51 @@ function addProjLink(name){
   saveProjects(projects);
   label.value='';url.value='';
   renderProjectDetail(name);renderProjectsTab();
+}
+function startLinkRowDrag(e,name,idx){
+  e.preventDefault();
+  var rows=Array.from(document.querySelectorAll('#projDetail .proj-link-row[data-link-idx]'));
+  var startRow=rows.find(function(r){return parseInt(r.dataset.linkIdx,10)===idx;});
+  if(!startRow)return;
+  startRow.classList.add('dragging');
+  var targetIdx=null,targetBefore=true;
+  function clearIndicators(){rows.forEach(function(r){r.classList.remove('drop-top','drop-bottom');});}
+  function onMove(ev){
+    var overRow=rows.find(function(r){
+      if(r===startRow)return false;
+      var rect=r.getBoundingClientRect();
+      return ev.clientY>=rect.top&&ev.clientY<=rect.bottom;
+    });
+    clearIndicators();
+    if(overRow){
+      var rect=overRow.getBoundingClientRect();
+      var before=ev.clientY<rect.top+rect.height/2;
+      overRow.classList.add(before?'drop-top':'drop-bottom');
+      targetIdx=parseInt(overRow.dataset.linkIdx,10);
+      targetBefore=before;
+    } else {
+      targetIdx=null;
+    }
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    startRow.classList.remove('dragging');
+    clearIndicators();
+    if(targetIdx!==null&&targetIdx!==idx)reorderProjLink(name,idx,targetIdx,targetBefore);
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function reorderProjLink(name,fromIdx,targetIdx,before){
+  var projects=getProjects();
+  var p=projects.find(function(x){return x.name===name;});
+  if(!p||!p.links||!p.links[fromIdx]||!p.links[targetIdx])return;
+  var moved=p.links.splice(fromIdx,1)[0];
+  if(targetIdx>fromIdx)targetIdx--;
+  p.links.splice(before?targetIdx:targetIdx+1,0,moved);
+  saveProjects(projects);
+  renderProjectDetail(name);
 }
 function deleteProjLink(name,linkIdx){
   var projects=getProjects();
@@ -3632,7 +3680,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.19.6';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.20.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{

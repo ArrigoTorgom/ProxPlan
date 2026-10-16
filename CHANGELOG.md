@@ -5,6 +5,19 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.20.0] — 2026-10-16
+
+### Added
+- **Drag to reorder project links** — on the Projects tab, each link in Links and Resources has the same grip handle as the project rows on the Timesheet tab. Drag it up or down and a line shows where it will land. The order is saved with the project, and Edit and Delete still act on the right link afterwards
+
+### Changed
+- **Backup and Sync are one card in Settings** — Backup & Sync, with the export and restore buttons first and the sync folders underneath
+
+### Fixed
+- **A hairline of page content showed above the header while scrolling** — the cover strip started 1px too low, leaving the very top row of the screen uncovered. It now reaches the top edge
+
+---
+
 ## [0.19.6] — 2026-10-15
 
 ### Added
