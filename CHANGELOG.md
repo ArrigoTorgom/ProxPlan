@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.22.2] — 2026-10-22
+
+### Fixed
+- **The day quick-action list opens instantly on hover** — it had a deliberate 140ms pause before appearing (meant to stop it flashing as the mouse sweeps across the week), which felt laggy compared with the old buttons. It now opens the moment you hover a day header and switches straight to the next day as you move across; it still waits briefly before closing so you can move onto the list
+
+---
+
+## [0.22.1] — 2026-10-22
+
+### Fixed
+- **Meeting reminders stay in sync when a meeting is moved or resized in the day plan** — the reminder's wording ("Meeting: Design review at 14:30") is rewritten with the new start time, and the reminder banner, the To Do summary and the reminders list refresh straight away. Meetings without a reminder are left alone, and deleting a meeting removes its reminder
+
+---
+
 ## [0.22.0] — 2026-10-22
 
 ### Added
