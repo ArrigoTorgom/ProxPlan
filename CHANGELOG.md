@@ -5,6 +5,53 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.22.0] — 2026-10-22
+
+### Added
+- **Meetings can be dragged and resized in the day plan, like planned blocks** — drag a meeting up or down to move it, or drag its top or bottom edge to change its length (15-minute steps). Times are saved to the meeting as you let go, and its reminder follows the new start time. Click a meeting to select it; a panel below the timeline shows Delete, Close and Edit details
+- **Type to search in the project and activity pickers** — the block editor and the meeting form now use search boxes instead of plain dropdowns. Click to see the full list, or start typing to narrow it (words can be in any order); use the arrow keys and Enter to pick, Tab to accept the highlighted match, or Escape to close the list. Text that doesn't match anything snaps back to your last valid choice
+- **Delete key removes the selected item** — select a planned block or a meeting in the day plan and press Delete (or Backspace) to remove it. Meetings ask for confirmation first. It never fires while you're typing in a field
+
+---
+
+## [0.21.3] — 2026-10-22
+
+### Changed
+- **Day quick actions open on hover, with no + Add button** — hover a day's header on This Week and the icon list appears just below it: Log time, Add event, Add task, Plan day, Log leave (Edit time and Edit leave on days that already have them). It opens after a very short pause, stays open while your mouse is over the day or the list, and closes when you move away, click elsewhere, press Escape, or scroll. Clicking the header itself still opens the day in the timesheet
+- **Touch screens and keyboard:** with no hover available, a small + in the corner of the day header opens the same list on tap. Keyboard users can Tab to that + and press Enter, then use the arrow keys
+- This replaces the pill-style list from 0.21.2
+
+---
+
+## [0.21.2] — 2026-10-22
+
+### Changed
+- **The + Add list uses the original button look** — the list that opens from + Add now shows the small coloured pills from before (+ Log in orange, + Event in purple, + Task and + Leave in green, + Plan in grey), stacked in a floating card. Log reads "Edit time" on days with time logged and Leave reads "Edit leave" on leave days. Behaviour is unchanged: click outside or press Escape to close, arrow keys to move through it
+
+---
+
+## [0.21.1] — 2026-10-21
+
+### Changed
+- **Day card quick actions are a single + Add button with a list** — the radial wheel from 0.21.0 has been replaced. Each day shows a small + Add button; click it for a short list: Log time, Add event, Add task, Plan day, Log leave, each with a coloured icon. Log time reads "Edit time" on days that already have time logged, and Log leave reads "Edit leave" on leave days. Click outside or press Escape to close, and use the arrow keys to move through the list. The list is easy to extend as more actions are added
+
+---
+
+## [0.21.0] — 2026-10-21
+
+### Changed
+- **Quick actions on the day cards are now a radial wheel** — the row of + Log, + Event, + Task, + Plan and + Leave buttons is replaced by a single + on each day. Click it and a wheel opens with the five actions around it (Log time, Add event, Add task, Plan day, Log leave). Choose one by clicking it, by pointing in its direction and clicking anywhere in the wheel, or by pressing the + and dragging towards an option and letting go. Click the centre or outside to close, press Escape to cancel, or use the arrow keys and Enter. The wheel stays on screen near edges, and the Log option reads "Edit time" on days that already have time logged
+- The guided tour's This Week step now describes the wheel
+
+---
+
+## [0.20.1] — 2026-10-20
+
+### Changed
+- **Drag-to-reorder grips only show on hover** — the ⋮⋮ handle on project rows (Timesheet tab) and on links (Projects tab) is hidden until you hover over the row, then fades in. It keeps its space so rows don't shift, stays visible while you're dragging, and is always shown on touch screens where there's no hover
+
+---
+
 ## [0.20.0] — 2026-10-16
 
 ### Added

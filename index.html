@@ -299,6 +299,17 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .proj-link-row.drop-top::before,.proj-link-row.drop-bottom::before{content:'';position:absolute;left:0;right:0;height:2px;background:var(--primary);border-radius:1px;z-index:5;}
 .proj-link-row.drop-top::before{top:-1px;}
 .proj-link-row.drop-bottom::before{bottom:-1px;}
+.proj-drag-handle{opacity:0;transition:opacity .12s;}
+.alloc-row:hover .proj-drag-handle,.proj-link-row:hover .proj-drag-handle,.alloc-row.dragging .proj-drag-handle,.proj-link-row.dragging .proj-drag-handle{opacity:.5;}
+.alloc-row .proj-drag-handle:hover,.proj-link-row .proj-drag-handle:hover{opacity:1;}
+@media(hover:none){.proj-drag-handle{opacity:.5;}}
+.day-add{position:absolute;top:7px;right:8px;width:24px;height:24px;border-radius:50%;border:1.5px solid #f7921e;background:transparent;color:#f7921e;font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;opacity:0;pointer-events:none;}
+.day-add:focus-visible{opacity:1;pointer-events:auto;outline:none;background:#f7921e;color:#fff;}
+@media(hover:none){.day-add{opacity:1;pointer-events:auto;}}
+.dam-menu{position:fixed;z-index:960;min-width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding:4px;}
+.dam-item{display:flex;align-items:center;gap:9px;width:100%;padding:7px 10px;border:none;background:none;border-radius:6px;font-size:13px;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;}
+.dam-item:hover,.dam-item:focus-visible{background:var(--bg);outline:none;}
+.dam-item svg{width:16px;height:16px;flex-shrink:0;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .alloc-label{flex:1 1 auto;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;min-width:40px;}
 .alloc-act-wrap{position:relative;flex-shrink:0;z-index:1;}.alloc-act-wrap:focus-within{z-index:50;}.alloc-lines{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:0;}.alloc-act-col{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;}.alloc-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}.alloc-line{padding-right:24px;}.add-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1.5px solid var(--primary);background:var(--bg);color:var(--primary);cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:0;z-index:60;flex-shrink:0;}.add-extra-btn:hover{opacity:1;}.alloc-row:hover .add-extra-btn{opacity:1;}.rm-extra-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 0 1px 0;z-index:60;opacity:0;transition:opacity .15s;}.rm-extra-btn:hover{opacity:1;border-color:var(--high);color:var(--high);}.alloc-extra-line:hover .rm-extra-btn{opacity:1;}
 .alloc-activity-input{font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;width:160px;}
@@ -867,6 +878,12 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-meeting .t .tt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dp-meeting .t .dp-tag{margin-left:0;flex-shrink:0;line-height:1.3;}
 .dp-meeting.l3 .dp-tag{display:none;}
+.dp-meeting{cursor:grab;}
+.dp-meeting:active{cursor:grabbing;}
+.dp-meeting.selected{outline:2px solid var(--text);outline-offset:-2px;z-index:4;}
+.cb-input{width:100%;box-sizing:border-box;}
+.act-opt.cb-opt{font-size:12px;padding:6px 12px;}
+.act-opt.cb-hl{background:var(--primary-light);}
 .dp-block.s1,.dp-meeting.s1{display:flex;align-items:center;gap:8px;padding:2px 6px;}
 .dp-block.s1 .t,.dp-meeting.s1 .t{flex:0 1 auto;min-width:0;}
 .dp-block.s1 .g,.dp-meeting.s1 .g{flex:1 1 0;min-width:0;}
@@ -929,9 +946,9 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     <div class="ev-field-label">Notes (optional)</div>
     <input id="evNotes" class="ev-input" type="text" placeholder="Location, dial-in, context…">
     <div class="ev-field-label">Project (optional)</div>
-    <select id="evProj" class="ev-input"></select>
+    <input id="evProj" class="ev-input cb-input" type="text" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">
     <div class="ev-field-label">Activity (optional)</div>
-    <select id="evActivity" class="ev-input"></select>
+    <input id="evActivity" class="ev-input cb-input" type="text" data-cb="act" placeholder="Type to search activities..." autocomplete="off" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">
     <div style="font-size:10.5px;color:var(--muted);margin:-6px 0 10px;line-height:1.4">Assign a project to include this meeting's hours in Log Time's "Import from planned hours."</div>
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);margin-top:2px;cursor:pointer"><input type="checkbox" id="evRemind" style="margin:0;cursor:pointer"> Remind me on this day</label>
     <div class="ev-modal-actions">
@@ -950,7 +967,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
       <button class="btn secondary-btn sm" onclick="openAddEvent(dpDate)">+ Meeting</button>
       <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
     </div>
-    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block to move it, or drag its top or bottom edge to change the duration. Overlapping items sit side by side.</span></div>
+    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block or meeting to move it, or drag its top or bottom edge to change the duration. Select an item and press Delete to remove it. Overlapping items sit side by side.</span></div>
     <div class="dp-main">
       <div class="dp-body">
         <div class="dp-hours" id="dpHours"></div>
@@ -1378,14 +1395,14 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.20.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.22.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.20.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.22.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1638,6 +1655,86 @@ function renderPlanner(){
 }
 
 // ── Calendar ──
+var DAM_ITEMS=[
+  {id:'log',name:'Log time',editName:'Edit time',c:'#f7921e',svg:'<circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15.5,14"/>'},
+  {id:'event',name:'Add event',c:'#7c3aed',svg:'<rect x="4" y="5" width="16" height="15" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="9" y1="3" x2="9" y2="7"/><line x1="15" y1="3" x2="15" y2="7"/>'},
+  {id:'task',name:'Add task',c:'#22c55e',svg:'<rect x="4" y="4" width="16" height="16" rx="3"/><polyline points="8,12.5 11,15.5 16,9"/>'},
+  {id:'plan',name:'Plan day',c:'#6b7280',svg:'<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="10" height="6" rx="1.5"/>'},
+  {id:'leave',name:'Log leave',editName:'Edit leave',c:'#16a34a',svg:'<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="5" y1="5" x2="7" y2="7"/><line x1="17" y1="17" x2="19" y2="19"/><line x1="5" y1="19" x2="7" y2="17"/><line x1="17" y1="7" x2="19" y2="5"/>'}
+];
+var _dam=null,_damT=null,_damOpenT=null;
+function dayAddHtml(ds,hasLog,hasLeave){
+  return'<button class="day-add" onclick="event.stopPropagation();openDayAddMenu(event,\''+ds+'\','+(hasLog?1:0)+','+(hasLeave?1:0)+')" aria-haspopup="menu" title="Add to this day" aria-label="Add to this day">+</button>';
+}
+function dayAddHover(head,ds,hasLog,hasLeave){
+  clearTimeout(_damT);
+  if(_dam&&_dam.ds===ds)return;
+  clearTimeout(_damOpenT);
+  _damOpenT=setTimeout(function(){buildDayAddMenu(head,-6,ds,hasLog,hasLeave,false);},140);
+}
+function dayAddLeave(){
+  clearTimeout(_damOpenT);clearTimeout(_damT);
+  _damT=setTimeout(closeDayAddMenu,220);
+}
+function openDayAddMenu(e,ds,hasLog,hasLeave){
+  var same=_dam&&_dam.ds===ds;
+  closeDayAddMenu();
+  if(same)return;
+  buildDayAddMenu(e.currentTarget,6,ds,hasLog,hasLeave,e.detail===0);
+}
+function buildDayAddMenu(anchor,gap,ds,hasLog,hasLeave,focusFirst){
+  closeDayAddMenu();
+  var menu=document.createElement('div');
+  menu.className='dam-menu';menu.id='dayAddMenu';menu.setAttribute('role','menu');
+  menu.onclick=function(ev){ev.stopPropagation();};
+  menu.onmouseenter=function(){clearTimeout(_damT);};
+  menu.onmouseleave=dayAddLeave;
+  DAM_ITEMS.forEach(function(it){
+    var nm=(it.id==='log'&&hasLog)?it.editName:(it.id==='leave'&&hasLeave)?it.editName:it.name;
+    var b=document.createElement('button');
+    b.className='dam-item';b.setAttribute('role','menuitem');
+    b.innerHTML='<svg viewBox="0 0 24 24" style="stroke:'+it.c+'">'+it.svg+'</svg><span>'+nm+'</span>';
+    b.onclick=function(ev){ev.stopPropagation();closeDayAddMenu();damRun(it.id,ds);};
+    menu.appendChild(b);
+  });
+  document.body.appendChild(menu);
+  var r=anchor.getBoundingClientRect(),w=menu.offsetWidth,h=menu.offsetHeight;
+  var left=Math.max(8,Math.min(r.left+(gap<0?8:0),window.innerWidth-w-8));
+  var top=r.bottom+gap;
+  if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-gap);
+  menu.style.left=left+'px';menu.style.top=top+'px';
+  _dam={ds:ds,menu:menu,anchor:anchor,
+    outside:function(ev){if(!menu.contains(ev.target))closeDayAddMenu();},
+    key:function(ev){
+      var items=Array.prototype.slice.call(menu.querySelectorAll('.dam-item'));
+      var i=items.indexOf(document.activeElement);
+      if(ev.key==='Escape'){ev.preventDefault();var bb=_dam.anchor;closeDayAddMenu();if(bb&&bb.focus&&bb.tagName==='BUTTON')bb.focus();}
+      else if(ev.key==='ArrowDown'){ev.preventDefault();items[(i+1)%items.length].focus();}
+      else if(ev.key==='ArrowUp'){ev.preventDefault();items[i<=0?items.length-1:i-1].focus();}
+    }
+  };
+  setTimeout(function(){if(_dam&&_dam.menu===menu)document.addEventListener('click',_dam.outside);},0);
+  document.addEventListener('keydown',_dam.key,true);
+  window.addEventListener('scroll',closeDayAddMenu,true);
+  if(focusFirst){var f=menu.querySelector('.dam-item');if(f)f.focus();}
+}
+function closeDayAddMenu(){
+  clearTimeout(_damOpenT);clearTimeout(_damT);
+  if(!_dam)return;
+  document.removeEventListener('click',_dam.outside);
+  document.removeEventListener('keydown',_dam.key,true);
+  window.removeEventListener('scroll',closeDayAddMenu,true);
+  if(_dam.menu.parentNode)_dam.menu.parentNode.removeChild(_dam.menu);
+  _dam=null;
+}
+function damRun(id,ds){
+  if(id==='log')openTimeLogForDay(ds);
+  else if(id==='event')openAddEvent(ds);
+  else if(id==='task')openQuickTask(ds);
+  else if(id==='plan')openDayPlan(ds);
+  else if(id==='leave')openLeaveModal(ds);
+}
+
 function renderCalendarShell(){
   var grid=document.getElementById('calGrid');
   var today=todayStr();
@@ -1661,10 +1758,10 @@ function renderCalendarShell(){
     var planBtn='<button class="add-ev-btn" onclick="event.stopPropagation();openDayPlan(\''+ds+'\')" title="Plan time blocks">+ Plan</button>';
     var leaveBtn='<button class="add-ev-btn" style="color:#16a34a;border-color:#bbf7d0" onclick="event.stopPropagation();openLeaveModal(\''+ds+'\')" title="Log leave or a public holiday">'+(getLeaveDays()[ds]?'Leave':'+ Leave')+'</button>';
     return'<div class="day-col'+(isT?' today':'')+(unlogged?' unlogged':'')+(_lvInfo?' leave-day':'')+'" data-date="'+ds+'">'
-      +'<div class="day-head" onclick="openTimeLogForDay(\''+ds+'\')">'
+      +'<div class="day-head" onclick="openTimeLogForDay(\''+ds+'\')" onmouseenter="dayAddHover(this,\''+ds+'\','+(hasLog?1:0)+','+(getLeaveDays()[ds]?1:0)+')" onmouseleave="dayAddLeave()">'
       +'<div class="day-name"><span class="dn-full">'+name+'</span><span class="dn-short">'+name.slice(0,3)+'</span></div>'
       +'<div class="day-num">'+dayNum+'</div>'
-      +'<div class="day-meta">'+metaHtml+editBtn+addEvBtn+addTaskBtn+planBtn+leaveBtn+'</div>'
+      +'<div class="day-meta">'+metaHtml+'</div>'+dayAddHtml(ds,hasLog,!!getLeaveDays()[ds])
       +'</div>'
       +'<div class="day-events" id="ev-'+ds+'"><div class="cal-msg">—</div></div>'
       +'</div>';
@@ -2118,7 +2215,7 @@ function dpBlockTotalsForDate(ds){
 }
 
 var DP_GRID_START=7*60,DP_GRID_END=19*60,DP_HOUR_PX=44,DP_PX_PER_MIN=DP_HOUR_PX/60,DP_SNAP=15;
-var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null;
+var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null,dpSelectedMeeting=null,dpMeetOverride=null;
 
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
 function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
@@ -2131,7 +2228,7 @@ function dpComputeLanes(blocks,ds){
   var items=blocks.map(function(b){return{id:b.id,start:b.start,end:b.start+b.dur};});
   getManualEvents().forEach(function(mt){
     if(mt.date!==ds||!mt.startTime||!mt.endTime)return;
-    var s=evMinFromTime(mt.startTime),en=evMinFromTime(mt.endTime);
+    var _tt=dpMeetTimes(mt),s=_tt.s,en=_tt.en;
     if(en>s)items.push({id:'m:'+mt.id,start:s,end:en});
   });
   items.sort(function(a,b){return a.start-b.start||a.end-b.end;});
@@ -2160,7 +2257,7 @@ function dpItemsForDate(ds,blocks){
   var out=(blocks||getBlocksForDate(ds)).map(function(b){return{kind:'block',id:b.id,start:b.start,end:b.start+b.dur,title:b.proj,sub:b.goal||'',date:ds};});
   getManualEvents().forEach(function(mt){
     if(mt.date!==ds||!mt.startTime||!mt.endTime)return;
-    var s=evMinFromTime(mt.startTime),en=evMinFromTime(mt.endTime);
+    var _tt=dpMeetTimes(mt),s=_tt.s,en=_tt.en;
     if(en>s)out.push({kind:'meeting',id:mt.id,start:s,end:en,title:mt.title||'Meeting',sub:mt.proj||'',date:ds});
   });
   out.sort(function(a,b){return a.start-b.start||a.end-b.end;});
@@ -2344,14 +2441,14 @@ setInterval(function(){if(!document.hidden)renderUpNext();},30000);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)renderUpNext();});
 
 function openDayPlan(ds,blockId){
-  dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;
+  dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   document.getElementById('dayPlanOverlay').classList.add('open');
   renderDayPlan();
 }
 function closeDayPlan(){
   if(!dpDate)return;
   document.getElementById('dayPlanOverlay').classList.remove('open');
-  dpDate=null;dpBlocks=[];dpSelectedBlock=null;dpNewRange=null;
+  dpDate=null;dpBlocks=[];dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderCalendarShell();renderUpNext();
   var ed=document.getElementById('entryDate');
   if(ed)renderImportRow(ed.value);
@@ -2359,11 +2456,12 @@ function closeDayPlan(){
 function dpShiftDay(delta){
   var d=new Date(dpDate+'T00:00:00');d.setDate(d.getDate()+delta);
   dpDate=d.toLocaleDateString('en-CA',{timeZone:TZ});
-  dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;
+  dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderDayPlan();
 }
 
 function renderDayPlan(){
+  if(dpSelectedBlock)dpSelectedMeeting=null;
   var d=new Date(dpDate+'T00:00:00');
   document.getElementById('dpDayName').textContent=d.toLocaleDateString('en-US',{weekday:'long',timeZone:TZ});
   document.getElementById('dpDayDate').textContent=d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',timeZone:TZ});
@@ -2409,16 +2507,18 @@ function renderDayPlan(){
 
   var meetings=getManualEvents().filter(function(e){return e.date===dpDate&&e.startTime&&e.endTime;});
   var meetingsHtml=meetings.map(function(mt){
-    var s=evMinFromTime(mt.startTime),en=evMinFromTime(mt.endTime);
+    var _tt=dpMeetTimes(mt),s=_tt.s,en=_tt.en;
     if(en<=s)return'';
     var top=(s-DP_GRID_START)*DP_PX_PER_MIN,h=(en-s)*DP_PX_PER_MIN;
     var assigned=mt.proj?' assigned':'';
     var mc=mt.proj?projColorForName(mt.proj):null;
     var colorStyle=mc?';--blk-color:'+mc+';--blk-bg:'+dpHexToRgba(mc,0.15):'';
-    return'<div class="dp-meeting'+assigned+dpLaneCls(lanes,'m:'+mt.id)+(h<30?' s1':h<50?' s2':'')+'" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,'m:'+mt.id)+colorStyle+'" onclick="openEditEvent(\''+mt.id+'\')">'
+    return'<div class="dp-meeting'+assigned+(dpSelectedMeeting===mt.id?' selected':'')+dpLaneCls(lanes,'m:'+mt.id)+(h<30?' s1':h<50?' s2':'')+'" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,'m:'+mt.id)+';--hh:'+Math.max(3,Math.min(8,Math.floor(h/3)))+'px'+colorStyle+'" onmousedown="dpStartMoveMeeting(event,\''+mt.id+'\')">'
+      +'<div class="dp-resize-top" onmousedown="dpStartResizeMeeting(event,\''+mt.id+'\',\'top\')"></div>'
       +'<div class="t"><span class="tt">'+escH(mt.title)+'</span><span class="dp-tag mt">Meeting</span></div>'
       +'<div class="g">'+(mt.proj?escH(mt.proj):'Unassigned')+'</div>'
       +'<div class="rt">'+dpFmtTime(s)+' - '+dpFmtTime(en)+'</div>'
+      +'<div class="dp-resize" onmousedown="dpStartResizeMeeting(event,\''+mt.id+'\',\'bottom\')"></div>'
     +'</div>';
   }).join('');
 
@@ -2473,7 +2573,7 @@ function dpStartMove(e,id){
     document.removeEventListener('mousemove',onMove);
     document.removeEventListener('mouseup',onUp);
     if(moved){dpPersist();}
-    else{dpSelectedBlock=id;renderDayPlan();}
+    else{dpSelectedBlock=id;dpSelectedMeeting=null;renderDayPlan();}
   }
   document.addEventListener('mousemove',onMove);
   document.addEventListener('mouseup',onUp);
@@ -2504,8 +2604,167 @@ function dpStartResize(e,id,edge){
   document.addEventListener('mouseup',onUp);
 }
 
+function dpMeetTimes(mt){
+  if(dpMeetOverride&&dpMeetOverride.id===mt.id)return{s:dpMeetOverride.s,en:dpMeetOverride.en};
+  return{s:evMinFromTime(mt.startTime),en:evMinFromTime(mt.endTime)};
+}
+function dpHM(min){return String(Math.floor(min/60)).padStart(2,'0')+':'+String(min%60).padStart(2,'0');}
+function dpCommitMeeting(){
+  var ov=dpMeetOverride;dpMeetOverride=null;
+  if(!ov)return;
+  var evs=getManualEvents(),ev=evs.find(function(x){return x.id===ov.id;});
+  if(!ev)return;
+  ev.startTime=dpHM(ov.s);ev.endTime=dpHM(ov.en);
+  saveManualEvents(evs);
+  try{syncEventReminder(ev);}catch(e){}
+  renderCalendarShell();renderUpNext();
+  var ed=document.getElementById('entryDate');if(ed)renderImportRow(ed.value);
+  renderDayPlan();
+}
+function dpStartMoveMeeting(e,id){
+  e.stopPropagation();
+  var tg=e.target;
+  if(tg.classList&&(tg.classList.contains('dp-resize')||tg.classList.contains('dp-resize-top')))return;
+  var mt=getManualEvents().find(function(x){return x.id===id;});
+  if(!mt)return;
+  var t0=dpMeetTimes(mt),dur=t0.en-t0.s,startY=e.clientY,moved=false;
+  function onMove(ev){
+    if(Math.abs(ev.clientY-startY)>3)moved=true;
+    if(!moved)return;
+    var delta=dpSnap((ev.clientY-startY)/DP_PX_PER_MIN);
+    var ns=Math.max(DP_GRID_START,Math.min(DP_GRID_END-dur,t0.s+delta));
+    dpMeetOverride={id:id,s:ns,en:ns+dur};
+    renderDayPlan();
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    if(moved){dpCommitMeeting();}
+    else{dpSelectedMeeting=id;dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function dpStartResizeMeeting(e,id,edge){
+  e.stopPropagation();e.preventDefault();
+  var mt=getManualEvents().find(function(x){return x.id===id;});
+  if(!mt)return;
+  var t0=dpMeetTimes(mt),startY=e.clientY;
+  function onMove(ev){
+    var delta=dpSnap((ev.clientY-startY)/DP_PX_PER_MIN);
+    var s=t0.s,en=t0.en;
+    if(edge==='top')s=Math.max(DP_GRID_START,Math.min(t0.en-DP_SNAP,t0.s+delta));
+    else en=Math.max(t0.s+DP_SNAP,Math.min(DP_GRID_END,t0.en+delta));
+    dpMeetOverride={id:id,s:s,en:en};
+    renderDayPlan();
+  }
+  function onUp(){
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    dpCommitMeeting();
+  }
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function dpDeleteMeeting(){
+  var id=dpSelectedMeeting;if(!id)return;
+  var mt=getManualEvents().find(function(x){return x.id===id;});
+  if(!mt){dpSelectedMeeting=null;renderDayPlan();return;}
+  if(!confirm('Delete the meeting "'+(mt.title||'Meeting')+'"?'))return;
+  dpSelectedMeeting=null;
+  deleteManualEvent(id);
+  renderDayPlan();
+}
+document.addEventListener('keydown',function(e){
+  if(!dpDate)return;
+  if(e.key!=='Delete'&&e.key!=='Backspace')return;
+  var t=e.target,tag=t&&t.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
+  var em=document.getElementById('eventModal');
+  if(em&&em.classList.contains('open'))return;
+  if(dpSelectedBlock&&dpSelectedBlock!=='new'){e.preventDefault();dpDelete();}
+  else if(dpSelectedBlock==='new'){e.preventDefault();dpCancelEdit();}
+  else if(dpSelectedMeeting){e.preventDefault();dpDeleteMeeting();}
+});
+
+// -- Type-to-search comboboxes (project and activity pickers) --
+var _cb=null;
+function cbOptions(kind){return kind==='proj'?getActiveProjects().map(function(p){return p.name;}):ACTIVITIES.slice();}
+function cbFilter(inp,showAll){
+  var all=cbOptions(inp.dataset.cb),txt=showAll?'':inp.value.trim().toLowerCase();
+  if(!txt)return all;
+  var toks=txt.split(/\s+/);
+  return all.filter(function(o){var l=o.toLowerCase();return toks.every(function(t){return l.indexOf(t)>=0;});});
+}
+function cbEnsure(){
+  var d=document.getElementById('cbDrop');
+  if(!d){d=document.createElement('div');d.id='cbDrop';d.className='act-dropdown';document.body.appendChild(d);
+    d.onmousedown=function(ev){var o=ev.target.closest('.cb-opt');if(!o)return;ev.preventDefault();if(_cb)cbPick(_cb.inp,o.dataset.v);};}
+  return d;
+}
+function cbRender(inp,showAll){
+  var items=cbFilter(inp,showAll),d=cbEnsure();
+  if(!items.length){cbClose();return;}
+  var cur=inp.dataset.valid||'';
+  var sel=showAll?items.findIndex(function(o){return o===cur;}):0;
+  _cb={inp:inp,items:items,sel:sel};
+  d.innerHTML=items.map(function(o,i){return'<div class="act-opt cb-opt'+(i===sel?' cb-hl':'')+'" data-v="'+escH(o)+'">'+escH(o)+'</div>';}).join('');
+  d.style.minWidth=Math.max(inp.offsetWidth,200)+'px';
+  d.classList.add('open');
+  var r=inp.getBoundingClientRect(),h=Math.min(d.scrollHeight,200);
+  var top=r.bottom+4;
+  if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-4);
+  d.style.left=Math.max(8,Math.min(r.left,window.innerWidth-d.offsetWidth-8))+'px';
+  d.style.top=top+'px';
+  var hl=d.querySelector('.cb-hl');if(hl&&hl.scrollIntoView)hl.scrollIntoView({block:'nearest'});
+}
+function cbClose(){var d=document.getElementById('cbDrop');if(d)d.classList.remove('open');_cb=null;}
+function cbFocus(inp){cbRender(inp,true);}
+function cbInput(inp){cbRender(inp,false);}
+function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();}
+function cbResolve(inp){
+  if(!inp)return;
+  var txt=inp.value.trim();
+  if(!txt){inp.value='';inp.dataset.valid='';return;}
+  var all=cbOptions(inp.dataset.cb),low=txt.toLowerCase();
+  var exact=all.find(function(o){return o.toLowerCase()===low;});
+  if(exact){inp.value=exact;inp.dataset.valid=exact;return;}
+  var f=cbFilter(inp,false);
+  if(f.length===1){inp.value=f[0];inp.dataset.valid=f[0];return;}
+  inp.value=inp.dataset.valid||'';
+}
+function cbBlur(inp){cbResolve(inp);cbClose();}
+function cbKey(e,inp){
+  var open=_cb&&_cb.inp===inp;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!open){cbRender(inp,true);return;}
+    var n=_cb.items.length;
+    _cb.sel=e.key==='ArrowDown'?(_cb.sel+1)%n:(_cb.sel<=0?n-1:_cb.sel-1);
+    Array.prototype.forEach.call(document.querySelectorAll('#cbDrop .cb-opt'),function(el,i){el.classList.toggle('cb-hl',i===_cb.sel);});
+    var hl=document.querySelector('#cbDrop .cb-hl');if(hl&&hl.scrollIntoView)hl.scrollIntoView({block:'nearest'});
+  }
+  else if(e.key==='Enter'&&open&&_cb.sel>=0){e.preventDefault();e.stopPropagation();cbPick(inp,_cb.items[_cb.sel]);}
+  else if(e.key==='Tab'&&open&&_cb.sel>=0){cbPick(inp,_cb.items[_cb.sel]);}
+  else if(e.key==='Escape'&&open){e.preventDefault();e.stopPropagation();cbClose();}
+}
+window.addEventListener('scroll',function(e){if(_cb&&!(e.target&&e.target.id==='cbDrop'))cbClose();},true);
+
 function renderDpEditor(){
   var el=document.getElementById('dpEditor');
+  if(!dpSelectedBlock&&dpSelectedMeeting){
+    var _mt=getManualEvents().find(function(x){return x.id===dpSelectedMeeting;});
+    if(_mt){
+      var _tt=dpMeetTimes(_mt);
+      el.classList.add('open');el.dataset.for='m:'+_mt.id;
+      el.innerHTML='<div class="dp-editor-title">Meeting</div>'
+        +'<div style="font-size:12.5px;font-weight:600;color:var(--text)">'+escH(_mt.title||'Meeting')+'</div>'
+        +'<div class="dp-editor-time" style="white-space:normal">'+dpFmtTime(_tt.s)+' - '+dpFmtTime(_tt.en)+' ('+dpFmtDur(_tt.en-_tt.s)+')'+(_mt.proj?' - '+escH(_mt.proj):'')+'</div>'
+        +'<div class="dp-editor-actions"><button class="dp-btn danger" onclick="dpDeleteMeeting()">Delete</button><button class="dp-btn" onclick="dpSelectedMeeting=null;renderDayPlan()">Close</button><button class="dp-btn primary" onclick="openEditEvent(\''+escA(_mt.id)+'\')">Edit details</button></div>';
+      return;
+    }
+    dpSelectedMeeting=null;
+  }
   if(!dpSelectedBlock){el.classList.remove('open');el.innerHTML='';return;}
   var isNew=dpSelectedBlock==='new';
   var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',start:dpNewRange.start,dur:dpNewRange.dur}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
@@ -2520,8 +2779,8 @@ function renderDpEditor(){
   }).join('');
   var keep=(el.dataset.for===String(dpSelectedBlock)&&document.getElementById('dpProj'))?{p:document.getElementById('dpProj').value,a:document.getElementById('dpActivity').value,g:document.getElementById('dpGoal').value}:null;
   el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'</div>'
-    +'<select id="dpProj">'+options+'</select>'
-    +'<select id="dpActivity">'+actOptions+'</select>'
+    +'<input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
+    +'<input type="text" id="dpActivity" class="cb-input" data-cb="act" placeholder="Type to search activities..." autocomplete="off" value="'+escH(b.activity||'')+'" data-valid="'+escH(b.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<div class="dp-editor-row">'
     +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'">'
     +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'
@@ -2536,8 +2795,9 @@ function renderDpEditor(){
 }
 function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 function dpSaveEdit(){
+  cbResolve(document.getElementById('dpProj'));cbResolve(document.getElementById('dpActivity'));
   var proj=document.getElementById('dpProj').value;
-  if(!proj)return;
+  if(!proj){document.getElementById('dpProj').focus();return;}
   var activity=document.getElementById('dpActivity').value;
   var goal=document.getElementById('dpGoal').value.trim();
   if(dpSelectedBlock==='new'){
@@ -3680,7 +3940,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.20.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.22.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -4617,19 +4877,14 @@ function openAddEvent(date){
 var editingEventId=null;
 function closeEventModal(){document.getElementById('eventModal').classList.remove('open');currentEventDate=null;editingEventId=null;document.getElementById('evModalTitle').textContent='Add Meeting';}
 function populateEvProjSelect(selected){
-  var sel=document.getElementById('evProj');
-  if(!sel)return;
-  var projects=getActiveProjects();
-  sel.innerHTML='<option value="">(No project)</option>'+projects.map(function(p){
-    return'<option value="'+escA(p.name)+'"'+(p.name===selected?' selected':'')+'>'+escH(p.name)+'</option>';
-  }).join('');
+  var el=document.getElementById('evProj');
+  if(!el)return;
+  el.value=selected||'';el.dataset.valid=selected||'';
 }
 function populateEvActivitySelect(selected){
-  var sel=document.getElementById('evActivity');
-  if(!sel)return;
-  sel.innerHTML='<option value="">(No activity)</option>'+ACTIVITIES.map(function(a){
-    return'<option value="'+escA(a)+'"'+(a===selected?' selected':'')+'>'+escH(a)+'</option>';
-  }).join('');
+  var el=document.getElementById('evActivity');
+  if(!el)return;
+  el.value=selected||'';el.dataset.valid=selected||'';
 }
 function openEditEvent(id){
   var ev=getManualEvents().find(function(e){return e.id===id;});
@@ -4668,6 +4923,8 @@ function saveManualEvent(){
   var startTime=document.getElementById('evStart').value;
   var endTime=document.getElementById('evEnd').value;
   var notes=document.getElementById('evNotes').value.trim();
+  var _evp=document.getElementById('evProj'),_eva=document.getElementById('evActivity');
+  if(_evp)cbResolve(_evp);if(_eva)cbResolve(_eva);
   var proj=document.getElementById('evProj')?(document.getElementById('evProj').value||null):null;
   var activity=document.getElementById('evActivity')?(document.getElementById('evActivity').value||null):null;
   var evs=getManualEvents();
@@ -4891,8 +5148,8 @@ document.addEventListener('keydown',function(e){
 // ── Dark mode ──
 var TOUR_STEPS=[
   {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
-  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day for quick actions: + Log, + Event, + Task, + Plan and + Leave. Days with leave or a public holiday turn green."},
-  {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block to move it, and drag its top or bottom edge to resize it. Overlapping blocks and meetings sit side by side so each can be moved on its own. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
+  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green."},
+  {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
   {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"Outside This Week, this pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan."},
   {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. Planned time and project meetings can be pulled in with the Import banner - it never overwrites what you've already logged. Leave days show a green line, and the chip at the top shows your leave balance."},
   {tab:'tracker',target:'.history-controls',title:"Log History",text:"Switch between List and Week view - Week gives a grid by project and activity that's easy to copy into Replicon. Export either one as a CSV; project and tender codes are included when your projects have them."},
