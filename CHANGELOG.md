@@ -5,6 +5,64 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.25.1] — 2026-10-27
+
+### Changed
+- **The header stays on one row on phones** — at 560px wide and below, the "Planner" text is dropped (the logo stays) and the header's spacing is tightened, so the logo, tabs, week number, bell and Up Next all fit on a single row instead of wrapping to two. Checked down to 375px wide
+- **The week number pill now shows on every tab** — not just This Week. Picking a week (or Today) from another tab takes you to This Week showing it
+
+---
+
+## [0.25.0] — 2026-10-27
+
+### Changed
+- **Up Next and the reminders bell now show on This Week too** — they sit in the top right of every tab
+- **Week arrows moved onto the planner** — a ‹ on the left and a › on the right of the Monday to Friday days change week, so the top bar no longer carries them
+- **Week picker is a compact week-number pill** in the top bar, to the left of the bell (This Week only). It opens the same calendar dropdown as before, and hovering it shows the full dates of the week
+- The guided tour's This Week and Up Next steps describe the new layout
+
+---
+
+## [0.24.1] — 2026-10-26
+
+### Changed
+- **The Up Next pill is the same height as the reminders bell** — both are now 28px, in line with the other controls in the header bar
+
+---
+
+## [0.24.0] — 2026-10-26
+
+### Changed
+- **The reminders panel on the To Do tab is gone** — along with the reminders chip in its summary row. Everything it did now lives in the bell and Up Next dropdown, the Manage window, and Settings. Existing reminders carry over untouched
+
+### Added
+- **Reminders can have a time of day.** A timed reminder stays quiet until its time. Before then it sits in the Up Next list in order between your blocks and meetings (and can be the pill's "next" item), and on the day plan it shows as a small bell marker on the timeline; click a marker to edit it
+- **Browser notifications (optional)** — Settings > Reminders. A notification pops up at a reminder's time, once, while the app is open in a browser tab. Off by default; it asks the browser for permission when you switch it on
+- **Remind me about a task** — every task has a Remind button: on the due date at 9AM, the day before, tomorrow at 9AM, or any date and time you pick. Linked reminders disappear when the task is completed, and clicking one takes you to the task
+- **Reminders can link to a project** (pick it in the editor) and meeting reminders now link back to the meeting; clicking either opens it
+- **Smarter built-in reminders** — "Log your hours" now nudges at 4:30PM (not all day) and stops once hours are logged; a Friday 3PM "Submit your timesheet" reminder shows how many days this week still aren't logged; and an optional Monday "Leave balance is low" warning with a threshold you set. Each can be turned off, or have its time changed, in Settings > Reminders
+- **Plain-language reminders** — in the new reminder editor, type things like "every Friday 3pm submit timesheet", "tomorrow 9am call Pieter", "monthly on the 25th pay invoices", "in 2 hours stretch" or "every mon, wed and fri 10am stand-up". It shows what it understood as you type, and fills in the repeat, day and time for you. Repeat options: once, daily, weekdays, weekly on chosen days, monthly on a day
+- **Manage reminders** — a window listing every reminder grouped as Repeating, One-off, Meetings and Built-in, with Edit and Remove. Open it from Manage in the Up Next dropdown, or from Settings > Reminders. The To Do tab's recurring and long-term reminders are now created here
+
+### Fixed
+- Reminders set via **+ Reminder** and **Add reminder** now use the same editor (so they can be timed and repeating)
+
+---
+
+## [0.23.0] — 2026-10-22
+
+### Added
+- **Reminders live in Up Next** — a bell with a red count badge now sits beside the Up Next pill on every tab outside This Week. Click it (or the pill) and the dropdown has a Reminders section listing everything due today, each with a tick to mark it done and a Snooze menu. When nothing is scheduled, the pill itself reads "2 reminders due"
+- **+ Reminder** — a quick-add button in the Up Next footer and a new "Add reminder" entry in the day hover list. Both open a small form (what, and which day); a reminder for today shows up straight away, a future one when its day arrives
+- **Smarter snooze** — Later today (+1 hour), This afternoon (3PM, offered before 3PM), Tomorrow (8AM), Next Monday (8AM), or Pick a time for any date and time. The reminder returns at exactly that moment (the banner and bell refresh every 30 seconds). Existing one-day snoozes keep working
+- **Done is recorded separately from dismissing** — marking a recurring reminder done saves the date, ready for streaks and history later. One-off reminders are removed when done
+
+### Changed
+- The reminder banner on This Week now has **Snooze ▾** (the same menu) and **Done** instead of Snooze and Dismiss
+- The guided tour's Up Next step mentions reminders
+
+---
+
 ## [0.22.2] — 2026-10-22
 
 ### Fixed

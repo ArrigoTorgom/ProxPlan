@@ -848,17 +848,71 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-plan-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff;}
 @media(max-width:760px){.dp-main{flex-direction:column;}.dp-side{width:auto;border-left:none;border-top:1px solid var(--border);max-height:none;}}
 .upnext-wrap{position:relative;display:flex;justify-content:flex-end;min-width:0;}
-.upnext-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:5px 12px;cursor:pointer;color:#fff;font-size:12px;max-width:300px;min-width:0;transition:background .12s;}
+.upnext-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:20px;height:28px;box-sizing:border-box;padding:0 12px;cursor:pointer;color:#fff;font-size:12px;max-width:300px;min-width:0;transition:background .12s;}
 .upnext-pill:hover{background:rgba(255,255,255,.2);}
 .upnext-pill span.txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .upnext-pill span.short{display:none;white-space:nowrap;}
-@media(max-width:920px){.upnext-pill span.txt{display:none;}.upnext-pill span.short{display:inline;}.upnext-pill{padding:4px 10px;}}
+@media(max-width:920px){.upnext-pill span.txt{display:none;}.upnext-pill span.short{display:inline;}.upnext-pill{padding:0 10px;}}
 .upnext-dot{width:8px;height:8px;border-radius:50%;background:#9fb0b9;flex-shrink:0;}
 .upnext-dot.now{background:#34d399;}
 .upnext-dot.soon{background:#f7921e;}
 .upnext-pop{display:none;position:absolute;right:0;top:calc(100% + 8px);width:330px;max-width:88vw;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 32px rgba(0,0,0,.28);padding:10px 12px;z-index:300;text-align:left;font-size:12px;}
 .upnext-pop.open{display:block;}
 .upnext-foot{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;}
+.upnext-foot .rq{margin-right:auto;}
+.rem-manage{margin-left:auto;font-size:11px;color:var(--primary);cursor:pointer;font-weight:500;}
+.rem-manage:hover{text-decoration:underline;}
+.rem-chip{display:inline-block;font-size:10px;padding:1px 7px;border-radius:9px;background:var(--primary-light);color:var(--primary);margin-left:6px;font-weight:600;}
+.rem-chip.sys{background:var(--bg);color:var(--muted);}
+.rem-mgr-item{flex-wrap:wrap;}
+.rem-mgr-item .rem-mgr-title{min-width:120px;}
+.dp-rem{position:absolute;right:6px;max-width:46%;height:16px;line-height:14px;font-size:10px;padding:0 7px 0 4px;border-radius:8px;background:var(--med-bg);color:var(--med);border:1px solid var(--med);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;z-index:3;transform:translateY(-8px);display:flex;align-items:center;gap:3px;}
+.dp-rem svg{width:10px;height:10px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.rem-flash{animation:remFlash 1.3s ease;}
+@keyframes remFlash{0%{background:rgba(247,146,30,.4);}100%{background:transparent;}}
+.rem-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#233b46;color:#fff;font-size:12px;padding:8px 16px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:990;max-width:90vw;}
+.rs-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--text);flex-wrap:wrap;}
+.rs-row:last-of-type{border-bottom:none;}
+.rs-row label{display:flex;align-items:center;gap:7px;cursor:pointer;flex:1;min-width:150px;}
+.rs-row input[type=time],.rs-row input[type=number]{font-size:12px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:inherit;}
+.rs-row input[type=number]{width:64px;}
+.rs-note{font-size:11px;color:var(--muted);margin:2px 0 8px;line-height:1.4;}
+.week-label .wl-extra,.week-label .wl-word{display:none;}
+.week-label{min-width:0!important;font-size:12px;}
+.week-badge{height:28px;box-sizing:border-box;padding:0 11px;}
+.header .week-nav{gap:8px;}
+.cal-wrap{display:flex;align-items:stretch;gap:6px;}
+.cal-wrap .calendar-card{flex:1;min-width:0;}
+.cal-arrow{flex:0 0 26px;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .12s,color .12s,border-color .12s;}
+.cal-arrow:hover,.cal-arrow:focus-visible{background:var(--primary-light);color:var(--primary);border-color:var(--primary);outline:none;}
+.cal-arrow svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+@media(max-width:700px){.cal-wrap{gap:4px;}.cal-arrow{flex-basis:20px;border-radius:8px;}}
+@media(max-width:560px){
+  .header{padding:10px;gap:6px;flex-wrap:nowrap;}
+  .title-block h1{display:none;}
+  .tab-btn{padding:7px 8px;}
+  .header .week-nav{gap:6px;}
+  .week-badge{padding:0 9px;}
+  .upnext-pill{padding:0 9px;}
+}
+.upnext-wrap{gap:8px;align-items:center;}
+.upnext-bell{position:relative;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0;}
+.upnext-bell:hover{background:rgba(255,255,255,.2);}
+.upnext-bell svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.upnext-bell b{position:absolute;top:-5px;right:-5px;min-width:15px;height:15px;border-radius:8px;background:#e24b4a;color:#fff;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 3px;}
+.upnext-bell.has b{display:flex;}
+.rem-chk{width:16px;height:16px;border:1.5px solid var(--border);border-radius:50%;flex-shrink:0;margin-top:1px;cursor:pointer;background:transparent;padding:0;}
+.rem-chk:hover{border-color:#22c55e;background:rgba(34,197,94,.15);}
+.rem-snz{font-size:11px;padding:1px 8px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;margin-left:auto;flex-shrink:0;line-height:1.6;font-family:inherit;}
+.rem-snz:hover{background:var(--primary-light);color:var(--primary);}
+.snz-menu{position:fixed;z-index:970;min-width:210px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding:4px;font-size:12px;color:var(--text);}
+.snz-item{display:flex;justify-content:space-between;gap:16px;width:100%;padding:6px 10px;border:none;background:none;border-radius:6px;cursor:pointer;color:var(--text);font-family:inherit;font-size:12px;text-align:left;}
+.snz-item:hover{background:var(--bg);}
+.snz-item span{color:var(--muted);font-size:11px;}
+.snz-pick{display:none;gap:6px;padding:6px 10px 4px;align-items:center;}
+.snz-pick.open{display:flex;}
+.snz-pick input{font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:inherit;}
+.user-reminder button.ur-snz,.user-reminder button.ur-done{flex-shrink:0;}
 .set-wrap{max-width:1100px;margin:0 auto;padding:14px;}
 .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;margin-bottom:14px;}
 .set-col{display:flex;flex-direction:column;gap:14px;min-width:0;}
@@ -906,11 +960,6 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     <button class="tab-btn" id="tabSettings" title="Settings" onclick="switchTab('settings')" data-tab="settings"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" style="vertical-align:-2px;margin-right:4px"><circle cx="6.5" cy="6.5" r="1.7"/><path d="M6.5 1.2v1.1M6.5 10.7v1.1M11.8 6.5h-1.1M2.3 6.5H1.2M10.3 2.7l-.78.78M3.48 9.52l-.78.78M10.3 10.3l-.78-.78M3.48 3.48l-.78-.78" stroke-linecap="round"/></svg><span class="tab-label">Settings</span></button>
   </div>
   <div class="week-nav" id="weekNav">
-    <div class="upnext-wrap" id="upNextWrap" style="display:none">
-      <button class="upnext-pill" id="upNextPill" onclick="toggleUpNext(event)" title="Up next"><span class="upnext-dot" id="upNextDot"></span><span class="txt" id="upNextText">Up next</span><span class="short" id="upNextShort"></span></button>
-      <div class="upnext-pop" id="upNextPop" onclick="event.stopPropagation()"></div>
-    </div>
-    <button class="btn" id="prevBtn" title="Previous week"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5,1.5 2.5,5 6.5,8.5"/></svg></button>
     <div class="week-badge-wrap" id="weekBadgeWrap">
       <button class="week-badge" id="weekBadge" onclick="toggleWeekPicker()" title="Pick a week">
         <svg width="12" height="12" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.2" y="2.2" width="10.6" height="9.6" rx="1.3"/><path d="M1.2 5.2h10.6M4 1v2.4M9 1v2.4" stroke-linecap="round"/></svg>
@@ -927,7 +976,10 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
         <div id="wpWeeksContainer"></div>
       </div>
     </div>
-    <button class="btn" id="nextBtn" title="Next week"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5,1.5 7.5,5 3.5,8.5"/></svg></button>
+    <div class="upnext-wrap" id="upNextWrap">
+      <button class="upnext-bell" id="upNextBell" onclick="toggleUpNext(event)" title="Reminders" aria-label="Reminders"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="upNextBellCount"></b></button><button class="upnext-pill" id="upNextPill" onclick="toggleUpNext(event)" title="Up next"><span class="upnext-dot" id="upNextDot"></span><span class="txt" id="upNextText">Up next</span><span class="short" id="upNextShort"></span></button>
+      <div class="upnext-pop" id="upNextPop" onclick="event.stopPropagation()"></div>
+    </div>
   </div>
 </div>
 
@@ -954,6 +1006,52 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     <div class="ev-modal-actions">
       <button class="btn secondary-btn" onclick="closeEventModal()">Cancel</button>
       <button class="btn primary-btn" onclick="saveManualEvent()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="remMgrModal" class="ev-modal-overlay" onclick="if(event.target===this)closeRemMgr()">
+  <div class="ev-modal" style="width:540px;max-height:82vh;display:flex;flex-direction:column">
+    <div class="ev-modal-title" style="display:flex;align-items:center;gap:8px">Reminders<button class="btn primary-btn sm" style="margin-left:auto" onclick="openRemEditor(null)">+ New reminder</button></div>
+    <div id="remMgrBody" style="overflow-y:auto;flex:1;min-height:70px"></div>
+    <div class="ev-modal-actions"><button class="btn secondary-btn" onclick="closeRemMgr()">Close</button></div>
+  </div>
+</div>
+
+<div id="remEditModal" class="ev-modal-overlay">
+  <div class="ev-modal" style="width:410px">
+    <div class="ev-modal-title" id="reHdr">New reminder</div>
+    <div class="ev-field-label">Reminder</div>
+    <input id="reTitle" class="ev-input" type="text" placeholder="e.g. every Friday 3pm submit timesheet" autocomplete="off" oninput="reLive()" style="margin-bottom:4px">
+    <div id="reParsed" style="font-size:11px;color:var(--muted);min-height:16px;margin-bottom:10px"></div>
+    <div class="ev-time-row">
+      <div><div class="ev-field-label">Repeat</div>
+        <select id="reRecur" class="ev-input" onchange="reFields()" style="margin-bottom:0">
+          <option value="none">Once</option>
+          <option value="daily">Every day</option>
+          <option value="daily-weekday">Every weekday</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select></div>
+      <div><div class="ev-field-label">Time (optional)</div><input id="reTime" class="ev-input" type="time" style="margin-bottom:0"></div>
+    </div>
+    <div id="reDateRow"><div class="ev-field-label" style="margin-top:10px">Date</div><input id="reDate" class="ev-input" type="date"></div>
+    <div id="reWeekRow" style="display:none"><div class="ev-field-label" style="margin-top:10px">Days</div>
+      <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="rem-day-btn" data-day="0" onclick="this.classList.toggle('active')">Mon</button>
+        <button class="rem-day-btn" data-day="1" onclick="this.classList.toggle('active')">Tue</button>
+        <button class="rem-day-btn" data-day="2" onclick="this.classList.toggle('active')">Wed</button>
+        <button class="rem-day-btn" data-day="3" onclick="this.classList.toggle('active')">Thu</button>
+        <button class="rem-day-btn" data-day="4" onclick="this.classList.toggle('active')">Fri</button>
+        <button class="rem-day-btn" data-day="5" onclick="this.classList.toggle('active')">Sat</button>
+        <button class="rem-day-btn" data-day="6" onclick="this.classList.toggle('active')">Sun</button>
+      </div></div>
+    <div id="reMonthRow" style="display:none"><div class="ev-field-label" style="margin-top:10px">Day of month</div><input id="reMonthDay" class="ev-input" type="number" min="1" max="31" value="1"></div>
+    <div class="ev-field-label" style="margin-top:2px">Link to (optional)</div>
+    <select id="reLink" class="ev-input"></select>
+    <div class="ev-modal-actions">
+      <button class="btn secondary-btn" onclick="closeRemEditor()">Cancel</button>
+      <button class="btn primary-btn" onclick="saveRemEditor()">Save</button>
     </div>
   </div>
 </div>
@@ -1119,7 +1217,11 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
       <div class="editable" contenteditable="true" spellcheck="false" id="sec-notes" data-ph="Any other notes…"></div>
     </div>
   </div>
-  <div class="calendar-card"><div class="calendar-grid" id="calGrid"></div></div>
+  <div class="cal-wrap">
+    <button class="cal-arrow" id="calPrev" title="Previous week" aria-label="Previous week"><svg viewBox="0 0 10 10"><polyline points="6.5,1.5 2.5,5 6.5,8.5"/></svg></button>
+    <div class="calendar-card"><div class="calendar-grid" id="calGrid"></div></div>
+    <button class="cal-arrow" id="calNext" title="Next week" aria-label="Next week"><svg viewBox="0 0 10 10"><polyline points="3.5,1.5 7.5,5 3.5,8.5"/></svg></button>
+  </div>
 <div class="etf-strip">
   <span class="etf-label">This week</span>
   <span class="etf-rule" id="etfRuleText"></span>
@@ -1217,42 +1319,6 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 <div class="tasks-wrap">
   <div class="tasks-col-left">
   <div class="tasks-summary" id="tasksSummary"></div>
-  <div id="remCardPanel" style="display:none;margin-bottom:12px">
-  <div class="card">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:10px">🔔 Reminders</div>
-    <div id="remMgrList" style="margin-bottom:10px"></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center">
-      <input id="remTitleInput" type="text" placeholder="Title…" style="flex:1;min-width:80px;border:1px solid var(--border);border-radius:7px;padding:5px 8px;font-size:12px;outline:none;background:var(--card);color:var(--text)">
-      <select id="remRecurSel" onchange="toggleRemFields()" style="border:1px solid var(--border);border-radius:7px;padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);outline:none">
-        <option value="none">Once</option>
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
-      </select>
-      <button id="remAddBtn" class="btn primary-btn sm" onclick="addUserReminder()" style="white-space:nowrap">Add</button>
-    </div>
-    <div id="remDateRow" style="display:flex;gap:6px;align-items:center;margin-bottom:8px">
-      <label style="font-size:11px;color:var(--muted)">Date</label>
-      <input id="remDateInput" type="date" style="border:1px solid var(--border);border-radius:7px;padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);outline:none">
-    </div>
-    <div id="remWeekRow" style="display:none;margin-bottom:8px">
-      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Day of week</div>
-      <div style="display:flex;gap:3px;flex-wrap:wrap">
-        <button class="rem-day-btn" data-day="0" onclick="toggleRemDay(this)">Mon</button>
-        <button class="rem-day-btn" data-day="1" onclick="toggleRemDay(this)">Tue</button>
-        <button class="rem-day-btn" data-day="2" onclick="toggleRemDay(this)">Wed</button>
-        <button class="rem-day-btn" data-day="3" onclick="toggleRemDay(this)">Thu</button>
-        <button class="rem-day-btn" data-day="4" onclick="toggleRemDay(this)">Fri</button>
-        <button class="rem-day-btn" data-day="5" onclick="toggleRemDay(this)">Sat</button>
-        <button class="rem-day-btn" data-day="6" onclick="toggleRemDay(this)">Sun</button>
-      </div>
-    </div>
-    <div id="remMonthRow" style="display:none;gap:6px;align-items:center;margin-bottom:8px">
-      <label style="font-size:11px;color:var(--muted)">Day of month</label>
-      <input id="remMonthDay" type="number" min="1" max="31" value="1" style="width:64px;border:1px solid var(--border);border-radius:7px;padding:5px 8px;font-size:12px;background:var(--card);color:var(--text);outline:none">
-    </div>
-  </div>
-  </div>
   <div class="task-add-card">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:12px">Add Task</div>
     <div class="task-form-row">
@@ -1391,18 +1457,22 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
     </div>
     </div>
   </div>
+  <div class="card set-sec" data-sec="reminders">
+    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('reminders')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('reminders')}"><span class="set-chev"></span><span class="set-sec-title">Reminders</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openRemMgr()">Manage</button></div>
+    <div class="set-sec-body"><div id="remSettingsBody"></div></div>
+  </div>
 </div>
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.22.2</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.25.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.22.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.25.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1433,10 +1503,11 @@ function switchTab(tab){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===tab);});
   // Week nav always visible; arrows only functional on Planner
   var onPlanner=(tab==='planner');
-  ['prevBtn','nextBtn','weekBadgeWrap'].forEach(function(id){var _wn=document.getElementById(id);if(_wn)_wn.style.display=onPlanner?'':'none';});
-  var _unw=document.getElementById('upNextWrap');if(_unw)_unw.style.display=onPlanner?'none':'flex';
-  if(onPlanner){var _wpp=document.getElementById('weekPickerPop');if(_wpp)_wpp.style.display='none';closeUpNext();}
-  else renderUpNext();
+  var _wbw=document.getElementById('weekBadgeWrap');if(_wbw)_wbw.style.display='';
+  var _unw=document.getElementById('upNextWrap');if(_unw)_unw.style.display='flex';
+  closeWeekPicker();
+  closeUpNext();
+  renderUpNext();
   ['planner','tracker','tasks','projects','settings'].forEach(function(t){
     var tb=document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
     var pn=document.getElementById('panel'+t.charAt(0).toUpperCase()+t.slice(1));
@@ -1475,6 +1546,7 @@ function initSettings(){
   renderSyncStatus();
   renderPhotoSyncStatus();
   renderLeaveSettings();
+  renderRemSettings();
 }
 
 function getMonday(date){var d=new Date(date);d.setHours(0,0,0,0);var day=d.getDay();d.setDate(d.getDate()-(day===0?6:day-1));return d;}
@@ -1522,6 +1594,7 @@ function selectPickerWeek(mondayStr){
   currentMonday=new Date(parseInt(p[0],10),parseInt(p[1],10)-1,parseInt(p[2],10));
   renderPlanner();renderEtfRule();
   closeWeekPicker();
+  if(currentTab!=='planner')switchTab('planner');
 }
 function positionWeekPicker(){
   var pop=document.getElementById('weekPickerPop');
@@ -1553,7 +1626,7 @@ function toggleWeekPicker(){
 }
 function closeWeekPicker(){var pop=document.getElementById('weekPickerPop');if(pop){pop.style.display='none';pop.style.left='';pop.style.transform='';}document.removeEventListener('click',_weekPickerOutsideClick,true);}
 function _weekPickerOutsideClick(e){var wrap=document.getElementById('weekBadgeWrap');if(wrap&&!wrap.contains(e.target))closeWeekPicker();}
-function goToToday(){clearTimeout(saveTimer);savePlanner();currentMonday=getMonday(new Date());renderPlanner();renderEtfRule();closeWeekPicker();}
+function goToToday(){clearTimeout(saveTimer);savePlanner();currentMonday=getMonday(new Date());renderPlanner();renderEtfRule();closeWeekPicker();if(currentTab!=='planner')switchTab('planner');}
 function weekLabel(m){var f=new Date(m);f.setDate(f.getDate()+4);return'<span class="wl-word">Week </span><span class="wl-num">'+getWeekNum(m)+'</span><span class="wl-extra">  ·  '+m.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' – '+f.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+'</span>';}
 function formatDate(d){var p=d.split('-');return parseInt(p[2])+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]+' '+p[0];}
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -1647,6 +1720,7 @@ function renderPlannerTasks(){
 
 function renderPlanner(){
   document.getElementById('weekLabel').innerHTML=weekLabel(currentMonday);
+  var _wbt=document.getElementById('weekBadge');if(_wbt)_wbt.title=stripHtml(weekLabel(currentMonday))+' - pick a week';
   renderCalendarShell();
   loadPlanner();
   loadCalendarEvents();
@@ -1659,6 +1733,7 @@ var DAM_ITEMS=[
   {id:'log',name:'Log time',editName:'Edit time',c:'#f7921e',svg:'<circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15.5,14"/>'},
   {id:'event',name:'Add event',c:'#7c3aed',svg:'<rect x="4" y="5" width="16" height="15" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="9" y1="3" x2="9" y2="7"/><line x1="15" y1="3" x2="15" y2="7"/>'},
   {id:'task',name:'Add task',c:'#22c55e',svg:'<rect x="4" y="4" width="16" height="16" rx="3"/><polyline points="8,12.5 11,15.5 16,9"/>'},
+  {id:'reminder',name:'Add reminder',c:'#f59e0b',svg:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'},
   {id:'plan',name:'Plan day',c:'#6b7280',svg:'<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="10" height="6" rx="1.5"/>'},
   {id:'leave',name:'Log leave',editName:'Edit leave',c:'#16a34a',svg:'<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="5" y1="5" x2="7" y2="7"/><line x1="17" y1="17" x2="19" y2="19"/><line x1="5" y1="19" x2="7" y2="17"/><line x1="17" y1="7" x2="19" y2="5"/>'}
 ];
@@ -1731,6 +1806,7 @@ function damRun(id,ds){
   if(id==='log')openTimeLogForDay(ds);
   else if(id==='event')openAddEvent(ds);
   else if(id==='task')openQuickTask(ds);
+  else if(id==='reminder')openRemQuick(ds);
   else if(id==='plan')openDayPlan(ds);
   else if(id==='leave')openLeaveModal(ds);
 }
@@ -2332,7 +2408,7 @@ function renderDpSide(){
   var cur=isToday?items.filter(function(it){return it.start<=now&&it.end>now;}):[];
   var upc=isToday?items.filter(function(it){return it.start>now;}):items;
   function row(it,isNow){
-    var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':'';
+    var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':it.kind==='reminder'?'<span class="dp-tag pri">Reminder</span>':'';
     return'<div class="dp-side-row'+(isNow?' now':'')+'" onclick="dpSideOpen(\''+it.kind+'\',\''+escA(it.id)+'\')"><span class="tm">'+dpFmtTime(it.start)+'</span><div class="bd"><span class="nm">'+escH(it.title)+'</span>'+tag+(it.sub?'<span class="sb">'+escH(it.sub)+'</span>':'')+'<span class="sb">'+dpFmtTime(it.start)+' - '+dpFmtTime(it.end)+'</span></div></div>';
   }
   var h='<div class="dp-side-title">Up next</div>';
@@ -2364,12 +2440,12 @@ function upNextCompute(){
   for(var i=0;i<8&&next.length<4;i++){
     var d=new Date(today+'T12:00:00');d.setDate(d.getDate()+i);
     var ds=d.toLocaleDateString('en-CA',{timeZone:TZ});
-    dpItemsForDate(ds).forEach(function(it){
+    (i===0?dpItemsForDate(ds).concat(remPendingItems(today)).sort(function(a,b){return a.start-b.start||a.end-b.end;}):dpItemsForDate(ds)).forEach(function(it){
       if(i===0){if(it.end<=nowMin)return;if(it.start<=nowMin){now.push(it);return;}}
       if(next.length<4)next.push(it);
     });
   }
-  return{now:now,next:next,tasks:upNextSuggestions(today,getBlocksForDate(today),3),leave:leaveDayInfo(today),nowMin:nowMin,today:today};
+  return{now:now,next:next,tasks:upNextSuggestions(today,getBlocksForDate(today),3),leave:leaveDayInfo(today),reminders:getReminders().filter(isReminderDue),nowMin:nowMin,today:today};
 }
 function upNextDayLabel(ds,today){
   if(ds===today)return'';
@@ -2379,8 +2455,11 @@ function upNextDayLabel(ds,today){
 }
 function renderUpNext(){
   var txt=document.getElementById('upNextText'),dot=document.getElementById('upNextDot');
-  if(!txt||!dot||currentTab==='planner')return;
+  if(!txt||!dot)return;
   var s=upNextCompute(),label='Nothing planned',state='',shortLbl='Free';
+  var _bell=document.getElementById('upNextBell'),_bc=document.getElementById('upNextBellCount');
+  if(_bell){_bell.classList.toggle('has',s.reminders.length>0);_bell.title=s.reminders.length?(s.reminders.length+' reminder'+(s.reminders.length>1?'s':'')+' due'):'Reminders';}
+  if(_bc)_bc.textContent=s.reminders.length>9?'9+':String(s.reminders.length);
   var dayOff=s.leave&&s.leave.len!=='half'&&!(s.next.length&&s.next[0].date===s.today)&&!s.now.length;
   if(s.now.length){label='Now: '+s.now[0].title+' \u00b7 until '+dpFmtTime(s.now[0].end);state='now';shortLbl='Now';}
   else if(dayOff){label='Day off \u00b7 '+leaveDayLabel(s.today,s.leave);shortLbl='Off';}
@@ -2390,6 +2469,7 @@ function renderUpNext(){
     else when=upNextDayLabel(it.date,s.today).toLowerCase()+' '+dpFmtTime(it.start);
     label=it.title+' '+when;shortLbl=when.replace(/^(in|at) /,'');
   }
+  else if(s.reminders.length){label=s.reminders.length+' reminder'+(s.reminders.length>1?'s':'')+' due';shortLbl=String(s.reminders.length);}
   else if(s.tasks.length){label='Next task: '+s.tasks[0].task.title;shortLbl='Task';}
   txt.textContent=label;
   var _shEl=document.getElementById('upNextShort');if(_shEl)_shEl.textContent=shortLbl;
@@ -2401,26 +2481,34 @@ function renderUpNextPop(s){
   if(!pop)return;
   s=s||upNextCompute();
   function row(it,showDay){
-    var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':'';
+    var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':it.kind==='reminder'?'<span class="dp-tag pri">Reminder</span>':'';
     var day=showDay?upNextDayLabel(it.date,s.today):'';
-    return'<div class="dp-side-row" onclick="upNextOpenItem(\''+it.date+'\',\''+it.kind+'\',\''+escA(it.id)+'\')"><span class="tm">'+dpFmtTime(it.start)+(day?'<span class="sb">'+escH(day)+'</span>':'')+'</span><div class="bd"><span class="nm">'+escH(it.title)+'</span>'+tag+(it.sub?'<span class="sb">'+escH(it.sub)+'</span>':'')+'<span class="sb">until '+dpFmtTime(it.end)+'</span></div></div>';
+    return'<div class="dp-side-row" onclick="upNextOpenItem(\''+it.date+'\',\''+it.kind+'\',\''+escA(it.id)+'\')"><span class="tm">'+dpFmtTime(it.start)+(day?'<span class="sb">'+escH(day)+'</span>':'')+'</span><div class="bd"><span class="nm">'+escH(it.title)+'</span>'+tag+(it.sub?'<span class="sb">'+escH(it.sub)+'</span>':'')+(it.kind==='reminder'?'':'<span class="sb">until '+dpFmtTime(it.end)+'</span>')+'</div></div>';
   }
   var h='';
   if(s.leave)h+='<div class="dp-side-leave">'+escH(leaveDayLabel(s.today,s.leave))+'</div>';
   if(s.now.length)h+='<div class="dp-side-sec" style="margin-top:0">Now</div>'+s.now.map(function(it){return row(it,false).replace('dp-side-row','dp-side-row now');}).join('');
   if(s.next.length)h+='<div class="dp-side-sec"'+(s.now.length||s.leave?'':' style="margin-top:0"')+'>Next</div>'+s.next.map(function(it){return row(it,true);}).join('');
   if(!s.now.length&&!s.next.length)h+='<div class="dp-side-note">Nothing planned in the next week.</div>';
+  h+='<div class="dp-side-sec" style="display:flex;align-items:center">Reminders<a class="rem-manage" onclick="closeUpNext();openRemMgr()">Manage</a></div>'+(s.reminders.length?'':'<div class="dp-side-note">Nothing due.</div>');
+  if(s.reminders.length){
+    h+=s.reminders.map(function(r){
+      var id=escA(r.id);
+      return'<div class="dp-side-row" style="cursor:default"><button class="rem-chk" title="Mark done" aria-label="Mark done" onclick="remDone(\''+id+'\')"></button><div class="bd"><span class="nm"'+(r.link?' style="cursor:pointer" onclick="remOpen(\''+id+'\')"':'')+'>'+escH(r.title)+'</span><span class="sb">'+escH(remRecurDesc(r))+(r.link?' \u00b7 '+escH(remLinkLabel(r)):'')+'</span></div><button class="rem-snz" onclick="openSnoozeMenu(event,\''+id+'\')">Snooze &#9662;</button></div>';
+    }).join('');
+  }
   if(s.tasks.length){
     h+='<div class="dp-side-sec">Suggested tasks</div>'+s.tasks.map(function(x){
       var t=x.task;
       return'<div class="dp-side-row" onclick="closeUpNext();switchTab(\'tasks\')"><div class="bd"><span class="nm">'+escH(t.title)+'</span>'+(x.tag?'<span class="dp-tag '+x.cls+'">'+escH(x.tag)+'</span>':'')+(t.project?'<span class="sb">'+escH(t.project)+'</span>':'')+'</div></div>';
     }).join('');
   }
-  h+='<div class="upnext-foot"><button class="btn secondary-btn sm" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button><button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button></div>';
+  h+='<div class="upnext-foot"><button class="btn secondary-btn sm rq" onclick="closeUpNext();openRemQuick()">+ Reminder</button><button class="btn secondary-btn sm" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button><button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button></div>';
   pop.innerHTML=h;
 }
 function upNextOpenItem(ds,kind,id){
   closeUpNext();
+  if(kind==='reminder'){remOpen(id);return;}
   openDayPlan(ds,kind==='block'?id:null);
 }
 function toggleUpNext(e){
@@ -2437,7 +2525,7 @@ function closeUpNext(){
 }
 document.addEventListener('click',function(e){if(upNextOpen&&!e.target.closest('#upNextWrap'))closeUpNext();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&upNextOpen)closeUpNext();});
-setInterval(function(){if(!document.hidden)renderUpNext();},30000);
+setInterval(function(){remNotifyTick();if(!document.hidden){renderUpNext();if(currentTab==='planner')renderReminderBanner();}},30000);setTimeout(remNotifyTick,2500);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)renderUpNext();});
 
 function openDayPlan(ds,blockId){
@@ -2528,7 +2616,7 @@ function renderDayPlan(){
     ghostHtml='<div class="dp-ghost" style="top:'+top2+'px;height:'+h2+'px"></div>';
   }
 
-  gridEl.innerHTML=lines+blocksHtml+meetingsHtml+ghostHtml;
+  gridEl.innerHTML=lines+blocksHtml+meetingsHtml+remMarkersHtml(dpDate)+ghostHtml;
   gridEl.onmousedown=function(e){if(e.target===gridEl)dpStartCreate(e);};
 
   renderDpSide();
@@ -3942,7 +4030,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.22.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.25.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -4175,7 +4263,7 @@ function toggleTaskDone(id){toggleDone(id);_refreshTaskViews();renderCalendarShe
 function deleteTaskItem(id){if(!confirm('Delete this task?'))return;deleteTask(id);_refreshTaskViews();renderCalendarShell();renderPlannerTasks();}
 function setTaskFilter(proj,filter){taskFilters[proj]=filter;_refreshTaskViews();}
 function setTaskSort(mode){_taskSortMode=mode;document.querySelectorAll('.sort-btn').forEach(function(b){b.classList.remove('active');});var ab=document.getElementById('tsort_'+mode);if(ab)ab.classList.add('active');renderTasksPanel();}
-function renderTasksSummary(){var tasks=getTasks();var _gid2=getActiveGroupId();if(_gid2){var _visNames=getVisibleProjects().map(function(p){return p.name;});tasks=tasks.filter(function(t){return t.project==='General'||_visNames.indexOf(t.project)>=0;});}var today=todayStr();var open=tasks.filter(function(t){return!t.done;}).length;var done=tasks.filter(function(t){return t.done;}).length;var overdue=tasks.filter(function(t){return!t.done&&t.dueDate&&t.dueDate<today;}).length;var dueToday=tasks.filter(function(t){return!t.done&&t.dueDate===today;}).length;var rems=getReminders();var remDue=rems.filter(isReminderDue).length;var panelOpen=!!(document.getElementById('remCardPanel')&&document.getElementById('remCardPanel').style.display!=='none');var el=document.getElementById('tasksSummary');if(!el)return;el.innerHTML='<div class="ts-stat"><span class="ts-num">'+open+'</span> open</div>'+'<div class="ts-stat"><span class="ts-num">'+done+'</span> done</div>'+(overdue>0?'<div class="ts-stat overdue-stat"><span class="ts-num">'+overdue+'</span> overdue</div>':'')+(dueToday>0?'<div class="ts-stat"><span class="ts-num" style="color:var(--today-text)">'+dueToday+'</span> due today</div>':'')+'<div class="ts-stat ts-rem-stat'+(panelOpen?' panel-open':'')+'" onclick="toggleRemPanel()">'+'<span style="font-size:15px">🔔</span>'+'<span>'+rems.length+' reminder'+(rems.length!==1?'s':'')+' </span></div>';}
+function renderTasksSummary(){var tasks=getTasks();var _gid2=getActiveGroupId();if(_gid2){var _visNames=getVisibleProjects().map(function(p){return p.name;});tasks=tasks.filter(function(t){return t.project==='General'||_visNames.indexOf(t.project)>=0;});}var today=todayStr();var open=tasks.filter(function(t){return!t.done;}).length;var done=tasks.filter(function(t){return t.done;}).length;var overdue=tasks.filter(function(t){return!t.done&&t.dueDate&&t.dueDate<today;}).length;var dueToday=tasks.filter(function(t){return!t.done&&t.dueDate===today;}).length;var rems=getReminders();var remDue=rems.filter(isReminderDue).length;var el=document.getElementById('tasksSummary');if(!el)return;el.innerHTML='<div class="ts-stat"><span class="ts-num">'+open+'</span> open</div>'+'<div class="ts-stat"><span class="ts-num">'+done+'</span> done</div>'+(overdue>0?'<div class="ts-stat overdue-stat"><span class="ts-num">'+overdue+'</span> overdue</div>':'')+(dueToday>0?'<div class="ts-stat"><span class="ts-num" style="color:var(--today-text)">'+dueToday+'</span> due today</div>':'');}
 // ── Task month calendar ──
 var _tmcNow=new Date();
 var tmcYear=_tmcNow.getFullYear();
@@ -4284,7 +4372,7 @@ function makeFlatTaskRow(t){
       +subHtml+subAddHtml
     +'</div>'
     +'<div class="task-actions">'
-      +'<button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button>'
+      +'<button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openTaskRemindMenu(event,\''+t.id+'\')" title="Remind me">Remind</button>'
       +'<button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button>'
       +'<button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button>'
       +'<button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button>'
@@ -4311,7 +4399,7 @@ function renderProjectTaskGroupHtml(project,hideName){
       ?'<div class="project-empty">'+(filter==='done'?'No completed tasks':'No open tasks')+'</div>'
       :visible.map(function(t){
         var isDone=t.done;var due=dueDateLabel(t.dueDate);
-        var subs=t.subtasks||[];var subsDone=subs.filter(function(s){return s.done;}).length;var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){if(_subtaskEditOpen[s.id]){var eid='ste_'+s.id;return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><input class="subtask-edit-input" id="'+eid+'" type="text" value="'+escH(s.title)+'" onkeydown="if(event.key===\'Enter\')saveSubtaskEdit(\''+t.id+'\',\''+s.id+'\',\''+eid+'\');if(event.key===\'Escape\'){this.onblur=null;cancelSubtaskEdit(\''+s.id+'\');}" onblur="saveSubtaskEdit(\''+t.id+'\',\''+s.id+'\',\''+eid+'\')"></div>';}return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span><button class="subtask-edit" onclick="openSubtaskEdit(\''+s.id+'\')" title="Edit">✎</button><button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')" title="Delete">×</button></div>';}).join('')+'</div>':'';var subAddHtml=t.subtaskAddOpen?'<div class="subtask-add-row"><input id="sta_'+t.id+'" placeholder="Subtask…" type="text"><button class="btn primary-btn sm" onclick="addSubtask(\''+t.id+'\',\'sta_'+t.id+'\')">Add</button><button class="btn secondary-btn sm" onclick="_subtaskAddOpen[\''+t.id+'\']=false;_refreshTaskViews()">×</button></div>':'';var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+subCount+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">'+escH(t.notes)+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+subHtml+subAddHtml+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
+        var subs=t.subtasks||[];var subsDone=subs.filter(function(s){return s.done;}).length;var subHtml=subs.length?'<div class="subtask-list">'+subs.map(function(s){if(_subtaskEditOpen[s.id]){var eid='ste_'+s.id;return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><input class="subtask-edit-input" id="'+eid+'" type="text" value="'+escH(s.title)+'" onkeydown="if(event.key===\'Enter\')saveSubtaskEdit(\''+t.id+'\',\''+s.id+'\',\''+eid+'\');if(event.key===\'Escape\'){this.onblur=null;cancelSubtaskEdit(\''+s.id+'\');}" onblur="saveSubtaskEdit(\''+t.id+'\',\''+s.id+'\',\''+eid+'\')"></div>';}return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'✓':'')+'</div><span class="subtask-title'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span><button class="subtask-edit" onclick="openSubtaskEdit(\''+s.id+'\')" title="Edit">✎</button><button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')" title="Delete">×</button></div>';}).join('')+'</div>':'';var subAddHtml=t.subtaskAddOpen?'<div class="subtask-add-row"><input id="sta_'+t.id+'" placeholder="Subtask…" type="text"><button class="btn primary-btn sm" onclick="addSubtask(\''+t.id+'\',\'sta_'+t.id+'\')">Add</button><button class="btn secondary-btn sm" onclick="_subtaskAddOpen[\''+t.id+'\']=false;_refreshTaskViews()">×</button></div>':'';var subCount=subs.length?'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>':'';return'<div class="task-row'+(isDone?' is-done':'')+'" id="tr_'+t.id+'"><div class="task-cb'+(isDone?' done-cb':'')+'" onclick="toggleTaskDone(\''+t.id+'\')"></div><span class="pri-badge '+t.priority+'">'+(t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1))+'</span><div class="task-body"><div class="task-title">'+escH(t.title)+subCount+'</div><div class="task-meta">'+(due?'<span class="task-due '+due.cls+'">'+due.text+'</span>':'')+(t.notes?'<span class="task-notes-txt" title="'+escH(t.notes)+'">'+escH(t.notes)+'</span>':'')+'</div>'+'<div class="task-quick-note'+(t.quickNoteOpen?' open':'')+'" id="qn_'+t.id+'"><textarea placeholder="Add note…" rows="2" id="qnt_'+t.id+'">'+(t.quickNoteOpen&&t.notes?escH(t.notes):'')+'</textarea><div class="task-quick-note-actions"><button class="btn secondary-btn sm" onclick="closeQuickNote(\''+t.id+'\')">Cancel</button><button class="btn primary-btn sm" onclick="saveQuickNote(\''+t.id+'\')">Save</button></div></div>'+subHtml+subAddHtml+'</div><div class="task-actions"><button class="task-act-btn" onclick="openTaskEditModal(\''+t.id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openTaskRemindMenu(event,\''+t.id+'\')" title="Remind me">Remind</button><button class="task-act-btn" onclick="openSubtaskAdd(\''+t.id+'\')" title="Add subtask">Sub</button><button class="task-act-btn" onclick="openQuickNote(\''+t.id+'\')" title="Add note">Note</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+t.id+'\')" title="Delete">Delete</button></div></div>';
       }).join('');
     return'<div class="project-group"><div class="project-group-header"><span class="'+(hideName?'proj-card-title' : 'project-group-name')+'" style="'+(hideName?'margin-bottom:0;flex:1':'')+'">'+(hideName?'Tasks':escH(project))+'</span><span class="'+countCls+'">'+countLabel+'</span><div class="task-filter"><button class="'+(filter==='active'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'active\')">Active</button><button class="'+(filter==='all'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'all\')">All</button><button class="'+(filter==='done'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'done\')">Done</button></div></div><div class="project-group-body">'+taskRows+'</div><div class="group-quick-add"><input type="text" id="'+qaId+'" placeholder="+ Quick add task to '+escH(project)+'…" onkeydown="if(event.key===\'Enter\') quickAddTask(\''+escA(project)+'\',\''+qaId+'\')"><button class="btn sm secondary-btn" onclick="quickAddTask(\''+escA(project)+'\',\''+qaId+'\')">Add</button></div></div>';
 }
@@ -4453,53 +4541,128 @@ function saveQuickTask(){
 
 // ── Data export / import ──
 // ── Reminders ──
-function toggleRemPanel(forceOpen){
-  var p=document.getElementById('remCardPanel');if(!p)return;
-  var open=forceOpen!==undefined?forceOpen:p.style.display==='none';
-  p.style.display=open?'block':'none';
-  renderTasksSummary();
-  if(open){renderReminderMgr();}
-}
+var REM_BUILTINS={
+  'log-hours':{id:'log-hours',title:'Log your hours',recur:'daily-weekday',time:'16:30'},
+  'submit-timesheet':{id:'sys-submit-timesheet',title:'Submit your timesheet',recur:'weekly',weekDays:[4],time:'15:00'},
+  'leave-low':{id:'sys-leave-low',title:'Leave balance is low',recur:'weekly',weekDays:[0],time:'08:30'}
+};
 function seedLogHoursReminder(){
-  var arr=getReminders();
-  if(!arr.some(function(r){return r.id==='log-hours';})){
-    arr.unshift({id:'log-hours',title:'Log your hours',recur:'daily-weekday',isSystem:true,dismissedDates:[],snoozedUntil:null});
-    saveReminders(arr);
+  var arr=getReminders(),changed=false;
+  var lh=arr.find(function(r){return r.id==='log-hours';});
+  if(!lh&&localStorage.getItem('plannerRemLogOff')!=='1'){
+    arr.unshift(Object.assign({},REM_BUILTINS['log-hours'],{isSystem:true,sys:'log-hours',dismissedDates:[],snoozedUntil:null}));
+    changed=true;
   }
+  if(lh&&!lh.sys){lh.sys='log-hours';changed=true;}
+  if(localStorage.getItem('plannerRemV24')!=='1'){
+    if(lh&&lh.time===undefined){lh.time='16:30';}
+    if(!arr.some(function(r){return remSys(r)==='submit-timesheet';})){
+      arr.push(Object.assign({},REM_BUILTINS['submit-timesheet'],{isSystem:true,sys:'submit-timesheet',dismissedDates:[],snoozedUntil:null}));
+    }
+    localStorage.setItem('plannerRemV24','1');
+    changed=true;
+  }
+  if(changed)saveReminders(arr);
 }
 
 function getReminders(){try{return JSON.parse(localStorage.getItem('plannerReminders'))||[];}catch(e){return[];}}
 function saveReminders(arr){localStorage.setItem('plannerReminders',JSON.stringify(arr));}
+function remPad(n){return String(n).padStart(2,'0');}
+function remTimeMin(t){
+  var p=String(t||'').split(':');
+  if(p.length<2)return null;
+  var h=parseInt(p[0],10),m=parseInt(p[1],10);
+  return(isNaN(h)||isNaN(m))?null:h*60+m;
+}
+function remFmtTime(t){var m=remTimeMin(t);return m===null?'':dpFmtTime(m);}
+function remNowMin(){return dpMinNow();}
+function remSys(r){return r.sys||(r.id==='log-hours'?'log-hours':'');}
+function remLeaveLow(){
+  var info=(typeof lvBalanceInfo==='function')?lvBalanceInfo():null;
+  var th=parseFloat(localStorage.getItem('plannerRemLeaveThreshold'));
+  if(isNaN(th))th=3;
+  return!!info&&info.cur.bal<=th;
+}
+function remMissingDays(){
+  var today=todayStr(),t=new Date(today+'T12:00:00'),dow=t.getDay();
+  var mon=new Date(t);mon.setDate(t.getDate()-(dow===0?6:dow-1));
+  var n=0;
+  for(var i=0;i<5;i++){
+    var d=new Date(mon);d.setDate(mon.getDate()+i);
+    var ds=localIsoDate(d);
+    if(ds>today)break;
+    if(LEAVE_HOLIDAYS[ds])continue;
+    if(!getLogsForDate(ds))n++;
+  }
+  return n;
+}
+function remLinkLabel(r){
+  var l=r.link;
+  if(!l)return'';
+  return l.type==='task'?'Task':(l.type==='project'?(l.name||'Project'):'Meeting');
+}
 function remRecurDesc(r){
-  var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  if(r.recur==='none')return'Once · '+(r.date||'—');
-  if(r.recur==='daily')return'Daily';
-  if(r.recur==='daily-weekday')return'Daily · weekdays';
-  if(r.recur==='weekly'){
-    var selected=(r.weekDays||[]).map(function(d){return days[d];});
-    return'Weekly · '+(selected.length?selected.join(', '):'—');
+  var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],d;
+  if(r.recur==='none')d='Once \u00b7 '+(r.date||'\u2014');
+  else if(r.recur==='daily')d='Daily';
+  else if(r.recur==='daily-weekday')d='Daily \u00b7 weekdays';
+  else if(r.recur==='weekly'){
+    var sel=(r.weekDays||[]).map(function(i){return days[i];});
+    d='Weekly \u00b7 '+(sel.length?sel.join(', '):'\u2014');
   }
-  if(r.recur==='monthly'){
-    var d=r.monthDay||1;
-    return'Monthly · '+(d===1?'1st':d===2?'2nd':d===3?'3rd':d+'th');
+  else if(r.recur==='monthly'){
+    var m=r.monthDay||1;
+    d='Monthly \u00b7 '+(m===1?'1st':m===2?'2nd':m===3?'3rd':m+'th');
   }
-  return'';
+  else d='';
+  if(r.time)d+=' \u00b7 '+remFmtTime(r.time);
+  if(remSys(r)==='submit-timesheet'){var n=remMissingDays();if(n>0)d+=' \u00b7 '+n+' day'+(n>1?'s':'')+' not logged';}
+  return d;
+}
+function remOccursOn(r,ds){
+  if(r.recur==='none')return!r.date||r.date===ds||(ds===todayStr()&&r.date<ds);
+  var d=new Date(ds+'T12:00:00'),dow=d.getDay(),mon=dow===0?6:dow-1;
+  if(r.recur==='daily')return true;
+  if(r.recur==='daily-weekday')return dow>=1&&dow<=5;
+  if(r.recur==='weekly')return(r.weekDays||[]).indexOf(mon)>=0;
+  if(r.recur==='monthly')return d.getDate()===(r.monthDay||1);
+  return false;
+}
+function remSnoozeElapsedToday(r){
+  var sn=r.snoozedUntil;
+  return!!sn&&String(sn).length>10&&String(sn).slice(0,10)===todayStr()&&Date.now()>=new Date(sn).getTime();
+}
+function remGate(r){
+  var today=todayStr();
+  if(r.snoozedUntil){
+    if(String(r.snoozedUntil).length>10){if(Date.now()<new Date(r.snoozedUntil).getTime())return false;}
+    else if(r.snoozedUntil>today)return false;
+  }
+  if(r.dismissedDates&&r.dismissedDates.indexOf(today)>=0)return false;
+  if(remSys(r)==='log-hours'&&!!getLogsForDate(today))return false;
+  if(r.link&&r.link.type==='task'){
+    var t=getTasks().find(function(x){return x.id===r.link.id;});
+    if(!t||t.done)return false;
+  }
+  if(remSys(r)==='leave-low'&&!remLeaveLow())return false;
+  return remOccursOn(r,today);
 }
 function isReminderDue(r){
-  var today=todayStr();
-  if(r.snoozedUntil&&r.snoozedUntil>today)return false;
-  if(r.dismissedDates&&r.dismissedDates.indexOf(today)>=0)return false;
-  if(r.id==='log-hours'&&!!getLogsForDate(today))return false;
-  if(r.recur==='none')return!r.date||r.date<=today;
-  if(r.recur==='daily')return true;
-  if(r.recur==='daily-weekday'){var _dow=new Date().getDay();return _dow>=1&&_dow<=5;}
-  if(r.recur==='weekly'){
-    var jsDay=new Date().getDay();
-    var monDay=jsDay===0?6:jsDay-1;
-    return(r.weekDays||[]).indexOf(monDay)>=0;
-  }
-  if(r.recur==='monthly')return new Date().getDate()===(r.monthDay||1);
-  return false;
+  if(!remGate(r))return false;
+  var tm=remTimeMin(r.time);
+  if(tm!==null&&remNowMin()<tm&&!remSnoozeElapsedToday(r))return false;
+  return true;
+}
+function isReminderPending(r){
+  if(!remGate(r))return false;
+  var tm=remTimeMin(r.time);
+  return tm!==null&&remNowMin()<tm&&!remSnoozeElapsedToday(r);
+}
+function remPendingItems(today){
+  return getReminders().filter(isReminderPending).map(function(r){
+    var m=remTimeMin(r.time);
+    return{kind:'reminder',id:r.id,start:m,end:m,title:r.title,sub:remRecurDesc(r),date:today};
+  });
 }
 function renderReminderBanner(){
   var zone=document.getElementById('reminderZone');if(!zone)return;
@@ -4508,9 +4671,9 @@ function renderReminderBanner(){
   function remCard(r){
     return'<div class="user-reminder">'
       +'<span>⏰</span>'
-      +'<div class="ur-text"><span class="ur-title">'+escH(r.title)+'</span><span class="ur-sub">· '+remRecurDesc(r)+'</span></div>'
-      +'<button onclick="event.stopPropagation();snoozeReminder(\''+r.id+'\')">Snooze</button>'
-      +'<button class="ur-dismiss" onclick="event.stopPropagation();dismissReminder(\''+r.id+'\')">Dismiss</button>'
+      +'<div class="ur-text"><span class="ur-title"'+(r.link?' style="cursor:pointer" onclick="event.stopPropagation();remOpen(\''+r.id+'\')"':'')+'>'+escH(r.title)+'</span><span class="ur-sub">· '+remRecurDesc(r)+'</span></div>'
+      +'<button class="ur-snz" onclick="openSnoozeMenu(event,\''+r.id+'\')">Snooze &#9662;</button>'
+      +'<button class="ur-dismiss ur-done" onclick="event.stopPropagation();remDone(\''+r.id+'\')">Done</button>'
       +'</div>';
   }
   if(due.length===1){zone.innerHTML=remCard(due[0]);return;}
@@ -4533,116 +4696,502 @@ function renderReminderBanner(){
   }
 }
 function toggleRemBanner(){_remBannerExpanded=!_remBannerExpanded;renderReminderBanner();}
-function dismissReminder(id){
-  var today=todayStr();
-  var arr=getReminders();
-  var rem=arr.find(function(r){return r.id===id;});
-  if(rem&&rem.recur==='none'){
+function remRefresh(){
+  renderReminderBanner();renderReminderMgr();renderTasksSummary();renderUpNext();
+  if(typeof dpDate!=='undefined'&&dpDate)renderDayPlan();
+}
+function remDone(id){
+  var today=todayStr(),arr=getReminders(),rem=arr.find(function(r){return r.id===id;});
+  if(!rem)return;
+  if(rem.recur==='none'){
     arr=arr.filter(function(r){return r.id!==id;});
   } else {
-    arr=arr.map(function(r){
-      if(r.id===id){if(!r.dismissedDates)r.dismissedDates=[];if(r.dismissedDates.indexOf(today)<0)r.dismissedDates.push(today);}
-      return r;
-    });
-  }
-  saveReminders(arr);renderReminderBanner();renderReminderMgr();renderTasksSummary();
-}
-function snoozeReminder(id){
-  var d=new Date();d.setDate(d.getDate()+1);
-  var arr=getReminders().map(function(r){
-    if(r.id===id)r.snoozedUntil=localIsoDate(d);
-    return r;
-  });
-  saveReminders(arr);renderReminderBanner();
-}
-var _editingRemId=null;
-var _remBannerExpanded=false;
-function renderReminderMgr(){
-  var el=document.getElementById('remMgrList');if(!el)return;
-  var _rp2={'none':0,'monthly':1,'weekly':2,'daily-weekday':3,'daily':3};var arr=getReminders().slice().sort(function(a,b){return(_rp2[a.recur]||4)-(_rp2[b.recur]||4);});
-  if(!arr.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);font-style:italic">No reminders set</div>';return;}
-  el.innerHTML=arr.map(function(r){
-    var sys=r.id==='log-hours';
-    var tag=sys?' <span style="font-size:10px;color:var(--muted)">(system)</span>':(r.isEventReminder?' <span style="font-size:10px;color:var(--muted)">(meeting)</span>':'');
-    return'<div class="rem-mgr-item">'
-      +'<span class="rem-mgr-title">'+escH(r.title)+tag+' </span>'
-      +'<span class="rem-mgr-meta">'+remRecurDesc(r)+'</span>'
-      +'<button class="btn secondary-btn sm" style="margin-left:4px" onclick="editReminder(\''+r.id+'\')" >Edit</button>'
-      +'<button class="btn secondary-btn sm" style="margin-left:4px" onclick="deleteReminder(\''+r.id+'\')" >Remove</button>'
-      +'</div>';
-  }).join('');
-}
-function editReminder(id){
-  var r=getReminders().find(function(x){return x.id===id;});if(!r)return;
-  _editingRemId=id;
-  var ti=document.getElementById('remTitleInput');if(ti)ti.value=r.title;
-  var rs=document.getElementById('remRecurSel');
-  var recur=(r.recur==='daily-weekday')?'daily':r.recur;
-  if(rs)rs.value=recur;
-  toggleRemFields();
-  if(r.recur==='none'&&r.date){var di=document.getElementById('remDateInput');if(di)di.value=r.date;}
-  if(r.recur==='weekly'&&r.weekDays){
-    document.querySelectorAll('.rem-day-btn').forEach(function(b){b.classList.toggle('active',(r.weekDays||[]).indexOf(parseInt(b.dataset.day))>=0);});
-  }
-  if(r.recur==='monthly'&&r.monthDay){var md=document.getElementById('remMonthDay');if(md)md.value=r.monthDay;}
-  var btn=document.getElementById('remAddBtn');
-  if(btn)btn.textContent='Save changes';
-  toggleRemPanel(true);
-}
-function deleteReminder(id){
-  saveReminders(getReminders().filter(function(r){return r.id!==id;}));
-  renderReminderMgr();renderReminderBanner();
-}
-function toggleRemFields(){
-  var recur=document.getElementById('remRecurSel').value;
-  var dateRow=document.getElementById('remDateRow');
-  var weekRow=document.getElementById('remWeekRow');
-  var monthRow=document.getElementById('remMonthRow');
-  if(dateRow)dateRow.style.display=recur==='none'?'flex':'none';
-  if(weekRow)weekRow.style.display=recur==='weekly'?'block':'none';
-  if(monthRow)monthRow.style.display=recur==='monthly'?'flex':'none';
-}
-function toggleRemDay(btn){
-  btn.classList.toggle('active');
-}
-function addUserReminder(){
-  var titleEl=document.getElementById('remTitleInput');
-  var title=(titleEl||{}).value;
-  if(!title||!title.trim()){alert('Please enter a reminder title.');return;}
-  var recur=document.getElementById('remRecurSel').value;
-  var weekDays=[];
-  if(recur==='weekly'){
-    document.querySelectorAll('.rem-day-btn.active').forEach(function(b){weekDays.push(parseInt(b.dataset.day));});
-    if(!weekDays.length){alert('Select at least one day.');return;}
-  }
-  var monthDay=recur==='monthly'?parseInt((document.getElementById('remMonthDay')||{}).value)||1:undefined;
-  var date=recur==='none'?((document.getElementById('remDateInput')||{}).value||todayStr()):undefined;
-  var arr=getReminders();
-  if(_editingRemId){
-    arr=arr.map(function(r){
-      if(r.id===_editingRemId){
-        r.title=title.trim();r.recur=recur;
-        if(date!==undefined)r.date=date;
-        if(weekDays.length)r.weekDays=weekDays;
-        if(monthDay!==undefined)r.monthDay=monthDay;
-      }
-      return r;
-    });
-    _editingRemId=null;
-  } else {
-    var r={id:'rem_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),title:title.trim(),recur:recur,dismissedDates:[],snoozedUntil:null};
-    if(date!==undefined)r.date=date;
-    if(weekDays.length)r.weekDays=weekDays;
-    if(monthDay!==undefined)r.monthDay=monthDay;
-    arr.push(r);
+    if(!rem.doneDates)rem.doneDates=[];
+    if(rem.doneDates.indexOf(today)<0)rem.doneDates.push(today);
+    if(!rem.dismissedDates)rem.dismissedDates=[];
+    if(rem.dismissedDates.indexOf(today)<0)rem.dismissedDates.push(today);
   }
   saveReminders(arr);
-  if(titleEl)titleEl.value='';
-  document.querySelectorAll('.rem-day-btn').forEach(function(b){b.classList.remove('active');});
-  var btn=document.getElementById('remAddBtn');
-  if(btn)btn.textContent='Add';
-  renderReminderMgr();renderReminderBanner();
-  toggleRemPanel(true);
+  remRefresh();
+}
+var _snm=null;
+function closeSnoozeMenu(){
+  if(!_snm)return;
+  document.removeEventListener('click',_snm.outside,true);
+  document.removeEventListener('keydown',_snm.key,true);
+  window.removeEventListener('scroll',closeSnoozeMenu,true);
+  if(_snm.el.parentNode)_snm.el.parentNode.removeChild(_snm.el);
+  _snm=null;
+}
+function snzIso(d){return localIsoDate(d)+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function remSnoozeTo(id,iso){
+  if(!iso)return;
+  saveReminders(getReminders().map(function(r){if(r.id===id)r.snoozedUntil=iso;return r;}));
+  closeSnoozeMenu();
+  remRefresh();
+}
+function openSnoozeMenu(e,id){
+  e.stopPropagation();
+  var btn=e.currentTarget;
+  if(_snm&&_snm.id===id){closeSnoozeMenu();return;}
+  closeSnoozeMenu();
+  var now=new Date(),opts=[];
+  opts.push({n:'Later today',h:'+1 hour',d:new Date(now.getTime()+3600000)});
+  if(now.getHours()<15){var aft=new Date(now);aft.setHours(15,0,0,0);opts.push({n:'This afternoon',h:'3PM',d:aft});}
+  var tom=new Date(now);tom.setDate(tom.getDate()+1);tom.setHours(8,0,0,0);
+  opts.push({n:'Tomorrow',h:'8AM',d:tom});
+  var dm=(1-now.getDay()+7)%7;if(dm===0)dm=7;
+  var mon=new Date(now);mon.setDate(mon.getDate()+dm);mon.setHours(8,0,0,0);
+  opts.push({n:'Next Monday',h:mon.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),d:mon});
+  var el=document.createElement('div');
+  el.className='snz-menu';el.onclick=function(ev){ev.stopPropagation();};
+  opts.forEach(function(o){
+    var b=document.createElement('button');
+    b.className='snz-item';
+    b.innerHTML='<b style="font-weight:500">'+o.n+'</b><span>'+o.h+'</span>';
+    b.onclick=function(ev){ev.stopPropagation();remSnoozeTo(id,snzIso(o.d));};
+    el.appendChild(b);
+  });
+  var pk=document.createElement('button');
+  pk.className='snz-item';pk.innerHTML='<b style="font-weight:500">Pick a time...</b><span>&#9719;</span>';
+  var row=document.createElement('div');
+  row.className='snz-pick';
+  var dflt=new Date(tom);
+  row.innerHTML='<input type="datetime-local" value="'+snzIso(dflt)+'"><button class="btn primary-btn sm">Set</button>';
+  pk.onclick=function(ev){ev.stopPropagation();row.classList.toggle('open');};
+  row.querySelector('button').onclick=function(ev){ev.stopPropagation();remSnoozeTo(id,row.querySelector('input').value);};
+  el.appendChild(pk);el.appendChild(row);
+  document.body.appendChild(el);
+  var r=btn.getBoundingClientRect(),w=el.offsetWidth,h=el.offsetHeight;
+  var left=Math.max(8,Math.min(r.left,window.innerWidth-w-8));
+  var top=r.bottom+4;
+  if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-4);
+  el.style.left=left+'px';el.style.top=top+'px';
+  _snm={id:id,el:el,
+    outside:function(ev){if(!el.contains(ev.target)&&!btn.contains(ev.target))closeSnoozeMenu();},
+    key:function(ev){if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();closeSnoozeMenu();}}
+  };
+  setTimeout(function(){if(_snm&&_snm.el===el)document.addEventListener('click',_snm.outside,true);},0);
+  document.addEventListener('keydown',_snm.key,true);
+  window.addEventListener('scroll',closeSnoozeMenu,true);
+}
+var _remBannerExpanded=false;
+function openRemQuick(date){openRemEditor(null,{date:date});}
+function remToast(msg){
+  var old=document.getElementById('remToast');if(old)old.remove();
+  var t=document.createElement('div');
+  t.id='remToast';t.className='rem-toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2400);
+}
+function remDelete(id){
+  var r=getReminders().find(function(x){return x.id===id;});
+  if(!r)return;
+  if(r.isEventReminder&&r.link&&r.link.id){
+    var evs=getManualEvents();
+    evs.forEach(function(e){if(e.id===r.link.id)e.remind=false;});
+    saveManualEvents(evs);
+  }
+  saveReminders(getReminders().filter(function(x){return x.id!==id;}));
+  if(id==='log-hours')localStorage.setItem('plannerRemLogOff','1');
+  remRefresh();
+}
+function remOpen(id){
+  var r=getReminders().find(function(x){return x.id===id;});
+  if(!r)return;
+  closeUpNext();
+  var l=r.link;
+  if(l&&l.type==='task'){
+    switchTab('tasks');
+    setTimeout(function(){
+      var el=document.getElementById('tr_'+l.id);
+      if(el){el.scrollIntoView({block:'center'});el.classList.add('rem-flash');setTimeout(function(){el.classList.remove('rem-flash');},1400);}
+    },80);
+  }
+  else if(l&&l.type==='project'){switchTab('projects');selectProject(l.name);}
+  else if(l&&l.type==='event'){openDayPlan(l.date||r.date||todayStr());}
+  else openRemEditor(id);
+}
+
+// -- Reminder manager --
+function openRemMgr(){
+  var m=document.getElementById('remMgrModal');if(!m)return;
+  renderRemMgr();
+  m.classList.add('open');
+}
+function closeRemMgr(){var m=document.getElementById('remMgrModal');if(m)m.classList.remove('open');}
+function renderRemMgr(){
+  var el=document.getElementById('remMgrBody');
+  if(!el)return;
+  var all=getReminders();
+  function row(r){
+    var chip=r.isSystem?'<span class="rem-chip sys">built-in</span>':(r.isEventReminder?'<span class="rem-chip sys">meeting</span>':(r.link?'<span class="rem-chip">'+escH(remLinkLabel(r))+'</span>':''));
+    var id=escA(r.id);
+    return'<div class="rem-mgr-item"><span class="rem-mgr-title">'+escH(r.title)+chip+'</span><span class="rem-mgr-meta">'+escH(remRecurDesc(r))+'</span>'
+      +'<button class="btn secondary-btn sm" onclick="'+(r.isEventReminder?'closeRemMgr();':'')+'remOpen(\''+id+'\')">'+(r.isEventReminder?'Open meeting':'Edit')+'</button>'
+      +'<button class="btn secondary-btn sm" onclick="remDelete(\''+id+'\')">Remove</button></div>';
+  }
+  function group(title,arr){
+    return arr.length?'<div class="dp-side-sec" style="margin:12px 0 2px">'+title+'</div>'+arr.map(row).join(''):'';
+  }
+  var user=all.filter(function(r){return!r.isSystem&&!r.isEventReminder;});
+  var rec=user.filter(function(r){return r.recur!=='none';});
+  var one=user.filter(function(r){return r.recur==='none';}).sort(function(a,b){return(a.date||'').localeCompare(b.date||'');});
+  var meet=all.filter(function(r){return r.isEventReminder;});
+  var sys=all.filter(function(r){return r.isSystem;});
+  var html=group('Repeating',rec)+group('One-off',one)+group('Meetings',meet)+group('Built-in',sys);
+  el.innerHTML=html||'<div style="font-size:12px;color:var(--muted);font-style:italic;padding:8px 0">No reminders yet. Use + New reminder, and try typing something like "every Friday 3pm submit timesheet".</div>';
+}
+function renderReminderMgr(){
+  if(typeof renderRemMgr==='function')renderRemMgr();
+  if(typeof renderRemSettings==='function')renderRemSettings();
+}
+
+// -- Reminder editor --
+var _reEditId=null;
+function reFields(){
+  var rc=document.getElementById('reRecur').value;
+  document.getElementById('reDateRow').style.display=rc==='none'?'block':'none';
+  document.getElementById('reWeekRow').style.display=rc==='weekly'?'block':'none';
+  document.getElementById('reMonthRow').style.display=rc==='monthly'?'block':'none';
+}
+function reLive(){
+  var el=document.getElementById('reParsed');if(!el)return;
+  var p=remParse(document.getElementById('reTitle').value);
+  el.textContent=p.any?('Will set: '+remParsedDesc(p)+(p.title?'  \u00b7  \u201c'+p.title+'\u201d':'')):'';
+}
+function openRemEditor(id,def){
+  def=def||{};
+  var m=document.getElementById('remEditModal');if(!m)return;
+  var r=id?getReminders().find(function(x){return x.id===id;}):null;
+  _reEditId=r?r.id:null;
+  document.getElementById('reHdr').textContent=r?'Edit reminder':'New reminder';
+  document.getElementById('reTitle').value=r?r.title:(def.title||'');
+  document.getElementById('reRecur').value=r?r.recur:(def.recur||'none');
+  document.getElementById('reTime').value=r?(r.time||''):(def.time||'');
+  document.getElementById('reDate').value=(r&&r.date)?r.date:(def.date||todayStr());
+  document.getElementById('reMonthDay').value=(r&&r.monthDay)||def.monthDay||parseInt(todayStr().slice(8),10);
+  var wd=(r&&r.weekDays)||def.weekDays||[];
+  document.querySelectorAll('#reWeekRow .rem-day-btn').forEach(function(b){b.classList.toggle('active',wd.indexOf(parseInt(b.dataset.day,10))>=0);});
+  var opts='<option value="">None</option>';
+  if(r&&r.link&&r.link.type!=='project')opts+='<option value="__keep" selected>'+(r.link.type==='task'?'Linked to a task':'Linked to a meeting')+'</option>';
+  getActiveProjects().forEach(function(p){
+    var sel=r&&r.link&&r.link.type==='project'&&r.link.name===p.name;
+    opts+='<option value="proj:'+escH(p.name)+'"'+(sel?' selected':'')+'>Project: '+escH(p.name)+'</option>';
+  });
+  document.getElementById('reLink').innerHTML=opts;
+  reFields();reLive();
+  m.classList.add('open');
+  setTimeout(function(){var t=document.getElementById('reTitle');if(t)t.focus();},50);
+}
+function closeRemEditor(){var m=document.getElementById('remEditModal');if(m)m.classList.remove('open');_reEditId=null;}
+function saveRemEditor(){
+  var raw=document.getElementById('reTitle').value.trim();
+  var p=remParse(raw);
+  var recur=document.getElementById('reRecur').value;
+  var time=document.getElementById('reTime').value||'';
+  var date=document.getElementById('reDate').value||todayStr();
+  var monthDay=parseInt(document.getElementById('reMonthDay').value,10)||1;
+  var weekDays=[];
+  document.querySelectorAll('#reWeekRow .rem-day-btn.active').forEach(function(b){weekDays.push(parseInt(b.dataset.day,10));});
+  var title=raw;
+  if(p.any){
+    title=p.title;
+    if(p.recur){recur=p.recur;if(p.recur==='weekly'&&p.weekDays&&p.weekDays.length)weekDays=p.weekDays;if(p.recur==='monthly'&&p.monthDay)monthDay=p.monthDay;}
+    else if(p.date){recur='none';date=p.date;}
+    if(p.time)time=p.time;
+  }
+  if(!title){document.getElementById('reTitle').focus();return;}
+  if(recur==='weekly'&&!weekDays.length){var dw=new Date(todayStr()+'T12:00:00').getDay();weekDays=[dw===0?6:dw-1];}
+  var linkVal=document.getElementById('reLink').value;
+  var arr=getReminders(),r=_reEditId?arr.find(function(x){return x.id===_reEditId;}):null;
+  if(!r){
+    r={id:'rem_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),dismissedDates:[],snoozedUntil:null};
+    arr.push(r);
+  }
+  r.title=title;r.recur=recur;
+  if(time)r.time=time;else delete r.time;
+  if(recur==='none'){r.date=date;delete r.weekDays;delete r.monthDay;}
+  else if(recur==='weekly'){r.weekDays=weekDays;delete r.date;delete r.monthDay;}
+  else if(recur==='monthly'){r.monthDay=monthDay;delete r.date;delete r.weekDays;}
+  else{delete r.date;delete r.weekDays;delete r.monthDay;}
+  if(linkVal.indexOf('proj:')===0)r.link={type:'project',name:linkVal.slice(5)};
+  else if(linkVal==='')delete r.link;
+  r.snoozedUntil=null;
+  saveReminders(arr);
+  closeRemEditor();
+  remRefresh();
+  remToast('Reminder saved: '+remRecurDesc(r));
+}
+
+// -- Plain-language parser --
+var REM_DAY='(?:mon(?:day)?|tue(?:s(?:day)?)?|wed(?:nesday)?|thu(?:r(?:s(?:day)?)?)?|fri(?:day)?|sat(?:urday)?|sun(?:day)?)';
+var REM_MON='(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)';
+function remParse(raw){
+  raw=String(raw||'');
+  var s=' '+raw+' ',o={any:false},today=todayStr(),base=new Date(today+'T12:00:00');
+  var MONS=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  var DOWS=['mon','tue','wed','thu','fri','sat','sun'];
+  function take(rx,fn){
+    var m=rx.exec(s);
+    if(!m)return false;
+    s=s.slice(0,m.index)+' '+s.slice(m.index+m[0].length);
+    o.any=true;
+    fn(m);
+    return true;
+  }
+  function dowIdx(t){return DOWS.indexOf(String(t).slice(0,3).toLowerCase());}
+  function nextDow(i){
+    var d=new Date(base),cur=(d.getDay()+6)%7,add=(i-cur+7)%7;
+    if(add===0)add=7;
+    d.setDate(d.getDate()+add);
+    return localIsoDate(d);
+  }
+  function addDays(n){var d=new Date(base);d.setDate(d.getDate()+n);return localIsoDate(d);}
+  function mkDate(y,mi,dd,explicitYear){
+    var d=new Date(y,mi,dd,12),iso=localIsoDate(d);
+    if(!explicitYear&&iso<today){d=new Date(y+1,mi,dd,12);iso=localIsoDate(d);}
+    return iso;
+  }
+  function dayList(str){
+    var out=[],ms=str.match(new RegExp('\\b'+REM_DAY+'\\b','ig'))||[];
+    ms.forEach(function(t){var i=dowIdx(t);if(i>=0&&out.indexOf(i)<0)out.push(i);});
+    return out.sort();
+  }
+  // time of day
+  take(/\bnoon\b/i,function(){o.time='12:00';})
+  ||take(/\b(?:at\s+)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/i,function(m){
+    var h=parseInt(m[1],10);
+    if(h<1||h>12)return;
+    h=h%12;if(m[3].toLowerCase()==='pm')h+=12;
+    o.time=remPad(h)+':'+remPad(m[2]?parseInt(m[2],10):0);
+  })
+  ||take(/\bat\s+(\d{1,2}):(\d{2})\b/i,function(m){o.time=remPad(parseInt(m[1],10))+':'+m[2];})
+  ||take(/\b([01]?\d|2[0-3]):([0-5]\d)\b/,function(m){o.time=remPad(parseInt(m[1],10))+':'+m[2];});
+  // relative: in N minutes / hours / days / weeks
+  take(/\bin\s+(\d+)\s*(min(?:ute)?s?|hours?|hrs?|days?|weeks?)\b/i,function(m){
+    var n=parseInt(m[1],10),u=m[2].toLowerCase().charAt(0),d;
+    if(u==='m'||u==='h'){
+      d=new Date(Date.now()+n*(u==='m'?60000:3600000));
+      o.date=localIsoDate(d);
+      o.time=remPad(d.getHours())+':'+remPad(d.getMinutes());
+    }
+    else o.date=addDays(n*(u==='w'?7:1));
+  });
+  // repeats
+  if(!o.date){
+    take(new RegExp('\\bevery\\s+('+REM_DAY+'(?:\\s*(?:,|and|&)\\s*'+REM_DAY+')*)\\b','i'),function(m){o.recur='weekly';o.weekDays=dayList(m[1]);})
+    ||take(/\b(?:every\s+month\s+on(?:\s+the)?|monthly\s+on(?:\s+the)?|every)\s+(\d{1,2})(?:st|nd|rd|th)\b/i,function(m){o.recur='monthly';o.monthDay=Math.min(31,Math.max(1,parseInt(m[1],10)));})
+    ||take(/\bevery\s+(?:other\s+)?(day|weekdays?|week|month)\b/i,function(m){
+      var w=m[1].toLowerCase();
+      if(w==='day')o.recur='daily';
+      else if(w==='week'){o.recur='weekly';o.weekDays=[(base.getDay()+6)%7];}
+      else if(w==='month'){o.recur='monthly';o.monthDay=base.getDate();}
+      else o.recur='daily-weekday';
+    })
+    ||take(/\b(daily|weekdays|weekly|monthly)\b/i,function(m){
+      var w=m[1].toLowerCase();
+      if(w==='daily')o.recur='daily';
+      else if(w==='weekdays')o.recur='daily-weekday';
+      else if(w==='weekly'){o.recur='weekly';}
+      else{o.recur='monthly';o.monthDay=base.getDate();}
+    });
+    if(o.recur==='weekly'&&(!o.weekDays||!o.weekDays.length)){
+      var got=take(new RegExp('\\b(?:on\\s+)?('+REM_DAY+'(?:\\s*(?:,|and|&)\\s*'+REM_DAY+')*)\\b','i'),function(m){o.weekDays=dayList(m[1]);});
+      if(!got||!o.weekDays||!o.weekDays.length)o.weekDays=[(base.getDay()+6)%7];
+    }
+  }
+  // one-off dates
+  if(!o.recur&&!o.date){
+    take(/\btoday\b/i,function(){o.date=today;})
+    ||take(/\b(?:tomorrow|tmrw)\b/i,function(){o.date=addDays(1);})
+    ||take(/\b(\d{4})-(\d{2})-(\d{2})\b/,function(m){o.date=m[1]+'-'+m[2]+'-'+m[3];})
+    ||take(new RegExp('\\b(?:on\\s+)?(\\d{1,2})(?:st|nd|rd|th)?\\s+('+REM_MON+')\\b(?:\\s+(\\d{4}))?','i'),function(m){o.date=mkDate(m[3]?parseInt(m[3],10):base.getFullYear(),MONS.indexOf(m[2].slice(0,3).toLowerCase()),parseInt(m[1],10),!!m[3]);})
+    ||take(new RegExp('\\b(?:on\\s+)?('+REM_MON+')\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b(?:\\s*,?\\s*(\\d{4}))?','i'),function(m){o.date=mkDate(m[3]?parseInt(m[3],10):base.getFullYear(),MONS.indexOf(m[1].slice(0,3).toLowerCase()),parseInt(m[2],10),!!m[3]);})
+    ||take(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/,function(m){var y=m[3]?parseInt(m[3],10):base.getFullYear();if(y<100)y+=2000;o.date=mkDate(y,parseInt(m[2],10)-1,parseInt(m[1],10),!!m[3]);})
+    ||take(new RegExp('\\bnext\\s+('+REM_DAY+')\\b','i'),function(m){o.date=nextDow(dowIdx(m[1]));})
+    ||take(new RegExp('\\b(?:on\\s+)?('+REM_DAY+')\\b','i'),function(m){o.date=nextDow(dowIdx(m[1]));});
+  }
+  var t=s.replace(/\s+/g,' ').trim();
+  t=t.replace(/^(?:remind me(?:\s+(?:to|about|that))?|reminder:?|to|that|about)\s+/i,'');
+  t=t.replace(/\s+(?:at|on|by|every|in|from|for|and|,)$/i,'').replace(/^(?:at|on|by|every|in|,)\s+/i,'').trim();
+  if(t)t=t.charAt(0).toUpperCase()+t.slice(1);
+  o.title=o.any?t:raw.trim();
+  if(o.any&&!o.recur&&!o.date&&o.time){
+    o.date=today;
+    if(remTimeMin(o.time)<=remNowMin())o.date=addDays(1);
+  }
+  return o;
+}
+function remParsedDesc(p){
+  if(p.recur)return remRecurDesc({recur:p.recur,weekDays:p.weekDays,monthDay:p.monthDay,time:p.time});
+  if(p.date)return remRecurDesc({recur:'none',date:p.date,time:p.time});
+  return p.time?('At '+remFmtTime(p.time)):'';
+}
+
+// -- Remind me about a task --
+var _trm=null;
+function closeTaskRemind(){
+  if(!_trm)return;
+  document.removeEventListener('click',_trm.outside,true);
+  document.removeEventListener('keydown',_trm.key,true);
+  window.removeEventListener('scroll',closeTaskRemind,true);
+  if(_trm.el.parentNode)_trm.el.parentNode.removeChild(_trm.el);
+  _trm=null;
+}
+function remLinkTask(taskId,date,time){
+  var t=getTasks().find(function(x){return x.id===taskId;});
+  if(!t||!date)return;
+  var arr=getReminders();
+  arr.push({id:'rem_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),title:t.title,recur:'none',date:date,time:time||undefined,link:{type:'task',id:taskId},dismissedDates:[],snoozedUntil:null});
+  saveReminders(arr);
+  closeTaskRemind();
+  remRefresh();
+  remToast('Reminder set: '+date+(time?' \u00b7 '+remFmtTime(time):''));
+}
+function openTaskRemindMenu(e,taskId){
+  e.stopPropagation();
+  var btn=e.currentTarget;
+  if(_trm&&_trm.id===taskId){closeTaskRemind();return;}
+  closeTaskRemind();
+  var t=getTasks().find(function(x){return x.id===taskId;});
+  if(!t)return;
+  var today=todayStr(),opts=[];
+  if(t.dueDate&&t.dueDate>=today){
+    opts.push({n:'On the due date',h:'9AM',date:t.dueDate,time:'09:00'});
+    var db=new Date(t.dueDate+'T12:00:00');db.setDate(db.getDate()-1);
+    var dbs=localIsoDate(db);
+    if(dbs>=today)opts.push({n:'The day before',h:'9AM',date:dbs,time:'09:00'});
+  }
+  var tm=new Date(today+'T12:00:00');tm.setDate(tm.getDate()+1);
+  opts.push({n:'Tomorrow',h:'9AM',date:localIsoDate(tm),time:'09:00'});
+  var el=document.createElement('div');
+  el.className='snz-menu';el.onclick=function(ev){ev.stopPropagation();};
+  opts.forEach(function(o){
+    var b=document.createElement('button');
+    b.className='snz-item';
+    b.innerHTML='<b style="font-weight:500">'+o.n+'</b><span>'+o.h+'</span>';
+    b.onclick=function(ev){ev.stopPropagation();remLinkTask(taskId,o.date,o.time);};
+    el.appendChild(b);
+  });
+  var pk=document.createElement('button');
+  pk.className='snz-item';pk.innerHTML='<b style="font-weight:500">Pick date and time...</b><span>&#9719;</span>';
+  var row=document.createElement('div');
+  row.className='snz-pick';
+  row.innerHTML='<input type="datetime-local" value="'+localIsoDate(tm)+'T09:00"><button class="btn primary-btn sm">Set</button>';
+  pk.onclick=function(ev){ev.stopPropagation();row.classList.toggle('open');};
+  row.querySelector('button').onclick=function(ev){
+    ev.stopPropagation();
+    var v=row.querySelector('input').value;
+    if(v)remLinkTask(taskId,v.slice(0,10),v.slice(11,16));
+  };
+  el.appendChild(pk);el.appendChild(row);
+  document.body.appendChild(el);
+  var r=btn.getBoundingClientRect(),w=el.offsetWidth,h=el.offsetHeight;
+  el.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+'px';
+  var top=r.bottom+4;
+  if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-4);
+  el.style.top=top+'px';
+  _trm={id:taskId,el:el,
+    outside:function(ev){if(!el.contains(ev.target)&&!btn.contains(ev.target))closeTaskRemind();},
+    key:function(ev){if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();closeTaskRemind();}}
+  };
+  setTimeout(function(){if(_trm&&_trm.el===el)document.addEventListener('click',_trm.outside,true);},0);
+  document.addEventListener('keydown',_trm.key,true);
+  window.addEventListener('scroll',closeTaskRemind,true);
+}
+
+// -- Day plan markers --
+function remMarkerOn(r,ds){
+  if(!r.time||!remOccursOn(r,ds))return false;
+  if(r.dismissedDates&&r.dismissedDates.indexOf(ds)>=0)return false;
+  if(r.link&&r.link.type==='task'){
+    var t=getTasks().find(function(x){return x.id===r.link.id;});
+    if(!t||t.done)return false;
+  }
+  return true;
+}
+function remMarkersHtml(ds){
+  return getReminders().filter(function(r){return remMarkerOn(r,ds);}).map(function(r){
+    var m=remTimeMin(r.time);
+    if(m===null||m<DP_GRID_START||m>DP_GRID_END)return'';
+    return'<div class="dp-rem" style="top:'+((m-DP_GRID_START)*DP_PX_PER_MIN)+'px" onmousedown="event.stopPropagation()" onclick="event.stopPropagation();remOpen(\''+escA(r.id)+'\')" title="Reminder: '+escH(r.title)+'"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>'+escH(remFmtTime(r.time))+' '+escH(r.title)+'</div>';
+  }).join('');
+}
+
+// -- Browser notifications (only while the app is open in a tab) --
+function remNotifySupported(){return typeof Notification!=='undefined';}
+function remNotifyOn(){return localStorage.getItem('plannerRemNotify')==='1'&&remNotifySupported()&&Notification.permission==='granted';}
+function remNotifyToggle(on){
+  if(!remNotifySupported())return;
+  if(!on){localStorage.setItem('plannerRemNotify','0');renderRemSettings();return;}
+  Notification.requestPermission().then(function(p){
+    localStorage.setItem('plannerRemNotify',p==='granted'?'1':'0');
+    renderRemSettings();
+    remNotifyTick();
+  });
+}
+function remNotifyTick(){
+  if(!remNotifyOn())return;
+  var today=todayStr(),sent={};
+  try{sent=JSON.parse(localStorage.getItem('plannerRemNotified')||'{}');}catch(e){}
+  var changed=false,nowM=remNowMin();
+  getReminders().forEach(function(r){
+    if(!r.time||!isReminderDue(r))return;
+    var tm=remTimeMin(r.time);
+    if(tm===null||nowM-tm>15)return;
+    var key=r.id+'|'+today+'|'+r.time;
+    if(sent[key])return;
+    try{new Notification('Reminder',{body:r.title+' \u00b7 '+remFmtTime(r.time)});}catch(e){}
+    sent[key]=1;changed=true;
+  });
+  if(changed){
+    Object.keys(sent).forEach(function(k){if(k.split('|')[1]!==today)delete sent[k];});
+    localStorage.setItem('plannerRemNotified',JSON.stringify(sent));
+  }
+}
+
+// -- Settings: built-in reminders --
+function remBuiltinOn(key){return getReminders().some(function(r){return remSys(r)===key;});}
+function remBuiltinToggle(key,on){
+  var arr=getReminders().filter(function(r){return remSys(r)!==key;});
+  if(on){
+    arr.push(Object.assign({},REM_BUILTINS[key],{isSystem:true,sys:key,dismissedDates:[],snoozedUntil:null}));
+    if(key==='log-hours')localStorage.removeItem('plannerRemLogOff');
+  }
+  else if(key==='log-hours')localStorage.setItem('plannerRemLogOff','1');
+  saveReminders(arr);
+  remRefresh();
+}
+function remBuiltinTime(key,val){
+  saveReminders(getReminders().map(function(r){if(remSys(r)===key){if(val)r.time=val;else delete r.time;}return r;}));
+  remRefresh();
+}
+function remLeaveThreshold(v){
+  var n=parseFloat(v);
+  localStorage.setItem('plannerRemLeaveThreshold',isNaN(n)?'3':String(n));
+  remRefresh();
+}
+function renderRemSettings(){
+  var el=document.getElementById('remSettingsBody');
+  if(!el)return;
+  var arr=getReminders();
+  function sysRow(key,label,extra){
+    var r=arr.find(function(x){return remSys(x)===key;});
+    return'<div class="rs-row"><label><input type="checkbox" '+(r?'checked ':'')+'onchange="remBuiltinToggle(\''+key+'\',this.checked)">'+label+'</label>'
+      +(r?'<input type="time" value="'+escH(r.time||'')+'" onchange="remBuiltinTime(\''+key+'\',this.value)" title="Time of day">':'')+(r&&extra?extra:'')+'</div>';
+  }
+  var th=parseFloat(localStorage.getItem('plannerRemLeaveThreshold'));if(isNaN(th))th=3;
+  var h='<div class="rs-note">Due reminders show under the bell in the header and on This Week. Add your own from Manage, or from a day on This Week.</div>'
+    +sysRow('log-hours','Nudge me to log my hours (weekdays, until something is logged)')
+    +sysRow('submit-timesheet','Remind me to submit my timesheet (Fridays)')
+    +sysRow('leave-low','Warn me when my leave balance is low (Mondays)','<span style="font-size:11px;color:var(--muted)">at or below</span><input type="number" min="0" step="0.5" value="'+th+'" onchange="remLeaveThreshold(this.value)"><span style="font-size:11px;color:var(--muted)">days</span>');
+  if(remNotifySupported()){
+    var denied=Notification.permission==='denied';
+    h+='<div class="rs-row"><label><input type="checkbox" '+(remNotifyOn()?'checked ':'')+(denied?'disabled ':'')+'onchange="remNotifyToggle(this.checked)">Browser notification at a reminder\'s time</label></div>'
+      +'<div class="rs-note">'+(denied?'Notifications are blocked for this site in your browser settings. ':'')+'Notifications only appear while the app is open in a browser tab.</div>';
+  }
+  el.innerHTML=h;
 }
 
 function exportAllData(){
@@ -4910,7 +5459,7 @@ function syncEventReminder(ev){
   var remId='evrem_'+ev.id;
   var reminders=getReminders().filter(function(r){return r.id!==remId;});
   if(ev.remind){
-    reminders.push({id:remId,title:'Meeting: '+ev.title+(ev.startTime?' at '+ev.startTime:''),recur:'none',date:ev.date,dismissedDates:[],snoozedUntil:null,isEventReminder:true});
+    reminders.push({id:remId,title:'Meeting: '+ev.title+(ev.startTime?' at '+ev.startTime:''),recur:'none',date:ev.date,dismissedDates:[],snoozedUntil:null,isEventReminder:true,link:{type:'event',id:ev.id,date:ev.date}});
   }
   saveReminders(reminders);
 }
@@ -5084,9 +5633,9 @@ function goToPlannerDay(yr,mo,day){
 var _ru=document.getElementById('redirectUriDisplay');
 if(_ru)_ru.textContent=window.location.protocol==='file:'?'http://localhost':window.location.origin;
 // ── Boot ──
-document.getElementById('prevBtn').addEventListener('click',function(){clearTimeout(saveTimer);savePlanner();currentMonday=new Date(currentMonday);currentMonday.setDate(currentMonday.getDate()-7);renderPlanner();
+document.getElementById('calPrev').addEventListener('click',function(){clearTimeout(saveTimer);savePlanner();currentMonday=new Date(currentMonday);currentMonday.setDate(currentMonday.getDate()-7);renderPlanner();
 renderEtfRule();});
-document.getElementById('nextBtn').addEventListener('click',function(){clearTimeout(saveTimer);savePlanner();currentMonday=new Date(currentMonday);currentMonday.setDate(currentMonday.getDate()+7);renderPlanner();
+document.getElementById('calNext').addEventListener('click',function(){clearTimeout(saveTimer);savePlanner();currentMonday=new Date(currentMonday);currentMonday.setDate(currentMonday.getDate()+7);renderPlanner();
 renderEtfRule();});
 
 PLAN_SECTIONS.forEach(function(s){document.getElementById('sec-'+s).addEventListener('input',scheduleSave);});
@@ -5106,12 +5655,12 @@ attachDraftListeners();
 // Restore any draft for today on load
 (function(){applyDraftOrLog(todayStr());})();
 document.getElementById('newTaskTitle').addEventListener('keydown',function(e){if(e.key==='Enter')addTask();});
-['remTitleInput','remDateInput'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter')addUserReminder();});});
+
 document.getElementById('eventModal').addEventListener('click',function(e){if(e.target===this)closeEventModal();});
 document.getElementById('quickTaskModal').addEventListener('click',function(e){if(e.target===this)closeQuickTaskModal();});
 document.getElementById('qtNotes').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveQuickTask();}});
 document.getElementById('dayPlanOverlay').addEventListener('click',function(e){if(e.target===this)closeDayPlan();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();closeDayPlan();closeLeaveModal();skipTour();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeEventModal();closeQuickTaskModal();closePhotoLightbox();closeWeekPicker();closeDayPlan();closeLeaveModal();closeRemEditor();closeRemMgr();skipTour();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}});
 document.addEventListener('keydown',function(e){
   var lb=document.getElementById('photoLightbox');
   if(!lb||!lb.classList.contains('open'))return;
@@ -5150,13 +5699,13 @@ document.addEventListener('keydown',function(e){
 // ── Dark mode ──
 var TOUR_STEPS=[
   {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
-  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green."},
+  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green. Use the arrows either side of the days to change week, or the week number in the top right to jump to any date."},
   {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
-  {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"Outside This Week, this pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan."},
+  {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"This pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan. Reminders that are due show here too, with a bell badge - tick them off or snooze them for an hour, the afternoon, tomorrow or next week. Use Manage there to add, edit or remove repeating and one-off reminders - you can type them in plain words, like 'every Friday 3pm submit timesheet'."},
   {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. Planned time and project meetings can be pulled in with the Import banner - it never overwrites what you've already logged. Leave days show a green line, and the chip at the top shows your leave balance."},
   {tab:'tracker',target:'.history-controls',title:"Log History",text:"Switch between List and Week view - Week gives a grid by project and activity that's easy to copy into Replicon. Export either one as a CSV; project and tender codes are included when your projects have them."},
   {tab:'tracker',target:'#projectList',title:"Active Projects",text:"Add projects here, click a pill to edit its name, color, code or group. Projects are archived rather than deleted, so nothing is ever silently lost."},
-  {tab:'tasks',target:'.tasks-wrap',title:"To Do",text:"Tasks live here with priority, due dates, subtasks and optional reminders, including recurring ones. The month calendars on the right show what's due and mark your leave and public holidays in green."},
+  {tab:'tasks',target:'.tasks-wrap',title:"To Do",text:"Tasks live here with priority, due dates, subtasks, and a Remind button on every task that sets a reminder for the due date or any time you pick. The month calendars on the right show what's due and mark your leave and public holidays in green."},
   {tab:'projects',target:'#projectsWrap',title:"Projects",text:"Each project gets a rich Summary, Photos and Links, plus its own task list. Click a photo to open it and use the arrows to flip through the rest. Archive a project when you're done with it - Restore brings it straight back."},
   {tab:'settings',target:'.set-col',title:"Settings",text:"Sections sit in two columns and can be minimised by clicking their titles - appearance, calendar import, your activity list, backup and sync. Restart this tour anytime from the button at the bottom."},
   {tab:'settings',target:'#lvSection .lv-grid',title:"Leave",text:"Enter your leave cost code, current balance and accrual here. Leave and public holidays are booked to that code in your timesheet without showing up as a project, and your balance is worked out from there."},
