@@ -144,6 +144,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .day-head:hover .add-ev-btn{display:block;}
 .add-ev-btn:hover{background:var(--primary-light);color:var(--primary);}
 .event-pill.manual{border-left-color:#7c3aed;background:#f5f3ff;}
+.event-pill.manual .ev-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;}
+.ev-ics-row{display:flex;align-items:center;gap:8px;margin:-4px 0 12px;}
+.ev-ics-msg{font-size:11px;color:var(--muted);min-width:0;}
 .ev-edit{float:right;background:none;border:none;cursor:pointer;color:#ccc;font-size:11px;padding:0 2px 0 4px;line-height:1;vertical-align:middle;opacity:.6;}
 .ev-edit:hover{color:var(--primary);opacity:1;}
 .ev-del{float:right;background:none;border:none;cursor:pointer;color:transparent;font-size:13px;padding:0 0 0 4px;line-height:1;vertical-align:middle;transition:color .15s;}
@@ -848,7 +851,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-plan-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff;}
 @media(max-width:760px){.dp-main{flex-direction:column;}.dp-side{width:auto;border-left:none;border-top:1px solid var(--border);max-height:none;}}
 .upnext-wrap{position:relative;display:flex;justify-content:flex-end;min-width:0;}
-.upnext-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:20px;height:28px;box-sizing:border-box;padding:0 12px;cursor:pointer;color:#fff;font-size:12px;max-width:300px;min-width:0;transition:background .12s;}
+.upnext-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:20px;height:28px;box-sizing:border-box;padding:0 12px;cursor:pointer;color:#fff;font-size:12px;max-width:210px;min-width:0;transition:background .12s;}
 .upnext-pill:hover{background:rgba(255,255,255,.2);}
 .upnext-pill span.txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .upnext-pill span.short{display:none;white-space:nowrap;}
@@ -994,6 +997,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 <div id="eventModal" class="ev-modal-overlay">
   <div class="ev-modal">
     <div class="ev-modal-title" id="evModalTitle">Add Meeting</div>
+    <div class="ev-ics-row" id="evIcsRow"><button class="btn secondary-btn sm" type="button" onclick="document.getElementById('evIcsInput').click()">Import from .ics file</button><input type="file" id="evIcsInput" accept=".ics,text/calendar" style="display:none" onchange="importICSFromModal(this)"><span class="ev-ics-msg" id="evIcsMsg"></span></div>
     <div class="ev-field-label">Title <span style="color:var(--high)">*</span></div>
     <input id="evTitle" class="ev-input" type="text" placeholder="Meeting title…">
     <div class="ev-field-label">Date</div>
@@ -1472,14 +1476,14 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.26.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.27.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.26.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.27.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1878,7 +1882,7 @@ function renderCalendarEvents(events){
       parts.push('<div class="divider-label">Meetings</div>');
       manualEvs.forEach(function(ev){
         var timeStr=ev.startTime?(ev.startTime+(ev.endTime?' – '+ev.endTime:'')):'';
-        parts.push('<div class="event-pill manual" onclick="openEditEvent(\''+ev.id+'\')" style="cursor:pointer"><button class="ev-del" onclick="event.stopPropagation();deleteManualEvent(\''+ev.id+'\')" title="Delete">×</button>'+(timeStr?'<span class="ev-time">'+escH(timeStr)+'</span>':'')+'<span class="ev-title">'+escH(ev.title)+(ev.notes?' · <em style=\'font-style:normal;color:var(--muted)\'>'+escH(ev.notes)+'</em>':'')+'</span></div>');
+        parts.push('<div class="event-pill manual" title="'+escH(ev.title+(ev.notes?' \u00b7 '+ev.notes:''))+'" onclick="openEditEvent(\''+ev.id+'\')" style="cursor:pointer"><button class="ev-del" onclick="event.stopPropagation();deleteManualEvent(\''+ev.id+'\')" title="Delete">×</button>'+(timeStr?'<span class="ev-time">'+escH(timeStr)+'</span>':'')+'<span class="ev-title">'+escH(ev.title)+(ev.notes?' · <em style=\'font-style:normal;color:var(--muted)\'>'+escH(ev.notes)+'</em>':'')+'</span></div>');
       });
     }
 
@@ -2564,6 +2568,7 @@ var _mq=null;
 function mqStop(){
   if(!_mq)return;
   cancelAnimationFrame(_mq.raf);clearTimeout(_mq.t);
+  if(_mq.dup!==null&&_mq.el.innerHTML===_mq.dup)_mq.el.innerHTML=_mq.orig;
   _mq.el.scrollLeft=0;_mq.el.classList.remove('scrolling');
   _mq=null;
 }
@@ -2573,18 +2578,22 @@ document.addEventListener('mouseover',function(e){
   mqStop();
   var over=el.scrollWidth-el.clientWidth;
   if(over<3)return;
-  var me={el:el,raf:0,t:0};
+  var me={el:el,raf:0,t:0,orig:null,dup:null};
   _mq=me;
   me.t=setTimeout(function(){
     if(_mq!==me)return;
     el.classList.add('scrolling');
-    var start=null,dur=Math.max(1200,over/0.045);
+    me.orig=el.innerHTML;
+    el.innerHTML='<span>'+me.orig+'</span><span>\u00a0\u00a0\u00a0\u2022\u00a0\u00a0\u00a0</span><span>'+me.orig+'</span>';
+    me.dup=el.innerHTML;
+    var sp=el.children,loop=sp[2].offsetLeft-sp[0].offsetLeft;
+    if(loop<10){el.innerHTML=me.orig;me.dup=null;el.classList.remove('scrolling');return;}
+    var start=null;
     function step(ts){
       if(_mq!==me)return;
       if(start===null)start=ts;
-      var p=Math.min(1,(ts-start)/dur);
-      el.scrollLeft=over*p;
-      if(p<1)me.raf=requestAnimationFrame(step);
+      el.scrollLeft=((ts-start)*0.045)%loop;
+      me.raf=requestAnimationFrame(step);
     }
     me.raf=requestAnimationFrame(step);
   },250);
@@ -4100,7 +4109,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.26.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.27.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5490,13 +5499,14 @@ function openAddEvent(date){
   document.getElementById('evEnd').value='';
   document.getElementById('evNotes').value='';
   document.getElementById('evRemind').checked=false;
+  evIcsReset(true);
   populateEvProjSelect(null);
   populateEvActivitySelect(null);
   document.getElementById('eventModal').classList.add('open');
   setTimeout(function(){document.getElementById('evTitle').focus();},50);
 }
 var editingEventId=null;
-function closeEventModal(){document.getElementById('eventModal').classList.remove('open');currentEventDate=null;editingEventId=null;document.getElementById('evModalTitle').textContent='Add Meeting';}
+function closeEventModal(){document.getElementById('eventModal').classList.remove('open');currentEventDate=null;editingEventId=null;evIcsUid=null;document.getElementById('evModalTitle').textContent='Add Meeting';}
 function populateEvProjSelect(selected){
   var el=document.getElementById('evProj');
   if(!el)return;
@@ -5519,6 +5529,7 @@ function openEditEvent(id){
   document.getElementById('evEnd').value=ev.endTime||'';
   document.getElementById('evNotes').value=ev.notes||'';
   document.getElementById('evRemind').checked=!!ev.remind;
+  evIcsReset(false);
   populateEvProjSelect(ev.proj||null);
   populateEvActivitySelect(ev.activity||null);
   document.getElementById('eventModal').classList.add('open');
@@ -5550,10 +5561,11 @@ function saveManualEvent(){
   var activity=document.getElementById('evActivity')?(document.getElementById('evActivity').value||null):null;
   var evs=getManualEvents();
   var savedEv;
+  if(!editingEventId&&evIcsUid){var _dup=evs.find(function(e){return e.icsUid===evIcsUid;});if(_dup)editingEventId=_dup.id;}
   if(editingEventId){
     evs=evs.map(function(e){if(e.id!==editingEventId)return e;savedEv=Object.assign({},e,{title:title,date:date,startTime:startTime,endTime:endTime,notes:notes,remind:remind,proj:proj,activity:activity});return savedEv;});
   } else {
-    savedEv={id:Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:date,title:title,startTime:startTime,endTime:endTime,notes:notes,remind:remind,proj:proj,activity:activity};
+    savedEv={id:Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:date,title:title,startTime:startTime,endTime:endTime,notes:notes,remind:remind,proj:proj,activity:activity,icsUid:evIcsUid||null};
     evs.push(savedEv);
   }
   saveManualEvents(evs);
@@ -5611,46 +5623,85 @@ function icsDateToParts(raw){
   if(z){var iso=y+'-'+mo+'-'+d+'T'+hh+':'+mi+':'+ss+'Z';return{date:localDateStr(iso),time:localTime(iso)};}
   return{date:y+'-'+mo+'-'+d,time:hh+':'+mi};
 }
-function importICSFile(input){
+var evIcsUid=null;
+function evIcsReset(show){
+  evIcsUid=null;
+  var row=document.getElementById('evIcsRow'),msg=document.getElementById('evIcsMsg');
+  if(row)row.style.display=show?'':'none';
+  if(msg)msg.textContent='';
+}
+function icsMerge(raw){
+  var evs=getManualEvents();
+  var existingByUid={};
+  evs.forEach(function(x){if(x.icsUid)existingByUid[x.icsUid]=x;});
+  var added=0,updated=0,skipped=0,first=null;
+  raw.forEach(function(r){
+    if(!r.dtstart){skipped++;return;}
+    var sp=icsDateToParts(r.dtstart);
+    if(!sp){skipped++;return;}
+    var ep=r.dtend?icsDateToParts(r.dtend):null;
+    var title=r.summary||'(untitled event)';
+    var notes=[r.location,r.description].filter(Boolean).join(' \u2014 ');
+    if(!first||sp.date<first)first=sp.date;
+    var existing=r.uid?existingByUid[r.uid]:null;
+    if(existing){
+      existing.title=title;existing.date=sp.date;existing.startTime=sp.time||'';existing.endTime=(ep&&ep.time)||'';existing.notes=notes;
+      updated++;
+    } else {
+      var newEv={id:'ics_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:sp.date,title:title,startTime:sp.time||'',endTime:(ep&&ep.time)||'',notes:notes,remind:false,icsUid:r.uid||null};
+      evs.push(newEv);
+      if(r.uid)existingByUid[r.uid]=newEv;
+      added++;
+    }
+  });
+  saveManualEvents(evs);
+  renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();renderUpNext();
+  return{added:added,updated:updated,skipped:skipped,first:first};
+}
+function icsSummary(r){return'\u2713 '+r.added+' added'+(r.updated?', '+r.updated+' updated':'')+(r.skipped?', '+r.skipped+' skipped':'')+'.';}
+function icsReadFile(input,cb){
   var file=input.files&&input.files[0];
   if(!file)return;
   var reader=new FileReader();
   reader.onload=function(e){
     var raw;
     try{raw=parseICS(e.target.result);}catch(err){raw=[];}
-    var evs=getManualEvents();
-    var existingByUid={};
-    evs.forEach(function(x){if(x.icsUid)existingByUid[x.icsUid]=x;});
-    var added=0,updated=0,skipped=0;
-    raw.forEach(function(r){
-      if(!r.dtstart){skipped++;return;}
-      var sp=icsDateToParts(r.dtstart);
-      if(!sp){skipped++;return;}
-      var ep=r.dtend?icsDateToParts(r.dtend):null;
-      var title=r.summary||'(untitled event)';
-      var notes=[r.location,r.description].filter(Boolean).join(' \u2014 ');
-      var existing=r.uid?existingByUid[r.uid]:null;
-      if(existing){
-        existing.title=title;existing.date=sp.date;existing.startTime=sp.time||'';existing.endTime=(ep&&ep.time)||'';existing.notes=notes;
-        updated++;
-      } else {
-        var newEv={id:'ics_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:sp.date,title:title,startTime:sp.time||'',endTime:(ep&&ep.time)||'',notes:notes,remind:false,icsUid:r.uid||null};
-        evs.push(newEv);
-        if(r.uid)existingByUid[r.uid]=newEv;
-        added++;
-      }
-    });
-    saveManualEvents(evs);
-    renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
-    var msg=document.getElementById('icsImportMsg');
-    if(msg){
-      msg.textContent='\u2713 '+added+' added'+(updated?', '+updated+' updated':'')+(skipped?', '+skipped+' skipped':'')+'.';
-      msg.style.display='inline';
-      setTimeout(function(){msg.style.display='none';},4000);
-    }
+    cb(raw);
   };
   reader.readAsText(file);
   input.value='';
+}
+function importICSFile(input){
+  icsReadFile(input,function(raw){
+    var res=icsMerge(raw);
+    var msg=document.getElementById('icsImportMsg');
+    if(msg){
+      msg.textContent=icsSummary(res);
+      msg.style.display='inline';
+      setTimeout(function(){msg.style.display='none';},4000);
+    }
+  });
+}
+function importICSFromModal(input){
+  icsReadFile(input,function(raw){
+    var msg=document.getElementById('evIcsMsg');
+    var valid=raw.filter(function(r){return r.dtstart&&icsDateToParts(r.dtstart);});
+    if(!valid.length){if(msg)msg.textContent='No events found in that file.';return;}
+    if(valid.length===1){
+      var r=valid[0],sp=icsDateToParts(r.dtstart),ep=r.dtend?icsDateToParts(r.dtend):null;
+      document.getElementById('evTitle').value=r.summary||'';
+      document.getElementById('evDate').value=sp.date;
+      document.getElementById('evStart').value=sp.time||'';
+      document.getElementById('evEnd').value=(ep&&ep.time)||'';
+      document.getElementById('evNotes').value=[r.location,r.description].filter(Boolean).join(' \u2014 ');
+      evIcsUid=r.uid||null;
+      if(msg)msg.textContent='Filled in from file - check it, then Save.';
+      return;
+    }
+    var res=icsMerge(raw);
+    if(msg)msg.textContent=icsSummary(res)+(res.first?' Earliest: '+formatDate(res.first)+'.':'');
+    setTimeout(closeEventModal,1800);
+  });
 }
 
 

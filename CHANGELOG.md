@@ -5,6 +5,32 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.27.0] — 2026-10-28
+
+### Added
+- **Import from .ics file in the Add Meeting window** (also reached from + Meeting in the Day Plan) — a file with one event fills in the form so you can check it, assign a project and Save; a file with several events imports them all straight away and tells you how many were added or updated. Re-importing the same event updates it rather than duplicating it
+
+### Changed
+- **Meeting notes in This Week are limited to 4 lines** — long invite text (e.g. Teams join details) no longer stretches the day card. Hover a meeting to see its full title and notes; click it to read or edit them in full
+
+---
+
+## [0.26.3] — 2026-10-28
+
+### Changed
+- **The header Up Next pill is narrower** (max width 300px to 210px) — longer text scrolls on hover, looping continuously
+- **The Up Next dropdown card is back to its original 320px width** (it was narrowed in 0.26.2 by mistake)
+
+---
+
+## [0.26.2] — 2026-10-28
+
+### Changed
+- **Hover-scroll now loops continuously** — long names keep scrolling, with a dot separator before the text repeats, for as long as the pointer stays on them (previously one pass then stop)
+- **Up Next and reminders cards are narrower** (320px to 264px)
+
+---
+
 ## [0.26.1] — 2026-10-28
 
 ### Changed
