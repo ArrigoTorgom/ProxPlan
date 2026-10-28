@@ -5,6 +5,24 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.26.1] — 2026-10-28
+
+### Changed
+- **The To Do list button in the Up Next dropdown is left-aligned**, with Open day plan on the right — matching how + Reminder and Manage sit in the reminders dropdown
+
+---
+
+## [0.26.0] — 2026-10-28
+
+### Changed
+- **Reminders have their own dropdown on the bell** — Up Next now shows only what's on now and next, plus suggested tasks. Click the bell for reminders: "Due now" (tick to finish, Snooze menu), "Later today" for timed ones that haven't reached their time, and + Reminder and Manage buttons. Opening one closes the other, and the bell's red badge still counts what's due
+- **The Up Next card is a fixed, compact width** (320px, never wider than the screen), and long names are cut off with an ellipsis on a single line instead of wrapping — tags like Meeting and Reminder stay visible beside them
+
+### Added
+- **Long names scroll when you hover over them** — pause on a cut-off name (in either dropdown, or on the Up Next pill itself) and it slides across to show the rest, then snaps back when you move away
+
+---
+
 ## [0.25.1] — 2026-10-27
 
 ### Changed

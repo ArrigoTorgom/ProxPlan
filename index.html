@@ -865,6 +865,12 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .rem-chip{display:inline-block;font-size:10px;padding:1px 7px;border-radius:9px;background:var(--primary-light);color:var(--primary);margin-left:6px;font-weight:600;}
 .rem-chip.sys{background:var(--bg);color:var(--muted);}
 .rem-mgr-item{flex-wrap:wrap;}
+.upnext-pop{width:320px;max-width:calc(100vw - 24px);overflow-x:hidden;}
+.dp-side-row .ln{display:flex;align-items:center;gap:4px;min-width:0;}
+.dp-side-row .nm.tr{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dp-side-row .ln .dp-tag{flex-shrink:0;margin-left:0;}
+.dp-side-row .sb.tr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tr.scrolling{text-overflow:clip!important;}
 .rem-mgr-item .rem-mgr-title{min-width:120px;}
 .dp-rem{position:absolute;right:6px;max-width:46%;height:16px;line-height:14px;font-size:10px;padding:0 7px 0 4px;border-radius:8px;background:var(--med-bg);color:var(--med);border:1px solid var(--med);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;z-index:3;transform:translateY(-8px);display:flex;align-items:center;gap:3px;}
 .dp-rem svg{width:10px;height:10px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
@@ -977,8 +983,9 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
       </div>
     </div>
     <div class="upnext-wrap" id="upNextWrap">
-      <button class="upnext-bell" id="upNextBell" onclick="toggleUpNext(event)" title="Reminders" aria-label="Reminders"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="upNextBellCount"></b></button><button class="upnext-pill" id="upNextPill" onclick="toggleUpNext(event)" title="Up next"><span class="upnext-dot" id="upNextDot"></span><span class="txt" id="upNextText">Up next</span><span class="short" id="upNextShort"></span></button>
+      <button class="upnext-bell" id="upNextBell" onclick="toggleRemPop(event)" title="Reminders" aria-label="Reminders"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="upNextBellCount"></b></button><button class="upnext-pill" id="upNextPill" onclick="toggleUpNext(event)" title="Up next"><span class="upnext-dot" id="upNextDot"></span><span class="txt tr" id="upNextText">Up next</span><span class="short" id="upNextShort"></span></button>
       <div class="upnext-pop" id="upNextPop" onclick="event.stopPropagation()"></div>
+      <div class="upnext-pop" id="remPop" onclick="event.stopPropagation()"></div>
     </div>
   </div>
 </div>
@@ -1465,14 +1472,14 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.25.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.26.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.25.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.26.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2475,35 +2482,49 @@ function renderUpNext(){
   var _shEl=document.getElementById('upNextShort');if(_shEl)_shEl.textContent=shortLbl;
   dot.className='upnext-dot'+(state?' '+state:'');
   if(upNextOpen)renderUpNextPop(s);
+  if(remPopOpen)renderRemPop(s);
+}
+var remPopOpen=false;
+function upNextRow(it,showDay,s,isNow){
+  var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':it.kind==='reminder'?'<span class="dp-tag pri">Reminder</span>':'';
+  var day=showDay?upNextDayLabel(it.date,s.today):'';
+  return'<div class="dp-side-row'+(isNow?' now':'')+'" onclick="upNextOpenItem(\''+it.date+'\',\''+it.kind+'\',\''+escA(it.id)+'\')"><span class="tm">'+dpFmtTime(it.start)+(day?'<span class="sb">'+escH(day)+'</span>':'')+'</span><div class="bd"><div class="ln"><span class="nm tr">'+escH(it.title)+'</span>'+tag+'</div>'+(it.sub?'<span class="sb tr">'+escH(it.sub)+'</span>':'')+(it.kind==='reminder'?'':'<span class="sb tr">until '+dpFmtTime(it.end)+'</span>')+'</div></div>';
 }
 function renderUpNextPop(s){
   var pop=document.getElementById('upNextPop');
   if(!pop)return;
   s=s||upNextCompute();
-  function row(it,showDay){
-    var tag=it.kind==='meeting'?'<span class="dp-tag mt">Meeting</span>':it.kind==='reminder'?'<span class="dp-tag pri">Reminder</span>':'';
-    var day=showDay?upNextDayLabel(it.date,s.today):'';
-    return'<div class="dp-side-row" onclick="upNextOpenItem(\''+it.date+'\',\''+it.kind+'\',\''+escA(it.id)+'\')"><span class="tm">'+dpFmtTime(it.start)+(day?'<span class="sb">'+escH(day)+'</span>':'')+'</span><div class="bd"><span class="nm">'+escH(it.title)+'</span>'+tag+(it.sub?'<span class="sb">'+escH(it.sub)+'</span>':'')+(it.kind==='reminder'?'':'<span class="sb">until '+dpFmtTime(it.end)+'</span>')+'</div></div>';
-  }
   var h='';
   if(s.leave)h+='<div class="dp-side-leave">'+escH(leaveDayLabel(s.today,s.leave))+'</div>';
-  if(s.now.length)h+='<div class="dp-side-sec" style="margin-top:0">Now</div>'+s.now.map(function(it){return row(it,false).replace('dp-side-row','dp-side-row now');}).join('');
-  if(s.next.length)h+='<div class="dp-side-sec"'+(s.now.length||s.leave?'':' style="margin-top:0"')+'>Next</div>'+s.next.map(function(it){return row(it,true);}).join('');
+  if(s.now.length)h+='<div class="dp-side-sec" style="margin-top:0">Now</div>'+s.now.map(function(it){return upNextRow(it,false,s,true);}).join('');
+  if(s.next.length)h+='<div class="dp-side-sec"'+(s.now.length||s.leave?'':' style="margin-top:0"')+'>Next</div>'+s.next.map(function(it){return upNextRow(it,true,s,false);}).join('');
   if(!s.now.length&&!s.next.length)h+='<div class="dp-side-note">Nothing planned in the next week.</div>';
-  h+='<div class="dp-side-sec" style="display:flex;align-items:center">Reminders<a class="rem-manage" onclick="closeUpNext();openRemMgr()">Manage</a></div>'+(s.reminders.length?'':'<div class="dp-side-note">Nothing due.</div>');
-  if(s.reminders.length){
-    h+=s.reminders.map(function(r){
-      var id=escA(r.id);
-      return'<div class="dp-side-row" style="cursor:default"><button class="rem-chk" title="Mark done" aria-label="Mark done" onclick="remDone(\''+id+'\')"></button><div class="bd"><span class="nm"'+(r.link?' style="cursor:pointer" onclick="remOpen(\''+id+'\')"':'')+'>'+escH(r.title)+'</span><span class="sb">'+escH(remRecurDesc(r))+(r.link?' \u00b7 '+escH(remLinkLabel(r)):'')+'</span></div><button class="rem-snz" onclick="openSnoozeMenu(event,\''+id+'\')">Snooze &#9662;</button></div>';
-    }).join('');
-  }
   if(s.tasks.length){
     h+='<div class="dp-side-sec">Suggested tasks</div>'+s.tasks.map(function(x){
       var t=x.task;
-      return'<div class="dp-side-row" onclick="closeUpNext();switchTab(\'tasks\')"><div class="bd"><span class="nm">'+escH(t.title)+'</span>'+(x.tag?'<span class="dp-tag '+x.cls+'">'+escH(x.tag)+'</span>':'')+(t.project?'<span class="sb">'+escH(t.project)+'</span>':'')+'</div></div>';
+      return'<div class="dp-side-row" onclick="closeUpNext();switchTab(\'tasks\')"><div class="bd"><div class="ln"><span class="nm tr">'+escH(t.title)+'</span>'+(x.tag?'<span class="dp-tag '+x.cls+'">'+escH(x.tag)+'</span>':'')+'</div>'+(t.project?'<span class="sb tr">'+escH(t.project)+'</span>':'')+'</div></div>';
     }).join('');
   }
-  h+='<div class="upnext-foot"><button class="btn secondary-btn sm rq" onclick="closeUpNext();openRemQuick()">+ Reminder</button><button class="btn secondary-btn sm" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button><button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button></div>';
+  h+='<div class="upnext-foot"><button class="btn secondary-btn sm rq" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button><button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button></div>';
+  pop.innerHTML=h;
+}
+function remPopRow(r){
+  var id=escA(r.id);
+  return'<div class="dp-side-row" style="cursor:default"><button class="rem-chk" title="Mark done" aria-label="Mark done" onclick="remDone(\''+id+'\')"></button><div class="bd"><div class="ln"><span class="nm tr"'+(r.link?' style="cursor:pointer" onclick="remOpen(\''+id+'\')"':'')+'>'+escH(r.title)+'</span></div><span class="sb tr">'+escH(remRecurDesc(r))+(r.link?' \u00b7 '+escH(remLinkLabel(r)):'')+'</span></div><button class="rem-snz" onclick="openSnoozeMenu(event,\''+id+'\')">Snooze &#9662;</button></div>';
+}
+function renderRemPop(s){
+  var pop=document.getElementById('remPop');
+  if(!pop)return;
+  s=s||upNextCompute();
+  var pend=getReminders().filter(isReminderPending).sort(function(a,b){return remTimeMin(a.time)-remTimeMin(b.time);});
+  var h='<div class="dp-side-sec" style="margin-top:0">Due now</div>'+(s.reminders.length?s.reminders.map(remPopRow).join(''):'<div class="dp-side-note">Nothing due.</div>');
+  if(pend.length){
+    h+='<div class="dp-side-sec">Later today</div>'+pend.map(function(r){
+      var id=escA(r.id);
+      return'<div class="dp-side-row" onclick="remOpen(\''+id+'\')"><span class="tm">'+escH(remFmtTime(r.time))+'</span><div class="bd"><div class="ln"><span class="nm tr">'+escH(r.title)+'</span></div><span class="sb tr">'+escH(remRecurDesc(r))+'</span></div></div>';
+    }).join('');
+  }
+  h+='<div class="upnext-foot"><button class="btn secondary-btn sm rq" onclick="closeUpNext();openRemQuick()">+ Reminder</button><button class="btn primary-btn sm" onclick="closeUpNext();openRemMgr()">Manage</button></div>';
   pop.innerHTML=h;
 }
 function upNextOpenItem(ds,kind,id){
@@ -2513,18 +2534,67 @@ function upNextOpenItem(ds,kind,id){
 }
 function toggleUpNext(e){
   if(e)e.stopPropagation();
-  upNextOpen=!upNextOpen;
+  var was=upNextOpen;
+  closeUpNext();
+  if(was)return;
+  upNextOpen=true;
   var pop=document.getElementById('upNextPop');
-  if(pop)pop.classList.toggle('open',upNextOpen);
-  if(upNextOpen)renderUpNextPop();
+  if(pop)pop.classList.add('open');
+  renderUpNextPop();
+}
+function toggleRemPop(e){
+  if(e)e.stopPropagation();
+  var was=remPopOpen;
+  closeUpNext();
+  if(was)return;
+  remPopOpen=true;
+  var pop=document.getElementById('remPop');
+  if(pop)pop.classList.add('open');
+  renderRemPop();
 }
 function closeUpNext(){
-  upNextOpen=false;
-  var pop=document.getElementById('upNextPop');
-  if(pop)pop.classList.remove('open');
+  upNextOpen=false;remPopOpen=false;
+  ['upNextPop','remPop'].forEach(function(id){var p=document.getElementById(id);if(p)p.classList.remove('open');});
 }
-document.addEventListener('click',function(e){if(upNextOpen&&!e.target.closest('#upNextWrap'))closeUpNext();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&upNextOpen)closeUpNext();});
+document.addEventListener('click',function(e){if((upNextOpen||remPopOpen)&&!e.target.closest('#upNextWrap'))closeUpNext();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(upNextOpen||remPopOpen))closeUpNext();});
+
+// -- Hover-scroll for truncated text (.tr) --
+var _mq=null;
+function mqStop(){
+  if(!_mq)return;
+  cancelAnimationFrame(_mq.raf);clearTimeout(_mq.t);
+  _mq.el.scrollLeft=0;_mq.el.classList.remove('scrolling');
+  _mq=null;
+}
+document.addEventListener('mouseover',function(e){
+  var el=e.target.closest?e.target.closest('.tr'):null;
+  if(!el||(_mq&&_mq.el===el))return;
+  mqStop();
+  var over=el.scrollWidth-el.clientWidth;
+  if(over<3)return;
+  var me={el:el,raf:0,t:0};
+  _mq=me;
+  me.t=setTimeout(function(){
+    if(_mq!==me)return;
+    el.classList.add('scrolling');
+    var start=null,dur=Math.max(1200,over/0.045);
+    function step(ts){
+      if(_mq!==me)return;
+      if(start===null)start=ts;
+      var p=Math.min(1,(ts-start)/dur);
+      el.scrollLeft=over*p;
+      if(p<1)me.raf=requestAnimationFrame(step);
+    }
+    me.raf=requestAnimationFrame(step);
+  },250);
+});
+document.addEventListener('mouseout',function(e){
+  if(!_mq)return;
+  var to=e.relatedTarget;
+  if(to&&_mq.el.contains(to))return;
+  mqStop();
+});
 setInterval(function(){remNotifyTick();if(!document.hidden){renderUpNext();if(currentTab==='planner')renderReminderBanner();}},30000);setTimeout(remNotifyTick,2500);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)renderUpNext();});
 
@@ -4030,7 +4100,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.25.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.26.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5701,7 +5771,7 @@ var TOUR_STEPS=[
   {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
   {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green. Use the arrows either side of the days to change week, or the week number in the top right to jump to any date."},
   {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
-  {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"This pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan. Reminders that are due show here too, with a bell badge - tick them off or snooze them for an hour, the afternoon, tomorrow or next week. Use Manage there to add, edit or remove repeating and one-off reminders - you can type them in plain words, like 'every Friday 3pm submit timesheet'."},
+  {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"This pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan. Long names scroll when you hover over them. The bell beside it holds your reminders - tick them off or snooze them for an hour, the afternoon, tomorrow or next week, and use Manage there to add, edit or remove repeating and one-off reminders. You can type them in plain words, like 'every Friday 3pm submit timesheet'."},
   {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. Planned time and project meetings can be pulled in with the Import banner - it never overwrites what you've already logged. Leave days show a green line, and the chip at the top shows your leave balance."},
   {tab:'tracker',target:'.history-controls',title:"Log History",text:"Switch between List and Week view - Week gives a grid by project and activity that's easy to copy into Replicon. Export either one as a CSV; project and tender codes are included when your projects have them."},
   {tab:'tracker',target:'#projectList',title:"Active Projects",text:"Add projects here, click a pill to edit its name, color, code or group. Projects are archived rather than deleted, so nothing is ever silently lost."},
