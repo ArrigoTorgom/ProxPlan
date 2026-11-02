@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.30.0] — 2026-11-02
+
+### Added
+- **Open task limit is now a setting** — new To Do card in Settings with "Keep my open tasks to" (default 20, 1 to 500). The meter on the To Do tab uses your number: amber from about 85% of it, red once you pass it, with the message updating to match. It is a guide, not a hard stop, and Someday and finished tasks still don't count. The setting is saved with your backup and sync file
+
+---
+
+## [0.29.3] — 2026-11-02
+
+### Changed
+- **Task detail panel footer tidied** — Mark done (or Reopen) is now a full-width button on its own row, with Remind, Plan today, Park and Delete evenly spaced in a single row beneath it, instead of Mark done wrapping awkwardly to the right
+
+---
+
+## [0.29.2] — 2026-11-02
+
+### Changed
+- **Outlook calendar day blocks are taller** — now close to square (about 40 x 36px, previously about 40 x 22px) with the number centred, so the calendars are easier to read and click. The column scrolls on short screens
+
+---
+
 ## [0.29.1] — 2026-11-02
 
 ### Fixed
