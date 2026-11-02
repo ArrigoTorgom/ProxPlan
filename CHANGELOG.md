@@ -5,6 +5,58 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.32.2] — 2026-11-02
+
+### Fixed
+- **Long project names no longer spill out of notes on small screens** — the project name on a note card now truncates with an ellipsis (hover shows the full name), as do long tags. The project filter dropdown above the board is also capped to the screen width instead of stretching to fit its longest project name
+
+---
+
+## [0.32.1] — 2026-11-02
+
+### Changed
+- **Bottom-sheet edit panel is inset on narrow screens** — the task and note edit panel that slides up on narrow screens now floats 12px in from the left, right and bottom edges with rounded corners all round, instead of running edge to edge
+
+---
+
+## [0.32.0] — 2026-11-02
+
+### Added
+- **Notes tab** — a board for pinning ideas and working notes, between Projects and Settings. Notes show as cards in a grid. Type a note in the bar at the top and press Enter (add `@Project` to link it and `#tags` to tag it), or press Add on its own for a blank note. Click a card to open it in the side panel (bottom sheet on narrow screens)
+- **Rich notes with a checklist** — each note has a title, formatted text (bold, italic, underline, highlight, bullet and numbered lists) and a tick-box checklist. Ticking items works straight from the card. Pasted text is stripped to plain text
+- **Drag to arrange** — drag a card to reorder it, with a marker showing where it will land. Pin a note to keep it in a Pinned row at the top (also the way to move a note to the top on a touch screen)
+- **Colour and tags** — seven card colours, free tags, and a filter bar with search, project dropdown and tag chips
+- **Link notes to projects** — a Notes card on every project page lists that project's notes. Click one to open it in the same side panel there, or use + Add to start one for that project. Renaming a project updates its notes
+- **Link notes to a date or meeting** — pick a date (and a meeting from that day) and the note appears under Notes on that day in This Week; click it to open the note
+- **Link notes to tasks** — attach a note to a task and it shows under Linked notes in the task panel, with + Note to start one. Any checklist line can be turned into a task with + Task
+- Notes are saved with your backup and sync file like everything else
+
+### Changed
+- **Header tabs fit with six tabs** — slightly tighter tab spacing between 920 and 1180px wide, and on phones the logo hides and the Up Next pill truncates so all six tabs stay visible
+
+---
+
+## [0.31.1] — 2026-11-02
+
+### Changed
+- **Quick add inside a project now uses the smart input** — type things like `Draft memo fri !high ~2h`, `!today`, `waiting on Sam` or `tomorrow` into the "Quick add" box at the bottom of a project and the date, priority, estimate, Today flag and waiting-on are picked up, with a live "Understood:" line under the box. The task goes into that project unless you type `@OtherProject`. Same behaviour on the To Do tab's project, due date and priority views
+
+### Fixed
+- **Project list can be opened with the task panel open** — between about 920px and 1180px wide the project list is tucked away while a task is open, but there was no way to bring it back. A "Projects" button now shows above the project and opens the list as a slide-out; tap the dimmed area or pick a project to close it
+
+---
+
+## [0.31.0] — 2026-11-02
+
+### Changed
+- **Projects tab tasks now match the To Do tab** — task rows inside a project use the same compact layout: click-to-edit due date and estimate, priority tap, the Today menu, and small subtask and note icons. The old row of Edit / Wait / Remind / Sub / Note / Delete buttons is gone
+- **Task detail side panel in Projects** — click a task to open the same panel as To Do (title, project, priority, due, estimate, Today list, waiting on, subtasks, notes, Remind / Plan today / Park / Delete) on the right of the project view. Changes show in the task list straight away. Esc or the x closes it
+- **Layout** — on wide screens it is project list | tasks | detail. Below about 1180px the project list tucks away while a task is open (close the panel to bring it back), and below 920px the panel opens as a bottom sheet, same as To Do
+- Moving a task to another project from the panel closes the panel, since the task has left the project you are viewing. Switching project or tab also clears the selection
+- Rows in Projects are no longer draggable (there is no calendar to drop them on there)
+
+---
+
 ## [0.30.4] — 2026-11-02
 
 ### Fixed
