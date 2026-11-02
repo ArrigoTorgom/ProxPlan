@@ -5,6 +5,48 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.29.1] — 2026-11-02
+
+### Fixed
+- **To Do tab now fills the page width on wide screens** instead of sitting left-aligned with an empty strip on the right. The task list and side column line up with the header edges, and the side column is slightly wider (320px)
+
+---
+
+## [0.29.0] — 2026-11-02
+
+### Added
+- **Outlook calendars are back on the To Do tab** — two months stacked in the right column, with arrows and a Today button to move through them. Leave and public holidays are green, days shaded amber when busy and red when over your day length (from task estimates). Click a day to filter the list to it, or drop a task on a day to reschedule. Your leave balance (and balance after booked leave) sits underneath with a Book leave link. The card can be collapsed
+- **Task detail panel** — click any task to open its details in the same right column (a slide-up sheet on phones). Edit the title, project, priority, due date, estimate, Today list (Off / Today / Keep), who you are waiting on and the chase date. Subtasks have checkboxes, a progress bar, rename and remove; notes are a full text box. Remind, Plan today, Park, Delete and Mark done are at the bottom. Changes save as you make them; Esc or × closes the panel and brings the calendars back
+- Completed tasks show a Took field in the panel so you can correct how long they actually took
+
+### Changed
+- **Task rows are cleaner** — hover now shows just the Today star. Subtasks and notes are shown as a small progress chip (e.g. 1/3) and a note icon instead of expanding inline; open the panel to see or edit them
+- The selected task is highlighted in the list
+
+---
+
+## [0.28.0] — 2026-11-02
+
+### Added
+- **To Do tab rebuilt around "what's due and what do I do today"**
+  - **Smart add box** — type a task in plain words, e.g. `Send RFI response @TenderX fri !high ~2h`. Chips show what was understood (project, due date, priority, estimate) and each can be dismissed with ×. `@` picks a project (partial names work), `!high` / `!med` / `!low` sets priority, `~2h` or `~45m` sets an estimate, `!today` / `!keep` / `!someday` set the Today behaviour
+  - **Urgency view (new default)** — sections for Overdue, Today, Waiting on, This week, Later, Someday and Completed. Sections collapse and remember their state. The old Project, Due Date and Priority views are still one click away
+  - **Today list** — mark any task with the Today star to do it today only (it returns to its due-date section overnight), or choose Keep on Today until done to persist it. Tasks due today appear automatically
+  - **Week strip** replaces the month calendars — the next five working days with task counts and estimated hours against your day length (leave and public holidays shown in green, overloaded days in red). Click a day to filter the list; drag a task onto a day to change its due date
+  - **Estimates** — click + est on any task (or use ~ in the add box, or the Edit window). Today and the week strip add them up. Planning a task into the Day Plan now sizes the block to its estimate
+  - **Actual time** — ticking off a task that has an estimate offers a quick "how long did it take?" so you build a feel for your estimates; the Completed section shows est vs took and a running summary of how your estimates compare
+  - **Waiting on** — mark a task as waiting on someone with a chase date. It sits in its own section, and on the chase date it moves to Today and a reminder fires. Mark it received to clear it
+  - **Soft limit of 20** — a meter shows open tasks (Someday not counted) and nudges you when the list gets long
+  - Quick edit: click a due date, estimate or priority on any task to change it in place
+  - Edit Task window gains Estimate, Today list, Waiting on and Chase on fields
+- Up Next suggestions put Today-list tasks and due chases first, and skip Someday and still-waiting tasks
+
+### Changed
+- The two month calendars on the To Do tab are removed (the week pill in the header still opens a month calendar)
+- Task rows on every view (including a project's Tasks card) now share the same layout, with the project shown as a coloured dot
+
+---
+
 ## [0.27.0] — 2026-10-28
 
 ### Added
