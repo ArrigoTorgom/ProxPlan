@@ -5,6 +5,35 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.30.4] — 2026-11-02
+
+### Fixed
+- **Calendar / task detail panel top now lines up with the task count blocks** — the right column was sticking 8px lower than the "open / done" blocks on the left once the task list was long enough to scroll. It now starts level with them and still stays pinned just under the header as you scroll
+
+---
+
+## [0.30.3] — 2026-11-02
+
+### Changed
+- **Calendar centred on narrow screens** — when the calendar sits below the tasks, the months, legend and leave balance are now centred in the card instead of hugging the left edge. Width is unchanged (still capped at 340px)
+
+---
+
+## [0.30.2] — 2026-11-02
+
+### Changed
+- **"Outlook" panel is now "Calendar" and matches the task sections** — same header style as Overdue / This week / Later (chevron, bold title, tap to collapse), with the month arrows and Today button on the right of the header. Looks consistent in the side column and when it drops below the tasks on narrow screens
+- **Calendar months no longer balloon on narrow screens** — when the calendar sits below the tasks, the month grid is capped at 340px wide so day blocks stay about 47 x 42px instead of stretching with the window
+
+---
+
+## [0.30.1] — 2026-11-02
+
+### Fixed
+- **To Do spacing outside Urgency view** — with the Week strip hidden (Project, Due Date and Priority views), the view buttons sat tight against the Add task bar. They now keep the same 12px gap as in Urgency view
+
+---
+
 ## [0.30.0] — 2026-11-02
 
 ### Added
