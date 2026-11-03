@@ -875,7 +875,7 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-side-row .sb.tr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tr.scrolling{text-overflow:clip!important;}
 .tasks-wrap{display:grid!important;grid-template-columns:minmax(0,1fr) 320px;gap:16px;max-width:none;align-items:start;}
-.tk-in{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:5px 6px 5px 14px;transition:border-color .12s;}
+.tk-in{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 8px 16px;transition:border-color .12s;}.tk-in .btn{padding:7px 18px;font-size:13px;flex-shrink:0;}
 .tk-in:focus-within{border-color:var(--primary);}
 .tk-in input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--text);font-size:14px;padding:8px 0;font-family:inherit;}
 .tk-prev{display:none;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 2px 0;font-size:11px;color:var(--muted);}
@@ -1019,6 +1019,9 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .nt-tg{background:none;border:1px solid var(--border);border-radius:12px;padding:2px 10px;font-size:11px;cursor:pointer;color:var(--muted);font-family:inherit;}
 .nt-tg:hover{border-color:var(--primary);color:var(--primary);}
 .nt-tg.on{background:var(--primary);border-color:var(--primary);color:#fff;}
+.nt-bar input[type=search],.nt-bar select,.nt-tg{height:28px;box-sizing:border-box;}
+.nt-bar input[type=search]{padding:0 10px;}.nt-bar select{padding:0 8px;}.nt-tg{display:inline-flex;align-items:center;padding:0 12px;}.nt-tags{align-items:center;}
+#taskSortBar .sort-btn,#taskSortBar select{height:28px;box-sizing:border-box;}#taskSortBar .sort-btn{display:inline-flex;align-items:center;padding:0 14px;}#taskSortBar select{padding:0 8px;}
 .nt-sec{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 2px 8px;}
 .nt-sec:first-child{margin-top:2px;}
 .nt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;align-items:start;}
@@ -1092,6 +1095,15 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 @media(max-width:420px){.header .title-block{display:none;}}
 .event-pill.ntpill{border-left-color:#eab308;background:rgba(250,204,21,.16);cursor:pointer;}
 .event-pill.ntpill em{font-style:normal;color:var(--muted);}
+.nt-side:empty{display:none;}
+.nt-card.nt-open{grid-column:1/-1;cursor:default;padding:14px 16px 16px;box-shadow:0 4px 18px rgba(0,0,0,.12);border-color:var(--primary);}
+.nt-card.nt-open:hover{border-color:var(--primary);}
+.nt-ex{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px;margin-top:6px;}
+.nt-ex-l,.nt-ex-r{min-width:0;}
+.nt-ex-r .tk-g2:first-child{margin-top:0!important;}
+.nt-open .nt-body{min-height:190px;max-height:60vh;}
+.tk-side.nt-open .tk-sh input.tk-title{font-size:16px;}
+@media(max-width:720px){.nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open .nt-body{min-height:140px;}}
 @media(max-width:920px){.nt-wrap.has-side{grid-template-columns:minmax(0,1fr);}.nt-side{position:static;max-height:none;overflow:visible;}.nt-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}}
 @media(max-width:480px){.nt-grid{grid-template-columns:minmax(0,1fr);}}
 .tk-side-bd{display:none;}
@@ -1602,7 +1614,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 <div class="tab-panel" id="panelNotes">
 <div class="nt-wrap" id="ntWrap">
   <div class="nt-main">
-    <div class="tk-in"><input type="text" id="ntQuick" placeholder="Jot a note - try: Call supplier re lead times @ProjectX #rfi (press Add on its own for a blank note)" maxlength="300" autocomplete="off" onkeydown="if(event.key==='Enter')ntAddQuick()"><button class="btn primary-btn sm" onclick="ntAddQuick()">Add</button></div>
+    <div class="tk-in"><input type="text" id="ntQuick" placeholder="Jot a note - try @Project #tag" maxlength="300" autocomplete="off" onkeydown="if(event.key==='Enter')ntAddQuick()"><button class="btn primary-btn sm" onclick="ntAddQuick()">Add</button></div>
     <div class="nt-bar" id="ntBar"></div>
     <div id="ntBoard"></div>
   </div>
@@ -1716,14 +1728,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.32.2</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.33.3</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.32.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.33.3%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4368,7 +4380,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.32.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.33.3';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5269,6 +5281,7 @@ function ntChips(n){
   return f.join('');
 }
 function ntCardHtml(n){
+  if(currentTab==='notes'&&_ntSel===n.id)return ntEditorHtml(n,true);
   var id=n.id,items=n.items||[],body=ntClean(n.body);
   var it=items.slice(0,6).map(function(i){return'<div class="nt-it'+(i.done?' d':'')+'"><span class="nt-cb'+(i.done?' on':'')+'" onclick="event.stopPropagation();ntToggleItem(\''+id+'\',\''+i.id+'\')">'+(i.done?'&#10003;':'')+'</span><span>'+escH(i.t)+'</span></div>';}).join('')+(items.length>6?'<div class="nt-more">+'+(items.length-6)+' more</div>':'');
   var chips=ntChips(n);
@@ -5280,7 +5293,7 @@ function ntCardHtml(n){
     +'</div>';
 }
 function ntCardClick(e,id){if(e.target.closest&&e.target.closest('a,button'))return;ntSelect(id);}
-function ntRefreshCard(id){var el=document.getElementById('nc_'+id),n=ntGet(id);if(el&&n)el.outerHTML=ntCardHtml(n);}
+function ntRefreshCard(id){if(currentTab==='notes'&&_ntSel===id)return;var el=document.getElementById('nc_'+id),n=ntGet(id);if(el&&n)el.outerHTML=ntCardHtml(n);}
 // -- drag to arrange --
 function ntDragStart(e,id){_ntDragId=id;try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);}catch(x){}var el=document.getElementById('nc_'+id);if(el)setTimeout(function(){el.classList.add('drag');},0);}
 function ntDragClear(){var o=document.querySelectorAll('.nt-card.drag,.nt-card.dbf,.nt-card.dba,.nt-card.dbt,.nt-card.dbb');for(var i=0;i<o.length;i++)o[i].classList.remove('drag','dbf','dba','dbt','dbb');}
@@ -5323,12 +5336,13 @@ function ntPrune(id){
 }
 function ntSelect(id){
   ntCommit();
-  var prev=_ntSel;
-  if(prev&&prev!==id)ntPrune(prev);
+  var prev=_ntSel,pruned=false;
+  if(prev&&prev!==id)pruned=ntPrune(prev);
   if(!ntGet(id))return;
   _ntSel=id;_tkSel='';
-  renderNoteSide();
-  if(currentTab==='notes'&&prev&&prev!==id){renderNotesBoard();}
+  if(currentTab==='notes'&&pruned){renderNotesBar();renderNotesBoard();}
+  else renderNoteSide();
+  if(currentTab==='notes'){var oc=document.getElementById('nc_'+id);if(oc&&oc.scrollIntoView)oc.scrollIntoView({block:'nearest'});}
   ntRefreshProjCard();
 }
 function ntClose(){
@@ -5348,13 +5362,9 @@ function renderNoteSide(){
   var n=_ntSel?ntGet(_ntSel):null;
   if(_ntSel&&!n)_ntSel='';
   if(currentTab==='notes'){
-    var el=document.getElementById('ntSide'),w=document.getElementById('ntWrap');
-    if(!el)return;
-    el.innerHTML=n?ntEditorHtml(n):'';
-    if(w)w.classList.toggle('has-side',!!n);
-    var old=document.querySelectorAll('.nt-card.sel');
-    for(var i=0;i<old.length;i++)old[i].classList.remove('sel');
-    if(n){var c=document.getElementById('nc_'+n.id);if(c)c.classList.add('sel');}
+    var open=document.querySelector('.nt-card.nt-open');
+    if(open&&(!n||open.id!=='nc_'+n.id)){var po=ntGet(open.id.slice(3));if(po)open.outerHTML=ntCardHtml(po);else open.parentNode.removeChild(open);}
+    if(n){var c=document.getElementById('nc_'+n.id);if(c)c.outerHTML=ntCardHtml(n);}
   }else if(currentTab==='projects')renderTaskSide();
 }
 function ntFmt(cmd,arg){var el=document.getElementById('ntBody');if(!el)return;el.focus();document.execCommand(cmd,false,arg||null);ntBodyInput();}
@@ -5372,7 +5382,7 @@ function ntBodyInput(){
   ntRefreshCard(id);ntRefreshProjCard();
 }
 function ntOptSel(v,cur){return v===cur?' selected':'';}
-function ntEditorHtml(n){
+function ntEditorHtml(n,inline){
   var id=n.id,items=n.items||[],done=items.filter(function(i){return i.done;}).length;
   var projs=getActiveProjects().map(function(p){return p.name;});
   if(n.project&&projs.indexOf(n.project)<0)projs.push(n.project);
@@ -5399,20 +5409,25 @@ function ntEditorHtml(n){
     +tb('insertUnorderedList','<svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg>','Bullet list')
     +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')
     +tb('removeFormat','<svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg>','Clear formatting');
-  return'<div class="tk-side detail nt-ed"><div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title"><button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>'
-    +'<div class="proj-desc-toolbar">'+toolbar+'</div>'
+  var head='<div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title"><button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>';
+  var writing='<div class="proj-desc-toolbar">'+toolbar+'</div>'
     +'<div class="proj-desc-area nt-body" id="ntBody" contenteditable="true" data-placeholder="Write here..." oninput="ntBodyInput()" onpaste="ntPaste(event)" spellcheck="false">'+ntClean(n.body)+'</div>'
     +'<div class="tk-l" style="margin-top:10px">Checklist'+(items.length?'<span style="float:right">'+done+' of '+items.length+'</span>':'')+'</div>'
     +(items.length?'<div class="tk-pb"><div style="width:'+Math.round(done/items.length*100)+'%"></div></div>':'')
     +itHtml
-    +'<input type="text" id="ntItemAdd" class="tk-subadd" placeholder="+ Add checklist item" onkeydown="if(event.key===\'Enter\')ntItemAdd(\''+id+'\')">'
-    +'<div class="tk-g2" style="margin-top:10px"><label>Project<select onchange="ntUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Task<select onchange="ntUpdate(\''+id+'\',{taskId:this.value})">'+tOpts+'</select></label></div>'
+    +'<input type="text" id="ntItemAdd" class="tk-subadd" placeholder="+ Add checklist item" onkeydown="if(event.key===\'Enter\')ntItemAdd(\''+id+'\')">';
+  var links='<div class="tk-g2" style="margin-top:10px"><label>Project<select onchange="ntUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Task<select onchange="ntUpdate(\''+id+'\',{taskId:this.value})">'+tOpts+'</select></label></div>'
     +'<div class="tk-g2"><label>Date<input type="date" value="'+escH(n.date||'')+'" onchange="ntUpdate(\''+id+'\',{date:this.value,eventId:\'\'})"></label><label>Meeting<select onchange="ntUpdate(\''+id+'\',{eventId:this.value})"'+(n.date?'':' disabled')+'>'+eOpts+'</select></label></div>'
     +'<div class="tk-l">Tags</div><div class="nt-tagrow">'+tags+'<input type="text" id="ntTagIn" class="nt-tagin" placeholder="+ tag" onkeydown="if(event.key===\'Enter\'||event.key===\',\'){event.preventDefault();ntTagAdd(\''+id+'\');}" onblur="ntTagAdd(\''+id+'\')"></div>'
-    +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>'
-    +'<div class="tk-ft"><div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div></div>'
-    +'<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>'
-    +'</div><div class="tk-side-bd" onclick="ntClose()"></div>';
+    +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>';
+  var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
+  var meta='<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>';
+  if(inline){
+    return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+'" id="nc_'+id+'">'+head
+      +'<div class="nt-ex"><div class="nt-ex-l">'+writing+'</div>'
+      +'<div class="nt-ex-r">'+links+'<div class="tk-ft"><button class="pri" onclick="ntClose()">Done</button>'+acts+'</div>'+meta+'</div></div></div>';
+  }
+  return'<div class="tk-side detail nt-ed">'+head+writing+links+'<div class="tk-ft">'+acts+'</div>'+meta+'</div><div class="tk-side-bd" onclick="ntClose()"></div>';
 }
 // -- updates --
 function ntLayoutPatch(p){return['pinned','project','tags'].some(function(k){return k in p;});}

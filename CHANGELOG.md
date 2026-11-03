@@ -5,6 +5,35 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.33.3] — 2026-11-03
+
+### Changed
+- **Shorter prompt in the Notes entry bar** — it now reads "Jot a note - try @Project #tag" so it no longer cuts off on narrow screens. The blank-note tip is gone from the bar; pressing Add with nothing typed still opens a blank note
+
+---
+
+## [0.33.2] — 2026-11-03
+
+### Fixed
+- **Matching heights on the filter rows** — on the Notes tab the search box (about 30px), project dropdown (about 25px) and tag chips (20px) are now all 28px tall and line up. The To Do view row (Urgency / Project / Due Date / Priority pills at about 20px and the group dropdown at about 25px) is now 28px across too
+
+---
+
+## [0.33.1] — 2026-11-03
+
+### Changed
+- **More room around the Add button** on the To Do and Notes entry bars — the button was sitting about 6px from the right edge. It now has an even 10px gap on the right, top and bottom and is slightly wider (about 61 x 34px), so the bar feels less tight
+
+---
+
+## [0.33.0] — 2026-11-03
+
+### Changed
+- **Notes now open on the note itself** — on the Notes tab, clicking a card expands it in place into the editor instead of filling a side panel. The writing area (formatting toolbar, text and checklist) takes the left of the open note, with project, task, date, meeting, tags and colour on the right and Done / Pin / Duplicate / Delete beneath. On narrow screens it stacks into one column with no slide-up sheet. Opening another note, pressing Done, the x or Esc collapses it back to a card; an empty untitled note is discarded when you close it
+- The Projects tab still uses the side panel for notes, next to the project list, as before
+
+---
+
 ## [0.32.2] — 2026-11-02
 
 ### Fixed
