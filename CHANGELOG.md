@@ -5,6 +5,21 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.34.0] — 2026-11-03
+
+### Changed
+- **Notes on the Projects tab now open in place too** — clicking a note in a project's Notes card expands that note right there in the card, using the same stacked editor as the narrow Notes tab layout (writing area first, then checklist, project, task, date, meeting, tags, colour and Done below), at any screen width. The side panel is no longer used for notes, so the project list stays put and the task panel is only for tasks. Opening a note closes any open task panel, and opening a note in a collapsed Notes card expands the card
+- Done, the x, Esc, or opening another note collapses it again; moving a note to another project from its editor, switching project or deleting it closes the editor
+
+---
+
+## [0.33.4] — 2026-11-03
+
+### Fixed
+- **Highlights are no longer lost when a note is saved** — highlighting text that was already bold, italic or underlined made the browser put the highlight colour on that formatting tag rather than a plain span, and the note-cleaning step only kept it on spans, so the highlight vanished when the note saved and closed. It is now kept on any formatting tag. Highlights lost before this update cannot be recovered; bold, italic, underline and lists were saving correctly
+
+---
+
 ## [0.33.3] — 2026-11-03
 
 ### Changed

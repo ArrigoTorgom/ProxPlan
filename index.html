@@ -1103,6 +1103,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .nt-ex-r .tk-g2:first-child{margin-top:0!important;}
 .nt-open .nt-body{min-height:190px;max-height:60vh;}
 .tk-side.nt-open .tk-sh input.tk-title{font-size:16px;}
+.nt-open.nt-stack .nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open.nt-stack .nt-body{min-height:140px;}
 @media(max-width:720px){.nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open .nt-body{min-height:140px;}}
 @media(max-width:920px){.nt-wrap.has-side{grid-template-columns:minmax(0,1fr);}.nt-side{position:static;max-height:none;overflow:visible;}.nt-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}}
 @media(max-width:480px){.nt-grid{grid-template-columns:minmax(0,1fr);}}
@@ -1728,14 +1729,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.33.3</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.34.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.33.3%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.34.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4380,7 +4381,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.33.3';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.34.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5175,7 +5176,7 @@ function ntClean(h){
       walk(c);
       if(!NT_OK[tn]){while(c.firstChild)node.insertBefore(c.firstChild,c);node.removeChild(c);return;}
       var href=tn==='A'?c.getAttribute('href'):null,bg='';
-      if(tn==='SPAN'){var m=/background(?:-color)?\s*:\s*([^;]+)/i.exec(c.getAttribute('style')||'');if(m&&/^[#\w(),.\s%]+$/.test(m[1]))bg=m[1].trim();}
+      if(tn!=='A'&&tn!=='BR'){var m=/background(?:-color)?\s*:\s*([^;]+)/i.exec(c.getAttribute('style')||'');if(m&&/^[#\w(),.\s%]+$/.test(m[1]))bg=m[1].trim();}
       while(c.attributes.length)c.removeAttribute(c.attributes[0].name);
       if(tn==='A'&&href&&/^(https?:|mailto:)/i.test(href.trim())){c.setAttribute('href',href.trim());c.setAttribute('target','_blank');c.setAttribute('rel','noopener');}
       if(bg)c.setAttribute('style','background-color:'+bg);
@@ -5340,9 +5341,10 @@ function ntSelect(id){
   if(prev&&prev!==id)pruned=ntPrune(prev);
   if(!ntGet(id))return;
   _ntSel=id;_tkSel='';
+  if(currentTab==='projects')ntShowProjNotes();
   if(currentTab==='notes'&&pruned){renderNotesBar();renderNotesBoard();}
   else renderNoteSide();
-  if(currentTab==='notes'){var oc=document.getElementById('nc_'+id);if(oc&&oc.scrollIntoView)oc.scrollIntoView({block:'nearest'});}
+  if(currentTab==='notes'||currentTab==='projects'){var oc=document.getElementById('nc_'+id);if(oc&&oc.scrollIntoView)oc.scrollIntoView({block:'nearest'});}
   ntRefreshProjCard();
 }
 function ntClose(){
@@ -5365,7 +5367,7 @@ function renderNoteSide(){
     var open=document.querySelector('.nt-card.nt-open');
     if(open&&(!n||open.id!=='nc_'+n.id)){var po=ntGet(open.id.slice(3));if(po)open.outerHTML=ntCardHtml(po);else open.parentNode.removeChild(open);}
     if(n){var c=document.getElementById('nc_'+n.id);if(c)c.outerHTML=ntCardHtml(n);}
-  }else if(currentTab==='projects')renderTaskSide();
+  }else if(currentTab==='projects'){ntRefreshProjCard();renderTaskSide();}
 }
 function ntFmt(cmd,arg){var el=document.getElementById('ntBody');if(!el)return;el.focus();document.execCommand(cmd,false,arg||null);ntBodyInput();}
 function ntPaste(e){
@@ -5379,7 +5381,7 @@ function ntBodyInput(){
   var h=el.innerHTML;
   if(h==='<br>')h='';
   saveNotes(getNotes().map(function(n){return n.id===id?Object.assign({},n,{body:ntClean(h),updated:Date.now()}):n;}));
-  ntRefreshCard(id);ntRefreshProjCard();
+  ntRefreshCard(id);ntRefreshProjCard(true);
 }
 function ntOptSel(v,cur){return v===cur?' selected':'';}
 function ntEditorHtml(n,inline){
@@ -5423,7 +5425,7 @@ function ntEditorHtml(n,inline){
   var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
   var meta='<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>';
   if(inline){
-    return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+'" id="nc_'+id+'">'+head
+    return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+(currentTab==='projects'?' nt-stack':'')+'" id="nc_'+id+'">'+head
       +'<div class="nt-ex"><div class="nt-ex-l">'+writing+'</div>'
       +'<div class="nt-ex-r">'+links+'<div class="tk-ft"><button class="pri" onclick="ntClose()">Done</button>'+acts+'</div>'+meta+'</div></div></div>';
   }
@@ -5440,7 +5442,7 @@ function ntUpdate(id,patch,opts){
     if(ntLayoutPatch(patch)){renderNotesBar();renderNotesBoard();}
     else ntRefreshCard(id);
   }
-  ntRefreshProjCard();
+  ntRefreshProjCard(opts.noSide);
   if(['title','date','eventId'].some(function(k){return k in patch;})&&typeof renderCalendarShell==='function')renderCalendarShell();
   if(_tkSel&&typeof renderTaskSide==='function'&&currentTab!=='notes')renderTaskSide();
   if(!opts.noSide&&_ntSel===id){
@@ -5560,6 +5562,7 @@ function ntProjListHtml(name){
   var ls=getNotes().filter(function(n){return n.project===name;});
   if(!ls.length)return'<div class="proj-empty">No notes yet.</div>';
   return'<div class="nt-minis">'+ls.map(function(n){
+    if(_ntSel===n.id)return ntEditorHtml(n,true);
     var items=n.items||[],done=items.filter(function(i){return i.done;}).length,snip=ntText(n.body);
     if(snip.length>120)snip=snip.slice(0,120)+'...';
     return'<div class="nt-mini'+(n.color?' c-'+n.color:'')+(_ntSel===n.id?' sel':'')+'" onclick="ntSelect(\''+n.id+'\')"><div class="nt-mt">'+(n.pinned?'<span class="nt-pin on">'+NT_PIN+'</span>':'')+'<span>'+(n.title?escH(n.title):'<em>Untitled</em>')+'</span></div>'
@@ -5571,8 +5574,10 @@ function ntProjCardHtml(name,pc){
   var cnt=getNotes().filter(function(n){return n.project===name;}).length,col=pc&&pc.notes;
   return'<div class="proj-card'+(col?' collapsed':'')+'" id="ntProjCard"><div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard(\'notes\',\''+escA(name)+'\')" title="'+(col?'Expand':'Collapse')+'">'+(col?'&#9656;':'&#9662;')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard(\'notes\',\''+escA(name)+'\')">Notes'+(cnt?' ('+cnt+')':'')+'</span><button class="btn secondary-btn sm" style="margin-left:auto" onclick="ntNewFor(\''+escA(name)+'\')">+ Add</button></div><div class="proj-card-body">'+ntProjListHtml(name)+'</div></div>';
 }
-function ntRefreshProjCard(){
+function ntShowProjNotes(){var pc=_projCardCollapsed[_selectedProject];if(pc&&pc.notes){pc.notes=false;try{localStorage.setItem('plannerProjCardCollapsed',JSON.stringify(_projCardCollapsed));}catch(e){}renderProjectDetail(_selectedProject);}}
+function ntRefreshProjCard(keepOpen){
   var el=document.getElementById('ntProjCard');
+  if(keepOpen&&el&&el.querySelector('.nt-open'))return;
   if(!el||currentTab!=='projects'||!_selectedProject)return;
   el.outerHTML=ntProjCardHtml(_selectedProject,_projCardCollapsed[_selectedProject]||{});
 }
@@ -5633,8 +5638,8 @@ function renderTaskSide(){
     if(_ntSel&&!nn)_ntSel='';
     if(nn&&nn.project!==_selectedProject){nn=null;_ntSel='';}
     if(t&&t.project!==_selectedProject){t=null;_tkSel='';}
-    pe.innerHTML=nn?ntEditorHtml(nn):(t?tkDetailHtml(t):'');
-    var has=!!(t||nn);
+    pe.innerHTML=t?tkDetailHtml(t):'';
+    var has=!!t;
     if(pw){pw.classList.toggle('proj-has-side',has);if(!has)pw.classList.remove('proj-nav-open');}
     return;
   }
