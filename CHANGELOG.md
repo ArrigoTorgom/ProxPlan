@@ -5,6 +5,22 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.35.1] — 2026-11-03
+
+### Changed
+- **Calendar months sit side by side on narrow screens** — when the calendar drops below the tasks (920px and narrower, on both To Do and Projects), the two months now share a row with a small gap instead of stacking, with the legend and leave balance beneath, centred up to 540px wide. Day blocks are smaller there (about 24 x 21px on a phone, 36 x 32px on a tablet). On wide screens the side column still stacks the months at the same size as before
+
+---
+
+## [0.35.0] — 2026-11-03
+
+### Changed
+- **The calendar now lives on the Projects tab too** — the right column of a project page always shows the same Calendar as To Do (two months, leave and holidays, load shading, leave balance, hide/show, month arrows). Selecting a task swaps it for the task panel in the same spot and Esc (or the x) brings the calendar back, so the project no longer shifts width as panels open and close. Opening a note also returns the column to the calendar
+- **Drag a task onto a calendar day** from the Projects tab to set its due date — task rows there are draggable again now there is somewhere to drop them. Clicking a day on this tab does nothing, since the day filter belongs to To Do
+- **Layout** — wide screens show project list | project | calendar. Between about 920 and 1180px the project list is always behind the "Projects" button (slide-out); below 920px the calendar drops under the project as a collapsed section, as on To Do, and the task panel opens as a bottom sheet
+
+---
+
 ## [0.34.0] — 2026-11-03
 
 ### Changed
