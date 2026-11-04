@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.35.3] — 2026-11-04
+
+### Fixed
+- **"Planner" is back in the header on medium widths** — it had been hidden between about 920 and 1180px wide to make room for the six tabs, which is no longer needed now the tab bar stays centred and the Up Next pill shrinks. The title shows at every width above 560px as before, and the tabs stay centred and clear of it
+
+---
+
+## [0.35.2] — 2026-11-03
+
+### Fixed
+- **Header tabs stay centred** — between roughly 920 and 1180px wide, a long Up Next meeting title pushed the right side out and shifted the tab bar left of centre (by up to about 100px). The Up Next pill now shrinks with an ellipsis to fit its half of the header, so the tabs stay dead centre and the right side no longer slides under them. On phones and narrow windows the tabs now sit in the middle of the space between the logo and the right-hand buttons, instead of hugging the left edge once the logo hides
+
+---
+
 ## [0.35.1] — 2026-11-03
 
 ### Changed
