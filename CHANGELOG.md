@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.36.1] — 2026-11-05
+
+### Fixed
+- Typing in a note opened on a project page dropped the cursor after the first keystroke. The open editor was being re-rendered on every input; it is now left untouched while you type (the Notes tab was not affected).
+
+---
+
 ## [0.36.0] — 2026-11-05
 
 ### Added
