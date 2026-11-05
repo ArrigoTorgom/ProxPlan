@@ -5,6 +5,16 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.37.0] — 2026-11-05
+
+### Added
+- Sub-bullets and sub-numbering in notes and project summaries: press Tab / Shift+Tab inside a list item, or use the new indent / outdent toolbar buttons. Up to four levels; nested numbered lists use a, b, c then i, ii, iii.
+
+### Changed
+- Bullets and numbers now take the colour of the text on their line (first coloured text of the item). Existing coloured lists pick this up automatically the next time they display.
+
+---
+
 ## [0.36.1] — 2026-11-05
 
 ### Fixed

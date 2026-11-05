@@ -1117,6 +1117,12 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .rt-sw.none{background:var(--card);}
 .rt-sw.none::after{content:'';position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:#e5484d;transform:rotate(-45deg);}
 .nt-cbody [style*="background-color"]{color:#233b46;border-radius:2px;padding:0 1px;}
+.proj-desc-area li::marker,.nt-cbody li::marker{color:var(--mk,currentcolor);}
+.proj-desc-area li>ul,.proj-desc-area li>ol,.nt-cbody li>ul,.nt-cbody li>ol{--mk:initial;}
+.proj-desc-area ul ul,.proj-desc-area ol ol,.proj-desc-area ul ol,.proj-desc-area ol ul,.nt-cbody ul ul,.nt-cbody ol ol,.nt-cbody ul ol,.nt-cbody ol ul{margin:0;}
+.proj-desc-area ol ol,.nt-cbody ol ol{list-style-type:lower-alpha;}
+.proj-desc-area ol ol ol,.nt-cbody ol ol ol{list-style-type:lower-roman;}
+.proj-desc-area ol ol ol ol,.nt-cbody ol ol ol ol{list-style-type:decimal;}
 .header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}.header .week-nav{min-width:0;justify-self:stretch;justify-content:flex-end;}
 @media(max-width:700px){.header{flex-wrap:nowrap;}.header .tabs{margin:0 auto;flex-shrink:0;}.header .week-nav{flex-shrink:1;}}
 @media(max-width:720px){.nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open .nt-body{min-height:140px;}}
@@ -1744,14 +1750,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.36.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.37.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.36.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.37.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3883,6 +3889,7 @@ function renderProjectDetail(name){
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertUnorderedList\')" title="Bullet list"><svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertOrderedList\')" title="Numbered list"><svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg></button>'
+        +rtIndentBtns('proj',name)
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'removeFormat\')" title="Clear formatting"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg></button>'
       +'</div>'
@@ -3931,6 +3938,7 @@ function saveProjDesc(name){
   var projects=getProjects();
   var idx=projects.findIndex(function(p){return p.name===name;});
   if(idx<0)return;
+  rtMarkers(el);
   projects[idx].description=ntClean(el.innerHTML);
   saveProjects(projects);
 }
@@ -4396,7 +4404,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.36.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.37.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5216,6 +5224,60 @@ document.addEventListener('keydown',function(e){
 },true);
 window.addEventListener('scroll',function(e){var p=document.getElementById('rtPop');if(p&&p.style.display==='block'&&!(e.target&&e.target.closest&&e.target.closest('#rtPop')))rtClose();},true);
 window.addEventListener('resize',rtClose);
+// -- list markers follow text colour; nested list levels --
+function rtMarkers(root){
+  if(!root||!root.querySelectorAll)return;
+  var lis=root.querySelectorAll('li');
+  for(var i=0;i<lis.length;i++){
+    var li=lis[i],col='',w=li.ownerDocument.createTreeWalker(li,4,null,false),t;
+    while((t=w.nextNode())){
+      if(!/\S/.test(t.nodeValue))continue;
+      var p=t.parentNode;
+      if(p.closest('li')!==li)continue;
+      for(var e=p;e;e=e.parentNode){
+        var c=e.style&&e.style.color?ntColor(e.style.color):'';
+        if(c){col=c;break;}
+        if(e===li)break;
+      }
+      break;
+    }
+    if(col)li.style.setProperty('--mk',col);
+    else if(li.style.getPropertyValue('--mk')){li.style.removeProperty('--mk');if(!li.getAttribute('style'))li.removeAttribute('style');}
+  }
+}
+function rtListShift(el,dir){
+  var s=window.getSelection();
+  if(!s||!s.rangeCount)return false;
+  var n=s.anchorNode;
+  n=n&&(n.nodeType===1?n:n.parentNode);
+  var li=n&&n.closest?n.closest('li'):null;
+  if(!li||!el.contains(li))return false;
+  var depth=0,p=li.parentNode;
+  while(p&&p!==el){if(p.tagName==='UL'||p.tagName==='OL')depth++;p=p.parentNode;}
+  if(dir>0){
+    if(depth>=4)return true;
+    if(depth<=1&&!li.previousElementSibling)return true;
+  }
+  document.execCommand(dir>0?'indent':'outdent');
+  return true;
+}
+function rtIndent(ctx,name,dir){
+  var el=document.getElementById(ctx==='nt'?'ntBody':'projDesc_'+name);
+  if(!el)return;
+  el.focus();
+  if(!rtListShift(el,dir))return;
+  if(ctx==='nt')ntBodyInput();else saveProjDesc(name);
+}
+function rtIndentBtns(ctx,name){
+  function btn(dir,title,svg){return'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="rtIndent(\''+ctx+'\',\''+escA(name||'')+'\','+dir+')" title="'+title+'"><svg viewBox="0 0 16 16">'+svg+'</svg></button>';}
+  return btn(-1,'Outdent list item (Shift+Tab)','<path d="M2 3h12M7 6.5h7M7 10h7M2 13.5h12"/><path d="M5.5 6 2.8 8.2l2.7 2.2"/>')
+    +btn(1,'Indent list item (Tab)','<path d="M2 3h12M7 6.5h7M7 10h7M2 13.5h12"/><path d="M2.8 6l2.7 2.2-2.7 2.2"/>');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Tab'||e.ctrlKey||e.altKey||e.metaKey)return;
+  var el=e.target&&e.target.closest?e.target.closest('.proj-desc-area[contenteditable]'):null;
+  if(el&&rtListShift(el,e.shiftKey?-1:1))e.preventDefault();
+},true);
 // -- Notes --
 var NT_COLORS=['','y','g','b','p','r','o'];
 var NT_COLOR_NAMES={'':'Default',y:'Yellow',g:'Green',b:'Blue',p:'Purple',r:'Rose',o:'Orange'};
@@ -5257,6 +5319,7 @@ function ntClean(h){
       else if(tn==='SPAN'){while(c.firstChild)node.insertBefore(c.firstChild,c);node.removeChild(c);}
     });
   })(doc.body);
+  rtMarkers(doc.body);
   return doc.body.innerHTML;
 }
 function ntText(h){return String(h||'').replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();}
@@ -5456,7 +5519,7 @@ function ntBodyInput(){
   var h=el.innerHTML;
   if(h==='<br>')h='';
   saveNotes(getNotes().map(function(n){return n.id===id?Object.assign({},n,{body:ntClean(h),updated:Date.now()}):n;}));
-  ntRefreshCard(id);ntRefreshProjCard(true);
+  rtMarkers(el);ntRefreshCard(id);ntRefreshProjCard(true);
 }
 function ntOptSel(v,cur){return v===cur?' selected':'';}
 function ntEditorHtml(n,inline){
@@ -5484,7 +5547,7 @@ function ntEditorHtml(n,inline){
     +rtColorBtns('nt')
     +'<span class="proj-desc-sep"></span>'
     +tb('insertUnorderedList','<svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg>','Bullet list')
-    +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')
+    +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')+rtIndentBtns('nt')
     +tb('removeFormat','<svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg>','Clear formatting');
   var head='<div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title"><button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>';
   var writing='<div class="proj-desc-toolbar">'+toolbar+'</div>'
