@@ -5,6 +5,21 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.38.0] — 2026-11-05
+
+### Added
+- Photos on notes: add photos from the note's editor (under the "Added" line), or paste an image straight into a note. Click a thumbnail to view it full size with next/previous. Notes show a photo count on the card and in the project page list.
+- Note photos use the same storage and photo backup folder as project photos, so they are backed up and restored the same way. Deleting a note deletes its photos (and removes them from the backup folder); duplicating a note copies them. A note that only holds photos is no longer cleared as "empty".
+
+### Changed
+- Checklist tick-boxes on notes use the input-box colour so they stand out on coloured and dark cards.
+- Task and note entry fields: in dark mode the inner field now has rounded corners and more padding around the placeholder.
+
+### Fixed
+- The cover strip above the sticky header was 1px short on each side, so the outer edge of note cards showed above the header bar when scrolling.
+
+---
+
 ## [0.37.0] — 2026-11-05
 
 ### Added

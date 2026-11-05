@@ -875,9 +875,9 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-side-row .sb.tr{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tr.scrolling{text-overflow:clip!important;}
 .tasks-wrap{display:grid!important;grid-template-columns:minmax(0,1fr) 320px;gap:16px;max-width:none;align-items:start;}
-.tk-in{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 8px 16px;transition:border-color .12s;}.tk-in .btn{padding:7px 18px;font-size:13px;flex-shrink:0;}
+.tk-in{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 8px 8px;transition:border-color .12s;}.tk-in .btn{padding:7px 18px;font-size:13px;flex-shrink:0;}
 .tk-in:focus-within{border-color:var(--primary);}
-.tk-in input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--text);font-size:14px;padding:8px 0;font-family:inherit;}
+.tk-in input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--text);font-size:14px;padding:8px 8px;border-radius:7px;font-family:inherit;}
 .tk-prev{display:none;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 2px 0;font-size:11px;color:var(--muted);}
 .tk-prev.show{display:flex;}
 .tk-lbl{margin-right:2px;}
@@ -1123,6 +1123,13 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .proj-desc-area ol ol,.nt-cbody ol ol{list-style-type:lower-alpha;}
 .proj-desc-area ol ol ol,.nt-cbody ol ol ol{list-style-type:lower-roman;}
 .proj-desc-area ol ol ol ol,.nt-cbody ol ol ol ol{list-style-type:decimal;}
+.nt-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-top:4px;}
+.nt-ph{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
+.nt-ph img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
+.nt-ph button{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:11px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+.nt-phnote{font-size:10px;color:var(--muted);margin-top:4px;}
+.nt-cb:not(.on){background:var(--card);}
+.nt-ed .subtask-cb:not(.done){background:var(--card);border-color:var(--border-strong,#b5bcc4);}
 .header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}.header .week-nav{min-width:0;justify-self:stretch;justify-content:flex-end;}
 @media(max-width:700px){.header{flex-wrap:nowrap;}.header .tabs{margin:0 auto;flex-shrink:0;}.header .week-nav{flex-shrink:1;}}
 @media(max-width:720px){.nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open .nt-body{min-height:140px;}}
@@ -1193,7 +1200,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .set-sec.collapsed .set-sec-body,.set-sub.collapsed .set-sub-body{display:none;}
 .set-sub{margin-top:14px;border-top:1px solid var(--border);padding-top:10px;}
 .set-sub-body{margin-top:8px;}
-.header::before{content:'';position:absolute;left:0;right:0;top:-14px;height:13px;background:var(--bg);pointer-events:none;}
+.header::before{content:'';position:absolute;left:-1px;right:-1px;top:-15px;height:14px;background:var(--bg);pointer-events:none;}
 .dp-meeting .t{display:flex;align-items:center;gap:5px;}
 .dp-meeting .t .tt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dp-meeting .t .dp-tag{margin-left:0;flex-shrink:0;line-height:1.3;}
@@ -1699,7 +1706,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <div class="set-sub"><div class="set-sec-title" style="margin-bottom:8px">Sync</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Keep your data backed up to a file you choose - point it at a folder OneDrive (or similar) syncs to follow you across devices. Chrome or Edge only.</div>
     <div id="syncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project Photos in sync too, added and removed automatically as you use the Photos card.</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project and Note photos in sync, added and removed automatically as you add or delete photos.</div>
     <div id="photoSyncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
       </div>
     </div>
@@ -1750,14 +1757,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.37.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.38.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.37.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.38.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4180,24 +4187,25 @@ function renderProjectImages(projectName){
   }).catch(function(){el.innerHTML='<div class="proj-empty">Photo storage unavailable in this browser.</div>';});
 }
 var _lbIdx=0;
-function openPhotoLightbox(url){
-  _lbIdx=Math.max(0,_projImgUrls.indexOf(url));
+var _lbList=null;
+function openPhotoLightbox(url,lst){
+  _lbList=lst||_projImgUrls;_lbIdx=Math.max(0,_lbList.indexOf(url));
   document.getElementById('photoLightbox').classList.add('open');
   showPhotoLightbox(url);
 }
 function showPhotoLightbox(url){
   document.getElementById('photoLightboxImg').src=url;
-  var n=_projImgUrls.length,multi=n>1;
+  var n=_lbList.length,multi=n>1;
   ['photoPrevBtn','photoNextBtn'].forEach(function(id){document.getElementById(id).style.display=multi?'flex':'none';});
   var c=document.getElementById('photoCounter');
   c.style.display=multi?'block':'none';
   c.textContent=(_lbIdx+1)+' / '+n;
 }
 function photoLightboxStep(d){
-  var n=_projImgUrls.length;
+  var n=(_lbList||_projImgUrls).length;
   if(n<2)return;
   _lbIdx=(_lbIdx+d+n)%n;
-  showPhotoLightbox(_projImgUrls[_lbIdx]);
+  showPhotoLightbox((_lbList||_projImgUrls)[_lbIdx]);
 }
 function closePhotoLightbox(){
   document.getElementById('photoLightbox').classList.remove('open');
@@ -4375,6 +4383,7 @@ async function reconcilePhotoSync(){
       if(lb&&lb.classList.contains('open'))closePhotoLightbox();
       renderProjectImages(_selectedProject);
     }
+    if(_ntSel&&touchedProjects['note:'+_ntSel])ntRenderPhotos(_ntSel);
     _photoSyncLastSyncedAt=Date.now();
     renderPhotoSyncStatus();
   }catch(e){}
@@ -4404,7 +4413,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.37.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.38.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5416,6 +5425,7 @@ function ntChips(n){
   if(n.project)f.push('<span class="tk-proj" title="'+escH(n.project)+'"><i style="background:'+projColorForName(n.project)+'"></i><span class="nt-pn">'+escH(n.project)+'</span></span>');
   (n.tags||[]).forEach(function(t){f.push('<span class="nt-tag">#'+escH(t)+'</span>');});
   if(n.date)f.push('<span class="nt-dt">'+escH(tkShort(n.date))+'</span>');
+  if(n.photos)f.push('<span class="nt-dt" title="Photos">'+n.photos+(n.photos===1?' photo':' photos')+'</span>');
   if(n.taskId){var t=tkTask(n.taskId);if(t)f.push('<span class="nt-dt" title="Linked task">Task: '+escH(t.title.length>24?t.title.slice(0,24)+'...':t.title)+'</span>');}
   return f.join('');
 }
@@ -5470,7 +5480,7 @@ function ntCommit(){var a=document.activeElement;if(a&&a.closest&&a.closest('.nt
 function ntPrune(id){
   if(!id)return;
   var n=ntGet(id);
-  if(n&&!n.title.trim()&&!ntText(n.body)&&!(n.items||[]).length&&!(n.tags||[]).length&&!n.date&&!n.taskId){saveNotes(getNotes().filter(function(x){return x.id!==id;}));return true;}
+  if(n&&!n.title.trim()&&!ntText(n.body)&&!(n.items||[]).length&&!(n.tags||[]).length&&!n.date&&!n.taskId&&!n.photos){saveNotes(getNotes().filter(function(x){return x.id!==id;}));return true;}
   return false;
 }
 function ntSelect(id){
@@ -5509,6 +5519,8 @@ function renderNoteSide(){
 }
 function ntFmt(cmd,arg){var el=document.getElementById('ntBody');if(!el)return;el.focus();document.execCommand(cmd,false,arg||null);ntBodyInput();}
 function ntPaste(e){
+  var pf=[].filter.call((e.clipboardData&&e.clipboardData.files)||[],function(f){return/^image\//.test(f.type);});
+  if(pf.length&&_ntSel){e.preventDefault();ntAddPhotos(_ntSel,pf);return;}
   e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');
   document.execCommand('insertText',false,t);
@@ -5565,9 +5577,9 @@ function ntEditorHtml(n,inline){
   if(inline){
     return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+(currentTab==='projects'?' nt-stack':'')+'" id="nc_'+id+'">'+head
       +'<div class="nt-ex"><div class="nt-ex-l">'+writing+'</div>'
-      +'<div class="nt-ex-r">'+links+'<div class="tk-ft"><button class="pri" onclick="ntClose()">Done</button>'+acts+'</div>'+meta+'</div></div></div>';
+      +'<div class="nt-ex-r">'+links+'<div class="tk-ft"><button class="pri" onclick="ntClose()">Done</button>'+acts+'</div>'+meta+ntPhotosHtml(id)+'</div></div></div>';
   }
-  return'<div class="tk-side detail nt-ed">'+head+writing+links+'<div class="tk-ft">'+acts+'</div>'+meta+'</div><div class="tk-side-bd" onclick="ntClose()"></div>';
+  return'<div class="tk-side detail nt-ed">'+head+writing+links+'<div class="tk-ft">'+acts+'</div>'+meta+ntPhotosHtml(id)+'</div><div class="tk-side-bd" onclick="ntClose()"></div>';
 }
 // -- updates --
 function ntLayoutPatch(p){return['pinned','project','tags'].some(function(k){return k in p;});}
@@ -5639,10 +5651,10 @@ function ntDuplicate(id){
   var a=getNotes(),i=a.findIndex(function(x){return x.id===id;});
   var cp=Object.assign({},n);
   delete cp.id;
-  cp.title=n.title?n.title+' (copy)':'';cp.created=Date.now();cp.updated=Date.now();cp.pinned=false;
+  cp.title=n.title?n.title+' (copy)':'';cp.created=Date.now();cp.updated=Date.now();cp.pinned=false;cp.photos=0;
   cp.items=(n.items||[]).map(function(x){return{id:'ni_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),t:x.t,done:x.done};});
   var c=ntNew(cp);
-  a.splice(i+1,0,c);
+  a.splice(i+1,0,c);ntCopyPhotos(id,c.id);
   saveNotes(a);
   if(currentTab==='notes'){renderNotesBar();renderNotesBoard();}
   ntSelect(c.id);
@@ -5651,7 +5663,8 @@ function ntDuplicate(id){
 function ntDelete(id){
   var n=ntGet(id);
   if(!n)return;
-  if((n.title||ntText(n.body)||(n.items||[]).length)&&!confirm('Delete this note?'))return;
+  if((n.title||ntText(n.body)||(n.items||[]).length||n.photos)&&!confirm('Delete this note?'))return;
+  ntDeleteAllPhotos(id);
   saveNotes(getNotes().filter(function(x){return x.id!==id;}));
   _ntSel='';
   renderNoteSide();
@@ -5695,6 +5708,90 @@ function tkNotesHtml(id){
   return'<div class="tk-l" style="margin-top:8px">Linked notes<button class="nt-addbtn" onclick="ntNewForTask(\''+id+'\')">+ Note</button></div>'
     +ls.map(function(n){return'<div class="tk-ln" onclick="ntOpenAnywhere(\''+n.id+'\')">'+(n.title?escH(n.title):'<em>Untitled</em>')+'</div>';}).join('');
 }
+// -- Note photos (same IndexedDB store and photo-folder backup as project photos; keyed 'note:<id>') --
+var _ntImgUrls=[];
+function ntPhotoKey(id){return'note:'+id;}
+function ntPhotosHtml(id){
+  return'<div class="tk-l" style="margin-top:10px">Photos<button type="button" class="nt-addbtn" onclick="document.getElementById(\'ntPhotoIn\').click()">+ Add</button></div>'
+    +'<input type="file" accept="image/*" multiple id="ntPhotoIn" style="display:none" onchange="ntAddPhotos(\''+id+'\',this.files);this.value=\'\'">'
+    +'<div class="nt-photos" id="ntPhotos" data-nid="'+id+'"></div>'
+    +'<div class="nt-phnote">Stored in this browser and backed up to your photo backup folder (Settings) if connected.</div>';
+}
+function ntSetPhotoCount(id,c){
+  var a=getNotes(),ch=false;
+  a.forEach(function(n){if(n.id===id&&(n.photos||0)!==c){n.photos=c;ch=true;}});
+  if(ch){saveNotes(a);ntRefreshCard(id);ntRefreshProjCard(true);}
+}
+function ntRenderPhotos(id){
+  getProjectImages(ntPhotoKey(id)).then(function(recs){
+    ntSetPhotoCount(id,recs.length);
+    var el=document.getElementById('ntPhotos');
+    if(!el||el.getAttribute('data-nid')!==id)return;
+    _ntImgUrls.forEach(function(u){URL.revokeObjectURL(u);});
+    _ntImgUrls=[];
+    el.innerHTML=recs.map(function(r){
+      var url=URL.createObjectURL(r.blob);
+      _ntImgUrls.push(url);
+      return'<div class="nt-ph"><img src="'+url+'" alt="" onclick="openPhotoLightbox(\''+url+'\',_ntImgUrls)"><button type="button" onclick="ntDelPhoto('+r.id+',\''+escA(r.uid||'')+'\',\''+id+'\')" title="Delete photo" aria-label="Delete photo">×</button></div>';
+    }).join('');
+  }).catch(function(){});
+}
+function ntAddPhotos(id,fileList){
+  var files=Array.from(fileList||[]).filter(function(f){return f.type.indexOf('image/')===0;});
+  if(!files.length)return;
+  var key=ntPhotoKey(id);
+  openImagesDB().then(function(db){
+    var recs=[];
+    return Promise.all(files.map(function(f){
+      return _resizeImageFile(f,1600,0.82).then(function(blob){
+        return new Promise(function(res,rej){
+          var r={project:key,name:f.name,type:'image/jpeg',blob:blob,added:Date.now(),uid:_newUid()};
+          var tx=db.transaction('images','readwrite');
+          var q=tx.objectStore('images').add(r);
+          q.onsuccess=function(){r.id=q.result;recs.push(r);};
+          tx.oncomplete=function(){res();};
+          tx.onerror=function(){rej(tx.error);};
+        });
+      });
+    })).then(function(){ntRenderPhotos(id);photoSyncPushRecords(recs);});
+  }).catch(function(e){alert('Could not save photo(s): '+e.message);});
+}
+function ntDelPhoto(rid,uid,id){
+  openImagesDB().then(function(db){
+    var tx=db.transaction('images','readwrite');
+    tx.objectStore('images').delete(rid);
+    tx.oncomplete=function(){if(uid)photoSyncTombstoneRecord(uid);ntRenderPhotos(id);};
+  });
+}
+function ntDeleteAllPhotos(id){
+  getProjectImages(ntPhotoKey(id)).then(function(recs){
+    if(!recs.length)return;
+    return openImagesDB().then(function(db){
+      var tx=db.transaction('images','readwrite'),st=tx.objectStore('images');
+      recs.forEach(function(r){st.delete(r.id);});
+      tx.oncomplete=function(){recs.forEach(function(r){if(r.uid)photoSyncTombstoneRecord(r.uid);});};
+    });
+  }).catch(function(){});
+}
+function ntCopyPhotos(from,to){
+  getProjectImages(ntPhotoKey(from)).then(function(recs){
+    if(!recs.length)return;
+    return openImagesDB().then(function(db){
+      var out=[],tx=db.transaction('images','readwrite'),st=tx.objectStore('images');
+      recs.forEach(function(r){
+        var c={project:ntPhotoKey(to),name:r.name,type:r.type,blob:r.blob,added:Date.now(),uid:_newUid()};
+        var q=st.add(c);
+        q.onsuccess=function(){c.id=q.result;out.push(c);};
+      });
+      tx.oncomplete=function(){photoSyncPushRecords(out);ntRenderPhotos(to);};
+    });
+  }).catch(function(){});
+}
+// fill the photo strip whenever an editor containing one is rendered (editors are rendered from many places)
+new MutationObserver(function(){
+  var el=document.getElementById('ntPhotos');
+  if(el&&!el.getAttribute('data-f')){el.setAttribute('data-f','1');ntRenderPhotos(el.getAttribute('data-nid'));}
+}).observe(document.body,{childList:true,subtree:true});
 // -- project page card --
 function ntProjListHtml(name){
   var ls=getNotes().filter(function(n){return n.project===name;});
@@ -5705,7 +5802,7 @@ function ntProjListHtml(name){
     if(snip.length>120)snip=snip.slice(0,120)+'...';
     return'<div class="nt-mini'+(n.color?' c-'+n.color:'')+(_ntSel===n.id?' sel':'')+'" onclick="ntSelect(\''+n.id+'\')"><div class="nt-mt">'+(n.pinned?'<span class="nt-pin on">'+NT_PIN+'</span>':'')+'<span>'+(n.title?escH(n.title):'<em>Untitled</em>')+'</span></div>'
       +(snip?'<div class="nt-ms">'+escH(snip)+'</div>':'')
-      +'<div class="nt-cf">'+(items.length?'<span class="nt-dt">'+done+'/'+items.length+' done</span>':'')+(n.tags||[]).map(function(t){return'<span class="nt-tag">#'+escH(t)+'</span>';}).join('')+(n.date?'<span class="nt-dt">'+escH(tkShort(n.date))+'</span>':'')+'</div></div>';
+      +'<div class="nt-cf">'+(items.length?'<span class="nt-dt">'+done+'/'+items.length+' done</span>':'')+(n.tags||[]).map(function(t){return'<span class="nt-tag">#'+escH(t)+'</span>';}).join('')+(n.date?'<span class="nt-dt">'+escH(tkShort(n.date))+'</span>':'')+(n.photos?'<span class="nt-dt">'+n.photos+(n.photos===1?' photo':' photos')+'</span>':'')+'</div></div>';
   }).join('')+'</div>';
 }
 function ntProjCardHtml(name,pc){
