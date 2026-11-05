@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.36.0] — 2026-11-05
+
+### Added
+- **Highlight and text colour palettes** in the rich text fields of notes and project summaries — the single highlight button is now two buttons, H (highlight) and A (text colour), each opening a small popover of six colours (yellow, green, blue, pink, orange, purple for highlights; red, orange, green, blue, purple, grey for text) plus a "none" swatch that removes it. The bar under each button remembers the last colour used. Esc, clicking elsewhere or scrolling closes the popover
+- Highlights get dark text automatically so they stay readable in dark mode, and the text colours are mid-tones that read on both light and dark backgrounds
+
+### Fixed
+- **Project summaries are now cleaned on save and on display**, the same way notes are — previously they stored whatever the browser produced, including any scripts or images pasted in or arriving through an imported backup. Text colours and highlights are kept, anything unsafe is removed
+- Note cards no longer force every highlight to yellow; they show the colour you picked
+
+---
+
 ## [0.35.3] — 2026-11-04
 
 ### Fixed

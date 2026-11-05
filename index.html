@@ -571,7 +571,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .proj-desc-block:focus-within .proj-desc-toolbar,.proj-desc-block:focus-within .proj-desc-area{border-color:var(--primary);}
 .proj-desc-area:empty::before{content:attr(data-placeholder);color:var(--muted);pointer-events:none;}
 .proj-desc-area ul,.proj-desc-area ol{margin:6px 0;padding-left:20px;}
-.proj-desc-area mark{background:#fff2a8;color:inherit;border-radius:2px;padding:0 1px;}.proj-desc-area [style*="rgb(255, 242, 168)"]{color:#233b46;}
+.proj-desc-area mark{background:#fff2a8;color:inherit;border-radius:2px;padding:0 1px;}.proj-desc-area [style*="background-color"]{color:#233b46;}
 .proj-desc-area a{color:var(--primary);}
 .proj-desc-toolbar{display:flex;align-items:center;gap:2px;flex-wrap:wrap;padding:6px 7px;border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;background:var(--card);}
 .proj-desc-btn{width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:5px;background:none;color:var(--text);cursor:pointer;padding:0;}
@@ -1045,7 +1045,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .nt-pin.on{opacity:1;color:var(--primary);}
 .nt-cbody{margin-top:5px;font-size:12px;line-height:1.45;max-height:132px;overflow:hidden;word-break:break-word;color:var(--text);}
 .nt-cbody ul,.nt-cbody ol{margin:3px 0;padding-left:18px;}
-.nt-cbody mark,.nt-cbody [style*="background-color"]{background:#fff2a8;color:#233b46;border-radius:2px;padding:0 1px;}
+.nt-cbody mark{background:#fff2a8;color:#233b46;border-radius:2px;padding:0 1px;}
 .nt-cbody a{color:var(--primary);}
 .nt-citems{margin-top:6px;display:flex;flex-direction:column;gap:3px;}
 .nt-it{display:flex;align-items:flex-start;gap:7px;font-size:12px;line-height:1.35;}
@@ -1107,6 +1107,16 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-side.nt-open .tk-sh input.tk-title{font-size:16px;}
 .nt-open.nt-stack .nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open.nt-stack .nt-body{min-height:140px;}
 .proj-side .tk-d.live{cursor:default;}
+.rt-pop{position:fixed;z-index:950;display:none;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,.22);}
+.rt-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;}
+.rt-row{display:flex;gap:7px;}
+.rt-sw{position:relative;width:24px;height:24px;border-radius:50%;border:2px solid var(--border);padding:0;cursor:pointer;background:var(--c);flex-shrink:0;}
+.rt-sw:hover{border-color:var(--text);}
+.rt-sw.fc{background:var(--bg);display:inline-flex;align-items:center;justify-content:center;}
+.rt-sw.fc::after{content:'A';font-size:13px;font-weight:700;color:var(--c);line-height:1;}
+.rt-sw.none{background:var(--card);}
+.rt-sw.none::after{content:'';position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:#e5484d;transform:rotate(-45deg);}
+.nt-cbody [style*="background-color"]{color:#233b46;border-radius:2px;padding:0 1px;}
 .header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}.header .week-nav{min-width:0;justify-self:stretch;justify-content:flex-end;}
 @media(max-width:700px){.header{flex-wrap:nowrap;}.header .tabs{margin:0 auto;flex-shrink:0;}.header .week-nav{flex-shrink:1;}}
 @media(max-width:720px){.nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open .nt-body{min-height:140px;}}
@@ -1734,14 +1744,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.35.3</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.36.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.35.3%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.36.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3869,7 +3879,7 @@ function renderProjectDetail(name){
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'italic\')" title="Italic"><svg viewBox="0 0 16 16"><path d="M9 3h5M6 13h5M11 3 8 13"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'underline\')" title="Underline"><svg viewBox="0 0 16 16"><path d="M5 3v5.5a3.5 3.5 0 0 0 7 0V3"/><path d="M4 14h9"/></svg></button>'
         +'<span class="proj-desc-sep"></span>'
-        +'<button type="button" class="proj-desc-btn proj-desc-swatch" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'hiliteColor\',\'#fff2a8\')" title="Highlight"><svg viewBox="0 0 16 16"><text x="3" y="12" font-size="11" font-weight="700" fill="currentColor">H</text></svg><span class="proj-desc-bar" style="background:#fff2a8"></span></button>'
+        +rtColorBtns('proj',name)
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertUnorderedList\')" title="Bullet list"><svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertOrderedList\')" title="Numbered list"><svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg></button>'
@@ -3903,7 +3913,7 @@ function renderProjectDetail(name){
 ;
 function projDescToHtml(desc){
   if(!desc)return'';
-  if(/<\/?(b|i|u|ul|ol|li|a|mark|br|div|span|font)[ >]/i.test(desc))return desc;
+  if(/<\/?(b|i|u|ul|ol|li|a|mark|br|div|span|font)[ >]/i.test(desc))return ntClean(desc);
   return escH(desc).replace(/\n/g,'<br>');
 }
 function formatProjDesc(name,cmd,arg){
@@ -3921,7 +3931,7 @@ function saveProjDesc(name){
   var projects=getProjects();
   var idx=projects.findIndex(function(p){return p.name===name;});
   if(idx<0)return;
-  projects[idx].description=el.innerHTML;
+  projects[idx].description=ntClean(el.innerHTML);
   saveProjects(projects);
 }
 function projQuickAddTask(name,inputId){
@@ -4386,7 +4396,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.35.3';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.36.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5154,6 +5164,58 @@ function tkDetailHtml(t){
     +(t.created?'<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(t.created))))+'</div>':'')
     +'</div><div class="tk-side-bd" onclick="tkClose()"></div>';
 }
+// -- Rich text colour palettes (notes and project summaries) --
+var RT_HI=['#fff2a8','#bbf7d0','#bfdbfe','#fbcfe8','#fed7aa','#e9d5ff'];
+var RT_HI_N=['Yellow','Green','Blue','Pink','Orange','Purple'];
+var RT_FC=['#e5484d','#e07c0a','#16a34a','#3b82f6','#8b5cf6','#6b7280'];
+var RT_FC_N=['Red','Orange','Green','Blue','Purple','Grey'];
+var _rtCtx=null,_rtBtn=null,_rtLast={hi:RT_HI[0],fc:RT_FC[0]};
+function rtColorBtns(ctx,name){
+  function btn(kind,label,title){
+    return'<button type="button" class="proj-desc-btn proj-desc-swatch" data-rt="'+kind+'" onmousedown="event.preventDefault()" onclick="rtOpen(event,\''+kind+'\',\''+ctx+'\',\''+escA(name||'')+'\')" title="'+title+'"><svg viewBox="0 0 16 16"><text x="3.5" y="12" font-size="11" font-weight="700" fill="currentColor">'+label+'</text></svg><span class="proj-desc-bar" style="background:'+_rtLast[kind]+'"></span></button>';
+  }
+  return btn('hi','H','Highlight colour')+btn('fc','A','Text colour');
+}
+function rtClose(){var p=document.getElementById('rtPop');if(p)p.style.display='none';_rtBtn=null;}
+function rtOpen(e,kind,ctx,name){
+  e.stopPropagation();
+  var btn=e.currentTarget,pop=document.getElementById('rtPop');
+  if(pop&&pop.style.display==='block'&&_rtBtn===btn){rtClose();return;}
+  _rtCtx={ctx:ctx,name:name};
+  var cols=kind==='hi'?RT_HI:RT_FC,names=kind==='hi'?RT_HI_N:RT_FC_N;
+  if(!pop){pop=document.createElement('div');pop.id='rtPop';pop.className='rt-pop';pop.onmousedown=function(ev){ev.preventDefault();};document.body.appendChild(pop);}
+  pop.innerHTML='<div class="rt-t">'+(kind==='hi'?'Highlight':'Text colour')+'</div><div class="rt-row">'
+    +cols.map(function(c,i){return'<button type="button" class="rt-sw'+(kind==='fc'?' fc':'')+'" style="--c:'+c+'" onclick="rtPick(\''+kind+'\',\''+c+'\')" title="'+names[i]+'" aria-label="'+names[i]+'"></button>';}).join('')
+    +'<button type="button" class="rt-sw none" onclick="rtPick(\''+kind+'\',\'\')" title="'+(kind==='hi'?'No highlight':'Default colour')+'" aria-label="'+(kind==='hi'?'No highlight':'Default colour')+'"></button></div>';
+  var b=btn.getBoundingClientRect();
+  pop.style.display='block';
+  var left=Math.max(8,Math.min(b.left,window.innerWidth-pop.offsetWidth-8));
+  pop.style.left=left+'px';
+  pop.style.top=(b.bottom+4)+'px';
+  _rtBtn=btn;
+}
+function rtPick(kind,color){
+  var ctx=_rtCtx;
+  rtClose();
+  if(!ctx)return;
+  var cmd=kind==='hi'?'hiliteColor':'foreColor',val=color||(kind==='hi'?'transparent':'inherit');
+  if(color)_rtLast[kind]=color;
+  try{document.execCommand('styleWithCSS',false,true);}catch(x){}
+  if(ctx.ctx==='nt')ntFmt(cmd,val);else formatProjDesc(ctx.name,cmd,val);
+  try{document.execCommand('styleWithCSS',false,false);}catch(x){}
+  var bars=document.querySelectorAll('.proj-desc-btn[data-rt="'+kind+'"] .proj-desc-bar');
+  for(var i=0;i<bars.length;i++)bars[i].style.background=_rtLast[kind];
+}
+document.addEventListener('mousedown',function(e){
+  var p=document.getElementById('rtPop');
+  if(p&&p.style.display==='block'&&!p.contains(e.target)&&!(e.target.closest&&e.target.closest('[data-rt]')))rtClose();
+},true);
+document.addEventListener('keydown',function(e){
+  var p=document.getElementById('rtPop');
+  if(e.key==='Escape'&&p&&p.style.display==='block'){rtClose();e.stopPropagation();}
+},true);
+window.addEventListener('scroll',function(e){var p=document.getElementById('rtPop');if(p&&p.style.display==='block'&&!(e.target&&e.target.closest&&e.target.closest('#rtPop')))rtClose();},true);
+window.addEventListener('resize',rtClose);
 // -- Notes --
 var NT_COLORS=['','y','g','b','p','r','o'];
 var NT_COLOR_NAMES={'':'Default',y:'Yellow',g:'Green',b:'Blue',p:'Purple',r:'Rose',o:'Orange'};
@@ -5167,6 +5229,11 @@ function ntNew(p){
 function ntInsert(n){var a=getNotes();a.unshift(n);saveNotes(a);return n;}
 var NT_OK={B:1,STRONG:1,I:1,EM:1,U:1,MARK:1,BR:1,UL:1,OL:1,LI:1,P:1,DIV:1,SPAN:1,A:1};
 var NT_DROP={SCRIPT:1,STYLE:1,IFRAME:1,OBJECT:1,EMBED:1,LINK:1,META:1,TEMPLATE:1,NOSCRIPT:1,SVG:1,MATH:1,FORM:1,INPUT:1,TEXTAREA:1,BUTTON:1,SELECT:1,TITLE:1,HEAD:1};
+function ntColor(v){
+  v=String(v||'').trim();
+  if(/^(#[0-9a-f]{3,8}|rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*[\d.]+\s*)?\))$/i.test(v)&&!/^rgba\([^)]*,\s*0(\.0+)?\s*\)$/i.test(v))return v;
+  return'';
+}
 function ntClean(h){
   h=String(h||'');
   if(!h)return'';
@@ -5179,12 +5246,15 @@ function ntClean(h){
       var tn=c.tagName.toUpperCase();
       if(NT_DROP[tn]){node.removeChild(c);return;}
       walk(c);
+      if(tn==='FONT'){var fcv=ntColor(c.getAttribute('color')||''),sp=doc.createElement('span');while(c.firstChild)sp.appendChild(c.firstChild);if(fcv)sp.setAttribute('style','color:'+fcv+';');node.replaceChild(sp,c);return;}
       if(!NT_OK[tn]){while(c.firstChild)node.insertBefore(c.firstChild,c);node.removeChild(c);return;}
-      var href=tn==='A'?c.getAttribute('href'):null,bg='';
-      if(tn!=='A'&&tn!=='BR'){var m=/background(?:-color)?\s*:\s*([^;]+)/i.exec(c.getAttribute('style')||'');if(m&&/^[#\w(),.\s%]+$/.test(m[1]))bg=m[1].trim();}
+      var href=tn==='A'?c.getAttribute('href'):null,bg='',fg='';
+      if(tn!=='A'&&tn!=='BR'){var st=c.getAttribute('style')||'',mb=/(?:^|;)\s*background(?:-color)?\s*:\s*([^;]+)/i.exec(st),mf=/(?:^|;)\s*color\s*:\s*([^;]+)/i.exec(st);if(mb)bg=ntColor(mb[1]);if(mf)fg=ntColor(mf[1]);}
       while(c.attributes.length)c.removeAttribute(c.attributes[0].name);
       if(tn==='A'&&href&&/^(https?:|mailto:)/i.test(href.trim())){c.setAttribute('href',href.trim());c.setAttribute('target','_blank');c.setAttribute('rel','noopener');}
-      if(bg)c.setAttribute('style','background-color:'+bg);
+      var css=(bg?'background-color:'+bg+';':'')+(fg?'color:'+fg+';':'');
+      if(css)c.setAttribute('style',css);
+      else if(tn==='SPAN'){while(c.firstChild)node.insertBefore(c.firstChild,c);node.removeChild(c);}
     });
   })(doc.body);
   return doc.body.innerHTML;
@@ -5411,7 +5481,7 @@ function ntEditorHtml(n,inline){
     +tb('italic','<svg viewBox="0 0 16 16"><path d="M9 3h5M6 13h5M11 3 8 13"/></svg>','Italic')
     +tb('underline','<svg viewBox="0 0 16 16"><path d="M5 3v5.5a3.5 3.5 0 0 0 7 0V3"/><path d="M4 14h9"/></svg>','Underline')
     +'<span class="proj-desc-sep"></span>'
-    +'<button type="button" class="proj-desc-btn proj-desc-swatch" onmousedown="event.preventDefault()" onclick="ntFmt(\'hiliteColor\',\'#fff2a8\')" title="Highlight"><svg viewBox="0 0 16 16"><text x="3" y="12" font-size="11" font-weight="700" fill="currentColor">H</text></svg><span class="proj-desc-bar" style="background:#fff2a8"></span></button>'
+    +rtColorBtns('nt')
     +'<span class="proj-desc-sep"></span>'
     +tb('insertUnorderedList','<svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg>','Bullet list')
     +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')
