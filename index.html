@@ -1129,6 +1129,12 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .nt-ph button{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:11px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
 .nt-phnote{font-size:10px;color:var(--muted);margin-top:4px;}
 .nt-cb:not(.on){background:var(--card);}
+.nt-sidebtn{background:none;border:none;color:var(--muted);cursor:pointer;padding:3px 4px;display:inline-flex;align-items:center;border-radius:5px;}
+.nt-sidebtn:hover{background:var(--bg);color:var(--text);}
+.nt-sidebtn.on{color:var(--primary);}
+.nt-sidebtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.nt-open.nt-side-off .nt-ex{grid-template-columns:minmax(0,1fr);}
+.nt-open.nt-side-off .nt-ex-r{display:none;}
 .nt-ed .subtask-cb:not(.done){background:var(--card);border-color:var(--border-strong,#b5bcc4);}
 .header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}.header .week-nav{min-width:0;justify-self:stretch;justify-content:flex-end;}
 @media(max-width:700px){.header{flex-wrap:nowrap;}.header .tabs{margin:0 auto;flex-shrink:0;}.header .week-nav{flex-shrink:1;}}
@@ -1757,14 +1763,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.38.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.39.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.38.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.39.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3891,6 +3897,7 @@ function renderProjectDetail(name){
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'bold\')" title="Bold"><svg viewBox="0 0 16 16"><path d="M5 3h5.5a3 3 0 0 1 0 6H5zM5 9h6a3.2 3.2 0 0 1 0 6H5z"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'italic\')" title="Italic"><svg viewBox="0 0 16 16"><path d="M9 3h5M6 13h5M11 3 8 13"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'underline\')" title="Underline"><svg viewBox="0 0 16 16"><path d="M5 3v5.5a3.5 3.5 0 0 0 7 0V3"/><path d="M4 14h9"/></svg></button>'
+        +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'strikeThrough\')" title="Strikethrough"><svg viewBox="0 0 16 16"><text x="4.6" y="12" font-size="11" font-weight="700" stroke="none" fill="currentColor">S</text><path d="M2.5 8h11"/></svg></button>'
         +'<span class="proj-desc-sep"></span>'
         +rtColorBtns('proj',name)
         +'<span class="proj-desc-sep"></span>'
@@ -3927,7 +3934,7 @@ function renderProjectDetail(name){
 ;
 function projDescToHtml(desc){
   if(!desc)return'';
-  if(/<\/?(b|i|u|ul|ol|li|a|mark|br|div|span|font)[ >]/i.test(desc))return ntClean(desc);
+  if(/<\/?(b|i|u|s|strike|del|ul|ol|li|a|mark|br|div|span|font)[ >]/i.test(desc))return ntClean(desc);
   return escH(desc).replace(/\n/g,'<br>');
 }
 function formatProjDesc(name,cmd,arg){
@@ -4413,7 +4420,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.38.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.39.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5298,7 +5305,7 @@ function ntNew(p){
   return Object.assign({id:'n_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),title:'',body:'',items:[],project:'',tags:[],color:'',pinned:false,date:'',eventId:'',taskId:'',created:Date.now(),updated:Date.now()},p||{});
 }
 function ntInsert(n){var a=getNotes();a.unshift(n);saveNotes(a);return n;}
-var NT_OK={B:1,STRONG:1,I:1,EM:1,U:1,MARK:1,BR:1,UL:1,OL:1,LI:1,P:1,DIV:1,SPAN:1,A:1};
+var NT_OK={B:1,STRONG:1,I:1,EM:1,U:1,S:1,STRIKE:1,DEL:1,MARK:1,BR:1,UL:1,OL:1,LI:1,P:1,DIV:1,SPAN:1,A:1};
 var NT_DROP={SCRIPT:1,STYLE:1,IFRAME:1,OBJECT:1,EMBED:1,LINK:1,META:1,TEMPLATE:1,NOSCRIPT:1,SVG:1,MATH:1,FORM:1,INPUT:1,TEXTAREA:1,BUTTON:1,SELECT:1,TITLE:1,HEAD:1};
 function ntColor(v){
   v=String(v||'').trim();
@@ -5555,13 +5562,14 @@ function ntEditorHtml(n,inline){
   var toolbar=tb('bold','<svg viewBox="0 0 16 16"><path d="M5 3h5.5a3 3 0 0 1 0 6H5zM5 9h6a3.2 3.2 0 0 1 0 6H5z"/></svg>','Bold')
     +tb('italic','<svg viewBox="0 0 16 16"><path d="M9 3h5M6 13h5M11 3 8 13"/></svg>','Italic')
     +tb('underline','<svg viewBox="0 0 16 16"><path d="M5 3v5.5a3.5 3.5 0 0 0 7 0V3"/><path d="M4 14h9"/></svg>','Underline')
+    +tb('strikeThrough','<svg viewBox="0 0 16 16"><text x="4.6" y="12" font-size="11" font-weight="700" stroke="none" fill="currentColor">S</text><path d="M2.5 8h11"/></svg>','Strikethrough')
     +'<span class="proj-desc-sep"></span>'
     +rtColorBtns('nt')
     +'<span class="proj-desc-sep"></span>'
     +tb('insertUnorderedList','<svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg>','Bullet list')
     +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')+rtIndentBtns('nt')
     +tb('removeFormat','<svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg>','Clear formatting');
-  var head='<div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title"><button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>';
+  var head='<div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title">'+(inline?ntSideBtn():'')+'<button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>';
   var writing='<div class="proj-desc-toolbar">'+toolbar+'</div>'
     +'<div class="proj-desc-area nt-body" id="ntBody" contenteditable="true" data-placeholder="Write here..." oninput="ntBodyInput()" onpaste="ntPaste(event)" spellcheck="false">'+ntClean(n.body)+'</div>'
     +'<div class="tk-l" style="margin-top:10px">Checklist'+(items.length?'<span style="float:right">'+done+' of '+items.length+'</span>':'')+'</div>'
@@ -5575,7 +5583,7 @@ function ntEditorHtml(n,inline){
   var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
   var meta='<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>';
   if(inline){
-    return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+(currentTab==='projects'?' nt-stack':'')+'" id="nc_'+id+'">'+head
+    return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+(currentTab==='projects'?' nt-stack':'')+(_ntSideOff?' nt-side-off':'')+'" id="nc_'+id+'">'+head
       +'<div class="nt-ex"><div class="nt-ex-l">'+writing+'</div>'
       +'<div class="nt-ex-r">'+links+'<div class="tk-ft"><button class="pri" onclick="ntClose()">Done</button>'+acts+'</div>'+meta+ntPhotosHtml(id)+'</div></div></div>';
   }
@@ -5792,6 +5800,18 @@ new MutationObserver(function(){
   var el=document.getElementById('ntPhotos');
   if(el&&!el.getAttribute('data-f')){el.setAttribute('data-f','1');ntRenderPhotos(el.getAttribute('data-nid'));}
 }).observe(document.body,{childList:true,subtree:true});
+// -- collapse the note details column (per device, not synced) --
+var _ntSideOff=(function(){try{return localStorage.getItem('_ntSideOff')==='1';}catch(e){return false;}})();
+function ntSideBtn(){
+  return'<button type="button" class="nt-sidebtn'+(_ntSideOff?' on':'')+'" onmousedown="event.preventDefault()" onclick="ntToggleSide()" title="'+(_ntSideOff?'Show details':'Hide details for more writing room')+'" aria-label="Show or hide details" aria-pressed="'+(_ntSideOff?'true':'false')+'"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.6"/><path d="M10 3v10"/></svg></button>';
+}
+function ntToggleSide(){
+  _ntSideOff=!_ntSideOff;
+  try{localStorage.setItem('_ntSideOff',_ntSideOff?'1':'0');}catch(e){}
+  var cs=document.querySelectorAll('.nt-card.nt-open'),bs=document.querySelectorAll('.nt-sidebtn'),i;
+  for(i=0;i<cs.length;i++)cs[i].classList.toggle('nt-side-off',_ntSideOff);
+  for(i=0;i<bs.length;i++){bs[i].classList.toggle('on',_ntSideOff);bs[i].title=_ntSideOff?'Show details':'Hide details for more writing room';bs[i].setAttribute('aria-pressed',_ntSideOff?'true':'false');}
+}
 // -- project page card --
 function ntProjListHtml(name){
   var ls=getNotes().filter(function(n){return n.project===name;});
@@ -6859,7 +6879,7 @@ function importAllData(){
 }
 
 // -- Cross-device sync via a local file (File System Access API, Chrome/Edge only) --
-var SYNC_INTERNAL_KEYS=['_syncStamp','_photoManifestStamp'];
+var SYNC_INTERNAL_KEYS=['_syncStamp','_photoManifestStamp','_ntSideOff'];
 function buildSyncPayload(){
   var data={version:1,savedAt:Date.now()};
   for(var i=0;i<localStorage.length;i++){

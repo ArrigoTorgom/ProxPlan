@@ -5,6 +5,14 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.39.0] — 2026-11-06
+
+### Added
+- Note editor: a show/hide button beside the close button hides the details column (project, task, date, tags, colour, photos) so the writing area uses the full width. The choice is remembered on that device and is not synced to your other devices.
+- Strikethrough button in the formatting bar for notes and project summaries (works with bold, colours and lists).
+
+---
+
 ## [0.38.0] — 2026-11-05
 
 ### Added
