@@ -30,18 +30,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .week-badge:hover{opacity:.85;}
 
 #prevBtn,#nextBtn{border:none;background:transparent;}
-.week-picker-pop{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;box-shadow:0 4px 16px rgba(0,0,0,.22);z-index:200;display:flex;flex-direction:column;gap:8px;min-width:220px;}
+.week-picker-pop{position:absolute;right:0;top:calc(100% + 8px);width:320px;max-width:calc(100vw - 24px);box-sizing:border-box;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px 12px 12px;box-shadow:0 10px 32px rgba(0,0,0,.28);z-index:300;display:flex;flex-direction:column;gap:8px;text-align:left;}
 .wp-cal-head{display:flex;align-items:center;justify-content:space-between;}
 .wp-cal-head button{background:none;border:none;cursor:pointer;color:var(--text);padding:2px 8px;border-radius:4px;font-size:13px;}
 .wp-cal-head button:hover{background:var(--bg);}
-.wp-cal-title{font-size:12px;font-weight:600;color:var(--text);}
+.wp-cal-title{font-size:13px;font-weight:700;color:var(--text);}
+.wp-cal-ctl{display:flex;align-items:center;gap:2px;}
+.wp-cal-head .wp-today{font-size:11px;font-weight:600;color:var(--primary);border:1px solid var(--border);background:var(--card);border-radius:6px;padding:3px 9px;margin-right:4px;}
+.wp-cal-head .wp-today:hover{background:var(--primary-light);}
 .wp-dow-row,.wp-week-row{display:grid;grid-template-columns:repeat(7,1fr);}
 .wp-dow-row span{font-size:10px;color:var(--muted);text-align:center;padding:2px 0;}
 .wp-week-row{cursor:pointer;border-radius:6px;}
 .wp-week-row:hover{background:var(--primary-light);}
 .wp-week-row.active{background:var(--primary);}
 .wp-week-row.active .wp-day{color:#fff;}
-.wp-day{font-size:11px;text-align:center;padding:4px 0;color:var(--text);}
+.wp-day{font-size:12px;text-align:center;padding:5px 0;color:var(--text);}
 .wp-day.other-month{opacity:.35;}
 .wp-day.today{font-weight:700;text-decoration:underline;}
 .btn{background:none;border:1px solid rgba(255,255,255,.25);border-radius:6px;cursor:pointer;padding:5px 10px;font-size:13px;color:#fff;transition:background .12s;line-height:1.4;}
@@ -1193,20 +1196,29 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .snz-pick input{font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:inherit;}
 .user-reminder button.ur-snz,.user-reminder button.ur-done{flex-shrink:0;}
 .set-wrap{max-width:1100px;margin:0 auto;padding:14px;}
-.set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;margin-bottom:14px;}
-.set-col{display:flex;flex-direction:column;gap:14px;min-width:0;}
-.set-col .card{margin-bottom:0;}
-@media(max-width:900px){.set-grid{grid-template-columns:minmax(0,1fr);}}
-.set-sec-head,.set-sub-head{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
+.set-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:start;margin-bottom:14px;}
+.set-nav{position:sticky;top:76px;display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px;}
+.set-nav-btn{display:flex;align-items:center;width:100%;padding:9px 12px;border:none;background:none;border-radius:7px;font-family:inherit;font-size:13px;color:var(--text);cursor:pointer;text-align:left;}
+.set-nav-btn:hover{background:var(--bg);}
+.set-nav-btn.on{background:var(--primary-light);color:var(--primary);font-weight:600;}
+.set-nav-btn:focus-visible{outline:2px solid var(--primary);outline-offset:-2px;}
+.set-main{min-width:0;}
+.set-main .card{margin-bottom:0;}
+.set-sec{display:none;}
+.set-sec.set-on{display:block;}
+@media(max-width:760px){.set-layout{grid-template-columns:minmax(0,1fr);}.set-nav{position:static;flex-direction:row;overflow-x:auto;}.set-nav-btn{width:auto;white-space:nowrap;flex-shrink:0;}}
+.set-sec-head,.set-sub-head{display:flex;align-items:center;gap:8px;}
+.set-sub-head{cursor:pointer;user-select:none;}
 .set-sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);flex:1;}
+.set-sec-head .set-sec-title{font-size:15px;text-transform:none;letter-spacing:0;color:var(--text);}
 .set-chev{display:inline-block;width:12px;color:var(--muted);font-size:11px;transition:transform .15s;}
 .set-chev::before{content:'\25BE';}
-.set-sec.collapsed .set-chev,.set-sub.collapsed .set-chev{transform:rotate(-90deg);}
+.set-sub.collapsed .set-chev{transform:rotate(-90deg);}
 .set-sec-body{margin-top:12px;}
-.set-sec.collapsed .set-sec-body,.set-sub.collapsed .set-sub-body{display:none;}
+.set-sub.collapsed .set-sub-body{display:none;}
 .set-sub{margin-top:14px;border-top:1px solid var(--border);padding-top:10px;}
 .set-sub-body{margin-top:8px;}
-.header::before{content:'';position:absolute;left:-1px;right:-1px;top:-15px;height:14px;background:var(--bg);pointer-events:none;}
+.header::before{content:'';position:absolute;left:-1px;right:-1px;top:-15px;height:24px;pointer-events:none;background:linear-gradient(var(--bg),var(--bg)) 0 0/100% 14px no-repeat,radial-gradient(circle at 100% 100%,transparent 9.5px,var(--bg) 10px) 0 100%/10px 10px no-repeat,radial-gradient(circle at 0 100%,transparent 9.5px,var(--bg) 10px) 100% 100%/10px 10px no-repeat;}
 .dp-meeting .t{display:flex;align-items:center;gap:5px;}
 .dp-meeting .t .tt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dp-meeting .t .dp-tag{margin-left:0;flex-shrink:0;line-height:1.3;}
@@ -1245,21 +1257,23 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
         <svg width="12" height="12" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.2" y="2.2" width="10.6" height="9.6" rx="1.3"/><path d="M1.2 5.2h10.6M4 1v2.4M9 1v2.4" stroke-linecap="round"/></svg>
         <span class="week-label" id="weekLabel">—</span>
       </button>
-      <div class="week-picker-pop" id="weekPickerPop" style="display:none">
-        <button class="btn today" onclick="goToToday()" style="width:100%">Today</button>
-        <div class="wp-cal-head">
-          <button onclick="wpPrevMonth()" title="Previous month"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5,1.5 2.5,5 6.5,8.5"/></svg></button>
-          <span class="wp-cal-title" id="wpCalTitle"></span>
-          <button onclick="wpNextMonth()" title="Next month"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5,1.5 7.5,5 3.5,8.5"/></svg></button>
-        </div>
-        <div class="wp-dow-row" id="wpDowRow"></div>
-        <div id="wpWeeksContainer"></div>
-      </div>
     </div>
     <div class="upnext-wrap" id="upNextWrap">
       <button class="upnext-bell" id="upNextBell" onclick="toggleRemPop(event)" title="Reminders" aria-label="Reminders"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b id="upNextBellCount"></b></button><button class="upnext-pill" id="upNextPill" onclick="toggleUpNext(event)" title="Up next"><span class="upnext-dot" id="upNextDot"></span><span class="txt tr" id="upNextText">Up next</span><span class="short" id="upNextShort"></span></button>
       <div class="upnext-pop" id="upNextPop" onclick="event.stopPropagation()"></div>
       <div class="upnext-pop" id="remPop" onclick="event.stopPropagation()"></div>
+      <div class="week-picker-pop" id="weekPickerPop" style="display:none" onclick="event.stopPropagation()">
+        <div class="wp-cal-head">
+          <span class="wp-cal-title" id="wpCalTitle"></span>
+          <div class="wp-cal-ctl">
+            <button type="button" class="wp-today" onclick="goToToday()">Today</button>
+            <button type="button" onclick="wpPrevMonth()" title="Previous month"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5,1.5 2.5,5 6.5,8.5"/></svg></button>
+            <button type="button" onclick="wpNextMonth()" title="Next month"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5,1.5 7.5,5 3.5,8.5"/></svg></button>
+          </div>
+        </div>
+        <div class="wp-dow-row" id="wpDowRow"></div>
+        <div id="wpWeeksContainer"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1657,10 +1671,19 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
 </div><div class="tab-panel" id="panelSettings">
 <div class="set-wrap">
-<div class="set-grid">
-<div class="set-col">
-  <div class="card set-sec" data-sec="appearance">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('appearance')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('appearance')}"><span class="set-chev"></span><span class="set-sec-title">Appearance</span></div>
+<div class="set-layout">
+<nav class="set-nav" id="setNav" aria-label="Settings sections">
+  <button type="button" class="set-nav-btn" data-nav="appearance" onclick="setSection('appearance')">Appearance</button>
+  <button type="button" class="set-nav-btn" data-nav="import" onclick="setSection('import')">Import Calendar</button>
+  <button type="button" class="set-nav-btn" data-nav="activity" onclick="setSection('activity')">Activity List</button>
+  <button type="button" class="set-nav-btn" data-nav="backup" onclick="setSection('backup')">Backup &amp; Sync</button>
+  <button type="button" class="set-nav-btn" data-nav="leave" onclick="setSection('leave')">Leave</button>
+  <button type="button" class="set-nav-btn" data-nav="reminders" onclick="setSection('reminders')">Reminders</button>
+  <button type="button" class="set-nav-btn" data-nav="todo" onclick="setSection('todo')">To Do</button>
+</nav>
+<div class="set-main">
+  <div class="card set-sec" data-set="appearance">
+    <div class="set-sec-head"><span class="set-sec-title">Appearance</span></div>
     <div class="set-sec-body">
   <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:0">
     <div>
@@ -1674,8 +1697,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
   </div>
     </div>
   </div>
-  <div class="card set-sec" data-sec="import">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('import')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('import')}"><span class="set-chev"></span><span class="set-sec-title">Import Calendar</span></div>
+  <div class="card set-sec" data-set="import">
+    <div class="set-sec-head"><span class="set-sec-title">Import Calendar</span></div>
     <div class="set-sec-body">
     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Import events from a .ics file (exported from Outlook, Google Calendar, or Apple Calendar) as meetings on your Planner. Re-importing the same file updates matching events instead of duplicating them.</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -1685,8 +1708,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
     </div>
     </div>
   </div>
-  <div class="card set-sec" data-sec="activity">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('activity')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('activity')}"><span class="set-chev"></span><span class="set-sec-title">Activity List</span></div>
+  <div class="card set-sec" data-set="activity">
+    <div class="set-sec-head"><span class="set-sec-title">Activity List</span></div>
     <div class="set-sec-body">
     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">One activity per row in the CSV. Upload to replace the dropdown list used in Log Time.</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -1697,8 +1720,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
     </div>
     </div>
   </div>
-  <div class="card set-sec" data-sec="backup">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('backup')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('backup')}"><span class="set-chev"></span><span class="set-sec-title">Backup &amp; Sync</span></div>
+  <div class="card set-sec" data-set="backup">
+    <div class="set-sec-head"><span class="set-sec-title">Backup &amp; Sync</span></div>
     <div class="set-sec-body">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
       <button class="btn secondary-btn sm" onclick="exportAllData()">Export data backup</button>
@@ -1717,10 +1740,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       </div>
     </div>
   </div>
-</div>
-<div class="set-col">
-  <div class="card set-sec" data-sec="leave" id="lvSection">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('leave')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('leave')}"><span class="set-chev"></span><span class="set-sec-title">Leave</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openLeaveModal()">Log leave</button></div>
+  <div class="card set-sec" data-set="leave" id="lvSection">
+    <div class="set-sec-head"><span class="set-sec-title">Leave</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openLeaveModal()">Log leave</button></div>
     <div class="set-sec-body">
     <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Leave and public holidays are booked to a single Leave project in your timesheet, so those days are never left blank.</div>
     <div class="lv-grid">
@@ -1748,12 +1769,12 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
     </div>
     </div>
   </div>
-  <div class="card set-sec" data-sec="reminders">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('reminders')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('reminders')}"><span class="set-chev"></span><span class="set-sec-title">Reminders</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openRemMgr()">Manage</button></div>
+  <div class="card set-sec" data-set="reminders">
+    <div class="set-sec-head"><span class="set-sec-title">Reminders</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openRemMgr()">Manage</button></div>
     <div class="set-sec-body"><div id="remSettingsBody"></div></div>
   </div>
-  <div class="card set-sec" data-sec="todo">
-    <div class="set-sec-head" role="button" tabindex="0" onclick="toggleSetSec('todo')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSetSec('todo')}"><span class="set-chev"></span><span class="set-sec-title">To Do</span></div>
+  <div class="card set-sec" data-set="todo">
+    <div class="set-sec-head"><span class="set-sec-title">To Do</span></div>
     <div class="set-sec-body">
       <div class="rs-row"><label>Keep my open tasks to</label><input type="number" id="taskCapInput" min="1" max="500" step="1" onchange="setTaskCap(this.value)"><span style="font-size:11px;color:var(--muted)">tasks</span></div>
       <div class="rs-note">A guide, not a hard stop. The meter on the To Do tab turns amber as you near this number and red once you pass it. Parked (Someday) and finished tasks don't count.</div>
@@ -1763,14 +1784,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.39.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.42.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.39.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.42.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1822,7 +1843,7 @@ function switchTab(tab){
 function getSetCollapsed(){try{return JSON.parse(localStorage.getItem('plannerSettingsCollapsed')||'{}');}catch(e){return{};}}
 function applySetCollapsed(){
   var c=getSetCollapsed();
-  document.querySelectorAll('#panelSettings [data-sec]').forEach(function(el){
+  document.querySelectorAll('#panelSettings .set-sub[data-sec]').forEach(function(el){
     var v=c[el.dataset.sec];
     if(v===undefined)v=el.dataset.def==='collapsed';
     el.classList.toggle('collapsed',!!v);
@@ -1836,8 +1857,26 @@ function toggleSetSec(k){
   var c=getSetCollapsed();c[k]=now;
   try{localStorage.setItem('plannerSettingsCollapsed',JSON.stringify(c));}catch(e){}
 }
+function getSetSection(){
+  var s='';try{s=localStorage.getItem('_setSec')||'';}catch(e){}
+  return document.querySelector('#panelSettings .set-sec[data-set="'+s+'"]')?s:'appearance';
+}
+function setSection(k,noSave){
+  if(!document.querySelector('#panelSettings .set-sec[data-set="'+k+'"]'))k='appearance';
+  var secs=document.querySelectorAll('#panelSettings .set-sec'),bs=document.querySelectorAll('#setNav .set-nav-btn'),i;
+  for(i=0;i<secs.length;i++)secs[i].classList.toggle('set-on',secs[i].dataset.set===k);
+  for(i=0;i<bs.length;i++){
+    var on=bs[i].dataset.nav===k;
+    bs[i].classList.toggle('on',on);
+    if(on)bs[i].setAttribute('aria-current','true');else bs[i].removeAttribute('aria-current');
+  }
+  var nv=document.getElementById('setNav'),ab=nv&&nv.querySelector('.set-nav-btn.on');
+  if(ab&&nv.clientWidth&&nv.scrollWidth>nv.clientWidth){var nr=nv.getBoundingClientRect(),br=ab.getBoundingClientRect();nv.scrollLeft+=br.left-nr.left-(nv.clientWidth-br.width)/2;}
+  if(!noSave){try{localStorage.setItem('_setSec',k);}catch(e){}}
+}
 function initSettings(){
   applySetCollapsed();
+  setSection(getSetSection(),true);
   var dm=localStorage.getItem('plannerDarkMode')||'system';
   ['light','system','dark'].forEach(function(m){var el=document.getElementById('dm-'+m);if(el)el.classList.toggle('active',m===dm);});
   document.querySelectorAll('.dow-btn').forEach(function(b){b.classList.toggle('active',parseInt(b.dataset.dow)===_firstDow);});
@@ -1897,20 +1936,7 @@ function selectPickerWeek(mondayStr){
   closeWeekPicker();
   if(currentTab!=='planner')switchTab('planner');
 }
-function positionWeekPicker(){
-  var pop=document.getElementById('weekPickerPop');
-  if(!pop||pop.style.display==='none'||!pop.style.display)return;
-  pop.style.left='50%';pop.style.transform='translateX(-50%)';
-  var wrap=document.getElementById('weekBadgeWrap');
-  var wrapRect=wrap.getBoundingClientRect();
-  var popRect=pop.getBoundingClientRect();
-  var margin=8;
-  var desiredLeft=window.innerWidth<=920?wrapRect.right-popRect.width:wrapRect.left+wrapRect.width/2-popRect.width/2;
-  var maxLeft=window.innerWidth-popRect.width-margin;
-  var clampedLeft=Math.max(margin,Math.min(desiredLeft,maxLeft));
-  pop.style.left=(clampedLeft-wrapRect.left)+'px';
-  pop.style.transform='none';
-}
+function positionWeekPicker(){}
 var _wpResizeT=null;window.addEventListener('resize',function(){clearTimeout(_wpResizeT);_wpResizeT=setTimeout(positionWeekPicker,60);});
 function toggleWeekPicker(){
   var pop=document.getElementById('weekPickerPop');if(!pop)return;
@@ -1926,7 +1952,7 @@ function toggleWeekPicker(){
   }
 }
 function closeWeekPicker(){var pop=document.getElementById('weekPickerPop');if(pop){pop.style.display='none';pop.style.left='';pop.style.transform='';}document.removeEventListener('click',_weekPickerOutsideClick,true);}
-function _weekPickerOutsideClick(e){var wrap=document.getElementById('weekBadgeWrap');if(wrap&&!wrap.contains(e.target))closeWeekPicker();}
+function _weekPickerOutsideClick(e){var wrap=document.getElementById('weekBadgeWrap'),pop=document.getElementById('weekPickerPop');if((wrap&&wrap.contains(e.target))||(pop&&pop.contains(e.target)))return;closeWeekPicker();}
 function goToToday(){clearTimeout(saveTimer);savePlanner();currentMonday=getMonday(new Date());renderPlanner();renderEtfRule();closeWeekPicker();if(currentTab!=='planner')switchTab('planner');}
 function weekLabel(m){var f=new Date(m);f.setDate(f.getDate()+4);return'<span class="wl-word">Week </span><span class="wl-num">'+getWeekNum(m)+'</span><span class="wl-extra">  ·  '+m.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' – '+f.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+'</span>';}
 function formatDate(d){var p=d.split('-');return parseInt(p[2])+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]+' '+p[0];}
@@ -2042,16 +2068,6 @@ var _dam=null,_damT=null,_damOpenT=null;
 function dayAddHtml(ds,hasLog,hasLeave){
   return'<button class="day-add" onclick="event.stopPropagation();openDayAddMenu(event,\''+ds+'\','+(hasLog?1:0)+','+(hasLeave?1:0)+')" aria-haspopup="menu" title="Add to this day" aria-label="Add to this day">+</button>';
 }
-function dayAddHover(head,ds,hasLog,hasLeave){
-  clearTimeout(_damT);
-  if(_dam&&_dam.ds===ds)return;
-  clearTimeout(_damOpenT);
-  buildDayAddMenu(head,-6,ds,hasLog,hasLeave,false);
-}
-function dayAddLeave(){
-  clearTimeout(_damOpenT);clearTimeout(_damT);
-  _damT=setTimeout(closeDayAddMenu,220);
-}
 function openDayAddMenu(e,ds,hasLog,hasLeave){
   var same=_dam&&_dam.ds===ds;
   closeDayAddMenu();
@@ -2063,8 +2079,6 @@ function buildDayAddMenu(anchor,gap,ds,hasLog,hasLeave,focusFirst){
   var menu=document.createElement('div');
   menu.className='dam-menu';menu.id='dayAddMenu';menu.setAttribute('role','menu');
   menu.onclick=function(ev){ev.stopPropagation();};
-  menu.onmouseenter=function(){clearTimeout(_damT);};
-  menu.onmouseleave=dayAddLeave;
   DAM_ITEMS.forEach(function(it){
     var nm=(it.id==='log'&&hasLog)?it.editName:(it.id==='leave'&&hasLeave)?it.editName:it.name;
     var b=document.createElement('button');
@@ -2135,7 +2149,7 @@ function renderCalendarShell(){
     var planBtn='<button class="add-ev-btn" onclick="event.stopPropagation();openDayPlan(\''+ds+'\')" title="Plan time blocks">+ Plan</button>';
     var leaveBtn='<button class="add-ev-btn" style="color:#16a34a;border-color:#bbf7d0" onclick="event.stopPropagation();openLeaveModal(\''+ds+'\')" title="Log leave or a public holiday">'+(getLeaveDays()[ds]?'Leave':'+ Leave')+'</button>';
     return'<div class="day-col'+(isT?' today':'')+(unlogged?' unlogged':'')+(_lvInfo?' leave-day':'')+'" data-date="'+ds+'">'
-      +'<div class="day-head" onclick="openTimeLogForDay(\''+ds+'\')" onmouseenter="dayAddHover(this,\''+ds+'\','+(hasLog?1:0)+','+(getLeaveDays()[ds]?1:0)+')" onmouseleave="dayAddLeave()">'
+      +'<div class="day-head" onclick="openDayAddMenu(event,\''+ds+'\','+(hasLog?1:0)+','+(getLeaveDays()[ds]?1:0)+')" aria-haspopup="menu" title="Click for quick actions">'
       +'<div class="day-name"><span class="dn-full">'+name+'</span><span class="dn-short">'+name.slice(0,3)+'</span></div>'
       +'<div class="day-num">'+dayNum+'</div>'
       +'<div class="day-meta">'+metaHtml+'</div>'+dayAddHtml(ds,hasLog,!!getLeaveDays()[ds])
@@ -2525,7 +2539,7 @@ function renderLeaveBalance(){
 }
 function goToLeaveSettings(){
   switchTab('settings');
-  var _lvs=document.querySelector('#panelSettings [data-sec="leave"]');if(_lvs&&_lvs.classList.contains('collapsed'))toggleSetSec('leave');
+  setSection('leave');
   var s=document.getElementById('lvSection');
   if(s)setTimeout(function(){s.scrollIntoView({block:'start'});},50);
 }
@@ -4420,7 +4434,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.39.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.42.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6879,7 +6893,7 @@ function importAllData(){
 }
 
 // -- Cross-device sync via a local file (File System Access API, Chrome/Edge only) --
-var SYNC_INTERNAL_KEYS=['_syncStamp','_photoManifestStamp','_ntSideOff'];
+var SYNC_INTERNAL_KEYS=['_syncStamp','_photoManifestStamp','_ntSideOff','_setSec'];
 function buildSyncPayload(){
   var data={version:1,savedAt:Date.now()};
   for(var i=0;i<localStorage.length;i++){
@@ -7389,7 +7403,7 @@ document.addEventListener('keydown',function(e){
 // ── Dark mode ──
 var TOUR_STEPS=[
   {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
-  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Hover a day to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green. Use the arrows either side of the days to change week, or the week number in the top right to jump to any date."},
+  {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Click a day's heading to open its quick actions: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green. Use the arrows either side of the days to change week, or the week number in the top right to jump to any date."},
   {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
   {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"This pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan. Long names scroll when you hover over them. The bell beside it holds your reminders - tick them off or snooze them for an hour, the afternoon, tomorrow or next week, and use Manage there to add, edit or remove repeating and one-off reminders. You can type them in plain words, like 'every Friday 3pm submit timesheet'."},
   {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. Planned time and project meetings can be pulled in with the Import banner - it never overwrites what you've already logged. Leave days show a green line, and the chip at the top shows your leave balance."},
@@ -7397,8 +7411,8 @@ var TOUR_STEPS=[
   {tab:'tracker',target:'#projectList',title:"Active Projects",text:"Add projects here, click a pill to edit its name, color, code or group. Projects are archived rather than deleted, so nothing is ever silently lost."},
   {tab:'tasks',target:'.tasks-wrap',title:"To Do",text:"Type a task in plain words, like 'Send RFI @TenderX fri !high ~2h', and the chips show what was understood. Today lists what to do now - use the Today star to do a task today, or keep it there until done. Click any task to open its details on the right: subtasks, notes, estimate, due date, the Today list and who you are waiting on. With nothing selected, the right column is an outlook of the coming months - leave and public holidays in green, busy days shaded from your estimates; click a day to filter the list, or drop a task on it to reschedule. The week strip shows the next five working days. When you tick off a task with an estimate you can note how long it really took."},
   {tab:'projects',target:'#projectsWrap',title:"Projects",text:"Each project gets a rich Summary, Photos and Links, plus its own task list. Click a photo to open it and use the arrows to flip through the rest. Archive a project when you're done with it - Restore brings it straight back."},
-  {tab:'settings',target:'.set-col',title:"Settings",text:"Sections sit in two columns and can be minimised by clicking their titles - appearance, calendar import, your activity list, backup and sync. Restart this tour anytime from the button at the bottom."},
-  {tab:'settings',target:'#lvSection .lv-grid',title:"Leave",text:"Enter your leave cost code, current balance and accrual here. Leave and public holidays are booked to that code in your timesheet without showing up as a project, and your balance is worked out from there."},
+  {tab:'settings',sec:'appearance',target:'.set-nav',title:"Settings",text:"Pick a section from the list on the left to see its settings - appearance, calendar import, your activity list, backup and sync, leave, reminders and the To Do limit. Restart this tour anytime from the button at the bottom."},
+  {tab:'settings',sec:'leave',target:'#lvSection .lv-grid',title:"Leave",text:"Enter your leave cost code, current balance and accrual here. Leave and public holidays are booked to that code in your timesheet without showing up as a project, and your balance is worked out from there."},
   {tab:null,target:null,title:"You're all set",text:"That's everything - explore at your own pace. Look for Take the tour in Settings if you want to run through this again.",isLast:true}
 ];
 var _tourStep=0;
@@ -7425,6 +7439,7 @@ function tourBack(){
 function renderTourStep(){
   var step=TOUR_STEPS[_tourStep];
   if(step.tab&&currentTab!==step.tab)switchTab(step.tab);
+  if(step.sec)setSection(step.sec);
   document.getElementById('tourTitle').textContent=step.title;
   document.getElementById('tourText').textContent=step.text;
   document.getElementById('tourProgress').textContent=(_tourStep+1)+' of '+TOUR_STEPS.length;

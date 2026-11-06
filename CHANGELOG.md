@@ -5,6 +5,35 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.42.0] — 2026-11-06
+
+### Changed
+- Week picker: the calendar dropdown now opens in the same spot, at the same width and with the same styling as the Up Next and Reminders dropdowns (right-aligned under the header) instead of dropping from the week badge. Only one of the three is open at a time.
+- Tidier calendar header: the month name sits on the left with a compact Today button and the previous/next arrows on the right, and the day numbers are slightly larger.
+
+---
+
+## [0.41.0] — 2026-11-06
+
+### Changed
+- Settings: the sections (Appearance, Import Calendar, Activity List, Backup & Sync, Leave, Reminders, To Do) are now listed in a permanent sidebar. Click one to show its settings on the right. The last section you opened is remembered on that device and is not synced.
+- On narrow screens the sidebar becomes a swipeable strip of tabs above the settings.
+- The section minimise/expand feature is removed, along with the chevrons on the section titles. The Public holidays list inside Leave can still be expanded.
+- The app tour's Settings steps now describe the sidebar and open the Leave section when pointing at it.
+
+---
+
+## [0.40.0] — 2026-11-06
+
+### Changed
+- This Week: clicking a day's heading (e.g. Wednesday) now opens that day's quick-actions menu (log or edit time, add event, task or reminder, plan day, log leave) instead of jumping straight to the Timesheet. The menu no longer opens on hover and stays open until you pick an action, click elsewhere, press Escape or scroll. "Log time" in the menu still takes you to the Timesheet for that day.
+- The tour text for the weekly calendar now says to click a day's heading rather than hover.
+
+### Fixed
+- Header bar: page content no longer shows through the rounded top corners when scrolling. The cover strip above the bar now also fills the two corner gaps.
+
+---
+
 ## [0.39.0] — 2026-11-06
 
 ### Added
