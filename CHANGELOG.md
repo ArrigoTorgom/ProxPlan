@@ -5,6 +5,73 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.46.0] — 2026-11-09
+
+### Changed
+- This Week: each day now has a small chevron in its header, and clicking the heading opens an action panel inside the day card (Log time or Edit time, Add event, Add task, Add reminder, Plan day, Log leave or Edit leave) instead of a floating menu. The panel stays open until you click the heading again, pick an action, press Escape, or open another day, and it keeps its place when the calendar refreshes. The hover-only "+" button and the floating menu are removed.
+- On narrower screens the panel adapts: labelled buttons in two columns, then one column, then one icon per row on a phone (the buttons keep their names for screen readers and tooltips). The heading can also be opened from the keyboard with Enter or Space.
+
+---
+
+## [0.45.1] — 2026-11-09
+
+### Fixed
+- To Do and Projects: the bullet that appears between the end and the start of a long subtask (or task title) while it scrolls on hover was showing as garbled characters (Â Â Â â€¢Â Â Â). It is now a clean bullet with even spacing, matching the Up Next pill.
+
+---
+
+## [0.45.0] — 2026-11-09
+
+### Added
+- This Week: the Planned, Meetings, Notes and Tasks labels in each day are now collapsible. Click a label to fold that list away on every day; a count shows how many items are hidden, and clicking again opens it. A "Collapse details" / "Expand details" link beside the weekly reminder line folds or opens all four at once. The day cards also shrink to fit their contents when anything is collapsed, saving vertical space. Your choice is remembered on that device and is not synced.
+- To Do and Projects: when you hover a task title or a subtask in the task details panel that is too long to fit, the text now scrolls across in a loop, like the Up Next pill. It stops when you click to edit.
+
+### Changed
+- This Week: clicking a day's heading now opens the quick-actions menu in exactly the same place as the "+" button does.
+- To Do and Notes: the add bars are now 36px tall (up from 30px in the last version, down from 52px originally).
+
+---
+
+## [0.44.0] — 2026-11-09
+
+### Added
+- This Week: a "+" button now appears in the corner of a day when you hover over it, as a reminder that clicking the day opens its quick actions. It fills in orange when you point at it.
+
+### Changed
+- To Do and Notes: the add bars are about 40% shorter (52px down to 30px), with a smaller Add button, so they sit more neatly on the page. They work exactly as before.
+
+---
+
+## [0.43.0] — 2026-11-09
+
+### Added
+- Calendar import: drag one or more .ics files onto any page, or copy an invite file and press Ctrl+V (pasting the invite text works too), to import meetings. The Import .ics files button in Settings now accepts several files at once.
+- Import preview: before anything is added you see each meeting or repeating series with a New, Update, Already imported or Remove tag. You can untick items, pick a project per item (suggested when the title contains a project name or code), set a project for everything selected, and choose whether to include past occurrences. Dropping several files in one go is merged, using the highest version of each meeting.
+- Undo: a toast after importing lets you undo the whole import, including removed meetings and their reminders.
+- Dropping a file that is not a calendar now shows a message instead of opening the file in the browser tab.
+
+### Changed
+- Repeating meetings (daily, weekly, monthly, yearly, with intervals, weekday lists, "2nd Tuesday" style rules, end dates, counts, excluded dates and extra dates) are now expanded into individual meetings for the next 12 months, starting from last week. Previously only the first meeting came in.
+- Moved occurrences of a repeating meeting are applied, and cancelled occurrences are left out.
+- Time zones are converted to your time (Johannesburg), including Outlook's Windows zone names and daylight saving: a 09:00 Berlin meeting shows as 09:00 or 10:00 depending on the date. If a zone is not recognised the import says so and treats the time as yours.
+- Cancellations (organiser cancellation emails, or cancelled occurrences) now offer to remove the matching meetings you imported earlier.
+- Multi-day meetings and all-day events are split into one entry per day, labelled "(day 2/3)".
+- Meetings you imported with the older importer are recognised and updated rather than duplicated.
+
+### Fixed
+- Imports no longer pick up the text of the reminder alarm inside an invite as the meeting description.
+- Invites whose time zone name contains a colon are now read correctly.
+
+---
+
+## [0.42.1] — 2026-11-09
+
+### Fixed
+- This Week, Last Week & Follow Ups: the auto-fill (↺) listed any project with no timesheet hours as a "New project", so a project you added weeks ago was reported as new every week. Projects now record the date they were added, and only projects added during last week are listed. Projects added before this version have no date and will not be listed as new again.
+- Last Week & Follow Ups: completed high-priority tasks finished in the first two hours after midnight on a Monday were counted in the wrong week because the date was read in UTC rather than your local time.
+
+---
+
 ## [0.42.0] — 2026-11-06
 
 ### Changed
