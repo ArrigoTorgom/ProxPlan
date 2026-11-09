@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Planner</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/tabler-icons.min.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f4f5f6">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAElklEQVR4AexVW2icVRD+5mw2e3XTK8XYtNvaKChCRUQRvLxYi4pPrVhp0YpakFoTmkS0SH7wKaYXEEQEX30wkYqFesELIiI+tFV8EBQ1ySZEc21ssrfs/mf8zm5TQ7Kby4qI0MPM+f+ZMzPfN+ecf9fgPx5XCfy/d0D3IjDsNUb/yTWqeQf09R2h9O1NrQ3RulMXveQaBQQ1jJoIOPBMLnfAGHPMiDwRienLU16yoRYSqyZw7lkEs/ncEZHAcShc5yELvFAf0ePoujG+WhKrIuDAb27e8iQQOAZBYm7HRRAUgwNZ5LzVklgxAbftNzVvblFIN4ET7F74pAlVN5MEDA5nkDu1muNYEQEH7s4cf3cuBM9D7PvW6td8LzhCczsxdyfoX1aWJaAe6rK5/PPizhxogMKB++z7TAT+oYAJHKDvGyLZ0k4A9e5OhGP2tVFvY5z+JWVJAurBZKJbd0HMi4QtnTnRCyL6XiSWfQptwxPho30pC3nMAl8RiQ9ABEGF7I9HQweVNbDEqEqg3E0ywYCTzF/HLgUCH6Kni5o/gufG0gIowTSW6R8NFOUg0UskyrkIKwKds/HkDUuRYH2WryS9MNmoPq2CHVx2cb6qfjbjZ56Jt42MOWD6SyIebDjfn4qp7COnC3RaqohgrW/1MK69LUC7orjCFRfw2/Y4O36Yi0J1MoKivrKhY3yGhdU55qt4sOBOiPU7SGLy8pqwxp0zl6bWXrYXPaoSyNcX17NQIzOEStG+6brZHyuBc7EkQhJ5G/ieRh8VBGcJrA9au3oC4iv/ZCRWKiJQnv3IpvaRDJYZDfnUnwwZpZZFECqaQqhsLJ7NYlfZU/B5+uVX14WomkjvXlSNnwtFJz9QheLKUBv0jX/FXPBStaCvyLLxzFwpARof3LltAyvzdUGVeebFru0JEdlYcpWCZdqqSZfsClNVAgozwfw/iMaHy9TrTdC/B17pUFBpePzmg4HZW7m2nepEuR+D4UR63BmVtCqB7/KpaWvxIdEpLlV4J3CiGNt6h/Yg4DzzVQnecU3jdUbNCfp5gTnz8CykB1+OZUtWhakqgfs64ftZ+xZzfqVaqoHI5gL03dzAln3Z7q3bJrx1Ce3eFEt3NTWmw033wwY/4PbvLMfyR0txbvJ3/x308hOls5KYSk7nE4EmMDSlilbu4yRo0y+ANCnkbQU+jsTiZ7MIn4UxH0nA9ABw2+9qMkWHIWjdfHIoxySGc7WCuOAK7rJLPNhocuATAV5lD/PP0X1WzQK5i5F3C3ALtfRfQdvJIC/v0UjbwLeuEeeopksScEnyKPxIYuObRvRx2vyR0SKfShVOLt8p8UkR4Anp53Vi90SSqdPLgbPGCr5rRsmh84VQOvVFJD19L/8PWnganxL8By79TP2JeoEdn+Gd2x8J1z8UnBk874jTv6w49ssGuQDxYMWbvBTrGHxjKFT/iAbNLgF254uyuyiFByLJgT3R9lSPHPklL4x1OSvRFROYX6yZILGWvtFw+0D/mpf6BxJtw+Mr7Xh+HfdeEwGXKNzvOXV2rVozgVoBF+b96wQWAi60/wIAAP//BsmMVAAAAAZJREFUAwBUyaxQBar8RQAAAABJRU5ErkJggg==">
 <link rel="apple-touch-icon" href="data:image/png;base64,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">
 <style>
@@ -280,6 +281,8 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .dp-meeting .rt{font-size:9px;color:var(--muted);}
 .dp-editor{border-top:1px solid var(--border);padding:12px 16px;background:var(--bg);display:none;flex-direction:column;gap:8px;}
 .dp-editor.open{display:flex;}
+.dp-saved{margin-left:8px;color:#22c55e;text-transform:none;letter-spacing:0;font-weight:600;opacity:0;transition:opacity .25s;}
+.dp-saved.on{opacity:1;}
 .dp-editor-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
 .dp-editor select,.dp-editor input{font-size:12.5px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);outline:none;font-family:inherit;}
 .dp-editor select:focus,.dp-editor input:focus{border-color:var(--primary);}
@@ -1258,6 +1261,15 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .set-main .card{margin-bottom:0;}
 .set-sec{display:none;}
 .set-sec.set-on{display:block;}
+.pwa-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.pwa-row:last-child{border-bottom:none;}
+.pwa-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;background:var(--muted);}
+.pwa-dot.ok{background:#22c55e;}
+.pwa-dot.no{background:#f59e0b;}
+.pwa-row b{color:var(--text);font-weight:600;}
+.pwa-d{color:var(--muted);margin-top:2px;line-height:1.45;}
+.pwa-help{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 8px;padding:8px 10px;border:1px dashed var(--border);border-radius:8px;}
+.pwa-upd{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:100000;max-width:calc(100vw - 24px);display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;background:var(--card);color:var(--text);border:1px solid var(--primary);border-radius:10px;padding:9px 12px;box-shadow:0 6px 24px rgba(0,0,0,.25);font-size:12px;}
 @media(max-width:760px){.set-layout{grid-template-columns:minmax(0,1fr);}.set-nav{position:static;flex-direction:row;overflow-x:auto;}.set-nav-btn{width:auto;white-space:nowrap;flex-shrink:0;}}
 .set-sec-head,.set-sub-head{display:flex;align-items:center;gap:8px;}
 .set-sub-head{cursor:pointer;user-select:none;}
@@ -1597,7 +1609,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 <div class="etf-strip">
   <span class="etf-label">This week</span>
   <span class="etf-rule" id="etfRuleText"></span>
-  <button class="etf-cal-tog" id="calColAll" onclick="calToggleAll()" title="Collapse or expand the planned, meetings, notes and tasks lists on every day">Collapse details</button>
+  <button class="etf-cal-tog" id="calColAll" onclick="calToggleAll()" title="Collapse or expand the planned, meetings, notes and tasks lists on every day this week">Collapse details</button>
   <button class="etf-cycle" onclick="cycleEtfRule()" title="Next rule">↻</button>
 </div>
 </div>
@@ -1739,6 +1751,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
   <button type="button" class="set-nav-btn" data-nav="import" onclick="setSection('import')">Import Calendar</button>
   <button type="button" class="set-nav-btn" data-nav="activity" onclick="setSection('activity')">Activity List</button>
   <button type="button" class="set-nav-btn" data-nav="backup" onclick="setSection('backup')">Backup &amp; Sync</button>
+  <button type="button" class="set-nav-btn" data-nav="pwa" onclick="setSection('pwa')">Desktop App</button>
   <button type="button" class="set-nav-btn" data-nav="leave" onclick="setSection('leave')">Leave</button>
   <button type="button" class="set-nav-btn" data-nav="reminders" onclick="setSection('reminders')">Reminders</button>
   <button type="button" class="set-nav-btn" data-nav="todo" onclick="setSection('todo')">To Do</button>
@@ -1802,6 +1815,18 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       </div>
     </div>
   </div>
+  <div class="card set-sec" data-set="pwa">
+    <div class="set-sec-head"><span class="set-sec-title">Desktop App</span></div>
+    <div class="set-sec-body">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Install Planner as an app on this computer. It opens in its own window, can be pinned to your taskbar, and keeps working without an internet connection. It uses the same data you see in the browser, so nothing needs to be moved.</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn sm" id="pwaInstallBtn" onclick="pwaInstall()" style="display:none">Install Planner</button>
+        <button class="btn secondary-btn sm" id="pwaPersistBtn" onclick="pwaPersist()" style="display:none">Protect my data</button>
+      </div>
+      <div class="pwa-help" id="pwaHelp" style="display:none"></div>
+      <div id="pwaStatus"></div>
+    </div>
+  </div>
   <div class="card set-sec" data-set="leave" id="lvSection">
     <div class="set-sec-head"><span class="set-sec-title">Leave</span><button class="btn secondary-btn sm" onclick="event.stopPropagation();openLeaveModal()">Log leave</button></div>
     <div class="set-sec-body">
@@ -1846,14 +1871,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em">V0.46.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.48.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.46.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.48.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1934,10 +1959,109 @@ function setSection(k,noSave){
   }
   var nv=document.getElementById('setNav'),ab=nv&&nv.querySelector('.set-nav-btn.on');
   if(ab&&nv.clientWidth&&nv.scrollWidth>nv.clientWidth){var nr=nv.getBoundingClientRect(),br=ab.getBoundingClientRect();nv.scrollLeft+=br.left-nr.left-(nv.clientWidth-br.width)/2;}
+  if(k==='pwa')pwaRefresh();
   if(!noSave){try{localStorage.setItem('_setSec',k);}catch(e){}}
+}
+// ===== Desktop app (PWA): install button, offline copy, data protection, update check =====
+var _pwaPrompt=null,_pwaLastCheck=0,_pwaNote='',_pwaDismissed='';
+function pwaStandalone(){try{return window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: window-controls-overlay)').matches||window.navigator.standalone===true;}catch(e){return false;}}
+function pwaSWok(){try{return 'serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&window.top===window.self;}catch(e){return false;}}
+function pwaTheme(){
+  try{
+    var m=document.querySelector('meta[name="theme-color"]');
+    if(!m){m=document.createElement('meta');m.name='theme-color';document.head.appendChild(m);}
+    var c=getComputedStyle(document.body).backgroundColor;
+    if(c&&c!=='rgba(0, 0, 0, 0)')m.setAttribute('content',c);
+  }catch(e){}
+}
+function pwaRow(state,title,detail){
+  return '<div class="pwa-row"><span class="pwa-dot '+(state===true?'ok':state===false?'no':'')+'"></span><div><b>'+title+'</b><div class="pwa-d">'+detail+'</div></div></div>';
+}
+function pwaMB(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';}
+function pwaRefresh(){
+  var st=document.getElementById('pwaStatus');
+  if(!st)return;
+  var ib=document.getElementById('pwaInstallBtn'),pb=document.getElementById('pwaPersistBtn'),hp=document.getElementById('pwaHelp');
+  var stand=pwaStandalone(),can=pwaSWok();
+  var swP=can?navigator.serviceWorker.getRegistration().then(function(r){return (r&&r.active)?caches.has('proxplan-v1'):false;}).catch(function(){return false;}):Promise.resolve(null);
+  var perP=(navigator.storage&&navigator.storage.persisted)?navigator.storage.persisted().catch(function(){return null;}):Promise.resolve(null);
+  var estP=(navigator.storage&&navigator.storage.estimate)?navigator.storage.estimate().catch(function(){return null;}):Promise.resolve(null);
+  Promise.all([swP,perP,estP]).then(function(a){
+    var offline=a[0],pers=a[1],est=a[2],h='';
+    h+=pwaRow(stand?true:null,'Window',stand?'Running as an installed app, in its own window.':'Running in a browser tab.');
+    h+=pwaRow(offline,'Offline use',offline===null?'Not available here. Open the hosted Planner address in Edge or Chrome to use this.':offline?'Ready - a copy of Planner is saved on this computer and opens without a connection.':'Not ready yet - the copy is saved the first time Planner loads over a connection. Reload once and check again.');
+    h+=pwaRow(pers,'Data protection',pers===null?'Not reported by this browser.':pers?'Protected - the browser will not clear Planner data to free up space.':'Not protected - if the disk runs low the browser is allowed to clear site data. Installing the app usually fixes this. Keep a backup file as well (see Backup &amp; Sync).');
+    if(est&&est.usage!=null)h+=pwaRow(null,'Storage used','About '+pwaMB(est.usage)+' held in this browser profile (tasks, notes and photos).');
+    st.innerHTML=h;
+    if(ib)ib.style.display=(_pwaPrompt&&!stand)?'':'none';
+    if(pb)pb.style.display=(pers===false&&navigator.storage&&navigator.storage.persist)?'':'none';
+    if(hp){
+      var t=_pwaNote;
+      if(!t&&!stand&&!_pwaPrompt&&can)t='To install: in Edge open the menu (...) and choose Apps > Install this site as an app. In Chrome use the install icon at the right end of the address bar, or Menu > Cast, save and share > Install page as app. Then pin it to the taskbar.';
+      hp.textContent=t;
+      hp.style.display=t?'':'none';
+    }
+  });
+}
+function pwaInstall(){
+  if(!_pwaPrompt)return;
+  var p=_pwaPrompt;_pwaPrompt=null;
+  try{p.prompt();if(p.userChoice)p.userChoice.then(function(){pwaRefresh();});}catch(e){}
+  pwaRefresh();
+}
+function pwaPersist(){
+  if(!(navigator.storage&&navigator.storage.persist))return;
+  navigator.storage.persist().then(function(ok){
+    _pwaNote=ok?'':'The browser did not grant protection yet. Chrome and Edge usually grant it once Planner is installed and in regular use.';
+    pwaRefresh();
+  });
+}
+function pwaAutoPersist(){
+  try{
+    if(navigator.storage&&navigator.storage.persist&&(pwaStandalone()||window.showDirectoryPicker)){
+      navigator.storage.persisted().then(function(p){if(!p)return navigator.storage.persist();}).then(function(){pwaRefresh();},function(){});
+    }
+  }catch(e){}
+}
+function pwaShowUpdate(v){
+  if(v===_pwaDismissed||document.getElementById('pwaUpd'))return;
+  var d=document.createElement('div');
+  d.id='pwaUpd';d.className='pwa-upd';d.setAttribute('role','status');
+  d.innerHTML='<span>A new version of Planner is ready ('+v+').</span><button class="btn sm" type="button" id="pwaUpdGo">Reload now</button><button class="btn secondary-btn sm" type="button" id="pwaUpdLater">Later</button>';
+  document.body.appendChild(d);
+  document.getElementById('pwaUpdGo').onclick=function(){location.reload();};
+  document.getElementById('pwaUpdLater').onclick=function(){_pwaDismissed=v;d.parentNode.removeChild(d);};
+}
+function pwaCheckUpdate(force){
+  var now=Date.now();
+  if(!pwaSWok()||navigator.onLine===false)return;
+  if(!force&&now-_pwaLastCheck<30*60*1000)return;
+  _pwaLastCheck=now;
+  var cur=document.getElementById('appVerBadge');
+  if(!cur)return;
+  fetch(location.pathname,{cache:'no-cache'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
+    var m=/id="appVerBadge"[^>]*>(V\d+\.\d+\.\d+)</.exec(t);
+    if(m&&m[1]!==cur.textContent.trim())pwaShowUpdate(m[1]);
+  }).catch(function(){});
+}
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_pwaPrompt=e;pwaRefresh();});
+window.addEventListener('appinstalled',function(){_pwaPrompt=null;pwaAutoPersist();pwaRefresh();});
+window.addEventListener('DOMContentLoaded',pwaTheme);
+try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){setTimeout(pwaTheme,60);});}catch(e){}
+if(pwaSWok()){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').then(function(){pwaRefresh();},function(){});
+    navigator.serviceWorker.ready.then(function(){pwaRefresh();});
+    pwaTheme();
+    pwaAutoPersist();
+    setTimeout(function(){pwaCheckUpdate(true);},8000);
+    setInterval(function(){pwaCheckUpdate(false);},30*60*1000+5000);
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')pwaCheckUpdate(false);});
+  });
 }
 function initSettings(){
   applySetCollapsed();
+  pwaRefresh();
   setSection(getSetSection(),true);
   var dm=localStorage.getItem('plannerDarkMode')||'system';
   ['light','system','dark'].forEach(function(m){var el=document.getElementById('dm-'+m);if(el)el.classList.toggle('active',m===dm);});
@@ -2191,22 +2315,44 @@ function renderCalendarShell(){
   calColBtn();
 }
 
-// -- collapse the day lists on This Week (per device, not synced) --
-function calColState(){try{return JSON.parse(localStorage.getItem('_calCol')||'{}')||{};}catch(e){return{};}}
-function calCatHead(cat,label,n){
-  var c=!!calColState()[cat];
-  return'<div class="divider-label dl-tog'+(c?' c':'')+'" role="button" tabindex="0" aria-expanded="'+(c?'false':'true')+'" title="'+(c?'Show ':'Hide ')+label.toLowerCase()+' on every day" onclick="calToggleCat(\''+cat+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();calToggleCat(\''+cat+'\')}"><span class="dl-chev">&#9662;</span>'+label+(c?'<span class="dl-n">'+n+'</span>':'')+'</div>';
+// -- collapse the day lists on This Week: remembered per day, per device (not synced) --
+var CAL_CATS=['planned','meetings','notes','tasks'];
+function calColState(){
+  var s={};
+  try{s=JSON.parse(localStorage.getItem('_calCol')||'{}')||{};}catch(e){s={};}
+  CAL_CATS.forEach(function(k){delete s[k];}); // the older single setting for every day is dropped
+  return s;
 }
-function calSetCol(s){try{localStorage.setItem('_calCol',JSON.stringify(s));}catch(e){}renderCalendarEvents([]);calColBtn();}
-function calToggleCat(cat){var s=calColState();s[cat]=!s[cat];calSetCol(s);}
+function calWeekDates(){
+  var out=[];
+  DAYS.forEach(function(_,i){var d=new Date(currentMonday);d.setDate(d.getDate()+i);out.push(d.toLocaleDateString('en-CA',{timeZone:TZ}));});
+  return out;
+}
+function calCatHead(cat,label,n,ds){
+  var c=!!(calColState()[ds]||{})[cat];
+  return'<div class="divider-label dl-tog'+(c?' c':'')+'" role="button" tabindex="0" aria-expanded="'+(c?'false':'true')+'" title="'+(c?'Show ':'Hide ')+label.toLowerCase()+' on this day" onclick="calToggleCat(\''+cat+'\',\''+ds+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();calToggleCat(\''+cat+'\',\''+ds+'\')}"><span class="dl-chev">&#9662;</span>'+label+(c?'<span class="dl-n">'+n+'</span>':'')+'</div>';
+}
+function calSetCol(s){
+  var cut=new Date();cut.setDate(cut.getDate()-56);cut=cut.toLocaleDateString('en-CA',{timeZone:TZ});
+  Object.keys(s).forEach(function(ds){
+    var d=s[ds],keep={},any=false;
+    if(d&&typeof d==='object')CAL_CATS.forEach(function(k){if(d[k]){keep[k]=true;any=true;}});
+    if(!any||ds<cut)delete s[ds];else s[ds]=keep;
+  });
+  try{localStorage.setItem('_calCol',JSON.stringify(s));}catch(e){}
+  renderCalendarEvents([]);calColBtn();
+}
+function calToggleCat(cat,ds){var s=calColState(),d=s[ds]||{};d[cat]=!d[cat];s[ds]=d;calSetCol(s);}
+function calWeekAll(s,ds){return ds.every(function(x){var d=s[x]||{};return CAL_CATS.every(function(k){return d[k];});});}
 function calToggleAll(){
-  var ks=['planned','meetings','notes','tasks'],s=calColState(),all=ks.every(function(k){return s[k];}),n={};
-  ks.forEach(function(k){n[k]=!all;});
-  calSetCol(n);
+  var s=calColState(),ds=calWeekDates(),all=calWeekAll(s,ds);
+  ds.forEach(function(x){var d={};CAL_CATS.forEach(function(k){d[k]=!all;});s[x]=d;});
+  calSetCol(s);
 }
 function calColBtn(){
-  var ks=['planned','meetings','notes','tasks'],s=calColState();
-  var all=ks.every(function(k){return s[k];}),any=ks.some(function(k){return s[k];});
+  var s=calColState(),ds=calWeekDates();
+  var all=calWeekAll(s,ds);
+  var any=ds.some(function(x){var d=s[x]||{};return CAL_CATS.some(function(k){return d[k];});});
   var b=document.getElementById('calColAll');if(b)b.textContent=all?'Expand details':'Collapse details';
   var g=document.getElementById('calGrid');if(g)g.classList.toggle('cal-lite',any);
 }
@@ -2219,14 +2365,15 @@ function renderCalendarEvents(events){
   Object.keys(byDate).forEach(function(date){
     var el=document.getElementById('ev-'+date);if(!el)return;
     var parts=[];
+    var _dc=_cc[date]||{};
     var _lv=leaveDayInfo(date);
     if(_lv)parts.push(leavePillHtml(date,_lv));
     var _blks=getBlocksForDate(date);
     var _logForBlks=getLogsForDate(date);
     var _hasLoggedHrs=_logForBlks&&Object.keys(_logForBlks.allocs).length>0;
     if(_blks.length>0&&!_hasLoggedHrs){
-      parts.push(calCatHead('planned','Planned',_blks.length));
-      if(!_cc.planned)_blks.slice().sort(function(a,b){return a.start-b.start;}).forEach(function(b){
+      parts.push(calCatHead('planned','Planned',_blks.length,date));
+      if(!_dc.planned)_blks.slice().sort(function(a,b){return a.start-b.start;}).forEach(function(b){
         var c=projColorForName(b.proj);
         parts.push('<div class="planned-card" style="--chip-color:'+c+';--chip-bg:'+dpHexToRgba(c,0.13)+'" onclick="openDayPlan(\''+date+'\',\''+b.id+'\')"><span class="planned-hrs">'+(b.dur/60)+'h</span><span class="planned-body"><span class="planned-proj">'+escH(b.proj)+'</span>'+(b.goal?'<span class="planned-goal">'+escH(b.goal)+'</span>':'')+'</span></div>');
       });
@@ -2235,8 +2382,8 @@ function renderCalendarEvents(events){
     var manualEvs=getManualEvents().filter(function(e){return e.date===date;});
     manualEvs.sort(function(a,b){return(a.startTime||'').localeCompare(b.startTime||'');});
     if(manualEvs.length>0){
-      parts.push(calCatHead('meetings','Meetings',manualEvs.length));
-      if(!_cc.meetings)manualEvs.forEach(function(ev){
+      parts.push(calCatHead('meetings','Meetings',manualEvs.length,date));
+      if(!_dc.meetings)manualEvs.forEach(function(ev){
         var timeStr=ev.startTime?(ev.startTime+(ev.endTime?' – '+ev.endTime:'')):'';
         parts.push('<div class="event-pill manual" title="'+escH(ev.title+(ev.notes?' \u00b7 '+ev.notes:''))+'" onclick="openEditEvent(\''+ev.id+'\')" style="cursor:pointer"><button class="ev-del" onclick="event.stopPropagation();deleteManualEvent(\''+ev.id+'\')" title="Delete">×</button>'+(timeStr?'<span class="ev-time">'+escH(timeStr)+'</span>':'')+'<span class="ev-title">'+escH(ev.title)+(ev.notes?' · <em style=\'font-style:normal;color:var(--muted)\'>'+escH(ev.notes)+'</em>':'')+'</span></div>');
       });
@@ -2244,9 +2391,9 @@ function renderCalendarEvents(events){
 
     var _dn=getNotes().filter(function(n){return n.date===date;});
     if(_dn.length>0){
-      parts.push(calCatHead('notes','Notes',_dn.length));
+      parts.push(calCatHead('notes','Notes',_dn.length,date));
       var _mev=getManualEvents();
-      if(!_cc.notes)_dn.forEach(function(n){
+      if(!_dc.notes)_dn.forEach(function(n){
         var _e=n.eventId?_mev.filter(function(x){return x.id===n.eventId;})[0]:null;
         parts.push('<div class="event-pill ntpill" title="'+escH((n.title||'Untitled')+(_e?' - '+_e.title:''))+'" onclick="ntOpenAnywhere(\''+n.id+'\')"><span class="ev-title">'+(n.title?escH(n.title):'<em>Untitled</em>')+(_e?' <em>re '+escH(_e.title)+'</em>':'')+'</span></div>');
       });
@@ -2259,8 +2406,8 @@ function renderCalendarEvents(events){
     }
     var due=getTasksForDate(date);
     if(due.length>0){
-      parts.push(calCatHead('tasks','Tasks',due.length));
-      if(!_cc.tasks)due.forEach(function(t){
+      parts.push(calCatHead('tasks','Tasks',due.length,date));
+      if(!_dc.tasks)due.forEach(function(t){
         var cls=t.done?'done':t.priority;
         parts.push('<div class="task-due-pill '+cls+'" onclick="switchTab(\'tasks\')" title="'+escH(t.title)+' — click to open To Do">'+(t.done?'':'<button class="pill-check" onclick="event.stopPropagation();quickCompleteTask(\''+t.id+'\')" title="Mark complete">✓</button><button class="pill-edit" onclick="event.stopPropagation();openTaskEditModal(\''+t.id+'\')" title="Edit task">✎</button>')+'<span class="td-title'+(t.done?' td-done-txt':'')+'">'+escH(t.title)+'</span><span class="td-proj">'+escH(t.project)+'</span></div>');
       });
@@ -3026,6 +3173,8 @@ function openDayPlan(ds,blockId){
 }
 function closeDayPlan(){
   if(!dpDate)return;
+  dpAutoSave();
+  var _de=document.getElementById('dpEditor');if(_de){_de.innerHTML='';_de.dataset.for='';}
   document.getElementById('dayPlanOverlay').classList.remove('open');
   dpDate=null;dpBlocks=[];dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderCalendarShell();renderUpNext();
@@ -3033,13 +3182,14 @@ function closeDayPlan(){
   if(ed)renderImportRow(ed.value);
 }
 function dpShiftDay(delta){
+  dpAutoSave();
   var d=new Date(dpDate+'T00:00:00');d.setDate(d.getDate()+delta);
   dpDate=d.toLocaleDateString('en-CA',{timeZone:TZ});
   dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderDayPlan();
 }
 
-function renderDayPlan(){
+function renderDayPlan(keepEd){
   if(dpSelectedBlock)dpSelectedMeeting=null;
   var d=new Date(dpDate+'T00:00:00');
   document.getElementById('dpDayName').textContent=d.toLocaleDateString('en-US',{weekday:'long',timeZone:TZ});
@@ -3111,7 +3261,7 @@ function renderDayPlan(){
   gridEl.onmousedown=function(e){if(e.target===gridEl)dpStartCreate(e);};
 
   renderDpSide();
-  renderDpEditor();
+  if(keepEd!==true)renderDpEditor();
 }
 
 function dpMinFromEvent(e,rect){var y=e.clientY-rect.top;return dpSnap(DP_GRID_START+y/DP_PX_PER_MIN);}
@@ -3302,7 +3452,7 @@ function cbRender(inp,showAll){
 function cbClose(){var d=document.getElementById('cbDrop');if(d)d.classList.remove('open');_cb=null;}
 function cbFocus(inp){cbRender(inp,true);}
 function cbInput(inp){cbRender(inp,false);}
-function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();}
+function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity')dpCommit();}
 function cbResolve(inp){
   if(!inp)return;
   var txt=inp.value.trim();
@@ -3314,7 +3464,7 @@ function cbResolve(inp){
   if(f.length===1){inp.value=f[0];inp.dataset.valid=f[0];return;}
   inp.value=inp.dataset.valid||'';
 }
-function cbBlur(inp){cbResolve(inp);cbClose();}
+function cbBlur(inp){cbResolve(inp);cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity')dpCommit();}
 function cbKey(e,inp){
   var open=_cb&&_cb.inp===inp;
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
@@ -3333,6 +3483,7 @@ window.addEventListener('scroll',function(e){if(_cb&&!(e.target&&e.target.id==='
 
 function renderDpEditor(){
   var el=document.getElementById('dpEditor');
+  dpAutoSave();
   if(!dpSelectedBlock&&dpSelectedMeeting){
     var _mt=getManualEvents().find(function(x){return x.id===dpSelectedMeeting;});
     if(_mt){
@@ -3359,22 +3510,46 @@ function renderDpEditor(){
     return'<option value="'+escA(a)+'"'+(a===b.activity?' selected':'')+'>'+escH(a)+'</option>';
   }).join('');
   var keep=(el.dataset.for===String(dpSelectedBlock)&&document.getElementById('dpProj'))?{p:document.getElementById('dpProj').value,a:document.getElementById('dpActivity').value,g:document.getElementById('dpGoal').value}:null;
-  el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'</div>'
+  el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block'+'<span class="dp-saved" id="dpSaved" aria-live="polite"></span>')+'</div>'
     +'<input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<input type="text" id="dpActivity" class="cb-input" data-cb="act" placeholder="Type to search activities..." autocomplete="off" value="'+escH(b.activity||'')+'" data-valid="'+escH(b.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<div class="dp-editor-row">'
-    +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'">'
+    +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
     +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'
     +'</div>'
     +'<div class="dp-editor-actions">'
     +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
-    +'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button>'
-    +'<button class="dp-btn primary" onclick="dpSaveEdit()">'+(isNew?'Add block':'Save changes')+'</button>'
+    +(isNew?'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button><button class="dp-btn primary" onclick="dpSaveEdit()">Add block</button>':'<button class="dp-btn primary" onclick="dpDone()">Done</button>')
     +'</div>';
   el.dataset.for=String(dpSelectedBlock);
   if(keep){document.getElementById('dpProj').value=keep.p;document.getElementById('dpActivity').value=keep.a;document.getElementById('dpGoal').value=keep.g;}
 }
 function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
+// Existing blocks save themselves: project and activity when picked or left, goal when you leave the field.
+function dpAutoSave(){
+  var el=document.getElementById('dpEditor'),id=el&&el.dataset.for;
+  if(!id||id==='new'||id.indexOf('m:')===0||!dpDate)return false;
+  var pe=document.getElementById('dpProj'),ae=document.getElementById('dpActivity'),ge=document.getElementById('dpGoal');
+  if(!pe||!ae||!ge)return false;
+  var b=dpBlocks.find(function(x){return x.id===id;});
+  if(!b)return false;
+  var proj=pe.dataset.valid||'';
+  if(!proj){pe.value=b.proj||'';pe.dataset.valid=b.proj||'';return false;} // a block always keeps a project
+  var act=ae.dataset.valid||'',goal=ge.value.trim();
+  if(b.proj===proj&&(b.activity||'')===act&&(b.goal||'')===goal)return false;
+  b.proj=proj;b.activity=act;b.goal=goal;
+  dpPersist();
+  return true;
+}
+var _dpSavedT=null;
+function dpFlashSaved(){
+  var s=document.getElementById('dpSaved');if(!s)return;
+  s.innerHTML='&#10003; Saved';s.classList.add('on');
+  clearTimeout(_dpSavedT);
+  _dpSavedT=setTimeout(function(){var e=document.getElementById('dpSaved');if(e)e.classList.remove('on');},1600);
+}
+function dpCommit(){if(dpAutoSave()){renderDayPlan(true);dpFlashSaved();}}
+function dpDone(){dpAutoSave();dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 function dpSaveEdit(){
   cbResolve(document.getElementById('dpProj'));cbResolve(document.getElementById('dpActivity'));
   var proj=document.getElementById('dpProj').value;
@@ -4530,7 +4705,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.46.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.48.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -8089,6 +8264,7 @@ function applyDarkMode(mode){
   if(mode==='dark')document.body.classList.add('app-dark');
   if(mode==='light')document.body.classList.add('app-light');
   localStorage.setItem('plannerDarkMode',mode);
+  pwaTheme();
   ['light','system','dark'].forEach(function(m){
     var el=document.getElementById('dm-'+m);
     if(el)el.classList.toggle('active',m===mode);

@@ -5,6 +5,28 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.48.0] — 2026-11-09
+
+### Changed
+- Plan Day: changes to an existing planned block now save as you make them. Picking a project or activity saves straight away, and the goal saves when you leave the field or press Enter. A small "Saved" tick confirms it. "Save changes" and "Cancel" are replaced by a single "Done" that closes the editor; Delete is unchanged. Anything you have typed is also kept if you click another block, change day or close the planner. New blocks still use "Add block", and a block can't be left without a project (clearing it puts the previous one back).
+- This Week: collapsing Planned, Meetings, Notes or Tasks now applies to the one day you click, not every day. "Collapse details" / "Expand details" still folds or opens everything, but only for the week you are viewing. Each new week starts expanded, and choices older than about two months are forgotten automatically. Your earlier collapse setting (which applied to every day) is reset once.
+
+---
+
+## [0.47.0] — 2026-11-09
+
+### Added
+- Planner can now be installed as a desktop app. Open the hosted address in Edge or Chrome, install it (Settings > Desktop App shows an Install button, or use the browser's install icon), and it opens in its own window with its own taskbar icon that you can pin. It uses the same data as the browser, so nothing needs to be moved.
+- Offline use: the app keeps a copy of itself on your computer and opens without an internet connection. When you are online it always loads the latest version first.
+- Update notice: if a newer version has been published while Planner is open, a small bar offers "Reload now" or "Later", so an app left open for days does not stay out of date.
+- Settings > Desktop App also shows whether the browser has marked your Planner data as protected from automatic clearing, how much storage Planner is using, and a "Protect my data" button if protection has not been granted yet.
+- The window's title bar colour follows the light or dark theme.
+
+### Removed
+- An unused icon-font download from the internet that Planner was requesting on every start.
+
+---
+
 ## [0.46.0] — 2026-11-09
 
 ### Changed
