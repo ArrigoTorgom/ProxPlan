@@ -5,6 +5,25 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.49.1] — 2026-11-09
+
+### Changed
+- Spellcheck now also switches on while you are typing in a project summary, and off again when you leave it.
+
+---
+
+## [0.49.0] — 2026-11-09
+
+### Added
+- Links in notes and project summaries. A new Link button (chain icon, or Ctrl+K) in the formatting bar turns the selected text into a link, or adds a link with its own text if nothing is selected. Click inside an existing link and use the same button to change its text or address, open it, or remove it. Addresses starting with www. or without https:// are fixed up for you, and email addresses become mail links. File and network-drive paths can't be linked (browsers block them), so the box suggests a SharePoint or OneDrive link instead.
+- Paste an address to link it. Pasting a single web address over selected text links that text; pasting it on its own adds a clickable link. Anything else you paste is still plain text.
+- Ctrl+click opens a link while you are editing (hovering shows the address and a reminder). In note cards and the project view a normal click opens it in a new tab.
+
+### Changed
+- Spellcheck now switches on while you are typing in a note's title or text and off when you leave, so the underlines don't clutter the board. Project summaries are unchanged.
+
+---
+
 ## [0.48.0] — 2026-11-09
 
 ### Changed

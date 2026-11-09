@@ -1168,6 +1168,18 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .rt-pop{position:fixed;z-index:950;display:none;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,.22);}
 .rt-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;}
 .rt-row{display:flex;gap:7px;}
+.lk-pop{width:268px;box-sizing:border-box;}
+.lk-in{display:block;width:100%;box-sizing:border-box;margin-bottom:6px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;}
+.lk-in:focus{border-color:var(--primary);}
+.lk-sel{font-size:12px;color:var(--muted);margin-bottom:6px;padding:4px 8px;background:var(--bg);border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lk-err{font-size:11.5px;line-height:1.35;color:#e5484d;margin-bottom:6px;}
+.lk-err:empty{display:none;}
+.lk-row{display:flex;gap:6px;align-items:center;}
+.lk-sp{flex:1;}
+.lk-b{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:6px;padding:4px 9px;font-size:12px;cursor:pointer;font-family:inherit;}
+.lk-b:hover{background:var(--bg);}
+.lk-b.pri{background:var(--primary);border-color:var(--primary);color:#fff;}
+.lk-b.pri:hover{filter:brightness(1.1);}
 .rt-sw{position:relative;width:24px;height:24px;border-radius:50%;border:2px solid var(--border);padding:0;cursor:pointer;background:var(--c);flex-shrink:0;}
 .rt-sw:hover{border-color:var(--text);}
 .rt-sw.fc{background:var(--bg);display:inline-flex;align-items:center;justify-content:center;}
@@ -1871,14 +1883,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.48.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.49.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.48.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.49.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4188,11 +4200,11 @@ function renderProjectDetail(name){
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertUnorderedList\')" title="Bullet list"><svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg></button>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'insertOrderedList\')" title="Numbered list"><svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg></button>'
-        +rtIndentBtns('proj',name)
+        +rtIndentBtns('proj',name)+'<span class="proj-desc-sep"></span>'+rtLinkBtn('proj',name)
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'removeFormat\')" title="Clear formatting"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg></button>'
       +'</div>'
-      +'<div class="proj-desc-area" id="projDesc_'+escH(name)+'" contenteditable="true" data-placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\')" spellcheck="false">'+projDescToHtml(proj.description)+'</div>'
+      +'<div class="proj-desc-area" id="projDesc_'+escH(name)+'" contenteditable="true" data-placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\')" onpaste="lkPaste(event)" spellcheck="false">'+projDescToHtml(proj.description)+'</div>'
       +'</div>'
       +'</div>'
     +'</div>'
@@ -4705,7 +4717,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.48.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.49.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5579,6 +5591,159 @@ document.addEventListener('keydown',function(e){
   var el=e.target&&e.target.closest?e.target.closest('.proj-desc-area[contenteditable]'):null;
   if(el&&rtListShift(el,e.shiftKey?-1:1))e.preventDefault();
 },true);
+// -- Links in notes and project summaries; spellcheck while a note is being edited --
+var _lk=null;
+function lkEl(ctx,name){return document.getElementById(ctx==='nt'?'ntBody':'projDesc_'+name);}
+function rtLinkBtn(ctx,name){
+  return'<button type="button" class="proj-desc-btn" data-lk="1" onmousedown="event.preventDefault()" onclick="lkOpen(this,\''+ctx+'\',\''+escA(name||'')+'\')" title="Link (Ctrl+K)" aria-label="Link"><svg viewBox="0 0 16 16"><path d="M6.8 9.2a2.6 2.6 0 0 0 3.7 0l2.4-2.4a2.6 2.6 0 0 0-3.7-3.7l-.8.8"/><path d="M9.2 6.8a2.6 2.6 0 0 0-3.7 0L3.1 9.2a2.6 2.6 0 0 0 3.7 3.7l.8-.8"/></svg></button>';
+}
+// turns what was typed into a safe address: {url} or {err}
+function lkNorm(u){
+  u=String(u||'').trim();
+  if(!u)return{err:'Enter a web address.'};
+  if(/^(https?:\/\/|mailto:)\S+$/i.test(u))return{url:u};
+  if(/^(file:|\\\\|[a-z]:[\\\/])/i.test(u))return{err:'Browsers block links to files and network drives. Use a SharePoint or OneDrive link instead.'};
+  if(/\s/.test(u))return{err:'The address cannot contain spaces.'};
+  if(/^(www\.)?[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}(:\d+)?([\/?#]\S*)?$/i.test(u))return{url:'https://'+u};
+  if(/^[^\s@\/:]+@[^\s@\/:]+\.[a-z]{2,}$/i.test(u))return{url:'mailto:'+u};
+  return{err:'Enter a web address such as https://example.com, or an email address.'};
+}
+function lkAnchor(el,r){
+  if(!r)return null;
+  var n=r.commonAncestorContainer;n=n&&(n.nodeType===1?n:n.parentNode);
+  var a=n&&n.closest?n.closest('a'):null;
+  return a&&el.contains(a)?a:null;
+}
+function lkOpenUrl(u){if(/^(https?:|mailto:)/i.test(String(u||'').trim()))window.open(String(u).trim(),'_blank','noopener');}
+function lkOpen(src,ctx,name){
+  var el=lkEl(ctx,name),pop=document.getElementById('lkPop');
+  if(!el)return;
+  if(src&&pop&&pop.style.display==='block'&&_lk&&_lk.btn===src){lkClose(true);return;}
+  var s=window.getSelection(),r=null;
+  if(s&&s.rangeCount&&el.contains(s.getRangeAt(0).commonAncestorContainer))r=s.getRangeAt(0).cloneRange();
+  if(!r){el.focus();r=document.createRange();r.selectNodeContents(el);r.collapse(false);}
+  var a=lkAnchor(el,r),showText=!!a||r.collapsed,selTxt=r.collapsed?'':r.toString();
+  _lk={ctx:ctx,name:name,range:r,a:a,btn:src||null};
+  if(!pop){
+    pop=document.createElement('div');pop.id='lkPop';pop.className='rt-pop lk-pop';
+    pop.onkeydown=function(ev){if(ev.key==='Enter'){ev.preventDefault();lkApply();}};
+    document.body.appendChild(pop);
+  }
+  pop.innerHTML='<div class="rt-t">'+(a?'Edit link':'Add link')+'</div>'
+    +(showText?'<input type="text" id="lkText" class="lk-in" placeholder="Text to show" value="'+escH(a?a.textContent:'')+'" aria-label="Link text" autocomplete="off">'
+      :'<div class="lk-sel">'+escH(selTxt.length>60?selTxt.slice(0,60)+'...':selTxt)+'</div>')
+    +'<input type="text" id="lkUrl" class="lk-in" placeholder="Paste address (https://...)" value="'+escH(a?(a.getAttribute('href')||''):'')+'" aria-label="Link address" autocomplete="off" spellcheck="false">'
+    +'<div class="lk-err" id="lkErr" role="alert"></div>'
+    +'<div class="lk-row">'+(a?'<button type="button" class="lk-b" onclick="lkRemove()">Remove</button><button type="button" class="lk-b" onclick="lkGo()">Open</button>':'')
+    +'<span class="lk-sp"></span><button type="button" class="lk-b" onclick="lkClose(true)">Cancel</button><button type="button" class="lk-b pri" onclick="lkApply()">'+(a?'Save':'Add')+'</button></div>';
+  var b=src&&src.getBoundingClientRect?src.getBoundingClientRect():null;
+  if(!b||(!b.width&&!b.height)){var cr=r.getBoundingClientRect();b=(cr&&(cr.width||cr.height))?cr:el.getBoundingClientRect();}
+  pop.style.display='block';
+  pop.style.left=Math.max(8,Math.min(b.left,window.innerWidth-pop.offsetWidth-8))+'px';
+  var top=b.bottom+4;
+  if(top+pop.offsetHeight>window.innerHeight-8)top=Math.max(8,b.top-pop.offsetHeight-4);
+  pop.style.top=top+'px';
+  var tx=document.getElementById('lkText'),f=(tx&&!tx.value)?tx:document.getElementById('lkUrl');
+  if(f){try{f.focus({preventScroll:true});}catch(x){f.focus();}if(f.select)f.select();}
+}
+function lkRestore(){
+  if(!_lk)return null;
+  var el=lkEl(_lk.ctx,_lk.name);
+  if(!el)return null;
+  try{el.focus({preventScroll:true});}catch(x){el.focus();}
+  var r=_lk.range,s=window.getSelection();
+  if(!el.contains(r.startContainer)||!el.contains(r.endContainer)){r=document.createRange();r.selectNodeContents(el);r.collapse(false);}
+  s.removeAllRanges();s.addRange(r);
+  return el;
+}
+function lkClose(back){
+  var p=document.getElementById('lkPop');
+  if(p)p.style.display='none';
+  if(back&&_lk)lkRestore();
+  _lk=null;
+}
+function lkSaved(ctx,name){if(ctx==='nt')ntBodyInput();else saveProjDesc(name);}
+function lkInsert(url,text){
+  var a=document.createElement('a');a.setAttribute('href',url);a.textContent=text;
+  document.execCommand('insertHTML',false,a.outerHTML+'&nbsp;');
+}
+function lkApply(){
+  if(!_lk)return;
+  var u=document.getElementById('lkUrl'),t=document.getElementById('lkText'),er=document.getElementById('lkErr');
+  var n=lkNorm(u&&u.value);
+  if(n.err){if(er)er.textContent=n.err;if(u)u.focus();return;}
+  var c=_lk,a=c.a,txt=t?t.value.trim():'';
+  var el=lkRestore();
+  if(!el){lkClose(false);return;}
+  if(a&&el.contains(a)){
+    a.setAttribute('href',n.url);
+    if(txt&&txt!==a.textContent)a.textContent=txt;
+  }else{
+    var s=window.getSelection(),r=s.rangeCount?s.getRangeAt(0):null;
+    if(r&&!r.collapsed)document.execCommand('createLink',false,n.url);
+    else lkInsert(n.url,txt||n.url);
+  }
+  lkClose(false);
+  lkSaved(c.ctx,c.name);
+}
+function lkRemove(){
+  var c=_lk;
+  if(!c)return;
+  var a=c.a;
+  if(a&&a.parentNode){while(a.firstChild)a.parentNode.insertBefore(a.firstChild,a);a.parentNode.removeChild(a);}
+  lkClose(true);
+  lkSaved(c.ctx,c.name);
+}
+function lkGo(){
+  var a=_lk&&_lk.a,u=document.getElementById('lkUrl'),n=lkNorm(u?u.value:'');
+  lkOpenUrl(n.url||(a&&a.getAttribute('href')));
+}
+// paste a single address: it becomes a link (over selected text it links that text)
+function lkPasteUrl(e){
+  var t=(((e.clipboardData||window.clipboardData).getData('text/plain'))||'').trim();
+  if(!t||/\s/.test(t)||!/^(https?:\/\/|mailto:|www\.)\S+$/i.test(t))return false;
+  var n=lkNorm(t);
+  if(!n.url)return false;
+  var s=window.getSelection(),r=s.rangeCount?s.getRangeAt(0):null;
+  e.preventDefault();
+  if(r&&!r.collapsed)document.execCommand('createLink',false,n.url);
+  else lkInsert(n.url,t);
+  return true;
+}
+function lkPaste(e){lkPasteUrl(e);}
+document.addEventListener('mousedown',function(e){
+  var p=document.getElementById('lkPop');
+  if(p&&p.style.display==='block'&&!p.contains(e.target)&&!(e.target.closest&&e.target.closest('[data-lk]')))lkClose(false);
+},true);
+document.addEventListener('keydown',function(e){
+  var p=document.getElementById('lkPop');
+  if(e.key==='Escape'&&p&&p.style.display==='block'){e.preventDefault();e.stopPropagation();lkClose(true);return;}
+  if((e.ctrlKey||e.metaKey)&&!e.altKey&&!e.shiftKey&&(e.key==='k'||e.key==='K')){
+    var el=e.target&&e.target.closest?e.target.closest('.proj-desc-area[contenteditable]'):null;
+    if(!el)return;
+    var ctx='',name='';
+    if(el.id==='ntBody')ctx='nt';
+    else if(el.id.indexOf('projDesc_')===0){ctx='proj';name=el.id.slice(9);}
+    else return;
+    e.preventDefault();
+    lkOpen(null,ctx,name);
+  }
+},true);
+window.addEventListener('scroll',function(e){var p=document.getElementById('lkPop');if(p&&p.style.display==='block'&&!(e.target&&e.target.closest&&e.target.closest('#lkPop')))lkClose(false);},true);
+window.addEventListener('resize',function(){lkClose(false);});
+// links inside an editable note: Ctrl+click opens, hovering explains
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;
+  if(!a||!a.closest('.proj-desc-area[contenteditable]'))return;
+  if(e.ctrlKey||e.metaKey){e.preventDefault();lkOpenUrl(a.getAttribute('href'));}
+},true);
+document.addEventListener('mouseover',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;
+  if(a&&!a.title&&a.closest('.proj-desc-area[contenteditable]'))a.title=a.getAttribute('href')+' (Ctrl+click to open)';
+});
+// spellcheck is on only while a note's title or text, or a project summary, is focused
+document.addEventListener('focusin',function(e){var t=e.target;if(t&&(t.id==='ntBody'||t.id==='ntTitle'||String(t.id).indexOf('projDesc_')===0))t.spellcheck=true;});
+document.addEventListener('focusout',function(e){var t=e.target;if(t&&(t.id==='ntBody'||t.id==='ntTitle'||String(t.id).indexOf('projDesc_')===0))t.spellcheck=false;});
 // -- Notes --
 var NT_COLORS=['','y','g','b','p','r','o'];
 var NT_COLOR_NAMES={'':'Default',y:'Yellow',g:'Green',b:'Blue',p:'Purple',r:'Rose',o:'Orange'};
@@ -5813,6 +5978,7 @@ function ntFmt(cmd,arg){var el=document.getElementById('ntBody');if(!el)return;e
 function ntPaste(e){
   var pf=[].filter.call((e.clipboardData&&e.clipboardData.files)||[],function(f){return/^image\//.test(f.type);});
   if(pf.length&&_ntSel){e.preventDefault();ntAddPhotos(_ntSel,pf);return;}
+  if(lkPasteUrl(e))return;
   e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');
   document.execCommand('insertText',false,t);
@@ -5852,7 +6018,7 @@ function ntEditorHtml(n,inline){
     +rtColorBtns('nt')
     +'<span class="proj-desc-sep"></span>'
     +tb('insertUnorderedList','<svg viewBox="0 0 16 16"><circle cx="3.2" cy="4" r="1"/><circle cx="3.2" cy="8" r="1"/><circle cx="3.2" cy="12" r="1"/><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/></svg>','Bullet list')
-    +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')+rtIndentBtns('nt')
+    +tb('insertOrderedList','<svg viewBox="0 0 16 16"><path d="M6.5 4h7M6.5 8h7M6.5 12h7"/><text x="1" y="5.3" font-size="4.2" stroke="none" fill="currentColor">1</text><text x="1" y="9.3" font-size="4.2" stroke="none" fill="currentColor">2</text><text x="1" y="13.3" font-size="4.2" stroke="none" fill="currentColor">3</text></svg>','Numbered list')+rtIndentBtns('nt')+'<span class="proj-desc-sep"></span>'+rtLinkBtn('nt')+'<span class="proj-desc-sep"></span>'
     +tb('removeFormat','<svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg>','Clear formatting');
   var head='<div class="tk-sh"><input type="text" class="tk-title" id="ntTitle" value="'+escH(n.title)+'" placeholder="Title" onchange="ntUpdate(\''+id+'\',{title:this.value.trim()},{noSide:true})" onkeydown="if(event.key===\'Enter\'){event.preventDefault();var b=document.getElementById(\'ntBody\');if(b)b.focus();}" aria-label="Note title">'+(inline?ntSideBtn():'')+'<button class="tk-x" onclick="ntClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>';
   var writing='<div class="proj-desc-toolbar">'+toolbar+'</div>'
