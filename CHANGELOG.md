@@ -5,6 +5,14 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.50.0] — 2026-11-09
+
+### Changed
+- Highlight and text colour buttons in notes and project summaries now remember the last colour you used. Click the H or A button to apply that colour straight to the selected text; the small arrow beside it opens the palette to pick a different one (which then becomes the new default). The last colours are kept on this device between sessions.
+- This Week: the buttons in a day's action panel (Log time, Add event, Add task, Reminder, Plan day, Log leave) are now the same width in both columns. "Add reminder" is shortened to "Reminder" so it still fits.
+
+---
+
 ## [0.49.1] — 2026-11-09
 
 ### Changed
