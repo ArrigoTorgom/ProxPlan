@@ -5,6 +5,19 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.54.0] — 2026-11-10
+
+### Added
+- Export > Copy for email. Copies the note, formatting and all, with its photos shown in place at the bottom. Open a new message in Outlook (or any mail app) and paste with Ctrl+V; there are no files to attach or open, and you can edit the text before sending.
+
+### Changed
+- Outlook message (.msg): photos now appear in the body of the message instead of as separate attachments, sized to fit the page (up to 560 pixels wide).
+
+### Fixed
+- Outlook message (.msg): the subject and photo names could show as a single letter in the new Outlook. The file now declares that its text is Unicode, which Outlook needs in order to read it.
+
+---
+
 ## [0.53.1] — 2026-11-10
 
 ### Fixed
