@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.58.1] — 2026-11-10
+
+### Changed
+- In Plan Day, the lunch (and other break) band is now hatched in the same grey as the areas outside your working hours, instead of a pale orange tint that looked too much like a planned block. It keeps its "Lunch" label.
+
+---
+
 ## [0.58.0] — 2026-11-10
 
 ### Added
