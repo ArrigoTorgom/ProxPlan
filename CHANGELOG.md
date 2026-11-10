@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.61.2] — 2026-11-10
+
+### Changed
+- In the Plan Day block editor, the block's time now sits next to the "Edit block" / "New block" heading (before the "Saved" tick), and Delete is back at the left of the button row with Done (or Cancel / Add block) on the right. The editor keeps the same compact height.
+
+---
+
+## [0.61.1] — 2026-11-10
+
+### Changed
+- The block editor in Plan Day now uses less height. Project and Activity sit side by side on one row, and Goal and Task on the next. The block's time moved onto the button row beside Delete / Done (or Cancel / Add block). On a normal desktop width the editor is about a third shorter, which leaves more room for the timeline. On a phone the fields stack in one column as before.
+
+---
+
 ## [0.61.0] — 2026-11-10
 
 ### Added
