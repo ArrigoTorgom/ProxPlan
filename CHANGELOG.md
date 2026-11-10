@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.55.1] — 2026-11-10
+
+### Fixed
+- The Export pop-up on a note sat hard against the right-hand edge of the screen. It now keeps a clear gap from the edge and the page scroll bar, and the link and text/highlight colour pop-ups do the same.
+
+---
+
+## [0.55.0] — 2026-11-10
+
+### Removed
+- The Outlook message (.msg) option has been removed from a note's Export menu. Export now offers Copy for email and PDF.
+
+---
+
 ## [0.54.0] — 2026-11-10
 
 ### Added

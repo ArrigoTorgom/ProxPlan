@@ -1933,14 +1933,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.54.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.55.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.54.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.55.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4905,7 +4905,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.54.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.55.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5709,7 +5709,7 @@ function rtOpen(e,kind,ctx,name){
     +'<button type="button" class="rt-sw none" onclick="rtPick(\''+kind+'\',\'\')" title="'+(kind==='hi'?'No highlight':'Default colour')+'" aria-label="'+(kind==='hi'?'No highlight':'Default colour')+'"></button></div>';
   var b=btn.getBoundingClientRect();
   pop.style.display='block';
-  var left=Math.max(8,Math.min(b.left,window.innerWidth-pop.offsetWidth-8));
+  var left=Math.max(8,Math.min(b.left,document.documentElement.clientWidth-pop.offsetWidth-20));
   pop.style.left=left+'px';
   pop.style.top=(b.bottom+4)+'px';
   _rtBtn=btn;
@@ -5838,7 +5838,7 @@ function lkOpen(src,ctx,name){
   var b=src&&src.getBoundingClientRect?src.getBoundingClientRect():null;
   if(!b||(!b.width&&!b.height)){var cr=r.getBoundingClientRect();b=(cr&&(cr.width||cr.height))?cr:el.getBoundingClientRect();}
   pop.style.display='block';
-  pop.style.left=Math.max(8,Math.min(b.left,window.innerWidth-pop.offsetWidth-8))+'px';
+  pop.style.left=Math.max(8,Math.min(b.left,document.documentElement.clientWidth-pop.offsetWidth-20))+'px';
   var top=b.bottom+4;
   if(top+pop.offsetHeight>window.innerHeight-8)top=Math.max(8,b.top-pop.offsetHeight-4);
   pop.style.top=top+'px';
@@ -6230,7 +6230,7 @@ function ntEditorHtml(n,inline){
     +'<div class="tk-g2"><label>Date<input type="date" value="'+escH(n.date||'')+'" onchange="ntUpdate(\''+id+'\',{date:this.value,eventId:\'\'})"></label><label>Meeting<select onchange="ntUpdate(\''+id+'\',{eventId:this.value})"'+(n.date?'':' disabled')+'>'+eOpts+'</select></label></div>'
     +'<div class="tk-l">Tags</div><div class="nt-tagrow">'+tags+'<input type="text" id="ntTagIn" class="nt-tagin" placeholder="+ tag" onkeydown="if(event.key===\'Enter\'||event.key===\',\'){event.preventDefault();ntTagAdd(\''+id+'\');}" onblur="ntTagAdd(\''+id+'\')"></div>'
     +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>';
-  var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button onclick="ntExportMenu(this,\''+id+'\')" title="Export the note as a PDF or an Outlook message">Export</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
+  var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button onclick="ntExportMenu(this,\''+id+'\')" title="Copy the note for an email, or export it as a PDF">Export</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
   var meta='<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>';
   if(inline){
     return'<div class="tk-side nt-ed nt-open nt-card'+(n.color?' c-'+n.color:'')+(currentTab==='projects'?' nt-stack':'')+(_ntSideOff?' nt-side-off':'')+'" id="nc_'+id+'">'+head
@@ -6561,7 +6561,7 @@ function ntExportPdf(id){
     });
   }).catch(function(e){alert('Could not create the PDF: '+(e&&e.message?e.message:e));});
 }
-// Export button: choose PDF or an Outlook message file
+// Export button: choose Copy for email or PDF
 function ntExpClose(){var p=document.getElementById('exPop');if(p)p.style.display='none';}
 function ntExportMenu(btn,id){
   var pop=document.getElementById('exPop');
@@ -6570,11 +6570,10 @@ function ntExportMenu(btn,id){
   pop._for=btn;
   pop.innerHTML='<div class="rt-t">Export this note</div>'
     +'<button type="button" class="ex-opt" onclick="ntCopyEmail(\''+id+'\')"><b>Copy for email</b><span>Paste it into a new message: the note and its photos land in the body.</span></button>'
-    +'<button type="button" class="ex-opt" onclick="ntExportPdf(\''+id+'\')"><b>PDF</b><span>Opens anywhere. Attach it to a mail or keep it for reference; photos are included in the file.</span></button>'
-    +'<button type="button" class="ex-opt" onclick="ntExpClose();ntEmail(\''+id+'\')"><b>Outlook message (.msg)</b><span>An unsent email with the note and its photos in the body.</span></button>';
+    +'<button type="button" class="ex-opt" onclick="ntExportPdf(\''+id+'\')"><b>PDF</b><span>Opens anywhere. Attach it to a mail or keep it for reference; photos are included in the file.</span></button>';
   var b=btn.getBoundingClientRect();
   pop.style.display='block';
-  pop.style.left=Math.max(8,Math.min(b.left,window.innerWidth-pop.offsetWidth-8))+'px';
+  pop.style.left=Math.max(8,Math.min(b.left,document.documentElement.clientWidth-pop.offsetWidth-20))+'px';
   var top=b.bottom+4;
   if(top+pop.offsetHeight>window.innerHeight-8)top=Math.max(8,b.top-pop.offsetHeight-4);
   pop.style.top=top+'px';
@@ -6589,7 +6588,7 @@ document.addEventListener('keydown',function(e){
 },true);
 window.addEventListener('resize',ntExpClose);
 window.addEventListener('scroll',function(e){var p=document.getElementById('exPop');if(p&&p.style.display==='block'&&!(e.target&&e.target.closest&&e.target.closest('#exPop')))ntExpClose();},true);
-// -- Email a note: an unsent Outlook message (.msg) or a copy to paste into a new email; photos sit in the body --
+// -- Email a note: copy it, photos included, to paste into a new email --
 function ntB64(u){var s='',i;for(i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s);}
 function ntHtmlText(h){
   var d=new DOMParser().parseFromString('<body>'+h+'</body>','text/html'),out='';
@@ -6633,172 +6632,6 @@ function ntEmailParts(n,imgs){
   var txt=(n.title?n.title+'\n':'')+(meta.length?meta.map(function(m){return m[0]+': '+m[1];}).join('  |  ')+'\n':'')+'\n'+ntHtmlText(body)
     +(items.length?'\n\nChecklist\n'+items.map(function(i){return(i.done?'[x] ':'[ ] ')+i.t;}).join('\n'):'')+(imgs.length?'\n\nPhotos: '+imgs.length+' shown in the message.':'');
   return{html:html,text:txt.trim()};
-}
-// ---- the file format: a Compound File (the container Outlook .msg files use) holding Outlook message properties ----
-function msgU16(s){var b=new Uint8Array(s.length*2),i,c;for(i=0;i<s.length;i++){c=s.charCodeAt(i);b[i*2]=c&255;b[i*2+1]=c>>8;}return b;}
-function cfbBuild(root){
-  var SS=512,MS=64,CUT=4096,FREE=0xFFFFFFFF,END=0xFFFFFFFE,FATS=0xFFFFFFFD,DIFS=0xFFFFFFFC,ents=[],i;
-  function add(nd,type){nd.id=ents.length;nd.type=type;nd.left=FREE;nd.right=FREE;nd.child=FREE;ents.push(nd);}
-  function cmp(a,b){if(a.name.length!==b.name.length)return a.name.length-b.name.length;var x=a.name.toUpperCase(),y=b.name.toUpperCase();return x<y?-1:(x>y?1:0);}
-  function build(list,lo,hi){if(lo>hi)return FREE;var m=(lo+hi)>>1,nd=list[m];nd.left=build(list,lo,m-1);nd.right=build(list,m+1,hi);return nd.id;}
-  function walk(nd){
-    var k=nd.kids||[];
-    k.forEach(function(c){add(c,c.kids?1:2);});
-    k.sort(cmp);
-    nd.child=build(k,0,k.length-1);
-    k.forEach(function(c){if(c.kids)walk(c);});
-  }
-  add(root,5);walk(root);
-  var miniFat=[],big=[],miniParts=[];
-  ents.forEach(function(e){
-    if(e.type!==2)return;
-    var len=e.data.length;
-    if(!len){e.start=END;return;}
-    if(len<CUT){
-      var cnt=Math.ceil(len/MS),first=miniFat.length,j;
-      for(j=0;j<cnt;j++)miniFat.push(j<cnt-1?first+j+1:END);
-      e.start=first;miniParts.push({at:first*MS,d:e.data});
-    }else big.push(e);
-  });
-  var msBytes=miniFat.length*MS,mini=new Uint8Array(Math.ceil(msBytes/SS)*SS);
-  miniParts.forEach(function(p){mini.set(p.d,p.at);});
-  var dirSecs=Math.ceil(ents.length/4),mfSecs=Math.ceil(miniFat.length/128),msSecs=mini.length/SS,next=0;
-  var dirStart=next;next+=dirSecs;
-  var mfStart=mfSecs?next:END;next+=mfSecs;
-  var msStart=msSecs?next:END;next+=msSecs;
-  big.forEach(function(e){e.start=next;e.secs=Math.ceil(e.data.length/SS);next+=e.secs;});
-  var N0=next,F=Math.max(1,Math.ceil(N0/128)),D;
-  for(;;){D=Math.max(0,Math.ceil((F-109)/127));if(F*128>=N0+F+D)break;F++;}
-  var fat=new Uint32Array(F*128);fat.fill(FREE);
-  function chain(s,c){for(var j=0;j<c;j++)fat[s+j]=(j<c-1)?s+j+1:END;}
-  chain(dirStart,dirSecs);if(mfSecs)chain(mfStart,mfSecs);if(msSecs)chain(msStart,msSecs);
-  big.forEach(function(e){chain(e.start,e.secs);});
-  var fatStart=N0,difStart=N0+F;
-  for(i=0;i<F;i++)fat[fatStart+i]=FATS;
-  for(i=0;i<D;i++)fat[difStart+i]=DIFS;
-  var out=new Uint8Array(SS+(N0+F+D)*SS),dv=new DataView(out.buffer);
-  function sec(n){return SS+n*SS;}
-  out.set([0xD0,0xCF,0x11,0xE0,0xA1,0xB1,0x1A,0xE1],0);
-  dv.setUint16(24,0x3E,true);dv.setUint16(26,3,true);dv.setUint16(28,0xFFFE,true);dv.setUint16(30,9,true);dv.setUint16(32,6,true);
-  dv.setUint32(44,F,true);dv.setUint32(48,dirStart,true);dv.setUint32(56,CUT,true);
-  dv.setUint32(60,mfStart,true);dv.setUint32(64,mfSecs,true);dv.setUint32(68,D?difStart:END,true);dv.setUint32(72,D,true);
-  for(i=0;i<109;i++)dv.setUint32(76+i*4,i<F?fatStart+i:FREE,true);
-  var d,k,base;
-  for(d=0;d<D;d++){
-    base=sec(difStart+d);
-    for(k=0;k<127;k++){var fi=109+d*127+k;dv.setUint32(base+k*4,fi<F?fatStart+fi:FREE,true);}
-    dv.setUint32(base+508,d<D-1?difStart+d+1:END,true);
-  }
-  for(i=0;i<fat.length;i++)dv.setUint32(sec(fatStart)+i*4,fat[i],true);
-  for(i=0;i<mfSecs*128;i++)dv.setUint32(sec(mfStart)+i*4,i<miniFat.length?miniFat[i]:FREE,true);
-  if(msSecs)out.set(mini,sec(msStart));
-  big.forEach(function(e){out.set(e.data,sec(e.start));});
-  var slots=dirSecs*4,o,nm;
-  for(i=0;i<slots;i++){
-    o=sec(dirStart)+i*128;
-    if(i>=ents.length){dv.setUint32(o+68,FREE,true);dv.setUint32(o+72,FREE,true);dv.setUint32(o+76,FREE,true);continue;}
-    var e=ents[i];
-    nm=msgU16(e.name);out.set(nm,o);dv.setUint16(o+64,nm.length+2,true);
-    out[o+66]=e.type;out[o+67]=1;
-    dv.setUint32(o+68,e.left,true);dv.setUint32(o+72,e.right,true);dv.setUint32(o+76,e.child,true);
-    if(e.type===5){
-      out.set([0x0B,0x0D,0x02,0,0,0,0,0,0xC0,0,0,0,0,0,0,0x46],o+80);
-      dv.setUint32(o+116,msStart,true);dv.setUint32(o+120,msBytes,true);
-    }else if(e.type===2){dv.setUint32(o+116,e.start,true);dv.setUint32(o+120,e.data.length,true);}
-  }
-  return out;
-}
-// Outlook message properties: a property table plus one stream per text or binary value
-function msgProps(props,head){
-  var hx=function(n,l){return('0000'+n.toString(16).toUpperCase()).slice(-l);},ents=[],kids=[];
-  props.forEach(function(p){
-    var e=new Uint8Array(16),dv=new DataView(e.buffer);
-    dv.setUint32(0,((p.id<<16)|p.type)>>>0,true);
-    dv.setUint32(4,6,true);
-    if(p.type===0x1F){var d=msgU16(p.v);dv.setUint32(8,d.length+2,true);kids.push({name:'__substg1.0_'+hx(p.id,4)+hx(p.type,4),data:d});}
-    else if(p.type===0x102){dv.setUint32(8,p.v.length,true);kids.push({name:'__substg1.0_'+hx(p.id,4)+hx(p.type,4),data:p.v});}
-    else if(p.type===0xB)dv.setUint16(8,p.v?1:0,true);
-    else dv.setUint32(8,p.v>>>0,true);
-    ents.push(e);
-  });
-  var data=new Uint8Array(head.length+ents.length*16);
-  data.set(head,0);
-  ents.forEach(function(e,i){data.set(e,head.length+i*16);});
-  kids.unshift({name:'__properties_version1.0',data:data});
-  return kids;
-}
-function ntPhotoName(rec,i,used){
-  var base=String(rec.name||'').replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9 _-]+/g,'').trim().slice(0,50)||('Photo '+(i+1)),nm=base+'.jpg',k=1;
-  while(used[nm.toLowerCase()]){k++;nm=base+' ('+k+').jpg';}
-  used[nm.toLowerCase()]=1;
-  return nm;
-}
-function ntEmailFile(n,recs){
-  var subj=n.title||'Note',hex8=function(i){return('00000000'+i.toString(16).toUpperCase()).slice(-8);};
-  return Promise.all(recs.map(function(r){return r.blob.arrayBuffer();})).then(function(bufs){
-    var used={},att=bufs.map(function(buf,i){
-      var u=new Uint8Array(buf),j=(typeof pdfJpeg==='function'&&pdfJpeg(u))||{w:560,h:420};
-      return{name:ntPhotoName(recs[i],i,used),short:'PHOTO'+(i+1)+'.JPG',cid:'photo'+(i+1)+'@proxplan',data:u,w:j.w,h:j.h};
-    });
-    var P=ntEmailParts(n,att.map(function(a){return{src:'cid:'+a.cid,w:a.w,h:a.h};}));
-    var head=new Uint8Array(32),hd=new DataView(head.buffer);
-    hd.setUint32(12,att.length,true);hd.setUint32(20,att.length,true);
-    var kids=msgProps([
-      {id:0x001A,type:0x1F,v:'IPM.Note'},
-      {id:0x0037,type:0x1F,v:subj},
-      {id:0x0070,type:0x1F,v:subj},
-      {id:0x0E1D,type:0x1F,v:subj},
-      {id:0x1000,type:0x1F,v:P.text.replace(/\r?\n/g,'\r\n')},
-      {id:0x1013,type:0x102,v:new TextEncoder().encode(P.html)},
-      {id:0x1016,type:3,v:3},
-      {id:0x340D,type:3,v:0x00040000},
-      {id:0x3FDE,type:3,v:65001},
-      {id:0x3FFD,type:3,v:65001},
-      {id:0x0E07,type:3,v:8|(att.length?16:0)},
-      {id:0x0E1B,type:0xB,v:att.length>0},
-      {id:0x0017,type:3,v:1},
-      {id:0x0036,type:3,v:0}
-    ],head);
-    kids.push({name:'__nameid_version1.0',kids:[
-      {name:'__substg1.0_00020102',data:new Uint8Array(0)},
-      {name:'__substg1.0_00030102',data:new Uint8Array(0)},
-      {name:'__substg1.0_00040102',data:new Uint8Array(0)}
-    ]});
-    att.forEach(function(a,i){
-      kids.push({name:'__attach_version1.0_#'+hex8(i),kids:msgProps([
-        {id:0x0FFE,type:3,v:7},
-        {id:0x0E21,type:3,v:i},
-        {id:0x0E20,type:3,v:a.data.length},
-        {id:0x3701,type:0x102,v:a.data},
-        {id:0x3703,type:0x1F,v:'.jpg'},
-        {id:0x3704,type:0x1F,v:a.short},
-        {id:0x3705,type:3,v:1},
-        {id:0x3707,type:0x1F,v:a.name},
-        {id:0x370B,type:3,v:0xFFFFFFFF},
-        {id:0x370E,type:0x1F,v:'image/jpeg'},
-        {id:0x3712,type:0x1F,v:a.cid},
-        {id:0x3714,type:3,v:4},
-        {id:0x7FFD,type:3,v:0},
-        {id:0x7FFE,type:0xB,v:true}
-      ],new Uint8Array(8))});
-    });
-    return new Blob([cfbBuild({name:'Root Entry',kids:kids})],{type:'application/vnd.ms-outlook'});
-  });
-}
-function ntEmail(id){
-  var n=ntGet(id);
-  if(!n)return;
-  var fname=(String(n.title||'Note').replace(/[\\\/:*?"<>|]+/g,'').trim().slice(0,60)||'Note')+'.msg';
-  getProjectImages(ntPhotoKey(id)).catch(function(){return[];}).then(function(recs){
-    recs=(recs||[]).slice().sort(function(a,b){return(a.id||0)-(b.id||0);});
-    return ntEmailFile(n,recs).then(function(blob){
-      var a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);a.download=fname;
-      document.body.appendChild(a);a.click();
-      setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
-      remToast('Email draft saved - open it to choose recipients and send'+(recs.length?' ('+recs.length+(recs.length===1?' photo':' photos')+' in the message)':''));
-    });
-  }).catch(function(e){alert('Could not prepare the email: '+(e&&e.message?e.message:e));});
 }
 // copy the note, with its photos in place, to paste straight into a new email
 function ntCopyEmail(id){
