@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.58.2] — 2026-11-10
+
+### Fixed
+- In Plan Day, the working-hours summary strip no longer wraps onto a second line when a day has a lot planned outside working hours. The orange warning now reads "3h 30m outside hours" (hover for the full wording), the progress bar is a little shorter, and the week total ("Week: 27h 15m of 40h") stays in one place at the right.
+
+---
+
 ## [0.58.1] — 2026-11-10
 
 ### Changed
