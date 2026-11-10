@@ -5,6 +5,40 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.61.0] — 2026-11-10
+
+### Added
+- Planned time is now freed when a task no longer needs it. Parking a task as Someday, marking it done, setting it to Waiting, or deleting it removes its upcoming planned blocks, so that time is open again for other work and the week strip and Plan Day update straight away. This applies to every way of changing a task (row menus, the Edit dialog, ticking it off).
+- Only blocks linked to the task are affected, and only blocks from now onwards. Past days are never touched. A block that is part-way through today is trimmed to the time already gone, so your logged time stays right.
+- A short message says how much time was freed (for example "Parked: freed 3.75h of planned time over 3 days") with a Restore button for 12 seconds. Restore puts the blocks back. Deleting a task has no Restore, since it already asks first.
+
+### Changed
+- Planning time for a parked task (dropping it on a day or using Plan) moves it back to your list, since you've decided to work on it.
+- The block editor's task list no longer offers tasks that are waiting (unless the chase date has arrived) or parked.
+
+---
+
+## [0.60.0] — 2026-11-10
+
+### Changed
+- On the To Do tab, dropping a task on a day in the week strip now plans time for it instead of changing its due date. A block is added in the first free slot inside your working hours (sized to the unplanned part of the estimate, 30 minutes to 2 hours, or 1 hour with no estimate). If the task's project can't be used, Plan Day opens on that day with a new block ready so you pick the project. If the day has no free working time you get a message instead.
+- Due dates are now changed only in the task details (or the Edit dialog). The due date on a task row is a label, and its click-to-change menu is gone, so a due date stays a deadline however you plan the work.
+- The week strip now takes everything planned for a task into account, on any day. A task due Friday with 2 hours planned on Wednesday only shows its unplanned remainder against Friday, so the same hours are never counted twice. The Today star is unchanged and still just keeps a task in front of you.
+
+### Added
+- A "Plan" button on task rows opens a quick menu of your next working days (with how much free time each has) or a date picker, and plans time for the task on the day you choose.
+- Task rows show where they are planned, for example "Planned Wed 11 · 1h to plan". Hover for each day and how much of the estimate is still unplanned; click it to open that day in Plan Day.
+
+---
+
+## [0.59.0] — 2026-11-10
+
+### Added
+- On the To Do tab, the day workload bars in the week strip now include planned work. Time you have blocked out in Plan Day shows as a green segment between meetings (purple) and tasks, and the day card says how much is planned (for example "3h planned"). A task that already has a planned block is not counted twice: only the part of its estimate not yet covered by a block counts as task time. The "over capacity" warning now takes planned work into account, and the strip updates as soon as you change a block.
+- Any planned block can now be linked to a task, not just ones added from the Up next suggestions. The block editor (new or existing) has a "Link to a task (optional)" list of your open tasks, with tasks from the block's project first. Picking a task fills in the goal and project if they are empty, and hovering a block shows which task it is linked to. Linked blocks count towards the task's time spent, and tasks with a planned block stop showing up in Up next. Choose the blank option to unlink.
+
+---
+
 ## [0.58.2] — 2026-11-10
 
 ### Fixed

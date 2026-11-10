@@ -1036,6 +1036,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-day .tk-bar{margin-top:4px;display:flex;}
 .tk-day .tk-bar .m{background:#8b5cf6;border-radius:3px 0 0 3px;}
 .tk-day .tk-bar .t{border-radius:0 3px 3px 0;}
+.tk-day .tk-bar .p{background:#22c55e;border-radius:0;}
+.tk-day .tk-pl{color:#16a34a;font-weight:600;}
 .tk-filter{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:0 2px 8px;}
 .tk-sec-h{cursor:pointer;user-select:none;}
 .tk-chev{display:inline-block;font-size:11px;color:var(--muted);transition:transform .12s;}
@@ -1047,6 +1049,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .task-row:hover .tk-add{opacity:.8;}
 .tk-est,.tk-pin,.tk-wait{font-size:11px;color:var(--muted);white-space:nowrap;}
 .tk-pin.on{color:var(--primary);font-weight:600;}
+.tk-plan{font-size:11px;color:#16a34a;white-space:nowrap;font-weight:600;}
 .tk-wait{color:#b45309;font-weight:600;}
 .snz-item.tk-on b{color:var(--primary);}
 .tk-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#233b46;color:#fff;font-size:12px;padding:8px 10px 8px 16px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:990;max-width:94vw;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
@@ -1965,14 +1968,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.58.2</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.61.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.58.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.61.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3061,7 +3064,7 @@ var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
 function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
 function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&m?' ':'')+(m?m+'m':'');}
-function dpPersist(){setBlocksForDate(dpDate,dpBlocks);renderUpNext();}
+function dpPersist(){setBlocksForDate(dpDate,dpBlocks);renderUpNext();if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();}
 
 var DP_WORK_START=8*60,DP_WORK_END=17*60;
 // -- Day planner: working hours shown as an indication only (nothing is blocked) --
@@ -3567,7 +3570,7 @@ function renderDayPlan(keepEd){
     var top=(b.start-DP_GRID_START)*DP_PX_PER_MIN,h=b.dur*DP_PX_PER_MIN;
     var sel=dpSelectedBlock===b.id?' selected':'';
     var hh=Math.max(3,Math.min(8,Math.floor(h/3)));
-    return'<div class="dp-block'+sel+dpLaneCls(lanes,b.id)+(h<30?' s1':h<50?' s2':'')+'" title="'+escH(b.proj)+' ('+dpFmtDur(b.dur)+')" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,b.id)+'--hh:'+hh+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
+    return'<div class="dp-block'+sel+dpLaneCls(lanes,b.id)+(h<30?' s1':h<50?' s2':'')+'" title="'+escH(b.proj)+' ('+dpFmtDur(b.dur)+')'+(b.taskId&&tkTask(b.taskId)?escH(' - Task: '+tkTask(b.taskId).title):'')+'" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,b.id)+'--hh:'+hh+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
       +'<div class="dp-resize-top'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='top'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'top\')"></div>'
       +'<div class="t">'+escH(b.proj)+'</div>'
       +(b.goal?'<div class="g">'+escH(b.goal)+'</div>':'')
@@ -3842,7 +3845,7 @@ function renderDpEditor(){
   }
   if(!dpSelectedBlock){el.classList.remove('open');el.innerHTML='';return;}
   var isNew=dpSelectedBlock==='new';
-  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',start:dpNewRange.start,dur:dpNewRange.dur}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',taskId:dpNewRange.taskId||'',start:dpNewRange.start,dur:dpNewRange.dur}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
   if(!b){dpSelectedBlock=null;el.classList.remove('open');el.innerHTML='';return;}
   el.classList.add('open');
   var projects=getActiveProjects();
@@ -3860,12 +3863,43 @@ function renderDpEditor(){
     +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
     +'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'
     +'</div>'
+    +dpTaskSel(b)
     +'<div class="dp-editor-actions">'
     +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
     +(isNew?'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button><button class="dp-btn primary" onclick="dpSaveEdit()">Add block</button>':'<button class="dp-btn primary" onclick="dpDone()">Done</button>')
     +'</div>';
   el.dataset.for=String(dpSelectedBlock);
   if(keep){document.getElementById('dpProj').value=keep.p;document.getElementById('dpActivity').value=keep.a;document.getElementById('dpGoal').value=keep.g;}
+}
+// -- Link a planned block to any open task (not only ones picked from Up next) --
+function dpTaskSel(b){
+  var cur=b.taskId||'',proj=b.proj||'';
+  var list=getTasks().filter(function(t){return t.id===cur||(!t.done&&!t.someday&&!(t.waiting&&!tkChaseDue(t)));});
+  list.sort(function(a,c){
+    var ap=(proj&&a.project===proj)?0:1,cp=(proj&&c.project===proj)?0:1;
+    if(ap!==cp)return ap-cp;
+    return(a.dueDate||'9').localeCompare(c.dueDate||'9')||String(a.title).localeCompare(String(c.title));
+  });
+  var opts='<option value="">Link to a task (optional)</option>'+list.map(function(t){
+    var nm=String(t.title||'');
+    return'<option value="'+escA(t.id)+'"'+(t.id===cur?' selected':'')+'>'+escH(nm.length>46?nm.slice(0,46)+'...':nm)+(t.project&&t.project!==proj&&t.project!=='General'?' ('+escH(t.project)+')':'')+(t.done?' - done':'')+'</option>';
+  }).join('');
+  return'<select id="dpTask" title="Time in this block counts towards the task" onchange="dpLinkTask(this.value)">'+opts+'</select>';
+}
+function dpLinkTask(id){
+  var t=id?tkTask(id):null,pe=document.getElementById('dpProj'),ge=document.getElementById('dpGoal');
+  if(t){
+    if(ge&&!ge.value.trim())ge.value=t.title;
+    if(pe&&!(pe.dataset.valid||'')&&getActiveProjects().some(function(p){return p.name===t.project;})){pe.value=t.project;pe.dataset.valid=t.project;}
+  }
+  if(dpSelectedBlock==='new'){if(dpNewRange)dpNewRange.taskId=id||undefined;return;}
+  var b=dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  if(!b)return;
+  if(id)b.taskId=id;else delete b.taskId;
+  dpAutoSave();
+  dpPersist();
+  renderDayPlan(true);
+  dpFlashSaved();
 }
 function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 // Existing blocks save themselves: project and activity when picked or left, goal when you leave the field.
@@ -5055,7 +5089,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.58.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.61.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5322,10 +5356,78 @@ function exportCSV(){var logs=getLogs();if(logs.length===0){alert('No data to ex
 
 // ── Tasks ──
 function getTasks(){try{return JSON.parse(localStorage.getItem('plannerTasks')||'[]');}catch(e){return[];}}
-function saveTasks(t){localStorage.setItem('plannerTasks',JSON.stringify(t));tkSyncWait(t);}
+function saveTasks(t){var _old=getTasks();localStorage.setItem('plannerTasks',JSON.stringify(t));tkSyncWait(t);tkFreePlanned(_old,t);}
 function createTask(proj,title,pri,due,notes,extra){var t=getTasks();var nt={id:'t_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),project:proj,title:title,priority:pri,dueDate:due||'',notes:notes||'',done:false,created:Date.now()};if(extra)Object.keys(extra).forEach(function(k){nt[k]=extra[k];});t.push(nt);saveTasks(t);return nt;}
 function toggleDone(id){saveTasks(getTasks().map(function(t){if(t.id!==id)return t;var nd=!t.done;return Object.assign({},t,{done:nd,doneAt:nd?Date.now():null,actual:nd?t.actual:undefined});}));}
 function deleteTask(id){saveTasks(getTasks().filter(function(t){return t.id!==id;}));}
+// -- Freeing planned time: a task that is parked, done, waiting or deleted gives its upcoming blocks back --
+var _tkFreed=null;
+function tkPlanRefresh(){
+  if(typeof dpDate!=='undefined'&&dpDate)dpBlocks=getBlocksForDate(dpDate);
+  if(typeof renderUpNext==='function')renderUpNext();
+  if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();
+  if(typeof renderCalendarShell==='function')renderCalendarShell();
+}
+function tkFreePlanned(oldT,newT){
+  try{
+    var nb={},ids={},any=false,first='';
+    newT.forEach(function(n){nb[n.id]=n;});
+    oldT.forEach(function(o){
+      var n=nb[o.id],why='';
+      if(!n)why='deleted';
+      else if(!o.done&&n.done)why='done';
+      else if(!o.someday&&n.someday)why='parked';
+      else if(!o.waiting&&n.waiting)why='waiting';
+      if(why){ids[o.id]=why;any=true;if(!first)first=why;}
+    });
+    if(!any)return;
+    var data=getTimeBlocksData(),today=todayStr(),nowM=dpMinNow(),removed=[],trimmed=[],mins=0,days={};
+    Object.keys(data).forEach(function(ds){
+      if(ds<today)return;
+      var keep=[];
+      (data[ds]||[]).forEach(function(b){
+        if(!b.taskId||!ids[b.taskId]){keep.push(b);return;}
+        var gone=ds===today?Math.min(b.dur,nowM-b.start):0;
+        if(gone>0){
+          // time already worked stays (so your log is right); only the rest of the block is freed
+          var nd=Math.min(b.dur,Math.ceil(gone/DP_SNAP)*DP_SNAP);
+          if(nd<b.dur){trimmed.push({ds:ds,id:b.id,dur:b.dur});mins+=b.dur-nd;days[ds]=1;b=Object.assign({},b,{dur:nd});}
+          keep.push(b);
+        }else{removed.push({ds:ds,b:b});mins+=b.dur;days[ds]=1;}
+      });
+      if(keep.length)data[ds]=keep;else delete data[ds];
+    });
+    if(!(mins>0))return;
+    saveTimeBlocksData(data);
+    _tkFreed={removed:removed,trimmed:trimmed};
+    tkPlanRefresh();
+    tkFreeToast(first,mins/60,Object.keys(days).length);
+  }catch(e){}
+}
+function tkFreeToastClose(){var el=document.getElementById('tkFreeToast');if(el)el.remove();}
+function tkFreeToast(why,h,nd){
+  tkFreeToastClose();
+  var el=document.createElement('div');
+  el.id='tkFreeToast';el.className='tk-toast';el.style.bottom='72px';
+  el.innerHTML='<span>'+({deleted:'Task deleted',done:'Done',parked:'Parked',waiting:'Waiting'}[why]||'Updated')+': freed '+tkFmtH(h)+' of planned time'+(nd>1?' over '+nd+' days':'')+'.</span>'
+    +(why!=='deleted'?'<button onclick="tkFreeRestore()">Restore</button>':'')
+    +'<button class="x" onclick="tkFreeToastClose()" aria-label="Dismiss">&times;</button>';
+  document.body.appendChild(el);
+  setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},12000);
+}
+function tkFreeRestore(){
+  var f=_tkFreed;
+  tkFreeToastClose();
+  if(!f)return;
+  var data=getTimeBlocksData();
+  f.trimmed.forEach(function(x){(data[x.ds]||[]).forEach(function(b){if(b.id===x.id)b.dur=x.dur;});});
+  f.removed.forEach(function(x){var a=data[x.ds]||(data[x.ds]=[]);if(!a.some(function(b){return b.id===x.b.id;}))a.push(x.b);});
+  saveTimeBlocksData(data);
+  _tkFreed=null;
+  tkPlanRefresh();
+  _refreshTaskViews();
+  remToast('Planned time restored');
+}
 function getTasksForDate(ds){return getTasks().filter(function(t){return t.dueDate===ds;});}
 function dueDateLabel(due){if(!due)return null;var today=todayStr();if(due<today)return{text:'Overdue · '+formatDate(due),cls:'overdue'};if(due===today)return{text:'Due today',cls:'due-today'};var diff=Math.ceil((new Date(due+' 00:00:00')-new Date(today+' 00:00:00'))/86400000);if(diff<=3)return{text:'Due '+formatDate(due),cls:'due-today'};return{text:formatDate(due),cls:''};}
 function selectPriority(pri){selectedPriority=pri;document.querySelectorAll('.pri-btn').forEach(function(b){b.className='pri-btn'+(b.dataset.pri===pri?' active-'+pri:'');});}
@@ -5617,18 +5719,6 @@ function tkRefresh(){
   if(typeof renderUpNext==='function')renderUpNext();
 }
 function tkUpdate(id,patch){saveTasks(getTasks().map(function(t){return t.id===id?Object.assign({},t,patch):t;}));tkRefresh();}
-function tkOpenDateMenu(e,id){
-  var today=todayStr(),t=tkTask(id);if(!t)return;
-  var set=function(ds){return function(){tkUpdate(id,{dueDate:ds});};};
-  var d1=tkAddDays(today,1),nm=tkNextMonday(),wk=tkAddDays(today,7);
-  tkMenu(e,'d'+id,[
-    {n:'Today',h:tkShort(today),on:t.dueDate===today,fn:set(today)},
-    {n:'Tomorrow',h:tkShort(d1),on:t.dueDate===d1,fn:set(d1)},
-    {n:'Next Monday',h:tkShort(nm),on:t.dueDate===nm,fn:set(nm)},
-    {n:'In a week',h:tkShort(wk),on:t.dueDate===wk,fn:set(wk)},
-    {n:'No date',h:'',on:!t.dueDate,fn:set('')}
-  ],{n:'Pick a date...',type:'date',value:t.dueDate||today,fn:function(v){tkUpdate(id,{dueDate:v});}});
-}
 function tkOpenEstMenu(e,id){
   var t=tkTask(id);if(!t)return;
   var set=function(v){return function(){tkUpdate(id,{est:v});};};
@@ -5734,8 +5824,86 @@ function tkDropOnDay(e,ds){
   try{id=id||e.dataTransfer.getData('text/plain');}catch(x){}
   tkDragEnd();
   if(!id||!tkTask(id))return;
-  tkUpdate(id,{dueDate:ds,waiting:undefined});
-  remToast('Due '+tkShort(ds));
+  tkPlanOnDay(id,ds);
+  
+}
+// -- To Do week strip: planned work (day planner blocks) shown beside meetings and tasks --
+// Hours of planned work on a day: blocks only, merged, minus any time a meeting already takes
+function tkPlanHrs(ds){
+  var iv=dpDayIvs(ds,getBlocksForDate(ds),false);
+  if(!iv.blocks.length)return 0;
+  var b=dpMerge(iv.blocks),m=dpMerge(iv.meetings.slice()),t=0;
+  b.forEach(function(p){t+=p[1]-p[0];});
+  t-=dpOverlapMin(b,m);
+  return Math.max(0,t)/60;
+}
+// Planned time per task that still lies ahead on that day (time already gone is counted in the task's spent time)
+// Where a task's planned time sits: hours still ahead (for the unscheduled part), and which days it is planned on
+var _tkPiC={raw:null,min:-1,v:null};
+function tkPlanIndex(){
+  var raw=localStorage.getItem('plannerTimeBlocks')||'{}',min=Math.floor(Date.now()/60000);
+  if(_tkPiC.raw===raw&&_tkPiC.min===min)return _tkPiC.v;
+  var data={},today=todayStr(),nowM=dpMinNow(),ahead={},days={};
+  try{data=JSON.parse(raw)||{};}catch(e){}
+  Object.keys(data).forEach(function(ds){
+    if(ds<today)return;
+    (data[ds]||[]).forEach(function(b){
+      if(!b.taskId||!(b.dur>0))return;
+      var m=b.dur;
+      if(ds===today){var gone=Math.min(b.dur,nowM-b.start);if(gone>0)m-=gone;} // time already gone counts as spent
+      var d=days[b.taskId]||(days[b.taskId]={});d[ds]=(d[ds]||0)+b.dur/60;
+      if(m>0)ahead[b.taskId]=(ahead[b.taskId]||0)+m/60;
+    });
+  });
+  _tkPiC={raw:raw,min:min,v:{ahead:ahead,days:days}};
+  return _tkPiC.v;
+}
+function tkShortD(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric'});}
+// Plan time for a task on a day: a block in the first free gap inside working hours (the Planner stays the one place that holds when)
+function tkPlanOnDay(id,ds){
+  var t=tkTask(id);
+  if(!t||t.done)return;
+  var blocks=getBlocksForDate(ds),gaps=dpFreeGaps(ds,dpItemsForDate(ds,blocks));
+  if(!gaps.length){remToast('No free working time on '+tkShort(ds));return;}
+  var wasParked=!!t.someday;
+  if(wasParked)saveTasks(getTasks().map(function(x){return x.id===id?Object.assign({},x,{someday:false}):x;}));
+  var unp=t.est>0?Math.max(0,tkLeft(t)-(tkPlanIndex().ahead[id]||0)):0;
+  var want=unp>0?Math.min(120,Math.max(30,Math.round(unp*4)*15)):60;
+  var g=gaps.filter(function(x){return x.end-x.start>=want;})[0]||gaps[0];
+  var dur=Math.min(want,g.end-g.start),start=g.start;
+  var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
+  if(projOk){
+    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:start,dur:dur,goal:t.title,taskId:t.id});
+    setBlocksForDate(ds,blocks);
+    tkRefresh();
+    renderTaskWeekStrip();
+    remToast('Planned '+tkShort(ds)+', '+dpFmtTime(start)+' to '+dpFmtTime(start+dur)+(wasParked?'. Moved back to your list.':''));
+  }else{
+    // no project to book the time to yet: open the day with a new block ready, the project is picked there
+    if(wasParked)_refreshTaskViews();
+    openDayPlan(ds);
+    dpNewRange={start:start,dur:dur,goal:t.title,taskId:t.id};
+    dpSelectedBlock='new';
+    renderDayPlan();
+  }
+}
+function tkOpenPlanMenu(e,id){
+  var t=tkTask(id);if(!t)return;
+  var today=todayStr(),items=[],ds=today,n=0;
+  while(items.length<5&&n<21){
+    if(tkCap(ds)>0){
+      var free=dpFreeGaps(ds,dpItemsForDate(ds,getBlocksForDate(ds))).reduce(function(s,g){return s+(g.end-g.start);},0)/60;
+      items.push({n:ds===today?'Today':(ds===tkAddDays(today,1)?'Tomorrow':new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long'})),h:tkShortD(ds)+' &middot; '+(free>0.01?tkFmtH(free)+' free':'full'),fn:(function(d){return function(){tkPlanOnDay(id,d);};})(ds)});
+    }
+    ds=tkAddDays(ds,1);n++;
+  }
+  tkMenu(e,'p'+id,items,{n:'Pick a date...',type:'date',value:today,fn:function(v){tkPlanOnDay(id,v);}});
+}
+// Hours still to do on tasks, less what a planned block already covers (so a task is never counted twice)
+function tkSumHPl(list,pm){
+  var h=0;
+  list.forEach(function(t){if(t.est>0)h+=Math.max(0,tkLeft(t)-(pm[t.id]||0));});
+  return{h:h};
 }
 function renderTaskWeekStrip(){
   var el=document.getElementById('taskWeekStrip');
@@ -5745,19 +5913,22 @@ function renderTaskWeekStrip(){
   while(days.length<5){var dw=d.getDay();if(dw>=1&&dw<=5)days.push(localIsoDate(d));d.setDate(d.getDate()+1);}
   el.innerHTML=days.map(function(ds){
     var items=tasks.filter(function(t){return ds===today?tkBucket(t)==='today':(t.dueDate===ds&&!t.waiting);});
-    var hrs=tkSumH(items).h,cap=tkCap(ds),mt=tkMeet(ds),av=Math.max(0,cap-mt),lv=leaveDayInfo(ds);
+    var pm=tkPlanIndex().ahead,hrs=tkSumHPl(items,pm).h,th=tkSumH(items).h,pl=tkPlanHrs(ds),cap=tkCap(ds),mt=tkMeet(ds),av=Math.max(0,cap-mt),lv=leaveDayInfo(ds);
     var mp=cap>0?Math.min(100,Math.round(mt/cap*100)):0;
-    var pct=cap>0?Math.min(100-mp,Math.round(hrs/cap*100)):(hrs>0?100:0);
-    var over=(cap>0&&hrs>av+0.001)||(cap===0&&hrs>0);
-    if(over&&hrs>0&&cap>0&&pct<8){pct=8;mp=Math.min(mp,100-pct);}
+    var pp=cap>0?Math.min(100-mp,Math.round(pl/cap*100)):(pl>0&&!(hrs>0)?100:0);
+    if(pl>0.004&&cap>0&&pp<4)pp=Math.min(4,100-mp);
+    var pct=cap>0?Math.min(100-mp-pp,Math.round(hrs/cap*100)):(hrs>0?100:0);
+    var over=(cap>0&&hrs+pl>av+0.001)||(cap===0&&hrs>0);
+    if(over&&hrs>0&&cap>0&&pct<8){pct=8;var ex=mp+pp+pct-100;if(ex>0){var dpp=Math.min(pp,ex);pp-=dpp;ex-=dpp;mp=Math.max(0,mp-ex);}}
     var lbl=ds===today?'Today':(lv?(leaveTypeById(lv.type)||{label:'Leave'}).label:'');
     if(mt)lbl=(lbl?lbl+' &middot; ':'')+tkFmtH(mt)+' mtg';
-    var cnt=items.length+' task'+(items.length===1?'':'s')+(hrs?' &middot; '+tkFmtH(hrs):'');
-    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?' leave':'')+(over?' over':'')+'" onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')" title="'+escH((lv?leaveDayLabel(ds,lv):'Click to show this day. Drop a task here to set its due date.')+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':''))+'">'
+    if(pl>0.004)lbl=(lbl?lbl+' &middot; ':'')+'<span class="tk-pl">'+tkFmtH(pl)+' planned</span>';
+    var cnt=items.length+' task'+(items.length===1?'':'s')+(th?' &middot; '+tkFmtH(th):'');
+    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?' leave':'')+(over?' over':'')+'" onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')" title="'+escH((lv?leaveDayLabel(ds,lv):'Click to show this day. Drop a task here to plan time for it.')+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':'')+(pl>0.004?' Planned work: '+tkFmtH(pl)+'.':''))+'">'
       +'<b>'+new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})+'</b>'
       +'<span class="tk-sub">'+(lbl||'&nbsp;')+'</span>'
       +'<span class="tk-cnt">'+cnt+'</span>'
-      +'<div class="tk-bar"><div class="m" style="width:'+mp+'%"></div><div class="t" style="width:'+pct+'%"></div></div></div>';
+      +'<div class="tk-bar"><div class="m" style="width:'+mp+'%"></div><div class="p" style="width:'+pp+'%"></div><div class="t" style="width:'+pct+'%"></div></div></div>';
   }).join('');
 }
 
@@ -5792,7 +5963,7 @@ function renderTaskUrgency(){
   var tHdr=(th.h?(tkFmtH(th.h)+(cap?' of '+tkFmtH(cap):'')+(th.miss?' &middot; '+th.miss+' without estimate':'')):'')+(mtT?(th.h?' &middot; ':'')+tkFmtH(mtT)+' in meetings':'');
   var h=banner;
   if(B.overdue.length)h+=tkSecHtml('overdue','Overdue',B.overdue,tkHdrH(B.overdue),'','overdue');
-  h+=tkSecHtml('today','Today',B.today,tHdr,'Nothing on Today yet. Use the &#9733; Today button on a task, add one with !today, or drop a task on today in the strip above.');
+  h+=tkSecHtml('today','Today',B.today,tHdr,'Nothing on Today yet. Use the &#9733; Today button on a task, or add one with !today.');
   if(B.waiting.length)h+=tkSecHtml('waiting','Waiting on',B.waiting,'','');
   if(B.week.length)h+=tkSecHtml('week','This week',B.week,tkHdrH(B.week),'');
   if(B.later.length)h+=tkSecHtml('later','Later',B.later,tkHdrH(B.later),'');
@@ -7212,8 +7383,16 @@ function makeFlatTaskRow(t,hideProj){
   var subIco=(compact&&subs.length)?'<span class="tk-ico" title="Subtasks done">'+TK_SVG_CHECK+' '+subsDone+'/'+subs.length+'</span>':'';
   var priLabel=t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1);
   var today=todayStr();
-  var dueHtml=isDone?(due?'<span class="task-due">'+due.text+'</span>':''):'<span class="task-due tk-click'+(due?' '+due.cls:' tk-add')+'" onclick="tkOpenDateMenu(event,\''+id+'\')" title="Change due date">'+(due?due.text:'+ date')+'</span>';
+  var dueHtml=isDone?(due?'<span class="task-due">'+due.text+'</span>':''):(due?'<span class="task-due '+due.cls+'" title="Change the due date in the task details">'+due.text+'</span>':'');
   var sp=tkSpent(t.id);
+  var plHtml='';
+  if(!isDone){
+    var pix=tkPlanIndex(),pd=pix.days[id];
+    if(pd){
+      var pks=Object.keys(pd).sort(),unp=t.est>0?Math.max(0,tkLeft(t)-(pix.ahead[id]||0)):0;
+      plHtml='<span class="tk-plan tk-click" onclick="event.stopPropagation();openDayPlan(\''+pks[0]+'\')" title="'+escH(pks.map(function(d){return tkShort(d)+' - '+tkFmtH(pd[d]);}).join('; ')+(unp>0.01?'. '+tkFmtH(unp)+' of the estimate is not planned yet.':''))+'">Planned '+(pks[0]===today?'today':tkShortD(pks[0]))+(pks.length>1?' +'+(pks.length-1):'')+(unp>0.01?' &middot; '+tkFmtH(unp)+' to plan':'')+'</span>';
+    }
+  }
   var estHtml=isDone
     ?((t.est>0||t.actual>0)?'<span class="tk-est">'+(t.est>0?'est '+tkFmtH(t.est):'')+(t.est>0&&t.actual>0?' &middot; ':'')+(t.actual>0?'took '+tkFmtH(t.actual):'')+'</span>':'')
     :'<span class="tk-est tk-click'+((t.est>0||sp.h>0)?'':' tk-add')+'" onclick="tkOpenEstMenu(event,\''+id+'\')" title="Time estimate'+(sp.h>0?' - '+tkSpentText(sp):'')+'">'+(t.est>0?(sp.h>0?tkFmtH(sp.h)+' of ~'+tkFmtH(t.est):'~'+tkFmtH(t.est)):(sp.h>0?tkFmtH(sp.h)+' spent':'+ est'))+'</span>';
@@ -7247,10 +7426,11 @@ function makeFlatTaskRow(t,hideProj){
         +'</div></div>';
   }
   var acts;
-  if(compact)acts=isDone?'':'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button>';
+  if(compact)acts=isDone?'':'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button><button class="task-act-btn" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>';
   else acts=isDone
     ?'<button class="task-act-btn" onclick="openTaskEditModal(\''+id+'\')" title="Edit">Edit</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+id+'\')" title="Delete">Delete</button>'
     :'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button>'
+      +'<button class="task-act-btn" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>'
       +'<button class="task-act-btn" onclick="tkOpenWaitMenu(event,\''+id+'\')" title="Waiting on someone">Wait</button>'
       +'<button class="task-act-btn" onclick="openTaskEditModal(\''+id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openTaskRemindMenu(event,\''+id+'\')" title="Remind me">Remind</button>'
       +'<button class="task-act-btn" onclick="openSubtaskAdd(\''+id+'\')" title="Add subtask">Sub</button>'
@@ -7261,7 +7441,7 @@ function makeFlatTaskRow(t,hideProj){
     +'<span class="pri-badge '+t.priority+(isDone?'':' tk-click')+'"'+(isDone?'':' onclick="tkCyclePri(\''+id+'\')" title="Click to change priority"')+'>'+priLabel+'</span>'
     +'<div class="task-body">'
       +'<div class="task-title">'+escH(t.title)+subCount+(hideProj?'':tkProjHtml(t.project))+'</div>'
-      +'<div class="task-meta">'+pinHtml+waitHtml+dueHtml+estHtml+subIco+notesHtml+'</div>'
+      +'<div class="task-meta">'+pinHtml+waitHtml+dueHtml+estHtml+plHtml+subIco+notesHtml+'</div>'
       +quickHtml+subHtml+subAddHtml
     +'</div>'
     +'<div class="task-actions">'+acts+'</div>'
