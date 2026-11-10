@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.57.0] — 2026-11-10
+
+### Added
+- The Plan Day view now shows your working hours (Settings > Working Hours) as an indication. Nothing is blocked: you can still plan blocks and meetings anywhere, including outside your hours, on weekends and over lunch.
+  - Time outside working hours is hatched on the timeline, and breaks such as lunch are shown as a labelled band. A non-working day or a leave day is hatched all the way down.
+  - A summary strip under the header shows the day's hours and breaks, a bar of planned time (orange for blocks, purple for meetings) with "3h 30m planned of 8h 15m" and what is still open, and an amber "1h outside working hours" when something is planned outside them. Overlapping items are counted once. Half-day leave halves the working time.
+  - The strip also shows the week so far, for example "Week: 22h planned of 40h", using the hours of each day, so a short Friday counts as its own length.
+
+### Changed
+- Free time and the "+ Plan" slot in Plan Day are now found inside your working hours and skip lunch and other breaks (previously a fixed 8AM to 5PM). A day with no working hours still falls back to 8AM to 5PM.
+- The timeline now widens to include your working hours, and any block or meeting planned outside the usual 7AM to 7PM window, so nothing is hidden.
+
+---
+
 ## [0.56.0] — 2026-11-10
 
 ### Changed

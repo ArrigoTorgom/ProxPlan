@@ -931,6 +931,22 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-side-row.now{border-left:3px solid #1D9E75;padding-left:6px;}
 .dp-side-gap{border:1px dashed var(--border);border-radius:6px;padding:5px 8px;margin:4px 0;color:var(--muted);font-size:11.5px;}
 .dp-side-note{font-size:11.5px;color:var(--muted);padding:4px 0;}
+.dp-wk{position:absolute;left:0;right:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;}
+.dp-wk span{font-size:10px;color:var(--muted);padding:0 8px;opacity:.9;}
+.dp-wk.off{background:repeating-linear-gradient(135deg,rgba(128,128,128,.13) 0 6px,rgba(128,128,128,.05) 6px 12px);}
+.dp-wk.brk{background:rgba(247,146,30,.10);border-top:1px dashed rgba(247,146,30,.5);border-bottom:1px dashed rgba(247,146,30,.5);}
+.dp-wh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;padding:7px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text);}
+.dp-wh:empty{display:none;}
+.dp-wh .sched{font-weight:600;}
+.dp-wh .mut{color:var(--muted);}
+.dp-wh .wk{margin-left:auto;}
+.dp-wh .warn{color:var(--med);font-weight:600;}
+.dp-wh .over{color:var(--high);font-weight:600;}
+.dp-wh .bar{width:110px;height:6px;border-radius:3px;background:var(--border);overflow:hidden;display:flex;flex-shrink:0;}
+.dp-wh .bar i{display:block;height:100%;}
+.dp-wh .bar .w{background:var(--primary);}
+.dp-wh .bar .m{background:#8b5cf6;}
+@media(max-width:760px){.dp-wh .wk{margin-left:0;}}
 .dp-side-leave{font-size:11.5px;background:rgba(34,197,94,.14);color:#16a34a;border-radius:6px;padding:4px 8px;margin-bottom:6px;}
 .dp-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:9px;margin-left:4px;vertical-align:1px;}
 .dp-tag.due{background:var(--high-bg);color:var(--high);}
@@ -1490,6 +1506,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
     </div>
     <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block or meeting to move it, or drag its top or bottom edge to change the duration. Select an item and press Delete to remove it. Overlapping items sit side by side.</span></div>
+    <div class="dp-wh" id="dpWh"></div>
     <div class="dp-main">
       <div class="dp-body">
         <div class="dp-hours" id="dpHours"></div>
@@ -1934,14 +1951,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.56.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.57.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.56.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.57.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3033,6 +3050,100 @@ function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&
 function dpPersist(){setBlocksForDate(dpDate,dpBlocks);renderUpNext();}
 
 var DP_WORK_START=8*60,DP_WORK_END=17*60;
+// -- Day planner: working hours shown as an indication only (nothing is blocked) --
+function dpHf(h){return h>0.004?dpFmtDur(Math.round(h*60)):'0m';}
+function dpMerge(iv){
+  iv.sort(function(a,b){return a[0]-b[0];});
+  var m=[];
+  iv.forEach(function(p){var l=m[m.length-1];if(l&&p[0]<=l[1])l[1]=Math.max(l[1],p[1]);else m.push([p[0],p[1]]);});
+  return m;
+}
+function dpOverlapMin(iv,bl){
+  var t=0;
+  iv.forEach(function(p){bl.forEach(function(q){var s=Math.max(p[0],q[0]),e=Math.min(p[1],q[1]);if(e>s)t+=e-s;});});
+  return t;
+}
+function dpDayIvs(ds,blocks,live){
+  var bi=[],mi=[];
+  (blocks||[]).forEach(function(b){if(b.dur>0)bi.push([b.start,b.start+b.dur]);});
+  getManualEvents().forEach(function(e){
+    if(e.date!==ds||!e.startTime)return;
+    var a=evMinFromTime(e.startTime),b=a+60;
+    if(e.endTime){if(live){var t=dpMeetTimes(e);a=t.s;b=t.en;}else b=evMinFromTime(e.endTime);}
+    if(b>a)mi.push([a,b]);
+  });
+  return{blocks:bi,meetings:mi};
+}
+// how a day's plan sits against the working hours: inside, outside, open
+function dpWorkStats(ds,blocks,live){
+  var sc=wcSched(wcDow(ds)),iv=dpDayIvs(ds,blocks,live);
+  var all=dpMerge(iv.blocks.concat(iv.meetings)),mt=dpMerge(iv.meetings.slice());
+  var inAll=dpOverlapMin(all,sc.blocks),inMeet=dpOverlapMin(mt,sc.blocks),tot=0;
+  all.forEach(function(p){tot+=p[1]-p[0];});
+  return{sc:sc,lv:leaveDayInfo(ds),cap:tkCap(ds),inside:inAll/60,meet:inMeet/60,work:(inAll-inMeet)/60,outside:(tot-inAll)/60,planned:tot/60};
+}
+function dpWeekStats(ds){
+  var d0=new Date(ds+'T12:00:00'),back=(d0.getDay()+6)%7,cap=0,pl=0,i;
+  for(i=0;i<7;i++){
+    var d=new Date(ds+'T12:00:00');d.setDate(d.getDate()-back+i);
+    var x=d.toLocaleDateString('en-CA',{timeZone:TZ}),live=x===dpDate;
+    var st=dpWorkStats(x,live?dpBlocks:getBlocksForDate(x),live);
+    cap+=st.cap;pl+=st.planned;
+  }
+  return{cap:cap,planned:pl};
+}
+// the grid always covers the working day, and any planned item that sits outside it
+function dpSetRange(ds){
+  var sc=wcSched(wcDow(ds)),a=7*60,b=19*60,iv=dpDayIvs(ds,dpBlocks,true);
+  if(sc.blocks.length){a=Math.min(a,Math.floor(sc.blocks[0][0]/60)*60);b=Math.max(b,Math.ceil(sc.blocks[sc.blocks.length-1][1]/60)*60);}
+  iv.blocks.concat(iv.meetings).forEach(function(p){a=Math.min(a,Math.floor(p[0]/60)*60);b=Math.max(b,Math.ceil(p[1]/60)*60);});
+  DP_GRID_START=Math.max(0,a);DP_GRID_END=Math.min(24*60,b);
+}
+// shading behind the grid: hatched = outside working hours, amber band = break
+function dpOffHtml(ds){
+  var sc=wcSched(wcDow(ds)),lv=leaveDayInfo(ds),G0=DP_GRID_START,G1=DP_GRID_END,h='';
+  function seg(a,b,cls,label){
+    a=Math.max(a,G0);b=Math.min(b,G1);
+    if(b<=a)return;
+    h+='<div class="dp-wk '+cls+'" style="top:'+((a-G0)*DP_PX_PER_MIN)+'px;height:'+((b-a)*DP_PX_PER_MIN)+'px">'+(label?'<span>'+label+'</span>':'')+'</div>';
+  }
+  if(lv&&lv.len!=='half'){seg(G0,G1,'off','On leave');return h;}
+  var bl=sc.blocks;
+  if(!bl.length){seg(G0,G1,'off','Not a working day');return h;}
+  seg(G0,bl[0][0],'off','');
+  for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;seg(bl[i-1][1],bl[i][0],'brk',mid>=690&&mid<=840?'Lunch':'Break');}
+  seg(bl[bl.length-1][1],G1,'off','');
+  return h;
+}
+function dpWorkRangeText(ds){
+  var bl=wcSched(wcDow(ds)).blocks;
+  return bl.length?'between '+dpFmtTime(bl[0][0])+' and '+dpFmtTime(bl[bl.length-1][1]):'between '+dpFmtTime(DP_WORK_START)+' and '+dpFmtTime(DP_WORK_END);
+}
+function dpWhRender(){
+  var el=document.getElementById('dpWh');
+  if(!el||!dpDate)return;
+  var st=dpWorkStats(dpDate,dpBlocks,true),bl=st.sc.blocks,lv=st.lv,h='';
+  if(lv&&lv.len!=='half'){
+    h+='<span class="sched">'+escH(leaveDayLabel(dpDate,lv))+'</span><span class="mut">no working time</span>';
+  }else if(!bl.length){
+    h+='<span class="sched">Not a working day</span>';
+  }else{
+    var t='Working '+dpFmtTime(bl[0][0])+' &ndash; '+dpFmtTime(bl[bl.length-1][1]);
+    for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;t+=' &middot; '+(mid>=690&&mid<=840?'lunch':'break')+' '+dpFmtTime(bl[i-1][1])+' &ndash; '+dpFmtTime(bl[i][0]);}
+    h+='<span class="sched">'+t+'</span>';
+    if(lv)h+='<span class="mut">half-day leave</span>';
+    if(st.cap>0){
+      var wp=Math.min(100,st.work/st.cap*100),mp=Math.min(100-wp,st.meet/st.cap*100),open=st.cap-st.inside;
+      h+='<span class="bar" title="Orange: planned blocks. Purple: meetings."><i class="w" style="width:'+wp+'%"></i><i class="m" style="width:'+mp+'%"></i></span>';
+      h+='<span>'+dpHf(st.inside)+' planned of '+dpHf(st.cap)+'</span>';
+      h+=open>0.004?'<span class="mut">'+dpHf(open)+' open</span>':(open<-0.004?'<span class="over">'+dpHf(-open)+' over</span>':'<span class="mut">fully planned</span>');
+    }
+  }
+  if(st.outside>0.004)h+='<span class="warn">'+dpHf(st.outside)+' outside working hours</span>';
+  var wk=dpWeekStats(dpDate);
+  if(wk.cap>0)h+='<span class="mut wk" title="Everything planned this week (Mon to Sun) against your working hours">Week: '+dpHf(wk.planned)+' planned of '+dpHf(wk.cap)+'</span>';
+  el.innerHTML=h;
+}
 function dpMinNow(){var n=new Date();return n.getHours()*60+n.getMinutes();}
 function dpComputeLanes(blocks,ds){
   var items=blocks.map(function(b){return{id:b.id,start:b.start,end:b.start+b.dur};});
@@ -3078,15 +3189,20 @@ function dpFreeGaps(ds,items){
   if(ds<today)return[];
   var lv=leaveDayInfo(ds);
   if(lv&&lv.len!=='half')return[];
-  var s=DP_WORK_START,e=DP_WORK_END;
-  if(ds===today)s=Math.max(s,Math.ceil(dpMinNow()/DP_SNAP)*DP_SNAP);
-  var gaps=[],cur=s;
-  items.slice().sort(function(a,b){return a.start-b.start;}).forEach(function(it){
-    var gEnd=Math.min(it.start,e);
-    if(gEnd-cur>=30)gaps.push({start:cur,end:gEnd});
-    cur=Math.max(cur,it.end);
+  // free time is looked for inside the working hours (lunch and other breaks left out); a day with no working hours falls back to 8-5
+  var sc=wcSched(wcDow(ds)),bl=sc.blocks.length?sc.blocks:[[DP_WORK_START,DP_WORK_END]];
+  var its=items.slice().sort(function(a,b){return a.start-b.start;}),gaps=[];
+  bl.forEach(function(p){
+    var s=p[0],e=p[1];
+    if(ds===today)s=Math.max(s,Math.ceil(dpMinNow()/DP_SNAP)*DP_SNAP);
+    var cur=s;
+    its.forEach(function(it){
+      var gEnd=Math.min(it.start,e);
+      if(gEnd-cur>=30)gaps.push({start:cur,end:gEnd});
+      cur=Math.max(cur,it.end);
+    });
+    if(e-cur>=30)gaps.push({start:cur,end:e});
   });
-  if(e-cur>=30)gaps.push({start:cur,end:e});
   return gaps;
 }
 function upNextSuggestions(ds,blocks,max){
@@ -3166,7 +3282,7 @@ function renderDpSide(){
       var t=s.task;
       return'<div class="dp-side-row" style="cursor:default"><div class="bd"><span class="nm">'+escH(t.title)+'</span>'+(s.tag?'<span class="dp-tag '+s.cls+'">'+escH(s.tag)+'</span>':'')+(t.project?'<span class="sb">'+escH(t.project)+'</span>':'')+'</div>'+(gaps.length?'<button class="dp-plan-btn" onclick="dpPlanTask(\''+escA(t.id)+'\')" title="Add a block for this task in the next free slot">+ Plan</button>':'')+'</div>';
     }).join('');
-    if(!gaps.length&&!(lv&&lv.len!=='half'))h+='<div class="dp-side-note">No free time left between '+dpFmtTime(DP_WORK_START)+' and '+dpFmtTime(DP_WORK_END)+'.</div>';
+    if(!gaps.length&&!(lv&&lv.len!=='half'))h+='<div class="dp-side-note">No free time left '+dpWorkRangeText(dpDate)+'.</div>';
   }
   el.innerHTML=h;
 }
@@ -3402,6 +3518,7 @@ function dpShiftDay(delta){
 
 function renderDayPlan(keepEd){
   if(dpSelectedBlock)dpSelectedMeeting=null;
+  dpSetRange(dpDate);
   var d=new Date(dpDate+'T00:00:00');
   document.getElementById('dpDayName').textContent=d.toLocaleDateString('en-US',{weekday:'long',timeZone:TZ});
   document.getElementById('dpDayDate').textContent=d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',timeZone:TZ});
@@ -3418,7 +3535,7 @@ function renderDayPlan(keepEd){
   var gridEl=document.getElementById('dpGrid');
   gridEl.style.height=totalPx+'px';
 
-  var lines='';
+  var lines=dpOffHtml(dpDate);
   for(var m=DP_GRID_START;m<=DP_GRID_END;m+=30){
     var top=(m-DP_GRID_START)*DP_PX_PER_MIN;
     lines+='<div class="dp-gridline'+(m%60?' half':'')+'" style="top:'+top+'px"></div>';
@@ -3472,6 +3589,7 @@ function renderDayPlan(keepEd){
   gridEl.onmousedown=function(e){if(e.target===gridEl)dpStartCreate(e);};
 
   renderDpSide();
+  dpWhRender();
   if(keepEd!==true)renderDpEditor();
 }
 
@@ -4917,7 +5035,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.56.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.57.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
