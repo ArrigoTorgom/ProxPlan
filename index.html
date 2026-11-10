@@ -931,6 +931,18 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-side-row.now{border-left:3px solid #1D9E75;padding-left:6px;}
 .dp-side-gap{border:1px dashed var(--border);border-radius:6px;padding:5px 8px;margin:4px 0;color:var(--muted);font-size:11.5px;}
 .dp-side-note{font-size:11.5px;color:var(--muted);padding:4px 0;}
+.ot-bar{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;margin:0 0 10px;font-size:12.5px;color:var(--muted);}
+.ot-bar .ot-bal b{color:var(--primary);font-size:14px;}
+.ot-panel{flex-direction:column;gap:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:10px 12px;margin:0 0 12px;font-size:12px;color:var(--text);}
+.ot-help{color:var(--muted);line-height:1.4;}
+.ot-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.ot-row label{display:flex;align-items:center;gap:5px;color:var(--muted);}
+.ot-row input{border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12.5px;background:var(--card);color:var(--text);font-family:inherit;}
+.ot-msg{color:var(--high);min-height:0;}
+.ot-msg:empty{display:none;}
+.ot-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+.ot-rec{display:flex;align-items:center;gap:10px;padding:3px 0;border-top:1px solid var(--border);}
+.ot-rec .ot-n{flex:1;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dp-wk{position:absolute;left:0;right:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;}
 .dp-wk span{font-size:10px;color:var(--muted);padding:0 8px;opacity:.9;}
 .dp-wk.off{background:repeating-linear-gradient(135deg,rgba(128,128,128,.13) 0 6px,rgba(128,128,128,.05) 6px 12px);}
@@ -1706,7 +1718,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
         <button id="btnPct" onclick="setMode('pct')">%</button>
       </div>
       <button id="simpleLogBtn" onclick="toggleSimpleLog()" class="btn secondary-btn sm act-toggle-btn" title="Show/hide activity fields">Activity<span class="act-toggle-pill"><span class="act-toggle-knob"></span></span></button>
-      <div id="totalHrsRow" style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:4px"><span style="font-size:12px;color:var(--muted)">Working Hours</span><div style="display:flex;align-items:center;gap:4px"><input type="number" id="totalHoursInput" min="0" max="24" step="0.5" value="8" oninput="syncHours()" style="width:52px;border:1px solid var(--border);border-radius:8px;padding:7px 8px;font-size:13px;outline:none;text-align:right;background:var(--bg);color:var(--text)"><span style="font-size:13px;color:var(--muted)">h</span></div></div>
+      <div id="totalHrsRow" style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:4px"><span id="totalHrsText" style="font-size:12px;color:var(--muted)" title="Set in Settings > Working Hours"></span><input type="hidden" id="totalHoursInput" value="8"></div>
 
     </div>
     <div id="leaveDayRow"></div>
@@ -1757,6 +1769,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       </div>
       <button id="actToggleBtn" onclick="toggleActivityBadges()" class="btn secondary-btn sm act-toggle-btn" title="Show/hide activity in badges">Activity<span class="act-toggle-pill"><span class="act-toggle-knob"></span></span></button><button class="btn secondary-btn sm" onclick="openExportModal()">Export</button>
     </div>
+    <div class="ot-bar" id="otBar" style="display:none"></div><div class="ot-panel" id="otPanel" style="display:none"></div>
     <table class="log-table" id="historyListTable">
       <thead><tr><th style="position:relative;width:var(--hist-date-w,130px)">Date<span class="hist-col-drag" onmousedown="startHistColDrag(event,'date')"></span></th><th style="position:relative;width:var(--hist-alloc-w,280px)">Allocations<span class="hist-col-drag" onmousedown="startHistColDrag(event,'alloc')"></span></th><th>Notes</th></tr></thead>
       <tbody id="historyBody"></tbody>
@@ -1951,14 +1964,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.57.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.58.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.57.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.58.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2172,7 +2185,7 @@ function wcNetRefresh(){
 function wcAfter(rerender){
   if(rerender)renderWorkSettings();else wcNetRefresh();
   var ed=document.getElementById('entryDate'),ti=document.getElementById('totalHoursInput');
-  if(ed&&ed.value&&ti&&!getLogsForDate(ed.value)){var dr=getDraft();if(!(dr&&dr.date===ed.value)){ti.value=workNet(ed.value)||8;updateTotal();}}
+  if(ed&&ed.value&&ti&&!getLogsForDate(ed.value)){var dr=getDraft();if(!(dr&&dr.date===ed.value)){tsApplyWork(ed.value);updateTotal();}}
   try{if(document.getElementById('taskWeekStrip'))renderTasksPanel();}catch(e){}
 }
 function wcSave(c,rerender){saveWorkCfg(c);wcAfter(rerender);}
@@ -2653,7 +2666,7 @@ function loadLogForDate(date){
   var log=getLogsForDate(date);
   if(!log){applyDraftOrLog(date);return;}
   setMode(log.mode||'pct');
-  document.getElementById('totalHoursInput').value=log.totalHrs||workNet(date)||8;
+  document.getElementById('totalHoursInput').value=tsLogWh(log,date);tsWhText();
   document.getElementById('entryNotes').value=log.notes||'';
   requestAnimationFrame(function(){
     document.querySelectorAll('.alloc-input').forEach(function(inp){
@@ -3924,7 +3937,7 @@ function renderImportRow(date){
 function importPlannedIntoLog(){
   var date=document.getElementById('entryDate').value;
   var totals=dpBlockTotalsForDate(date);
-  var totalDayHrs=parseFloat(document.getElementById('totalHoursInput').value)||8;
+  var totalDayHrs=tsBasis();
   document.querySelectorAll('.alloc-row[data-project]').forEach(function(row){
     var proj=row.dataset.project;
     if(!(proj in totals))return;
@@ -4128,7 +4141,7 @@ function setMode(m){
   document.getElementById('btnHrs').classList.toggle('active',m==='hrs');
   document.getElementById('totalHrsRow').style.display=m==='hrs'?'flex':'none';
   var unit=m==='pct'?'%':'h';var max=m==='pct'?100:24;var step=m==='pct'?5:0.5;
-  var wh=parseFloat((document.getElementById('totalHoursInput')||{value:'8'}).value)||8;
+  var wh=tsBasis();
   document.querySelectorAll('.alloc-input,.alloc-extra-input').forEach(function(inp){
     var v=parseFloat(inp.value)||0;
     if(prev==='pct'&&m==='hrs')inp.value=Math.round(v/100*wh*10)/10;
@@ -4228,7 +4241,7 @@ function updateTotal(){
     grandTotal+=projTotals[proj];
   });
   var _lvH=leaveHrsForDate((document.getElementById('entryDate')||{}).value);
-  if(_lvH>0){var _lvWh=parseFloat((document.getElementById('totalHoursInput')||{value:'8'}).value)||8;grandTotal+=trackerMode==='pct'?_lvH/_lvWh*100:_lvH;}
+  if(_lvH>0){var _lvWh=tsBasis();grandTotal+=trackerMode==='pct'?_lvH/_lvWh*100:_lvH;}
   var num=document.getElementById('totalNum');var unit=document.getElementById('totalUnit');
   if(!num)return;
   if(trackerMode==='pct'){
@@ -4237,15 +4250,21 @@ function updateTotal(){
     num.className='total-num '+(Math.abs(grandTotal-100)<0.5?'ok':grandTotal>100?'warn':'');
     var _or=document.getElementById('otRow');if(_or)_or.style.display='none';
   }else{
-    var wh=parseFloat((document.getElementById('totalHoursInput')||{value:'8'}).value)||8;
-    var ot=Math.max(0,grandTotal-wh);
+    var wh=tsWhVal();
+    var ot=Math.max(0,grandTotal-wh);tsWhText();
     num.textContent=grandTotal.toFixed(1);
     if(unit)unit.textContent='h';
     var otRow=document.getElementById('otRow');
-    if(otRow){if(ot>0){otRow.style.display='';otRow.textContent='+'+ot.toFixed(1)+'h OT';}else{otRow.style.display='none';}}
+    if(otRow){if(ot>0){otRow.style.display='';otRow.textContent='+'+dpHf(ot)+' OT';}else{otRow.style.display='none';}}
     num.className='total-num ok';
   }
 }
+// -- Timesheet working hours come from Settings > Working Hours and are not edited here. Overtime is whatever is logged above them. --
+function tsWhVal(){var v=parseFloat((document.getElementById('totalHoursInput')||{}).value);return isNaN(v)?8:v;}
+function tsBasis(){var v=tsWhVal();if(v>0)return v;var d=(document.getElementById('entryDate')||{}).value;return d?lvDayHrs(d):8;}
+function tsLogWh(l,ds){var v=(l&&l.totalHrs!=null&&l.totalHrs!=='')?Number(l.totalHrs):NaN;return isNaN(v)?workNet(ds):v;}
+function tsApplyWork(ds){var ti=document.getElementById('totalHoursInput');if(ti)ti.value=workNet(ds);tsWhText();}
+function tsWhText(){var e=document.getElementById('totalHrsText');if(!e)return;var v=tsWhVal();e.textContent=v>0?'Working hours '+dpHf(v):'Not a working day: all hours count as overtime';}
 function syncHours(){updateTotal();}
 // ── Timesheet draft autosave ──
 function getDraft(){try{return JSON.parse(localStorage.getItem('plannerTimeDraft')||'null');}catch(e){return null;}}
@@ -4326,7 +4345,7 @@ function applyDraftOrLog(date){
   var draft=getDraft();
   if(draft&&draft.date===date){
     setMode(draft.mode||'pct');
-    if(draft.totalHrs)document.getElementById('totalHoursInput').value=draft.totalHrs;
+    document.getElementById('totalHoursInput').value=tsLogWh(getLogsForDate(date),date);tsWhText();
     document.getElementById('entryNotes').value=draft.notes||'';
     requestAnimationFrame(function(){
       document.querySelectorAll('.alloc-input').forEach(function(inp){
@@ -4346,7 +4365,7 @@ function applyDraftOrLog(date){
   var log=getLogsForDate(date);
   if(log){
     setMode(log.mode||'pct');
-    if(log.totalHrs)document.getElementById('totalHoursInput').value=log.totalHrs;
+    document.getElementById('totalHoursInput').value=tsLogWh(log,date);tsWhText();
     document.getElementById('entryNotes').value=log.notes||'';
     requestAnimationFrame(function(){
       document.querySelectorAll('.alloc-input').forEach(function(inp){
@@ -4368,7 +4387,7 @@ function applyDraftOrLog(date){
   setMode('hrs');
   document.querySelectorAll('.alloc-extra-line').forEach(function(el){el.remove();});
   document.getElementById('entryNotes').value='';
-  document.getElementById('totalHoursInput').value=workNet(date)||8;
+  tsApplyWork(date);
   updateTotal();
 }
 
@@ -4376,7 +4395,7 @@ function saveEntry(){
   var p=getProjects();if(p.length===0)return;
   var date=document.getElementById('entryDate').value;if(!date){alert('Please select a date.');return;}
   var notes=document.getElementById('entryNotes').value.trim();
-  var totalHrs=parseFloat(document.getElementById('totalHoursInput').value)||8;
+  var totalHrs=tsWhVal(),basis=tsBasis();
   var allocs={};
   document.querySelectorAll('.alloc-row[data-project]').forEach(function(row){
     var proj=row.dataset.project;
@@ -4388,10 +4407,10 @@ function saveEntry(){
       var ei=line.querySelector('.alloc-extra-input');
       var ea=line.querySelector('.alloc-activity-input');
       var ev=parseFloat(ei?ei.value:0)||0;
-      if(ev>0)extras.push(trackerMode==='pct'?{pct:ev,hrs:parseFloat((ev/100*totalHrs).toFixed(2)),activity:ea?ea.value.trim():''}:{hrs:ev,activity:ea?ea.value.trim():''});
+      if(ev>0)extras.push(trackerMode==='pct'?{pct:ev,hrs:parseFloat((ev/100*basis).toFixed(2)),activity:ea?ea.value.trim():''}:{hrs:ev,activity:ea?ea.value.trim():''});
     });
     if(v<=0&&!extras.length)return;
-    var entry=trackerMode==='pct'?{pct:v,hrs:parseFloat((v/100*totalHrs).toFixed(2))}:{hrs:v,pct:null};
+    var entry=trackerMode==='pct'?{pct:v,hrs:parseFloat((v/100*basis).toFixed(2))}:{hrs:v,pct:null};
     entry.activity=pAct?pAct.value.trim():'';
     if(extras.length)entry.extras=extras;
     allocs[proj]=entry;
@@ -5035,7 +5054,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.57.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.58.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5125,7 +5144,59 @@ function renderHistoryReplicon(){
   var totalsRow='<tr class="hist-repl-totals"><td colspan="2">Total</td>'+grpTotals.map(function(t){return'<td class="hist-repl-day">'+(t?t.toFixed(1):'')+'</td>';}).join('')+'<td style="text-align:right">'+grandTotal.toFixed(1)+'</td></tr>';
   tbody.innerHTML=bodyHtml+totalsRow;
 }
+// -- Overtime balance: overtime logged on past days, less what has been recovered (time off or paid out) --
+var _otOpen=false;
+function getOtRec(){var d=getTrackerData();return Array.isArray(d.otRecovered)?d.otRecovered:[];}
+function saveOtRec(a){var d=getTrackerData();d.otRecovered=a;saveTrackerData(d);}
+function otOfLog(l){
+  var t=0;
+  Object.values(l.allocs||{}).forEach(function(a){t+=(parseFloat(a.hrs)||0);(a.extras||[]).forEach(function(x){t+=parseFloat(x.hrs)||0;});});
+  return t>0?Math.max(0,t-tsLogWh(l,l.date)):0;
+}
+function otAccrued(){var s=0,td=todayStr();getLogs().forEach(function(l){if(l.date<=td)s+=otOfLog(l);});return Math.round(s*100)/100;}
+function otRecovered(){var s=0;getOtRec().forEach(function(x){s+=Number(x.hrs)||0;});return Math.round(s*100)/100;}
+function otBalance(){return Math.max(0,Math.round((otAccrued()-otRecovered())*100)/100);}
+function otToggle(){_otOpen=!_otOpen;renderOtBar();}
+function otRecord(all){
+  var bal=otBalance(),h=all?bal:parseFloat((document.getElementById('otHrs')||{}).value),dt=(document.getElementById('otDate')||{}).value||todayStr(),note=((document.getElementById('otNote')||{}).value||'').trim();
+  var msg=document.getElementById('otMsg');
+  if(!(h>0)){if(msg)msg.textContent='Enter the hours recovered.';return;}
+  if(h>bal+0.004){if(msg)msg.textContent='That is more than your balance of '+dpHf(bal)+'.';return;}
+  var a=getOtRec();
+  a.push({id:'ot_'+Date.now().toString(36),date:dt,hrs:Math.round(h*100)/100,note:all&&!note?'Cleared':note,saved:Date.now()});
+  a.sort(function(x,y){return y.date.localeCompare(x.date);});
+  saveOtRec(a);_otOpen=bal-h>0.004;renderOtBar();
+}
+function otRemove(id){
+  if(!confirm('Remove this recovery? The hours go back into your overtime balance.'))return;
+  saveOtRec(getOtRec().filter(function(x){return x.id!==id;}));renderOtBar();
+}
+function renderOtBar(){
+  var bar=document.getElementById('otBar'),pan=document.getElementById('otPanel');
+  if(!bar||!pan)return;
+  var acc=otAccrued(),rec=otRecovered(),bal=otBalance(),list=getOtRec();
+  if(!acc&&!list.length){bar.style.display='none';pan.style.display='none';return;}
+  bar.style.display='flex';
+  bar.innerHTML='<span class="ot-bal">Overtime balance <b>'+(bal>0?'+':'')+dpHf(bal)+'</b></span>'
+    +'<span class="ot-sub">'+dpHf(acc)+' worked'+(rec>0?', '+dpHf(rec)+' recovered':'')+'</span>'
+    +'<button class="btn secondary-btn sm" onclick="otToggle()">'+(_otOpen?'Close':(bal>0?'Clear or recover':'Recoveries'))+'</button>';
+  if(!_otOpen){pan.style.display='none';return;}
+  pan.style.display='flex';
+  var h='<div class="ot-help">Taken time off in lieu or been paid for overtime? Record the hours recovered and they come off your balance. Your daily overtime badges stay as they were logged.</div>';
+  if(bal>0){
+    h+='<div class="ot-row"><label>Hours recovered <input type="number" id="otHrs" min="0" max="'+bal+'" step="0.25" value="'+bal+'" style="width:78px"></label>'
+      +'<label>On <input type="date" id="otDate" value="'+todayStr()+'"></label>'
+      +'<input type="text" id="otNote" placeholder="Note (optional)" style="flex:1;min-width:120px">'
+      +'<button class="btn primary-btn sm" onclick="otRecord(false)">Record</button>'
+      +'<button class="btn secondary-btn sm" onclick="otRecord(true)" title="Record the whole balance as recovered">Clear all ('+dpHf(bal)+')</button></div><div class="ot-msg" id="otMsg"></div>';
+  }
+  if(list.length){
+    h+='<div class="ot-lbl">Recovered</div>'+list.map(function(x){return'<div class="ot-rec"><span>'+formatDate(x.date)+'</span><b>'+dpHf(Number(x.hrs)||0)+'</b><span class="ot-n">'+escH(x.note||'')+'</span><button class="task-act-btn del" onclick="otRemove(\''+escA(x.id)+'\')" title="Remove this recovery">Remove</button></div>';}).join('');
+  }
+  pan.innerHTML=h;
+}
 function renderHistory(){
+  renderOtBar();
   var lt=document.getElementById('historyListTable'),rp=document.getElementById('historyReplicon');
   var hs=document.getElementById('historySearch'),hp=document.getElementById('historyPeriod');
   var atb=document.getElementById('actToggleBtn'),hrn=document.getElementById('histReplNav');
@@ -5139,7 +5210,7 @@ function renderHistory(){
   if(atb)atb.style.visibility=_historyView==='list'?'visible':'hidden';
   if(hrn)hrn.style.display=_historyView==='replicon'?'flex':'none';
   if(_historyView==='replicon'){renderHistoryReplicon();return;}
-  var btn=document.getElementById('actToggleBtn');if(btn)btn.className='btn '+(_showActivity?'primary-btn':'secondary-btn')+' sm act-toggle-btn';var search=(document.getElementById('historySearch').value||'').toLowerCase();var period=(document.getElementById('historyPeriod')?document.getElementById('historyPeriod').value:'all');var now=new Date();var cutoff=null;if(period!=='all'){cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-parseInt(period));}var logs=getLogs();if(cutoff)logs=logs.filter(function(l){return new Date(l.date)>=cutoff;});if(search)logs=logs.filter(function(l){return Object.keys(l.allocs).some(function(p){return p.toLowerCase().includes(search);});});var _hGid=getActiveGroupId();if(_hGid){var _hVisNames=getVisibleProjects().map(function(p){return p.name;});logs=logs.map(function(l){var fa={};Object.keys(l.allocs).forEach(function(k){if(_hVisNames.indexOf(k)>=0)fa[k]=l.allocs[k];});return Object.assign({},l,{allocs:fa});}).filter(function(l){return Object.keys(l.allocs).length>0;});}var tbody=document.getElementById('historyBody');if(logs.length===0){tbody.innerHTML='<tr><td colspan="3"><div class="empty-state">No entries yet</div></td></tr>';return;}tbody.innerHTML=logs.map(function(l,i){var badges=Object.entries(l.allocs).map(function(e){
+  var btn=document.getElementById('actToggleBtn');if(btn)btn.className='btn '+(_showActivity?'primary-btn':'secondary-btn')+' sm act-toggle-btn';var search=(document.getElementById('historySearch').value||'').toLowerCase();var period=(document.getElementById('historyPeriod')?document.getElementById('historyPeriod').value:'all');var now=new Date();var cutoff=null;if(period!=='all'){cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-parseInt(period));}var logs=getLogs().filter(function(l){return l.date<=todayStr();});if(cutoff)logs=logs.filter(function(l){return new Date(l.date)>=cutoff;});if(search)logs=logs.filter(function(l){return Object.keys(l.allocs).some(function(p){return p.toLowerCase().includes(search);});});var _hGid=getActiveGroupId();if(_hGid){var _hVisNames=getVisibleProjects().map(function(p){return p.name;});logs=logs.map(function(l){var fa={};Object.keys(l.allocs).forEach(function(k){if(_hVisNames.indexOf(k)>=0)fa[k]=l.allocs[k];});return Object.assign({},l,{allocs:fa});}).filter(function(l){return Object.keys(l.allocs).length>0;});}var tbody=document.getElementById('historyBody');if(logs.length===0){tbody.innerHTML='<tr><td colspan="3"><div class="empty-state">No entries yet</div></td></tr>';return;}tbody.innerHTML=logs.map(function(l,i){var badges=Object.entries(l.allocs).map(function(e){
   var a=e[1];var pn=e[0];
   var bArr=[];
   var primaryH=parseFloat(a.hrs||0);
@@ -5163,7 +5234,7 @@ function renderHistory(){
     bArr.push('<span class="badge">'+escH(lbl)+'</span>');
   }
   return bArr.join('');
-}).join('');var loggedTotal=Object.values(l.allocs).reduce(function(s,a){var ex=(a.extras||[]).reduce(function(ss,x){return ss+(x.hrs||0);},0);return s+(a.hrs||0)+ex;},0);var wh=parseFloat(l.totalHrs||workNet(l.date)||8)||8;var ot=loggedTotal>0?Math.max(0,loggedTotal-wh):0;var otBadge=ot>0?'<span class="ot-badge">+'+ot.toFixed(1)+'h OT</span>':'';
+}).join('');var loggedTotal=Object.values(l.allocs).reduce(function(s,a){var ex=(a.extras||[]).reduce(function(ss,x){return ss+(x.hrs||0);},0);return s+(a.hrs||0)+ex;},0);var wh=tsLogWh(l,l.date);var ot=loggedTotal>0?Math.max(0,loggedTotal-wh):0;var otBadge=ot>0?'<span class="ot-badge">+'+dpHf(ot)+' OT</span>':'';
 return'<tr><td style="white-space:nowrap;font-weight:500;cursor:pointer;color:var(--primary)" onclick="openTimeLogForDay(\''+l.date+'\')">'+formatDate(l.date)+otBadge+'</td><td>'+badges+'</td><td class="hist-notes-cell" style="color:var(--muted);font-size:12px">'+escH(l.notes||'')+'<div class="hist-row-actions"><button class="task-act-btn" onclick="loadLogForDate(\''+l.date+'\')" title="Load into Log Time">Edit</button><button class="task-act-btn del" onclick="deleteEntry(\''+l.date+'\')" title="Delete">Delete</button></div></td></tr>';}).join('');}
 function setChartType(t){
   _chartType=t;

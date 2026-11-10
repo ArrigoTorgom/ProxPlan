@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.58.0] — 2026-11-10
+
+### Added
+- Overtime balance in Log History. A line above the list shows your running overtime (for example "Overtime balance +6h 30m"), made up of the overtime on each logged day up to today, less anything you have recovered. Overtime on days still to come is not counted.
+- Clear or recover overtime. Click "Clear or recover" to record hours taken as time off in lieu or paid out: enter the hours (it starts at your full balance), the date and an optional note, then Record. "Clear all" takes the whole balance to zero in one click. The hours are listed under Recovered, each with a Remove button that puts them back into the balance if you make a mistake. Your daily "+1h OT" badges are unchanged, and the hours recovered are stored with your time logs, so they back up and sync with them.
+
+### Changed
+- The Log History list now only shows days up to today. Public holidays and other leave that is already booked for future dates no longer fill the list, and appear as soon as they arrive.
+
+---
+
+## [0.57.1] — 2026-11-10
+
+### Changed
+- The timesheet's Working Hours box is no longer editable. It now just shows the hours for that day from Settings > Working Hours (for example "Working hours 8h 15m", or 7h on a short Friday), and overtime is whatever you log above them.
+- A day outside your working week (a weekend, or a day you have switched off) has no working hours, so everything logged on it counts as overtime. Before, it was treated as an 8-hour day.
+- Overtime is now shown to the minute, for example "+45m OT" or "+1h 45m OT", instead of rounded to a tenth of an hour (9h on an 8h 15m day used to read "+0.8h").
+- Changing your working hours in Settings updates any date you have not saved yet. Entries you saved earlier keep the working hours they were saved with, so past overtime does not change.
+
+---
+
 ## [0.57.0] — 2026-11-10
 
 ### Added
