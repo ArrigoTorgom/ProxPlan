@@ -5,6 +5,23 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.56.0] — 2026-11-10
+
+### Changed
+- Planning a task into a day (Plan today, or a task from the suggestions in Plan Day) now always creates a 1-hour block, whatever the task's estimate is. The estimate belongs to the whole task, which can be worked over several sessions, so it no longer sets the block length (the block is shorter only if the free gap is less than an hour).
+- Time spent on a task is now worked out from your planner. Every block linked to the task that has already happened (earlier days, or today up to the current time) counts as a session, rounded to quarter-hours. The task row shows it, for example "5h of ~8h", and the task panel shows "5h over 4 planned sessions · 3h left".
+- When you tick a task done, the "how long did it take?" prompt now leads with that planned total (for example "5h") so one click confirms it, followed by the usual choices based on the estimate. A task with sessions but no estimate now asks too. The prompt is unchanged for tasks with no planned sessions, and the Took field in the task panel shows the planned total as a hint.
+- To Do capacity counts the time left on a task (estimate minus time already spent) instead of its full estimate. A long task being worked across several days no longer fills the day it is due, in the day cards, the Today header and the calendar colours.
+
+---
+
+## [0.55.2] — 2026-11-10
+
+### Fixed
+- Dialogs (add event, quick task, leave, reminders, groups, import preview, Plan Day and others) no longer close when you press inside a text box, drag to select text, and let go outside the dialog. A drag that starts in one place and ends in another is no longer treated as a click on the dark background, and the same protection covers the small pop-up menus that close when you click outside them. A normal click on the background still closes a dialog.
+
+---
+
 ## [0.55.1] — 2026-11-10
 
 ### Fixed

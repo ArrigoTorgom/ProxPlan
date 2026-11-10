@@ -1025,6 +1025,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-toast button{background:rgba(255,255,255,.14);border:none;color:#fff;font-family:inherit;font-size:11px;padding:3px 10px;border-radius:12px;cursor:pointer;}
 .tk-toast button:hover{background:rgba(255,255,255,.28);}
 .tk-toast button.x{background:none;font-size:15px;padding:0 6px;line-height:1;}
+.tk-spent{font-size:11px;color:var(--muted);margin:-2px 0 8px;}
 .task-row[draggable=true]{cursor:default;}
 .sort-bar{flex-wrap:wrap;}#taskSortBar{margin-top:12px;}
 .tasks-col-left{min-width:0;}
@@ -1933,14 +1934,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.55.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.56.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.55.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.56.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -1956,6 +1957,17 @@ function projColor(proj,i){return(proj&&proj.color)||COLORS[(i||0)%COLORS.length
 var currentTab='planner';
 var currentMonday=getMonday(new Date());
 var saveTimer=null;
+// A drag that starts in one place and ends in another (selecting text in a box, say) is not a click on whatever
+// contains both ends: without this, letting go over a dialog's dark backdrop closed the dialog.
+(function(){
+  var down=null;
+  window.addEventListener('mousedown',function(e){down=e.button===0?{t:e.target,x:e.clientX,y:e.clientY}:null;},true);
+  window.addEventListener('click',function(e){
+    var d=down;down=null;
+    if(!d||e.detail===0||e.target===d.t)return;
+    if(Math.abs(e.clientX-d.x)>4||Math.abs(e.clientY-d.y)>4){e.stopPropagation();e.preventDefault();}
+  },true);
+})();
 var trackerMode='hrs';
 var selectedPriority='medium';
 var taskFilters={};
@@ -3112,7 +3124,7 @@ function dpPlanTask(taskId){
   if(!t)return;
   var gaps=dpFreeGaps(dpDate,dpItemsForDate(dpDate,dpBlocks));
   if(!gaps.length)return;
-  var g=gaps[0],want=t.est>0?Math.max(15,Math.round(t.est*4)*15):60,dur=Math.min(want,g.end-g.start);
+  var g=gaps[0],want=60,dur=Math.min(want,g.end-g.start);
   var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
   if(projOk){
     dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:g.start,dur:dur,goal:t.title,taskId:t.id});
@@ -4905,7 +4917,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.55.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.56.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5224,7 +5236,7 @@ function tkCap(ds){
   var dayH=workNet(ds),lv=leaveDayInfo(ds);
   return lv?(lv.len==='half'?dayH/2:0):dayH;
 }
-function tkSumH(list){var h=0,miss=0;list.forEach(function(t){if(t.est>0)h+=Number(t.est);else miss++;});return{h:h,miss:miss};}
+function tkSumH(list){var h=0,miss=0;list.forEach(function(t){if(t.est>0)h+=tkLeft(t);else miss++;});return{h:h,miss:miss};}
 function tkHdrH(list){var s=tkSumH(list);return s.h?tkFmtH(s.h):'';}
 
 // -- Smart input --
@@ -5457,16 +5469,43 @@ function tkOpenWaitMenu(e,id){
 }
 function tkCyclePri(id){var t=tkTask(id);if(!t)return;var n={high:'medium',medium:'low',low:'high'};tkUpdate(id,{priority:n[t.priority]||'high'});}
 
+// -- Time spent on a task, worked out from the planner: blocks linked to the task that have happened (or are under way) --
+var _tkSpC={raw:null,min:-1,map:{}};
+function tkSpentMap(){
+  var raw=localStorage.getItem('plannerTimeBlocks')||'{}',min=Math.floor(Date.now()/60000);
+  if(_tkSpC.raw===raw&&_tkSpC.min===min)return _tkSpC.map;
+  var data={},map={},today=todayStr(),nowM=dpMinNow();
+  try{data=JSON.parse(raw)||{};}catch(e){}
+  Object.keys(data).forEach(function(ds){
+    if(ds>today)return;
+    (data[ds]||[]).forEach(function(b){
+      if(!b.taskId||!(b.dur>0))return;
+      var m=ds===today?Math.min(b.dur,nowM-b.start):b.dur;
+      if(!(m>0))return;
+      var e=map[b.taskId]||(map[b.taskId]={h:0,n:0});
+      e.h+=m/60;e.n++;
+    });
+  });
+  Object.keys(map).forEach(function(k){map[k].h=Math.max(0.25,Math.round(map[k].h*4)/4);});
+  _tkSpC={raw:raw,min:min,map:map};
+  return map;
+}
+function tkSpent(id){return tkSpentMap()[id]||{h:0,n:0};}
+function tkLeft(t){var l=Number(t.est)-tkSpent(t.id).h;return l>0?Math.round(l*100)/100:0;}
+function tkSpentText(sp){return tkFmtH(sp.h)+' over '+sp.n+' planned session'+(sp.n===1?'':'s');}
 // -- Actual time: build a feel for how long things take --
 function tkToastClose(){var el=document.getElementById('tkToast');if(el)el.remove();}
 function tkAfterDone(id){
   var t=tkTask(id);
   tkToastClose();
-  if(!t||!(t.est>0))return;
+  if(!t)return;
+  var sp=tkSpent(id),spent=sp.h>0?Math.max(0.25,Math.round(sp.h*4)/4):0;
+  if(!(t.est>0)&&!spent)return;
   var el=document.createElement('div');
   el.id='tkToast';el.className='tk-toast';
-  var seen={},opts=[t.est/2,t.est,t.est*1.5,t.est*2].map(function(v){return Math.max(0.25,Math.round(v*4)/4);}).filter(function(v){if(seen[v])return false;seen[v]=1;return true;});
-  var h='<span>Done. Estimated '+tkFmtH(t.est)+' - how long did it take?</span>';
+  var seen={},base=t.est>0?[t.est/2,t.est,t.est*1.5,t.est*2]:[];
+  var opts=(spent?[spent]:[]).concat(base).map(function(v){return Math.max(0.25,Math.round(v*4)/4);}).filter(function(v){if(seen[v])return false;seen[v]=1;return true;}).slice(0,4);
+  var h='<span>Done. '+(spent?'Your planned sessions add up to '+tkFmtH(spent)+' ('+sp.n+(sp.n===1?' session':' sessions')+')'+(t.est>0?', estimated '+tkFmtH(t.est):'')+' - how long did it take?':'Estimated '+tkFmtH(t.est)+' - how long did it take?')+'</span>';
   opts.forEach(function(v){h+='<button onclick="tkSetActual(\''+id+'\','+v+')">'+tkFmtH(v)+'</button>';});
   h+='<button onclick="tkActualOther(\''+id+'\')">Other</button><button class="x" onclick="tkToastClose()" aria-label="Skip">&times;</button>';
   el.innerHTML=h;
@@ -5660,7 +5699,8 @@ function tkDetailHtml(t){
   return'<div class="tk-side detail"><div class="tk-sh"><input type="text" class="tk-title" value="'+escH(t.title)+'" onchange="tkSetTitle(\''+id+'\',this.value)" aria-label="Task title"><button class="tk-x" onclick="tkClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>'
     +'<div class="tk-g2"><label>Project<select onchange="tkUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Priority<select onchange="tkUpdate(\''+id+'\',{priority:this.value})">'+prOpts+'</select></label></div>'
     +'<div class="tk-g2"><label>Due<input type="date" value="'+escH(t.dueDate||'')+'" onchange="tkUpdate(\''+id+'\',{dueDate:this.value})"></label><label>Estimate (h)<input type="number" min="0" step="0.25" value="'+(t.est>0?t.est:'')+'" onchange="tkSetNum(\''+id+'\',\'est\',this.value)"></label></div>'
-    +(t.done?'<div class="tk-g2"><label>Took (h)<input type="number" min="0" step="0.25" value="'+(t.actual>0?t.actual:'')+'" onchange="tkSetNum(\''+id+'\',\'actual\',this.value)"></label><span></span></div>':'')
+    +(tkSpent(t.id).n?'<div class="tk-spent">'+tkSpentText(tkSpent(t.id))+(t.est>0&&!t.done?' &middot; '+tkFmtH(tkLeft(t))+' left':'')+'</div>':'')
+    +(t.done?'<div class="tk-g2"><label>Took (h)<input type="number" min="0" step="0.25" placeholder="'+(tkSpent(t.id).h>0?Math.round(tkSpent(t.id).h*100)/100:'')+'" value="'+(t.actual>0?t.actual:'')+'" onchange="tkSetNum(\''+id+'\',\'actual\',this.value)"></label><span></span></div>':'')
     +'<div class="tk-l">Today list'+(t.someday?' <em>(parked as Someday)</em>':'')+'</div><div class="tk-seg">'+seg+'</div>'
     +'<div class="tk-l">Waiting on</div><div class="tk-g2"><input type="text" id="tkWw" placeholder="Name" value="'+escH(w.who)+'" onchange="tkSetWait(\''+id+'\')"><input type="date" id="tkWd" value="'+escH(w.follow||'')+'" title="Chase on" onchange="tkSetWait(\''+id+'\')"></div>'
     +'<div class="tk-l">Subtasks'+(subs.length?'<span style="float:right">'+sd+' of '+subs.length+'</span>':'')+'</div>'
@@ -6856,7 +6896,7 @@ function tkMonthHtml(y,m,map,today,showYear){
     if(mt)tip+=(tip?' - ':'')+tkFmtH(mt)+' in meetings';
     var live=ds>=today;
     h+='<span class="tk-d'+(we?' we':'')+(lv?' l':'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':'')+'"'+(tip?' title="'+escH(tip)+'"':'')
-      +(live?' onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+(info.n&&!info.h?'<i></i>':'')+'</span>';
+      +(live?' onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+(info.n&&!info.h&&!info.est?'<i></i>':'')+'</span>';
   }
   return h+'</div>';
 }
@@ -6874,7 +6914,7 @@ function tkOutlookHtml(){
       var b=tkBucket(t),ds=b==='today'?today:((t.waiting||!t.dueDate)?'':t.dueDate);
       if(!ds)return;
       var e=map[ds]||(map[ds]={h:0,n:0});
-      e.n++;if(t.est>0)e.h+=Number(t.est);
+      e.n++;if(t.est>0){e.h+=tkLeft(t);e.est=1;}
     });
     var ny=tmcYear,nm=tmcMonth+1;if(nm>11){nm=0;ny++;}
     h+='<div class="tk-mos"><div class="tk-mo">'+tkMonthHtml(tmcYear,tmcMonth,map,today,true)+'</div><div class="tk-mo">'+tkMonthHtml(ny,nm,map,today,ny!==tmcYear)+'</div></div>';
@@ -6983,9 +7023,10 @@ function makeFlatTaskRow(t,hideProj){
   var priLabel=t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1);
   var today=todayStr();
   var dueHtml=isDone?(due?'<span class="task-due">'+due.text+'</span>':''):'<span class="task-due tk-click'+(due?' '+due.cls:' tk-add')+'" onclick="tkOpenDateMenu(event,\''+id+'\')" title="Change due date">'+(due?due.text:'+ date')+'</span>';
+  var sp=tkSpent(t.id);
   var estHtml=isDone
     ?((t.est>0||t.actual>0)?'<span class="tk-est">'+(t.est>0?'est '+tkFmtH(t.est):'')+(t.est>0&&t.actual>0?' &middot; ':'')+(t.actual>0?'took '+tkFmtH(t.actual):'')+'</span>':'')
-    :'<span class="tk-est tk-click'+(t.est>0?'':' tk-add')+'" onclick="tkOpenEstMenu(event,\''+id+'\')" title="Time estimate">'+(t.est>0?'~'+tkFmtH(t.est):'+ est')+'</span>';
+    :'<span class="tk-est tk-click'+((t.est>0||sp.h>0)?'':' tk-add')+'" onclick="tkOpenEstMenu(event,\''+id+'\')" title="Time estimate'+(sp.h>0?' - '+tkSpentText(sp):'')+'">'+(t.est>0?(sp.h>0?tkFmtH(sp.h)+' of ~'+tkFmtH(t.est):'~'+tkFmtH(t.est)):(sp.h>0?tkFmtH(sp.h)+' spent':'+ est'))+'</span>';
   var pinHtml='';
   if(!isDone){
     if(t.someday)pinHtml='<span class="tk-pin tk-click" onclick="tkOpenTodayMenu(event,\''+id+'\')">Someday</span>';
