@@ -5,6 +5,37 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.53.0] — 2026-11-10
+
+### Added
+- Export a note as a PDF. Open a note, click Export and choose PDF: you get a single file with the note's formatting (bold, italic, underline, colours, highlights, links, bullet and numbered lists), its details (project, date, meeting, task, tags), the checklist with ticks, and the photos. It does not depend on Outlook, so it can be attached to any mail, dragged into a mail folder, or filed for reference. Characters the standard PDF fonts can't show (such as emoji) appear as a question mark.
+
+### Changed
+- The Email button on a note is now Export, which offers PDF or an Outlook message (.msg). The message file replaces the earlier .eml draft: it is an unsent email with the note as the text and the photos attached.
+
+---
+
+## [0.52.0] — 2026-11-10
+
+### Added
+- Email a note. Open a note and click Email (next to Pin and Duplicate) to save it as an unsent email draft. Open the downloaded file and it appears as a new message in Outlook (or your mail app) with the subject set to the note title and the note as the message: formatting, colours and links are kept, and the project, date, meeting, task, tags and checklist are listed. Any photos on the note are attached as picture files. Choose the recipients and send as usual. Nothing is sent automatically.
+
+---
+
+## [0.51.0] — 2026-11-10
+
+### Added
+- Settings > Working Hours. Set your working days and a start and end time for the whole week, with as many breaks as you need (lunch, tea breaks and so on). Tick "Set different hours for individual days" to give each day its own start, end and breaks, or mark a day as not working. The screen shows the working time left after breaks for each day and for the week. The default is Monday to Friday, 08:00 to 17:00 with a one-hour lunch (8 hours), so nothing changes until you edit it; if you had changed "Hours per leave day" before, that length is used as the starting point.
+- To Do: each day's capacity now allows for meetings. Meeting time inside your working hours (overlapping meetings counted once, anything over a break ignored, all-day events ignored, and a meeting with no end time treated as one hour) is shown in purple at the start of the day's progress bar, and the tasks fill the rest. A day is flagged over capacity when its tasks no longer fit around the meetings, with a red end on the bar and red task text. The Today header reads, for example, "3h of 5.5h · 2.5h in meetings", and the calendar tooltips mention meetings too.
+
+### Changed
+- Log Time now always opens in hours, with the hrs / % toggle swapped so hrs is on the left. A new day starts in hours even if you used % on the previous one. Entries you saved in % still reopen in % so their figures are not changed. The "Working Hours" box defaults to that day's hours from your Working Hours settings.
+- Leave booked from Settings or the leave panel uses that day's working hours (the "Hours per leave day" setting is now only used if a day has none). Overtime shown in the history also compares against that day's hours.
+- To Do capacity follows your Working Hours, so a day you don't work (for example a weekend) counts as having no capacity.
+- The Add button in the Notes and To Do input bars is smaller, leaving more space around it inside the bar.
+
+---
+
 ## [0.50.0] — 2026-11-09
 
 ### Changed
