@@ -5,6 +5,15 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.53.1] — 2026-11-10
+
+### Fixed
+- Outlook message (.msg) export: photos showed as blanks. They were being marked as hidden in the message, which is now corrected, and each photo also carries its size.
+- Outlook message (.msg) export: lines in the note were spaced too far apart. The body now uses tight line spacing with no extra space between lines or list items, matching the note.
+- PDF export: line spacing is slightly tighter and no longer adds extra space between lines.
+
+---
+
 ## [0.53.0] — 2026-11-10
 
 ### Added
