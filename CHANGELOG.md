@@ -5,6 +5,16 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.65.0] — 2026-11-11
+
+### Changed
+- In Plan Day, overtime now goes by how long you work, not by when. The strip adds up everything planned for the day (blocks plus meetings, wherever they sit) and compares it with that day's working hours, so a day of 8h 15m with a quarter hour worked into lunch reads "8h 15m planned of 8h 15m · fully planned" instead of "15m outside hours". Overtime shows in orange, for example "30m overtime", only when the total is more than the working day. Work outside the working-hours window on a day that is still under its hours is no longer flagged. The hatched shading stays as a visual guide.
+- Once a day has hours booked on the timesheet, the strip shows what was booked ("Booked 9h of 8h 15m · 45m overtime") and the planned total moves into a tooltip. The week total now counts booked hours for booked days and planned hours for the rest, so it no longer ignores bookings.
+- On a day with no working hours (a weekend or leave day), planned time shows as overtime.
+- Overtime from booked hours was already worked out by duration, so the timesheet, History and the overtime balance are unchanged. Planned time never counts towards them, only saved hours do.
+
+---
+
 ## [0.64.0] — 2026-11-11
 
 ### Added

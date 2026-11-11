@@ -1976,14 +1976,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.64.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.65.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.64.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.65.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3105,15 +3105,26 @@ function dpWorkStats(ds,blocks,live){
   var all=dpMerge(iv.blocks.concat(iv.meetings)),mt=dpMerge(iv.meetings.slice());
   var inAll=dpOverlapMin(all,sc.blocks),inMeet=dpOverlapMin(mt,sc.blocks),tot=0;
   all.forEach(function(p){tot+=p[1]-p[0];});
-  return{sc:sc,lv:leaveDayInfo(ds),cap:tkCap(ds),inside:inAll/60,meet:inMeet/60,work:(inAll-inMeet)/60,outside:(tot-inAll)/60,planned:tot/60};
+  var mtAll=0;mt.forEach(function(p){mtAll+=p[1]-p[0];});
+  return{sc:sc,lv:leaveDayInfo(ds),cap:tkCap(ds),inside:inAll/60,meet:inMeet/60,work:(inAll-inMeet)/60,outside:(tot-inAll)/60,planned:tot/60,meetAll:mtAll/60,workAll:(tot-mtAll)/60};
 }
+// Booked work on a day (from the saved timesheet), leave hours left out, against that day's working hours. null when nothing is booked.
+function dpBooked(ds){
+  var l=getLogsForDate(ds);
+  if(!l||!l.allocs)return null;
+  var t=0;
+  Object.values(l.allocs).forEach(function(a){t+=(parseFloat(a.hrs)||0);(a.extras||[]).forEach(function(x){t+=parseFloat(x.hrs)||0;});});
+  var lv=leaveHrsForDate(ds),work=t-lv;
+  return work>0.004?{hrs:work,wh:Math.max(0,tsLogWh(l,ds)-lv)}:null;
+}
+// a week (Mon to Sun): hours worked against working hours. A day with booked hours counts what was booked, any other day what is planned.
 function dpWeekStats(ds){
   var d0=new Date(ds+'T12:00:00'),back=(d0.getDay()+6)%7,cap=0,pl=0,i;
   for(i=0;i<7;i++){
     var d=new Date(ds+'T12:00:00');d.setDate(d.getDate()-back+i);
     var x=d.toLocaleDateString('en-CA',{timeZone:TZ}),live=x===dpDate;
-    var st=dpWorkStats(x,live?dpBlocks:getBlocksForDate(x),live);
-    cap+=st.cap;pl+=st.planned;
+    var st=dpWorkStats(x,live?dpBlocks:getBlocksForDate(x),live),bk=dpBooked(x);
+    cap+=st.cap;pl+=bk?bk.hrs:st.planned;
   }
   return{cap:cap,planned:pl};
 }
@@ -3147,7 +3158,7 @@ function dpWorkRangeText(ds){
 function dpWhRender(){
   var el=document.getElementById('dpWh');
   if(!el||!dpDate)return;
-  var st=dpWorkStats(dpDate,dpBlocks,true),bl=st.sc.blocks,lv=st.lv,h='';
+  var st=dpWorkStats(dpDate,dpBlocks,true),bl=st.sc.blocks,lv=st.lv,bk=dpBooked(dpDate),h='';
   if(lv&&lv.len!=='half'){
     h+='<span class="sched">'+escH(leaveDayLabel(dpDate,lv))+'</span><span class="mut">no working time</span>';
   }else if(!bl.length){
@@ -3157,16 +3168,27 @@ function dpWhRender(){
     for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;t+=' &middot; '+(mid>=690&&mid<=840?'lunch':'break')+' '+dpFmtTime(bl[i-1][1])+' &ndash; '+dpFmtTime(bl[i][0]);}
     h+='<span class="sched">'+t+'</span>';
     if(lv)h+='<span class="mut">half-day leave</span>';
-    if(st.cap>0){
-      var wp=Math.min(100,st.work/st.cap*100),mp=Math.min(100-wp,st.meet/st.cap*100),open=st.cap-st.inside;
-      h+='<span class="bar" title="Orange: planned blocks. Purple: meetings."><i class="w" style="width:'+wp+'%"></i><i class="m" style="width:'+mp+'%"></i></span>';
-      h+='<span>'+dpHf(st.inside)+' planned of '+dpHf(st.cap)+'</span>';
-      h+=open>0.004?'<span class="mut">'+dpHf(open)+' open</span>':(open<-0.004?'<span class="over">'+dpHf(-open)+' over</span>':'<span class="mut">fully planned</span>');
-    }
   }
-  if(st.outside>0.004)h+='<span class="warn" title="Planned outside your working hours">'+dpHf(st.outside)+' outside hours</span>';
+  // Overtime goes by how long you work, not by when: only hours beyond the working day count. Booked hours replace planned ones once a day is booked.
+  if(bk){
+    var ot=bk.hrs-bk.wh;
+    if(bk.wh>0)h+='<span class="bar" title="Booked hours against your working hours"><i class="w" style="width:'+Math.min(100,bk.hrs/bk.wh*100)+'%"></i></span>';
+    h+='<span title="Hours booked on your timesheet. Planned in this view: '+dpHf(st.planned)+'">Booked '+dpHf(bk.hrs)+(bk.wh>0?' of '+dpHf(bk.wh):'')+'</span>';
+    if(ot>0.004)h+='<span class="warn" title="Booked beyond your working hours for the day">'+dpHf(ot)+' overtime</span>';
+    else if(ot<-0.004)h+='<span class="mut">'+dpHf(-ot)+' not booked</span>';
+    else h+='<span class="mut">fully booked</span>';
+  }else if(st.cap>0){
+    var open=st.cap-st.planned,wp=Math.min(100,st.workAll/st.cap*100),mp=Math.min(100-wp,st.meetAll/st.cap*100);
+    h+='<span class="bar" title="Orange: planned blocks. Purple: meetings."><i class="w" style="width:'+wp+'%"></i><i class="m" style="width:'+mp+'%"></i></span>';
+    h+='<span>'+dpHf(st.planned)+' planned of '+dpHf(st.cap)+'</span>';
+    if(open>0.004)h+='<span class="mut">'+dpHf(open)+' open</span>';
+    else if(open<-0.004)h+='<span class="warn" title="Planned beyond your working hours for the day">'+dpHf(-open)+' overtime</span>';
+    else h+='<span class="mut">fully planned</span>';
+  }else if(st.planned>0.004){
+    h+='<span>'+dpHf(st.planned)+' planned</span><span class="warn" title="Planned on a day with no working hours">'+dpHf(st.planned)+' overtime</span>';
+  }
   var wk=dpWeekStats(dpDate);
-  if(wk.cap>0)h+='<span class="mut wk" title="Planned this week (Mon to Sun) of your working hours">Week: '+dpHf(wk.planned)+' of '+dpHf(wk.cap)+'</span>';
+  if(wk.cap>0)h+='<span class="mut wk" title="This week (Mon to Sun): booked hours where a day is booked, planned hours for the rest, against your working hours">Week: '+dpHf(wk.planned)+' of '+dpHf(wk.cap)+'</span>';
   el.innerHTML=h;
 }
 function dpMinNow(){var n=new Date();return n.getHours()*60+n.getMinutes();}
@@ -5095,7 +5117,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.64.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.65.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
