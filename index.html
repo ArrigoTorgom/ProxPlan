@@ -1976,14 +1976,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.65.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.65.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.65.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.65.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2627,7 +2627,7 @@ function renderCalendarEvents(events){
       parts.push(calCatHead('planned','Planned',_blks.length,date));
       if(!_dc.planned)_blks.slice().sort(function(a,b){return a.start-b.start;}).forEach(function(b){
         var c=projColorForName(b.proj);
-        parts.push('<div class="planned-card" style="--chip-color:'+c+';--chip-bg:'+dpHexToRgba(c,0.13)+'" onclick="openDayPlan(\''+date+'\',\''+b.id+'\')"><span class="planned-hrs">'+(b.dur/60)+'h</span><span class="planned-body"><span class="planned-proj">'+escH(b.proj)+'</span>'+(b.goal?'<span class="planned-goal">'+escH(b.goal)+'</span>':'')+'</span></div>');
+        parts.push('<div class="planned-card" style="--chip-color:'+c+';--chip-bg:'+dpHexToRgba(c,0.13)+'" onclick="openDayPlan(\''+date+'\',\''+b.id+'\')"><span class="planned-hrs">'+(b.dur/60)+'h</span><span class="planned-body"><span class="planned-proj">'+escH(b.proj)+'</span>'+(dpBlockNote(b)?'<span class="planned-goal">'+escH(dpBlockNote(b))+'</span>':'')+'</span></div>');
       });
     }
     // Manual events (sorted by start time)
@@ -3069,6 +3069,8 @@ function dpBlockTotalsForDate(ds){
 var DP_GRID_START=7*60,DP_GRID_END=19*60,DP_HOUR_PX=44,DP_PX_PER_MIN=DP_HOUR_PX/60,DP_SNAP=15;
 var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null,dpSelectedMeeting=null,dpMeetOverride=null;
 
+// what a block says about itself: its own goal, or the linked task's title when no goal is set
+function dpBlockNote(b){if(b.goal)return b.goal;var t=b.taskId?tkTask(b.taskId):null;return t?t.title:'';}
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
 function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
 function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&m?' ':'')+(m?m+'m':'');}
@@ -3222,7 +3224,7 @@ function dpLaneCls(lanes,id){
   return' lane'+(l.cols>=3?' l3':'');
 }
 function dpItemsForDate(ds,blocks){
-  var out=(blocks||getBlocksForDate(ds)).map(function(b){return{kind:'block',id:b.id,start:b.start,end:b.start+b.dur,title:b.proj,sub:b.goal||'',date:ds};});
+  var out=(blocks||getBlocksForDate(ds)).map(function(b){return{kind:'block',id:b.id,start:b.start,end:b.start+b.dur,title:b.proj,sub:dpBlockNote(b),date:ds};});
   getManualEvents().forEach(function(mt){
     if(mt.date!==ds||!mt.startTime||!mt.endTime)return;
     var _tt=dpMeetTimes(mt),s=_tt.s,en=_tt.en;
@@ -3290,12 +3292,12 @@ function dpPlanTask(taskId){
   var g=gaps[0],want=60,dur=Math.min(want,g.end-g.start);
   var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
   if(projOk){
-    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:g.start,dur:dur,goal:t.title,taskId:t.id});
+    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:g.start,dur:dur,goal:'',taskId:t.id});
     dpPersist();dpSelectedBlock=null;dpNewRange=null;
     renderDayPlan();renderCalendarShell();
     var ed=document.getElementById('entryDate');if(ed)renderImportRow(ed.value);
   }else{
-    dpNewRange={start:g.start,dur:dur,goal:t.title,taskId:t.id};
+    dpNewRange={start:g.start,dur:dur,goal:'',taskId:t.id};
     dpSelectedBlock='new';
     renderDayPlan();
   }
@@ -3603,7 +3605,7 @@ function renderDayPlan(keepEd){
     return'<div class="dp-block'+sel+dpLaneCls(lanes,b.id)+(h<30?' s1':h<50?' s2':'')+'" title="'+escH(b.proj)+' ('+dpFmtDur(b.dur)+')'+(b.taskId&&tkTask(b.taskId)?escH(' - Task: '+tkTask(b.taskId).title):'')+'" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,b.id)+'--hh:'+hh+'px;--blk-color:'+c+';--blk-bg:'+dpHexToRgba(c,0.15)+'" onmousedown="dpStartMove(event,\''+b.id+'\')">'
       +'<div class="dp-resize-top'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='top'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'top\')"></div>'
       +'<div class="t">'+escH(b.proj)+'</div>'
-      +(b.goal?'<div class="g">'+escH(b.goal)+'</div>':'')
+      +(dpBlockNote(b)?'<div class="g">'+escH(dpBlockNote(b))+'</div>':'')
       +'<div class="rt">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</div>'
       +'<div class="dp-resize'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='bottom'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'bottom\')"></div>'
     +'</div>';
@@ -3917,7 +3919,7 @@ function dpTaskSel(b){
 function dpLinkTask(id){
   var t=id?tkTask(id):null,pe=document.getElementById('dpProj'),ge=document.getElementById('dpGoal');
   if(t){
-    if(ge&&!ge.value.trim())ge.value=t.title;
+    
     if(pe&&!(pe.dataset.valid||'')&&getActiveProjects().some(function(p){return p.name===t.project;})){pe.value=t.project;pe.dataset.valid=t.project;}
   }
   if(dpSelectedBlock==='new'){if(dpNewRange)dpNewRange.taskId=id||undefined;return;}
@@ -5117,7 +5119,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.65.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.65.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5901,7 +5903,7 @@ function tkPlanOnDay(id,ds){
   var dur=Math.min(want,g.end-g.start),start=g.start;
   var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
   if(projOk){
-    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:start,dur:dur,goal:t.title,taskId:t.id});
+    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:start,dur:dur,goal:'',taskId:t.id});
     setBlocksForDate(ds,blocks);
     tkRefresh();
     renderTaskWeekStrip();
@@ -5910,7 +5912,7 @@ function tkPlanOnDay(id,ds){
     // no project to book the time to yet: open the day with a new block ready, the project is picked there
     if(wasParked)_refreshTaskViews();
     openDayPlan(ds);
-    dpNewRange={start:start,dur:dur,goal:t.title,taskId:t.id};
+    dpNewRange={start:start,dur:dur,goal:'',taskId:t.id};
     dpSelectedBlock='new';
     renderDayPlan();
   }

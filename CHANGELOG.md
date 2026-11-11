@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.65.1] — 2026-11-11
+
+### Changed
+- Linking a planned block to a task no longer fills in the goal with the task's name, so the goal can stay specific to that slot. This applies in the block editor and to blocks created from Up next, the Plan button, or by dropping a task on a day. If a linked block has no goal, the task's title is shown in its place on the timeline, in the Up next list and on the calendar's planned cards (and is not saved as the goal). Blocks that already have a goal are unchanged.
+
+---
+
 ## [0.65.0] — 2026-11-11
 
 ### Changed
