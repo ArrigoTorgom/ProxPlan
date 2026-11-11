@@ -5,6 +5,38 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.64.0] — 2026-11-11
+
+### Added
+- Right-click a table cell in a note or a project description to change the table: insert a row above or below, insert a column to the left or right, delete the row, delete the column, or delete the whole table. New rows and columns start empty, a new column in a header row gets a header cell, and the cursor moves into the new cell. Deleting the only row or column removes the table.
+- Deleting a row, column or table shows a short message with an Undo button, since the browser's own undo does not cover these changes.
+- Changes are saved as you make them. Right-clicking anywhere else still opens the normal browser menu.
+
+---
+
+## [0.63.0] — 2026-11-11
+
+### Added
+- Notes and project descriptions can now hold tables. A table pasted from Claude (Markdown or selected text), Excel, Word or a web page stays a real table, with thin borders and a shaded bold header row that suit light and dark mode. You can click into any cell and type. Colours, widths and merged cells are dropped on paste, and each cell keeps its bold, italics and links.
+- A table wider than the screen scrolls sideways inside the note instead of stretching the page.
+- Tables come through in note exports: the PDF and email copy show them as rows (the email copy as a bordered table), and the plain-text version uses one line per row with " | " between cells.
+
+### Changed
+- Very large pasted tables (more than 50 rows or 300 cells) and tables nested inside tables are still pasted as plain lines, one per row, so a note stays light. Row and column insert/delete controls are not included yet.
+
+---
+
+## [0.62.0] — 2026-11-11
+
+### Added
+- Pasting formatted text from Claude (or any web page) into a note or a project description now keeps the formatting instead of leaving raw symbols behind. Text copied with Claude's Copy button (Markdown) is converted: `**bold**`, `*italic*`, `~~strike~~`, `[links](url)`, bullet and numbered lists (including nested ones), and `# headings` (shown as a bold line). Text you select and copy from a chat or web page is cleaned the same way: its lists, bold, italics, links and headings are kept, while colours, fonts and sizes are dropped so nothing turns up white-on-white in dark mode. Tables become one line per row with the header in bold, and code blocks become plain lines.
+- Ordinary text (a sentence, a single URL, text with only colour or size styling) still pastes as plain text, and a single pasted address still becomes a link.
+
+### Changed
+- The project description box now cleans pasted content as it goes in, instead of only when it is saved.
+
+---
+
 ## [0.61.2] — 2026-11-10
 
 ### Changed

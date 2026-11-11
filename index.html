@@ -1273,6 +1273,9 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .proj-desc-area ol ol,.nt-cbody ol ol{list-style-type:lower-alpha;}
 .proj-desc-area ol ol ol,.nt-cbody ol ol ol{list-style-type:lower-roman;}
 .proj-desc-area ol ol ol ol,.nt-cbody ol ol ol ol{list-style-type:decimal;}
+.proj-desc-area table,.nt-cbody table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;margin:4px 0;}
+.proj-desc-area td,.proj-desc-area th,.nt-cbody td,.nt-cbody th{border:1px solid var(--border);padding:3px 8px;vertical-align:top;min-width:36px;text-align:left;}
+.proj-desc-area th,.nt-cbody th{background:var(--bg);font-weight:700;}
 .nt-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-top:4px;}
 .nt-ph{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--card);}
 .nt-ph img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
@@ -1973,14 +1976,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.61.2</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.64.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.61.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.64.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4579,7 +4582,7 @@ function renderProjectDetail(name){
         +'<span class="proj-desc-sep"></span>'
         +'<button type="button" class="proj-desc-btn" onmousedown="event.preventDefault()" onclick="formatProjDesc(\''+escA(name)+'\',\'removeFormat\')" title="Clear formatting"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M8 3h5v3M4 13h5"/><path d="M8 3 5 13"/></svg></button>'
       +'</div>'
-      +'<div class="proj-desc-area" id="projDesc_'+escH(name)+'" contenteditable="true" data-placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\')" onpaste="lkPaste(event)" spellcheck="false">'+projDescToHtml(proj.description)+'</div>'
+      +'<div class="proj-desc-area" id="projDesc_'+escH(name)+'" contenteditable="true" data-placeholder="Short project description, scope, objectives…" oninput="saveProjDesc(\''+escA(name)+'\')" onpaste="rtPaste(event)" spellcheck="false">'+projDescToHtml(proj.description)+'</div>'
       +'</div>'
       +'</div>'
     +'</div>'
@@ -4606,7 +4609,7 @@ function renderProjectDetail(name){
 ;
 function projDescToHtml(desc){
   if(!desc)return'';
-  if(/<\/?(b|i|u|s|strike|del|ul|ol|li|a|mark|br|div|span|font)[ >]/i.test(desc))return ntClean(desc);
+  if(/<\/?(b|i|u|s|strike|del|ul|ol|li|a|mark|br|div|span|font|table)[ >]/i.test(desc))return ntClean(desc);
   return escH(desc).replace(/\n/g,'<br>');
 }
 function formatProjDesc(name,cmd,arg){
@@ -5092,7 +5095,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.61.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.64.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6358,7 +6361,7 @@ function ntNew(p){
   return Object.assign({id:'n_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),title:'',body:'',items:[],project:'',tags:[],color:'',pinned:false,date:'',eventId:'',taskId:'',created:Date.now(),updated:Date.now()},p||{});
 }
 function ntInsert(n){var a=getNotes();a.unshift(n);saveNotes(a);return n;}
-var NT_OK={B:1,STRONG:1,I:1,EM:1,U:1,S:1,STRIKE:1,DEL:1,MARK:1,BR:1,UL:1,OL:1,LI:1,P:1,DIV:1,SPAN:1,A:1};
+var NT_OK={B:1,STRONG:1,I:1,EM:1,U:1,S:1,STRIKE:1,DEL:1,MARK:1,BR:1,UL:1,OL:1,LI:1,P:1,DIV:1,SPAN:1,A:1,TABLE:1,THEAD:1,TBODY:1,TFOOT:1,TR:1,TH:1,TD:1};
 var NT_DROP={SCRIPT:1,STYLE:1,IFRAME:1,OBJECT:1,EMBED:1,LINK:1,META:1,TEMPLATE:1,NOSCRIPT:1,SVG:1,MATH:1,FORM:1,INPUT:1,TEXTAREA:1,BUTTON:1,SELECT:1,TITLE:1,HEAD:1};
 function ntColor(v){
   v=String(v||'').trim();
@@ -6578,10 +6581,244 @@ function renderNoteSide(){
   }else if(currentTab==='projects'){ntRefreshProjCard();renderTaskSide();}
 }
 function ntFmt(cmd,arg){var el=document.getElementById('ntBody');if(!el)return;el.focus();document.execCommand(cmd,false,arg||null);ntBodyInput();}
+// -- Pasting from Claude (or any formatted source) into Notes and the project description --
+// Markdown text and formatted web text are turned into what the editor can show: bold, italic, strike, lists, links.
+function rtMdLooks(t){
+  if(!t||t.length<3)return false;
+  if(/^\s{0,3}#{1,6}\s+\S/m.test(t))return true;
+  if(/\*\*[^*\n]+\*\*/.test(t))return true;
+  if(/\[[^\]\n]+\]\((https?:\/\/|mailto:)[^)\s]+\)/.test(t))return true;
+  if(/^\s*\|.+\|\s*$/m.test(t)&&/^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?\s*$/m.test(t))return true;
+  if(/^```/m.test(t))return true;
+  var b=t.match(/^\s*([-*+]|\d+[.)])\s+\S/gm);
+  return !!(b&&b.length>=2);
+}
+function rtMdInline(s){
+  var codes=[];
+  s=String(s).replace(/`([^`\n]+)`/g,function(m,c){codes.push(c);return'\u0001'+(codes.length-1)+'\u0002';});
+  s=escH(s);
+  s=s.replace(/\[([^\]\n]+)\]\(((?:https?:\/\/|mailto:)[^)\s]+)\)/g,function(m,t,u){return'<a href="'+u+'">'+t+'</a>';});
+  s=s.replace(/\*\*([^*\n]+?)\*\*/g,'<b>$1</b>');
+  s=s.replace(/(^|[^*\w])\*([^*\s][^*\n]*?)\*(?![*\w])/g,'$1<i>$2</i>');
+  s=s.replace(/~~([^~\n]+?)~~/g,'<s>$1</s>');
+  s=s.replace(/\u0001(\d+)\u0002/g,function(m,i){return escH(codes[+i]);});
+  return s;
+}
+var RT_TBL_ROWS=50,RT_TBL_CELLS=300; // bigger tables are pasted as plain lines so a note stays light
+function rtMdToHtml(text){
+  var L=String(text).replace(/\r\n?/g,'\n').split('\n'),out=[],stack=[],last='',i=0;
+  var LI=/^(\s*)([-*+]|\d+[.)])\s+(.*)$/;
+  function pop(){out.push('</li></'+stack.pop().tag+'>');}
+  function closeLists(){while(stack.length)pop();}
+  function isSep(s){return/^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?\s*$/.test(s);}
+  function cellsOf(s){return s.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(function(c){return rtMdInline(c.trim());});}
+  while(i<L.length){
+    var line=L[i],m;
+    if(/^\s*```/.test(line)){
+      closeLists();
+      var code=[];i++;
+      while(i<L.length&&!/^\s*```/.test(L[i])){code.push(escH(L[i]));i++;}
+      i++;
+      out.push('<div>'+code.join('<br>')+'</div>');last='p';continue;
+    }
+    if(!line.trim()){
+      var j=i+1;while(j<L.length&&!L[j].trim())j++;
+      if(stack.length&&j<L.length&&LI.test(L[j])){i=j;continue;} // a blank line inside a list does not break it
+      closeLists();
+      if(last==='p'&&j<L.length)out.push('<div><br></div>');
+      last='b';i=j;continue;
+    }
+    if((m=LI.exec(line))){
+      var ind=m[1].replace(/\t/g,'    ').length,tag=/\d/.test(m[2])?'ol':'ul';
+      while(stack.length&&ind<stack[stack.length-1].ind)pop();
+      var top=stack[stack.length-1];
+      if(top&&top.ind===ind){
+        if(top.tag===tag)out.push('</li><li>'+rtMdInline(m[3]));
+        else{pop();out.push('<'+tag+'><li>'+rtMdInline(m[3]));stack.push({ind:ind,tag:tag});}
+      }else{out.push('<'+tag+'><li>'+rtMdInline(m[3]));stack.push({ind:ind,tag:tag});}
+      last='l';i++;continue;
+    }
+    if(stack.length&&/^\s+\S/.test(line)){out.push('<br>'+rtMdInline(line.trim()));i++;continue;} // text continuing a list item
+    closeLists();
+    if((m=/^\s{0,3}(#{1,6})\s+(.*?)\s*#*\s*$/.exec(line))){out.push('<div><b>'+rtMdInline(m[2])+'</b></div>');last='p';i++;continue;}
+    if(/^\s{0,3}([-*_])(\s*\1){2,}\s*$/.test(line)){i++;continue;}
+    if(/^\s*\|.*\|\s*$/.test(line)){
+      var hdr=i+1<L.length&&isSep(L[i+1]),rows=[],wide=0;
+      while(i<L.length&&/^\s*\|.*\|\s*$/.test(L[i])){
+        if(!isSep(L[i])){var cs=cellsOf(L[i]);wide=Math.max(wide,cs.length);rows.push(cs);}
+        i++;
+      }
+      if(rows.length>RT_TBL_ROWS||rows.length*wide>RT_TBL_CELLS){
+        rows.forEach(function(r,ri){var c=r.join('  |  ');out.push('<div>'+(hdr&&ri===0?'<b>'+c+'</b>':c)+'</div>');});
+      }else{
+        out.push('<table>'+rows.map(function(r,ri){
+          var t=(hdr&&ri===0)?'th':'td',h='';
+          for(var k=0;k<wide;k++)h+='<'+t+'>'+(r[k]||'<br>')+'</'+t+'>';
+          return'<tr>'+h+'</tr>';
+        }).join('')+'</table><div><br></div>');
+      }
+      last='b';continue;
+    }
+    out.push('<div>'+rtMdInline(line.replace(/^\s*>\s?/,''))+'</div>');last='p';i++;
+  }
+  closeLists();
+  return out.join('');
+}
+// a table too big or too tangled to keep as a table becomes one line per row
+function rtTableLines(doc,t){
+  var wrap=doc.createElement('div');
+  [].slice.call(t.querySelectorAll('tr')).forEach(function(tr){
+    var txt=[].slice.call(tr.children).map(function(c){return(c.textContent||'').replace(/\s+/g,' ').trim();}).join('  |  ');
+    var d=doc.createElement('div');
+    if(tr.querySelector('th')){var bb=doc.createElement('b');bb.textContent=txt;d.appendChild(bb);}else d.textContent=txt;
+    wrap.appendChild(d);
+  });
+  t.parentNode.replaceChild(wrap,t);
+}
+function rtHtmlToNote(html){
+  var doc;try{doc=new DOMParser().parseFromString(html,'text/html');}catch(e){return'';}
+  var b=doc.body,all=function(sel){return[].slice.call(b.querySelectorAll(sel));};
+  var unwrap=function(n){while(n.firstChild)n.parentNode.insertBefore(n.firstChild,n);n.parentNode.removeChild(n);};
+  all('script,style,meta,link,title,svg,button,input,select,textarea,img,iframe,object,embed').forEach(function(n){n.parentNode&&n.parentNode.removeChild(n);});
+  all('h1,h2,h3,h4,h5,h6').forEach(function(h){var d=doc.createElement('div'),s=doc.createElement('b');while(h.firstChild)s.appendChild(h.firstChild);d.appendChild(s);h.parentNode.replaceChild(d,h);});
+  all('table').forEach(function(t){
+    if(!t.parentNode)return;
+    var rows=t.querySelectorAll('tr').length,cells=t.querySelectorAll('td,th').length;
+    if(t.querySelector('table')||!rows||rows>RT_TBL_ROWS||cells>RT_TBL_CELLS){rtTableLines(doc,t);return;}
+    [].slice.call(t.querySelectorAll('colgroup,col,caption')).forEach(function(n){n.parentNode&&n.parentNode.removeChild(n);});
+    [].slice.call(t.querySelectorAll('td,th')).forEach(function(c){
+      [].slice.call(c.querySelectorAll('p,div')).forEach(function(p){if(p.nextSibling)p.parentNode.insertBefore(doc.createElement('br'),p.nextSibling);unwrap(p);});
+      if(!(c.textContent||'').trim()&&!c.querySelector('br'))c.appendChild(doc.createElement('br'));
+    });
+    t.parentNode.insertBefore(doc.createElement('div'),t.nextSibling).appendChild(doc.createElement('br')); // room to keep typing below the table
+  });
+  all('pre').forEach(function(p){var d=doc.createElement('div');d.innerHTML=escH((p.textContent||'').replace(/\n+$/,'')).replace(/\n/g,'<br>');p.parentNode.replaceChild(d,p);});
+  all('li>p').forEach(unwrap);
+  all('[style],[class],[color],[face],[size],[bgcolor]').forEach(function(n){['style','class','color','face','size','bgcolor'].forEach(function(a){n.removeAttribute(a);});});
+  all('font,mark').forEach(unwrap);
+  return b.innerHTML;
+}
+// formatted text (a web page, or Claude's chat when you select and copy): keep the structure, drop colours, fonts and sizes
+function rtHtmlRich(html){
+  var d;try{d=new DOMParser().parseFromString(html,'text/html');}catch(e){return false;}
+  if(d.body.querySelector('h1,h2,h3,h4,h5,h6,ul,ol,table,strong,b,em,i,a[href],pre,blockquote'))return true;
+  return d.body.querySelectorAll('p').length>1;
+}
+function rtRichPaste(e){
+  var cd=e.clipboardData||window.clipboardData;
+  if(!cd)return false;
+  var html=cd.getData('text/html')||'',text=cd.getData('text/plain')||'',out='';
+  if(html&&rtHtmlRich(html))out=rtHtmlToNote(html);
+  else if(rtMdLooks(text))out=rtMdToHtml(text);
+  out=ntClean(out);
+  if(!ntText(out)&&!/<(br|li)/i.test(out))return false;
+  e.preventDefault();
+  document.execCommand('insertHTML',false,out);
+  return true;
+}
+function rtPaste(e){
+  if(lkPasteUrl(e)||rtRichPaste(e))return;
+  e.preventDefault();
+  document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text/plain'));
+}
+// -- Right-click a table cell in a note or project description: insert and delete rows and columns --
+var _tbl=null,_tblUndo=null;
+function tblClose(){
+  if(!_tbl)return;
+  document.removeEventListener('mousedown',_tbl.out,true);
+  document.removeEventListener('keydown',_tbl.key,true);
+  window.removeEventListener('scroll',tblClose,true);
+  window.removeEventListener('resize',tblClose,true);
+  if(_tbl.el.parentNode)_tbl.el.parentNode.removeChild(_tbl.el);
+  _tbl=null;
+}
+function tblChanged(root){root.dispatchEvent(new Event('input',{bubbles:true}));}
+function tblNewCell(tag){var c=document.createElement(tag||'td');c.appendChild(document.createElement('br'));return c;}
+function tblCaret(c){try{var r=document.createRange();r.setStart(c,0);r.collapse(true);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}}
+function tblToastClose(){var el=document.getElementById('tblToast');if(el)el.remove();}
+function tblUndoToast(msg,root,html){
+  _tblUndo={id:root.id,html:html};
+  tblToastClose();
+  var el=document.createElement('div');
+  el.id='tblToast';el.className='tk-toast';
+  el.innerHTML='<span>'+msg+'</span><button onclick="tblUndo()">Undo</button><button class="x" onclick="tblToastClose()" aria-label="Dismiss">&times;</button>';
+  document.body.appendChild(el);
+  setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},8000);
+}
+function tblUndo(){
+  var u=_tblUndo,root=u&&document.getElementById(u.id);
+  tblToastClose();
+  if(!u||!root)return;
+  root.innerHTML=u.html;
+  tblChanged(root);
+  _tblUndo=null;
+}
+function tblDo(act,cell,root){
+  var tr=cell.parentNode,t=cell.closest('table'),ci=cell.cellIndex,before=root.innerHTML,nc=null,del='';
+  if(!t||!tr)return;
+  var rows=[].slice.call(t.rows);
+  if(act==='rowAbove'||act==='rowBelow'){
+    var nr=document.createElement('tr');
+    for(var k=0;k<tr.cells.length;k++)nr.appendChild(tblNewCell('td'));
+    tr.parentNode.insertBefore(nr,act==='rowAbove'?tr:tr.nextSibling);
+    nc=nr.cells[Math.min(ci,nr.cells.length-1)];
+  }else if(act==='colLeft'||act==='colRight'){
+    rows.forEach(function(r){
+      var ref=r.cells[ci]||r.cells[r.cells.length-1],n=tblNewCell(ref?ref.tagName.toLowerCase():'td');
+      if(!ref)r.appendChild(n);else r.insertBefore(n,act==='colLeft'?ref:ref.nextSibling);
+      if(r===tr)nc=n;
+    });
+  }else if(act==='rowDel'){
+    if(rows.length<=1)return tblDo('tableDel',cell,root);
+    var nx=tr.nextElementSibling||tr.previousElementSibling;
+    tr.parentNode.removeChild(tr);
+    del='Row deleted';nc=nx&&nx.cells[Math.min(ci,nx.cells.length-1)];
+  }else if(act==='colDel'){
+    if(tr.cells.length<=1)return tblDo('tableDel',cell,root);
+    rows.forEach(function(r){var c=r.cells[ci];if(c)r.removeChild(c);});
+    del='Column deleted';nc=tr.cells[Math.min(ci,tr.cells.length-1)];
+  }else if(act==='tableDel'){
+    t.parentNode.removeChild(t);
+    del='Table deleted';
+  }
+  tblChanged(root);
+  if(nc)tblCaret(nc);
+  if(del)tblUndoToast(del,root,before);
+}
+function tblMenu(e){
+  var cell=e.target&&e.target.closest?e.target.closest('td,th'):null;
+  var root=cell&&cell.closest('.proj-desc-area[contenteditable="true"]');
+  if(!root)return; // anywhere else the normal browser menu stays
+  e.preventDefault();
+  tblClose();
+  var el=document.createElement('div');
+  el.className='snz-menu';el.style.minWidth='170px';
+  [['rowAbove','Insert row above'],['rowBelow','Insert row below'],['rowDel','Delete row'],null,['colLeft','Insert column left'],['colRight','Insert column right'],['colDel','Delete column'],null,['tableDel','Delete table']].forEach(function(o){
+    if(!o){var hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:4px 2px;';el.appendChild(hr);return;}
+    var b=document.createElement('button');
+    b.type='button';b.className='snz-item';
+    b.innerHTML='<b style="font-weight:500">'+o[1]+'</b>';
+    b.onmousedown=function(ev){ev.preventDefault();};
+    b.onclick=function(ev){ev.stopPropagation();tblClose();tblDo(o[0],cell,root);};
+    el.appendChild(b);
+  });
+  document.body.appendChild(el);
+  var w=el.offsetWidth,h=el.offsetHeight;
+  el.style.left=Math.max(8,Math.min(e.clientX,window.innerWidth-w-8))+'px';
+  el.style.top=Math.max(8,Math.min(e.clientY,window.innerHeight-h-8))+'px';
+  _tbl={el:el,
+    out:function(ev){if(!el.contains(ev.target))tblClose();},
+    key:function(ev){if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();tblClose();}}};
+  document.addEventListener('mousedown',_tbl.out,true);
+  document.addEventListener('keydown',_tbl.key,true);
+  window.addEventListener('scroll',tblClose,true);
+  window.addEventListener('resize',tblClose,true);
+}
+document.addEventListener('contextmenu',tblMenu);
 function ntPaste(e){
   var pf=[].filter.call((e.clipboardData&&e.clipboardData.files)||[],function(f){return/^image\//.test(f.type);});
   if(pf.length&&_ntSel){e.preventDefault();ntAddPhotos(_ntSel,pf);return;}
-  if(lkPasteUrl(e))return;
+  if(lkPasteUrl(e)||rtRichPaste(e))return;
   e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');
   document.execCommand('insertText',false,t);
@@ -6778,6 +7015,18 @@ function pdfBlocks(html){
         });
         cur=null;
         return;
+      }
+      if(tn==='TABLE'||tn==='THEAD'||tn==='TBODY'||tn==='TFOOT'){cur=null;walk(c,s,lvl);cur=null;return;}
+      if(tn==='TR'){
+        cur=null;nb({level:lvl});
+        var first=true;
+        Array.prototype.forEach.call(c.children,function(cell){
+          if(!first)cur.runs.push({t:'   |   ',st:s});
+          first=false;
+          var cs=Object.assign({},s);if(cell.tagName==='TH')cs.b=1;
+          walk(cell,cs,lvl);
+        });
+        cur=null;return;
       }
       if(tn==='DIV'||tn==='P'){cur=null;walk(c,s,lvl);cur=null;return;}
       walk(c,s,lvl);
@@ -7003,7 +7252,9 @@ function ntHtmlText(h){
       var t=c.tagName;
       if(t==='BR'){out+='\n';return;}
       if(t==='LI'){out=out.replace(/ +$/,'');if(out&&out.slice(-1)!=='\n')out+='\n';out+='- ';w(c);return;}
-      var blk=/^(DIV|P|UL|OL)$/.test(t);
+      if(t==='TR'){if(out&&out.slice(-1)!=='\n')out+='\n';w(c);return;}
+      if(t==='TD'||t==='TH'){if(c.previousElementSibling)out+=' | ';w(c);return;}
+      var blk=/^(DIV|P|UL|OL|TABLE)$/.test(t);
       if(blk&&out&&out.slice(-1)!=='\n')out+='\n';
       w(c);
       if(t==='A'){var hr=c.getAttribute('href');if(hr&&c.textContent.trim()!==hr)out+=' ('+hr+')';}
@@ -7025,6 +7276,8 @@ function ntEmailParts(n,imgs){
   Array.prototype.forEach.call(d.body.querySelectorAll('[style]'),function(e){var st=e.getAttribute('style')||'';if(/background-color/.test(st)&&!/(^|;)\s*color:/.test(st))e.setAttribute('style',st+'color:#233b46;');});
   Array.prototype.forEach.call(d.body.querySelectorAll('mark'),function(m){m.setAttribute('style','background-color:#fff2a8;color:#233b46;');});
   Array.prototype.forEach.call(d.body.querySelectorAll('ul,ol'),function(l){l.setAttribute('style','margin:2px 0;padding-left:22px;');});
+  Array.prototype.forEach.call(d.body.querySelectorAll('table'),function(t){t.setAttribute('style','border-collapse:collapse;margin:4px 0;');});
+  Array.prototype.forEach.call(d.body.querySelectorAll('td,th'),function(c){c.setAttribute('style','border:1px solid #bbb;padding:3px 8px;vertical-align:top;'+(c.tagName==='TH'?'background-color:#f0f0f0;font-weight:bold;':''));});
   Array.prototype.forEach.call(d.body.querySelectorAll('div,p,li'),function(e){e.setAttribute('style',(e.getAttribute('style')||'')+'margin:0;padding:0;');});
   var html='<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><div style="font-family:Segoe UI,Calibri,Arial,sans-serif;font-size:14px;line-height:1.3;color:#222">'
     +(n.title?'<h2 style="margin:0 0 6px;font-size:18px">'+escH(n.title)+'</h2>':'')
