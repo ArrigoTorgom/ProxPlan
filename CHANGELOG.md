@@ -5,6 +5,30 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.70.0] — 2026-11-12
+
+### Added
+- Quicker lists in notes and project summaries. Typing `- ` or `* ` at the start of a line turns it into a bulleted list, and typing `1. ` (or `1) `) starts a numbered list. Pressing Backspace straight afterwards undoes the conversion and gives you back the characters you typed. Ctrl+Shift+8 and Ctrl+Shift+7 start or end a bulleted or numbered list on the current line, and the list buttons' tooltips and the `?` shortcuts list now show them.
+
+### Fixed
+- A numbered list that does not start at 1 (for example one started by typing `3. `) now keeps its starting number when the note is saved.
+
+---
+
+## [0.69.1] — 2026-11-12
+
+### Changed
+- The Photos section inside an open note no longer lists every photo at full size. It now shows up to two rows of smaller thumbnails that fit the width of the details column, and any photos beyond that are folded into one dimmed thumbnail with a number such as +7. Click it to show them all, and use Show fewer to fold them away again. Notes with only a few photos look as before, just with slightly smaller thumbnails.
+
+---
+
+## [0.69.0] — 2026-11-12
+
+### Added
+- Notes with photos now show thumbnails on the Notes board instead of just a photo count. A card shows as many thumbnails as fit its width (Small notes use smaller ones, Large notes bigger ones), and any that do not fit are folded into one dimmed thumbnail with a number such as +4. The number updates as the window or the note size changes. Click a thumbnail to view the photos full size, or the +N thumbnail to carry on from the first hidden photo; clicking elsewhere on the card still opens the note.
+
+---
+
 ## [0.68.1] — 2026-11-12
 
 ### Changed
