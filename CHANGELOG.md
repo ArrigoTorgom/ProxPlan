@@ -5,6 +5,21 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.68.1] — 2026-11-12
+
+### Changed
+- Rolling the mouse wheel over the tab bar now moves one tab for every wheel step, with no delay between steps. It still stops at the first and last tab.
+
+---
+
+## [0.68.0] — 2026-11-12
+
+### Added
+- Faster ways to move around the app. Alt+1 to Alt+6 jump straight to This Week, Timesheet, To Do, Projects, Notes and Settings, Alt+Page Down and Alt+Page Up step to the next or previous tab, and rolling the mouse wheel over the tab bar does the same. The tab tooltips now show their shortcut, and pressing `?` (when you are not typing) opens a list of all keyboard shortcuts.
+- A quick switcher: press Ctrl+K anywhere except inside a note or project summary, where it still inserts a link. Type a few letters to jump to a tab, project, note or open task, or run an action (New task, New note, Plan today, Add a meeting today, Log hours for today, Keyboard shortcuts). Move with the up and down arrows, Enter to go, Esc to close. It also works from inside text boxes such as the quick-add field.
+
+---
+
 ## [0.67.0] — 2026-11-12
 
 ### Added
