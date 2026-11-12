@@ -1164,7 +1164,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 #taskSortBar .sort-btn,#taskSortBar select{height:28px;box-sizing:border-box;}#taskSortBar .sort-btn{display:inline-flex;align-items:center;padding:0 14px;}#taskSortBar select{padding:0 8px;}
 .nt-sec{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 2px 8px;}
 .nt-sec:first-child{margin-top:2px;}
-.nt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;align-items:start;}
+.nt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));column-gap:12px;row-gap:0;grid-auto-rows:1px;grid-auto-flow:dense;align-items:start;}
 .nt-empty{padding:40px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:10px;}
 .nt-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px 11px;cursor:pointer;min-width:0;transition:border-color .12s,box-shadow .12s;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .nt-card:hover{border-color:var(--primary);}
@@ -1211,6 +1211,19 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .nt-sw{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);padding:0;cursor:pointer;background:var(--card);}
 .nt-sw.c-y{background:#facc15;}.nt-sw.c-g{background:#4ade80;}.nt-sw.c-b{background:#60a5fa;}.nt-sw.c-p{background:#c084fc;}.nt-sw.c-r{background:#fb7185;}.nt-sw.c-o{background:#fb923c;}
 .nt-sw.on{border-color:var(--text);}
+#ntBoard{container-type:inline-size;}
+.nt-card.sz-s{padding:7px 10px 8px;}
+.nt-card.sz-s .nt-ct{font-size:12px;}
+.nt-card.sz-s .nt-cbody{max-height:34px;}
+.nt-card.sz-l .nt-ct{font-size:15px;}
+.nt-card.sz-l .nt-cbody{max-height:340px;font-size:13px;}
+@container (min-width:472px){.nt-card.sz-w,.nt-card.sz-l{grid-column:span 2;}}
+@media(max-width:920px){@container (min-width:352px){.nt-card.sz-w,.nt-card.sz-l{grid-column:span 2;}}}
+@media(max-width:480px){.nt-card.sz-w,.nt-card.sz-l{grid-column:auto;}}
+.nt-szs{display:flex;gap:6px;flex-wrap:wrap;margin:5px 0 2px;}
+.nt-szb{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:14px;padding:3px 11px;font-size:11.5px;cursor:pointer;font-family:inherit;}
+.nt-szb:hover{border-color:var(--primary);}
+.nt-szb.on{background:var(--primary);border-color:var(--primary);color:#fff;}
 .nt-tagrow{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px;}
 .tk-side input.nt-tagin{width:90px;margin:0;padding:2px 6px;font-size:11px;border-radius:10px;}
 .nt-mk{background:none;border:none;font-size:10px;color:transparent;cursor:pointer;padding:0 3px;font-family:inherit;white-space:nowrap;}
@@ -1976,14 +1989,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.65.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.67.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.65.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.67.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -5119,7 +5132,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.65.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.67.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6519,24 +6532,54 @@ function ntChips(n){
 function ntCardHtml(n){
   if(currentTab==='notes'&&_ntSel===n.id)return ntEditorHtml(n,true);
   var id=n.id,items=n.items||[],body=ntClean(n.body);
-  var it=items.slice(0,6).map(function(i){return'<div class="nt-it'+(i.done?' d':'')+'"><span class="nt-cb'+(i.done?' on':'')+'" onclick="event.stopPropagation();ntToggleItem(\''+id+'\',\''+i.id+'\')">'+(i.done?'&#10003;':'')+'</span><span>'+escH(i.t)+'</span></div>';}).join('')+(items.length>6?'<div class="nt-more">+'+(items.length-6)+' more</div>':'');
+  var lim=n.size==='l'?12:(n.size==='s'?2:6),it=items.slice(0,lim).map(function(i){return'<div class="nt-it'+(i.done?' d':'')+'"><span class="nt-cb'+(i.done?' on':'')+'" onclick="event.stopPropagation();ntToggleItem(\''+id+'\',\''+i.id+'\')">'+(i.done?'&#10003;':'')+'</span><span>'+escH(i.t)+'</span></div>';}).join('')+(items.length>lim?'<div class="nt-more">+'+(items.length-lim)+' more</div>':'');
   var chips=ntChips(n);
-  return'<div class="nt-card'+(n.color?' c-'+n.color:'')+(_ntSel===id?' sel':'')+'" id="nc_'+id+'" draggable="true" ondragstart="ntDragStart(event,\''+id+'\')" ondragend="ntDragEnd()" ondragover="ntDragOver(event,\''+id+'\')" ondragleave="ntDragLeave(event)" ondrop="ntDrop(event,\''+id+'\')" onclick="ntCardClick(event,\''+id+'\')">'
-    +'<div class="nt-ch"><span class="nt-ct">'+(n.title?escH(n.title):'<em>Untitled</em>')+'</span><button class="nt-pin'+(n.pinned?' on':'')+'" onclick="event.stopPropagation();ntTogglePin(\''+id+'\')" title="'+(n.pinned?'Unpin':'Pin to top')+'" aria-label="Pin">'+NT_PIN+'</button></div>'
+  return'<div class="nt-card'+(n.color?' c-'+n.color:'')+(_ntSel===id?' sel':'')+(n.size&&n.size!=='n'?' sz-'+n.size:'')+'" id="nc_'+id+'" draggable="true" ondragstart="ntDragStart(event,\''+id+'\')" ondragend="ntDragEnd()" ondragover="ntDragOver(event,\''+id+'\')" ondragleave="ntDragLeave(event)" ondrop="ntDrop(event,\''+id+'\')" onclick="ntCardClick(event,\''+id+'\')">'
+    +'<div class="nt-ch"><span class="nt-ct">'+(n.title?escH(n.title):'<em>Untitled</em>')+'</span><button class="nt-pin nt-szbtn" onclick="ntCycleSize(event,\''+id+'\')" title="'+ntSizeTip(n)+'" aria-label="Note size">'+NT_SIZE+'</button><button class="nt-pin'+(n.pinned?' on':'')+'" onclick="event.stopPropagation();ntTogglePin(\''+id+'\')" title="'+(n.pinned?'Unpin':'Pin to top')+'" aria-label="Pin">'+NT_PIN+'</button></div>'
     +(body?'<div class="nt-cbody">'+body+'</div>':'')
     +(items.length?'<div class="nt-citems">'+it+'</div>':'')
     +(chips?'<div class="nt-cf">'+chips+'</div>':'')
     +'</div>';
 }
+// -- Note size on the board: small, normal, wide (two columns) or large (two columns, more text) --
+var NT_SIZES=[['s','Small'],['n','Normal'],['w','Wide'],['l','Large']];
+var NT_SIZE='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+function ntSizeNext(cur){var i=0;NT_SIZES.forEach(function(s,k){if(s[0]===(cur||'n'))i=k;});return NT_SIZES[(i+1)%NT_SIZES.length];}
+function ntSizeName(cur){var r='Normal';NT_SIZES.forEach(function(s){if(s[0]===(cur||'n'))r=s[1];});return r;}
+function ntSizeTip(n){return'Size: '+ntSizeName(n.size)+' - click for '+ntSizeNext(n.size)[1];}
+function ntSetSize(id,s){ntUpdate(id,{size:s==='n'?'':s});}
+function ntCycleSize(e,id){e.stopPropagation();var n=ntGet(id);if(n)ntSetSize(id,ntSizeNext(n.size)[0]);}
+function ntSizeBtns(id,cur){
+  cur=cur||'n';
+  return NT_SIZES.map(function(s){return'<button type="button" class="nt-szb'+(cur===s[0]?' on':'')+'" onclick="ntSetSize(\''+id+'\',\''+s[0]+'\')">'+s[1]+'</button>';}).join('');
+}
 function ntCardClick(e,id){if(e.target.closest&&e.target.closest('a,button'))return;ntSelect(id);}
 function ntRefreshCard(id){if(_ntSel===id)return;var el=document.getElementById('nc_'+id),n=ntGet(id);if(el&&n)el.outerHTML=ntCardHtml(n);}
 // -- drag to arrange --
+// -- Notes board: notes pack together in columns, each one right under the one above, instead of sitting in fixed rows --
+// The grid has 1px rows and every note spans as many as its height (plus the gap), so a short note leaves no hole below it.
+var NT_GAP=12;
+function ntSpan(c){
+  var h=Math.ceil(c.getBoundingClientRect().height);
+  if(h>0)c.style.gridRowEnd='span '+(h+NT_GAP);
+}
+function ntMasonry(){
+  var cs=document.querySelectorAll('#ntBoard .nt-card'),i;
+  if(window._ntRO)window._ntRO.disconnect();
+  for(i=0;i<cs.length;i++){ntSpan(cs[i]);if(window._ntRO)window._ntRO.observe(cs[i]);}
+}
+(function(){
+  var b=document.getElementById('ntBoard');
+  if(!b)return;
+  if(window.ResizeObserver)window._ntRO=new ResizeObserver(function(es){es.forEach(function(e){ntSpan(e.target);});});
+  new MutationObserver(function(){ntMasonry();}).observe(b,{childList:true,subtree:true});
+})();
 function ntDragStart(e,id){_ntDragId=id;try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);}catch(x){}var el=document.getElementById('nc_'+id);if(el)setTimeout(function(){el.classList.add('drag');},0);}
 function ntDragClear(){var o=document.querySelectorAll('.nt-card.drag,.nt-card.dbf,.nt-card.dba,.nt-card.dbt,.nt-card.dbb');for(var i=0;i<o.length;i++)o[i].classList.remove('drag','dbf','dba','dbt','dbb');}
 function ntDragEnd(){_ntDragId='';ntDragClear();}
 function ntSide(e,el){
-  var g=el.parentNode,cols=g?getComputedStyle(g).gridTemplateColumns.split(' ').length:1,r=el.getBoundingClientRect();
-  return cols>1?{before:e.clientX<r.left+r.width/2,h:true}:{before:e.clientY<r.top+r.height/2,h:false};
+  var r=el.getBoundingClientRect();
+  return{before:e.clientY<r.top+r.height/2,h:false};
 }
 function ntDragOver(e,id){
   if(!_ntDragId||_ntDragId===id)return;
@@ -6894,7 +6937,8 @@ function ntEditorHtml(n,inline){
   var links='<div class="tk-g2" style="margin-top:10px"><label>Project<select onchange="ntUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Task<select onchange="ntUpdate(\''+id+'\',{taskId:this.value})">'+tOpts+'</select></label></div>'
     +'<div class="tk-g2"><label>Date<input type="date" value="'+escH(n.date||'')+'" onchange="ntUpdate(\''+id+'\',{date:this.value,eventId:\'\'})"></label><label>Meeting<select onchange="ntUpdate(\''+id+'\',{eventId:this.value})"'+(n.date?'':' disabled')+'>'+eOpts+'</select></label></div>'
     +'<div class="tk-l">Tags</div><div class="nt-tagrow">'+tags+'<input type="text" id="ntTagIn" class="nt-tagin" placeholder="+ tag" onkeydown="if(event.key===\'Enter\'||event.key===\',\'){event.preventDefault();ntTagAdd(\''+id+'\');}" onblur="ntTagAdd(\''+id+'\')"></div>'
-    +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>';
+    +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>'
+    +'<div class="tk-l" style="margin-top:8px">Size on the board</div><div class="nt-szs">'+ntSizeBtns(id,n.size)+'</div>';
   var acts='<div class="tk-ft2"><button onclick="ntTogglePin(\''+id+'\')">'+(n.pinned?'Unpin':'Pin')+'</button><button onclick="ntDuplicate(\''+id+'\')">Duplicate</button><button onclick="ntExportMenu(this,\''+id+'\')" title="Copy the note for an email, or export it as a PDF">Export</button><button class="del" onclick="ntDelete(\''+id+'\')">Delete</button></div>';
   var meta='<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(n.created||Date.now()))))+'</div>';
   if(inline){
@@ -6905,7 +6949,7 @@ function ntEditorHtml(n,inline){
   return'<div class="tk-side detail nt-ed">'+head+writing+links+'<div class="tk-ft">'+acts+'</div>'+meta+ntPhotosHtml(id)+'</div><div class="tk-side-bd" onclick="ntClose()"></div>';
 }
 // -- updates --
-function ntLayoutPatch(p){return['pinned','project','tags'].some(function(k){return k in p;});}
+function ntLayoutPatch(p){return['pinned','project','tags','size'].some(function(k){return k in p;});}
 function ntUpdate(id,patch,opts){
   var found=false;
   saveNotes(getNotes().map(function(n){if(n.id!==id)return n;found=true;return Object.assign({},n,patch,{updated:Date.now()});}));

@@ -5,6 +5,23 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.67.0] — 2026-11-12
+
+### Added
+- Notes can now be given a size on the board, so important notes stand out: Small (one column, a two-line preview and the first two checklist items), Normal (as before), Wide (two columns wide) and Large (two columns wide, with a larger title, more text and up to 12 checklist items). Wide and Large fall back to a single column when the window is too narrow for two.
+- To change a note's size, use the Small / Normal / Wide / Large buttons under Colour when the note is open, or the small resize button that appears on a note when you hover over it (next to the pin), which steps through Small, Normal, Wide, Large. The size is saved with the note and the board packs around it without gaps.
+
+---
+
+## [0.66.0] — 2026-11-12
+
+### Changed
+- The Notes board now packs notes together in columns instead of a fixed grid. Each note sits directly under the one above it with an even gap, so a short note no longer leaves empty space beneath it when its neighbour is tall. Pinned notes still sit in their own block above the rest, and the board adapts to the window width, including split-screen.
+- A note you open for editing still takes the full width and pushes the notes below it down, and it keeps its space as you type.
+- Drag to rearrange now decides by where you drop on a note: the top half places the dragged note before it, the bottom half after it.
+
+---
+
 ## [0.65.1] — 2026-11-11
 
 ### Changed
