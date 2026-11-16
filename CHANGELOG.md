@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.71.0] — 2026-11-16
+
+### Added
+- The Ctrl+K quick switcher now finds archived projects as well. They show an "archived" tag and rank below active projects with a similar match, and typing "archived" lists them all. Choosing one opens it on the Projects tab with the Archived list expanded so you can see where it sits and restore it.
+
+---
+
+## [0.70.2] — 2026-11-16
+
+### Fixed
+- Time typed into the Timesheet form but not yet saved is no longer wiped when the project list changes. Archiving or restoring a project, editing or renaming one, and switching the group filter now all keep the hours, activities, extra lines and notes you had entered. If you archive a project you have just entered hours against, it stays on the form with its "archived" tag. Hours entered for projects the group filter is hiding come back when you turn the filter off.
+
+---
+
+## [0.70.1] — 2026-11-16
+
+### Fixed
+- Reopening a saved timesheet entry no longer hides projects that were archived after the time was logged. Those projects now appear on the day's entry with an "archived" tag, their hours count towards the day's total, and saving the entry keeps them. Before, they were left out of the form and the total, so saving over the entry would have dropped that time. Archived projects with no time on the selected day stay hidden, and the History list and weekly summary are unchanged.
+
+---
+
 ## [0.70.0] — 2026-11-12
 
 ### Added

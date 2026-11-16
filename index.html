@@ -350,6 +350,9 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .proj-drag-handle:hover{opacity:1;color:var(--primary);}
 .proj-drag-handle:active{cursor:grabbing;}
 .alloc-row.dragging{opacity:.4;}
+.alloc-label-arch{display:flex;align-items:baseline;gap:6px;}
+.alloc-lname{overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.alloc-archtag{flex:0 0 auto;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0 6px;line-height:1.5;}
 .alloc-row.drop-top::before,.alloc-row.drop-bottom::before{content:'';position:absolute;left:4px;right:4px;height:2px;background:var(--primary);border-radius:1px;z-index:5;}
 .alloc-row.drop-top::before{top:-1px;}
 .alloc-row.drop-bottom::before{bottom:-1px;}
@@ -1244,6 +1247,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .qs-s{color:var(--muted);font-size:11px;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis;}
 .qs-k{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0 7px;line-height:1.7;min-width:44px;text-align:center;}
 .qs-h{font-size:11px;color:var(--muted);white-space:nowrap;}
+.qs-tg{flex:0 0 auto;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0 6px;line-height:1.5;}
 .qs-empty{padding:18px;text-align:center;color:var(--muted);font-size:12.5px;}
 .qs-foot{display:flex;gap:14px;padding:7px 14px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);}
 .qs-ht{padding:12px 16px 6px;font-size:13px;font-weight:700;}
@@ -2019,14 +2023,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.70.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.71.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.70.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.71.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2125,12 +2129,13 @@ function qsItems(){
   out.push({k:'Action',label:'Log hours for today',go:function(){openTimeLogForDay(today);}});
   out.push({k:'Action',label:'Keyboard shortcuts',hint:'?',go:function(){qsHelp();}});
   getActiveProjects().forEach(function(p){out.push({k:'Project',label:p.name,go:function(){switchTab('projects');selectProject(p.name);}});});
+  getProjects().forEach(function(p){if(p.archived)out.push({k:'Project',tag:'archived',label:p.name,go:function(){_archivedExpanded=true;switchTab('projects');selectProject(p.name);}});});
   getNotes().forEach(function(n){out.push({k:'Note',label:n.title||ntText(n.body).slice(0,70)||'Untitled note',sub:n.project||'',go:function(){switchTab('notes');ntSelect(n.id);}});});
   getTasks().forEach(function(t){if(!t.done)out.push({k:'Task',label:t.title||'Untitled task',sub:t.project||'',go:function(){switchTab('tasks');tkSelect(t.id);}});});
   return out;
 }
 function qsScore(it,toks){
-  var l=it.label.toLowerCase(),s=(it.sub||'').toLowerCase(),sc=0;
+  var l=it.label.toLowerCase(),s=((it.sub||'')+' '+(it.tag||'')).toLowerCase(),sc=0;
   for(var j=0;j<toks.length;j++){
     var i=l.indexOf(toks[j]);
     if(i===0)sc+=100;
@@ -2139,7 +2144,7 @@ function qsScore(it,toks){
     else if(s.indexOf(toks[j])>=0)sc+=15;
     else return-1;
   }
-  return sc-l.length*0.05+((it.k==='Tab'||it.k==='Action')?5:0);
+  return sc-l.length*0.05+((it.k==='Tab'||it.k==='Action')?5:0)-(it.tag?8:0);
 }
 function qsRender(){
   var inp=document.getElementById('qsIn'),list=document.getElementById('qsList');
@@ -2155,7 +2160,7 @@ function qsRender(){
   _qs.res=res;
   if(_qs.sel>=res.length)_qs.sel=0;
   list.innerHTML=res.length?res.map(function(it,i){
-    return'<div class="qs-it'+(i===_qs.sel?' on':'')+'" onmousemove="qsHover('+i+')" onmousedown="event.preventDefault();qsRun('+i+')"><span class="qs-k">'+it.k+'</span><span class="qs-l">'+escH(it.label)+'</span>'+(it.sub?'<span class="qs-s">'+escH(it.sub)+'</span>':'')+(it.hint?'<span class="qs-h">'+escH(it.hint)+'</span>':'')+'</div>';
+    return'<div class="qs-it'+(i===_qs.sel?' on':'')+'" onmousemove="qsHover('+i+')" onmousedown="event.preventDefault();qsRun('+i+')"><span class="qs-k">'+it.k+'</span><span class="qs-l">'+escH(it.label)+'</span>'+(it.tag?'<span class="qs-tg">'+escH(it.tag)+'</span>':'')+(it.sub?'<span class="qs-s">'+escH(it.sub)+'</span>':'')+(it.hint?'<span class="qs-h">'+escH(it.hint)+'</span>':'')+'</div>';
   }).join(''):'<div class="qs-empty">Nothing matches &quot;'+escH(inp.value.trim())+'&quot;</div>';
 }
 function qsMark(){
@@ -4188,7 +4193,7 @@ function getActiveProjects(){return getProjects().filter(function(p){return!p.ar
 function startProjDrag(e,name){
   e.preventDefault();
   var grid=document.getElementById('allocGrid');
-  var rows=Array.from(grid.querySelectorAll('.alloc-row'));
+  var rows=Array.from(grid.querySelectorAll('.alloc-row:not(.alloc-arch)'));
   var startRow=rows.find(function(r){return r.dataset.project===name;});
   if(!startRow)return;
   startRow.classList.add('dragging');
@@ -4252,7 +4257,8 @@ function getVisibleProjects(){var gid=getActiveGroupId();var active=getActivePro
 function setActiveGroupId(id){
   localStorage.setItem('plannerActiveGroup',id||'');
   renderGroupFilters();
-  renderProjects();renderAllocGrid();renderSummary();renderHistory();
+  tsDraftNow();
+  renderProjects();tsRefreshGrid();renderSummary();renderHistory();
   if(currentTab==='projects')renderProjectsTab();
   if(currentTab==='tasks')renderTasksPanel();
 }
@@ -4343,7 +4349,8 @@ function archiveProject(name){
   p[idx]=Object.assign({},p[idx],{archived:true});
   saveProjects(p);
   if(_selectedProject===name)_selectedProject=null;
-  renderProjects();renderAllocGrid();renderSummary();renderProjectsTab();
+  tsDraftNow();
+  renderProjects();tsRefreshGrid();renderSummary();renderProjectsTab();
 }
 function restoreProject(name){
   var p=getProjects();
@@ -4351,12 +4358,13 @@ function restoreProject(name){
   if(idx<0)return;
   p[idx]=Object.assign({},p[idx],{archived:false});
   saveProjects(p);
-  renderProjects();renderAllocGrid();renderSummary();renderProjectsTab();
+  tsDraftNow();
+  renderProjects();tsRefreshGrid();renderSummary();renderProjectsTab();
 }
 function openProjectEdit(name){var p=getProjects();var proj=p.find(function(x){return x.name===name;});if(!proj)return;document.getElementById('peOrigName').value=proj.name;document.getElementById('peName').value=proj.name;document.getElementById('peCode').value=proj.code||'';document.getElementById('peActivity').value=proj.activityType||'';document.getElementById('peGroup').innerHTML=groupAssignOptionsHtml(proj.groupId||'');document.getElementById('peColor').value=proj.color||'';renderColorSwatches(proj.color||'');var t=document.getElementById('projModalTitle');if(t)t.textContent='Edit Project';document.getElementById('projectEditModal').style.display='flex';}
 function openAddProjectModal(){document.getElementById('peOrigName').value='';document.getElementById('peName').value='';document.getElementById('peCode').value='';document.getElementById('peActivity').value='';document.getElementById('peGroup').innerHTML=groupAssignOptionsHtml(getActiveGroupId());document.getElementById('peColor').value='';renderColorSwatches('');var t=document.getElementById('projModalTitle');if(t)t.textContent='Add Project';document.getElementById('projectEditModal').style.display='flex';}
 function closeProjectEdit(){document.getElementById('projectEditModal').style.display='none';}
-function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(getAllProjects().find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color,added:Date.now()});saveProjects(p);closeProjectEdit();_selectedProject=newName;renderProjects();renderAllocGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);ntRenameProject(origName,newName);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();renderProjects();renderAllocGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
+function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(getAllProjects().find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color,added:Date.now()});saveProjects(p);closeProjectEdit();_selectedProject=newName;tsDraftNow();renderProjects();tsRefreshGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);ntRenameProject(origName,newName);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();tsDraftNow();if(origName!==newName)tsDraftRename(origName,newName);renderProjects();tsRefreshGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
 function renderColorSwatches(selected){var el=document.getElementById('peColorSwatches');if(!el)return;var html='<div class="palette-swatch'+(!selected?' active':'')+'" style="background:repeating-linear-gradient(45deg,#ccc,#ccc 3px,#fff 3px,#fff 6px)" title="Auto" onclick="selectPeColor(\'\')"></div>';html+=UNIQUE_COLORS.map(function(c){return'<div class="palette-swatch'+(selected===c?' active':'')+'" style="background:'+c+'" title="'+c+'" onclick="selectPeColor(\''+c+'\')"></div>';}).join('');el.innerHTML=html;}
 function selectPeColor(c){document.getElementById('peColor').value=c;renderColorSwatches(c);}
 function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')" title="'+escH(proj.name)+'"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span><span class="project-tag-name">'+escH(proj.name)+'</span></div>';}).join('');}
@@ -4448,7 +4456,39 @@ function downloadActivitiesCSV(){
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='proxplan-activities.csv';a.click();
 }
 var ACTIVITIES=(function(){try{var s=localStorage.getItem('plannerActivities');if(s)return JSON.parse(s);}catch(e){}return ["Admin - General", "Admin - Meetings", "Business Development", "Commissioning", "Document Control", "Drawings - BOM", "Drawings - Diagrams", "Drawings - GAs", "Drawings - Renders", "Engineering - Basic Design", "Engineering - Concept Design", "Engineering - Design Review", "Engineering - Detail Design", "Engineering - Discussions / Meetings", "Engineering - FAT/SAT", "Engineering - General", "Engineering - HAZOP", "Engineering - Mentoring/Assistance", "Engineering - Model Review", "Engineering - Operational Support", "Engineering - Rework", "Engineering - Standard/Product Development", "IMS", "IT List Time", "Lab and Test Work", "Leave - Family Responsibility Leave", "Leave - Maternity Leave", "Leave - Overtime", "Leave - Sick Leave", "Leave - Special Leave", "Leave - Study Leave", "Leave - Unpaid Leave", "Leave - Vacation Leave", "Procurement", "Project Management", "Public Holiday", "Quality Control", "Site Visit / Site Work", "Teambuilding", "Tender Assistance", "Training (Formal)", "Training (Informal)", "Travel"];})();
-function renderAllocGrid(){var p=getVisibleProjects();var grid=document.getElementById('allocGrid');var tr=document.getElementById('totalRow');if(p.length===0){grid.innerHTML='<div class="no-projects">Add projects above to start logging</div>';tr.style.display='none';return;}tr.style.display='flex';grid.innerHTML=p.map(function(proj,i){var n=proj.name;var unit=trackerMode==='pct'?'%':'h';return'<div class="alloc-row" data-project="'+escA(n)+'">'+'<div class="proj-drag-handle" onmousedown="startProjDrag(event,\''+escA(n)+'\')" title="Drag to reorder">⋮⋮</div>'+'<span class="alloc-label" title="'+escH(n)+'">'+escH(n)+'</span>'+'<div class="alloc-lines">'+'<div class="alloc-line">'+'<div class="alloc-act-col">'+
+// -- Keep the time being entered when the project list changes (archive, restore, edit, group filter) --
+function tsDraftNow(){
+  if(document.querySelector('.alloc-row[data-project]')&&(document.getElementById('entryDate')||{}).value)saveDraft();
+}
+function tsRefreshGrid(){
+  var d=(document.getElementById('entryDate')||{}).value;
+  renderAllocGrid(d);
+  if(d)applyDraftOrLog(d);
+}
+function tsDraftRename(a,b){
+  var dr=getDraft();
+  if(dr&&dr.allocs&&dr.allocs[a]!==undefined){
+    dr.allocs[b]=dr.allocs[a];delete dr.allocs[a];
+    localStorage.setItem('plannerTimeDraft',JSON.stringify(dr));
+  }
+}
+// -- Projects archived after time was logged against them: still shown (tagged) on that day's entry so the total adds up and a save keeps them --
+function tsArchNames(date){
+  if(!date)return[];
+  var d=getDraft(),src=(d&&d.date===date)?d.allocs:null;
+  if(!src){var l=getLogsForDate(date);src=l?l.allocs:null;}
+  if(!src)return[];
+  var arch={};
+  getProjects().forEach(function(p){if(p.archived)arch[p.name]=1;});
+  return Object.keys(src).filter(function(k){
+    if(!arch[k])return false;
+    var a=src[k]||{};
+    var h=(parseFloat(a.hrs)||0)+(parseFloat(a.pct)||0);
+    (a.extras||[]).forEach(function(x){h+=(parseFloat(x.hrs)||0)+(parseFloat(x.pct)||0);});
+    return h>0;
+  });
+}
+function renderAllocGrid(_ad){var p=getVisibleProjects();var _an=tsArchNames(_ad||(document.getElementById('entryDate')||{}).value);window._tsArchKey=_an.join('|');if(_an.length){var _allp=getProjects();_an.forEach(function(_n){var _q=_allp.find(function(x){return x.name===_n;});if(_q)p=p.concat([Object.assign({},_q,{_arch:1})]);});}var grid=document.getElementById('allocGrid');var tr=document.getElementById('totalRow');if(p.length===0){grid.innerHTML='<div class="no-projects">Add projects above to start logging</div>';tr.style.display='none';return;}tr.style.display='flex';grid.innerHTML=p.map(function(proj,i){var n=proj.name;var unit=trackerMode==='pct'?'%':'h';return'<div class="alloc-row'+(proj._arch?' alloc-arch':'')+'" data-project="'+escA(n)+'">'+'<div class="proj-drag-handle"'+(proj._arch?' style="visibility:hidden"':' onmousedown="startProjDrag(event,\''+escA(n)+'\')"')+' title="Drag to reorder">⋮⋮</div>'+(proj._arch?'<span class="alloc-label alloc-label-arch" title="'+escH(n)+' (archived project)"><span class="alloc-lname">'+escH(n)+'</span><span class="alloc-archtag">archived</span></span>':'<span class="alloc-label" title="'+escH(n)+'">'+escH(n)+'</span>')+'<div class="alloc-lines">'+'<div class="alloc-line">'+'<div class="alloc-act-col">'+
 '<div class="alloc-act-wrap"><input type="text" class="alloc-activity-input" data-project="'+escA(n)+'" placeholder="Activity\u2026" autocomplete="off" oninput="showActDropdown(this)" onfocus="showActDropdown(this)" onkeydown="(function(el,e){if(e.key===\'Tab\'){var dd=el.nextElementSibling;var f=dd&&dd.querySelector(\'.act-opt\');if(f&&dd.classList.contains(\'open\')){e.preventDefault();el.value=f.textContent;dd.classList.remove(\'open\');saveDraft();}}})(this,event)" onblur="(function(el){setTimeout(function(){closeActDropdown(el);},150);})(this)"><div class="act-dropdown"></div></div>'
 +'<button class="add-extra-btn" onclick="addExtraLine(this,\''+ escA(n) +'\')">+</button>'+'</div>'+'<div class="alloc-input-wrap"><input type="number" class="alloc-input" data-project="'+escA(n)+'" min="0" max="'+(trackerMode==='pct'?100:24)+'" step="'+(trackerMode==='pct'?5:0.5)+'" value="0" oninput="updateTotal()" onfocus="if(parseFloat(this.value)===0)this.value=\'\' " onblur="if(this.value===\'\')this.value=\'0\'"><span class="alloc-unit">'+unit+'</span></div>'+'</div>'+'</div>'+'</div>'}).join('');updateTotal();document.querySelectorAll('.alloc-act-col').forEach(function(el){el.style.display=_simpleLog?'none':'';});
 document.querySelectorAll('.add-extra-btn').forEach(function(el){el.style.display=_simpleLog?'none':'';});
@@ -4520,6 +4560,8 @@ function saveDraft(){
   var date=document.getElementById('entryDate').value;
   if(!date)return;
   var allocs={};
+  var _pd=getDraft();
+  if(_pd&&_pd.date===date&&_pd.allocs)Object.keys(_pd.allocs).forEach(function(k){allocs[k]=_pd.allocs[k];}); // keep time entered for projects the group filter is hiding
   document.querySelectorAll('.alloc-row[data-project]').forEach(function(row){
     var proj=row.dataset.project;
     var primaryInp=row.querySelector('.alloc-input');
@@ -4565,6 +4607,7 @@ function _loadExtras(allocsData,mode,totalHrs){
 }
 
 function applyDraftOrLog(date){
+  if(tsArchNames(date).join('|')!==(window._tsArchKey||''))renderAllocGrid(date);
   renderImportRow(date);
   renderLeaveDayRow(date);
   // Priority: unsaved draft (most recent edits) > saved log > clear form
@@ -5280,7 +5323,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.70.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.71.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
