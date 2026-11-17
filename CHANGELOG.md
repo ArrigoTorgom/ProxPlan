@@ -5,6 +5,49 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.77.7] — 2026-11-18
+
+### Changed
+- Break and out of office blocks in Plan Day now slope at 45 degrees (the other way from before). The shaded working-hours bands in the timeline keep their existing angle.
+
+---
+
+## [0.77.6] — 2026-11-18
+
+### Changed
+- Break and out of office blocks in Plan Day are back to the original diagonal (135 degree) striping, green for breaks and red for out of office. This undoes the hatch experiments in 0.77.1 to 0.77.5.
+
+---
+
+## [0.77.5] — 2026-11-18
+
+### Changed
+- Break blocks in Plan Day now use horizontal green stripes, so they stand apart from the diagonal red stripes on out of office blocks.
+
+---
+
+## [0.77.4] — 2026-11-18
+
+### Changed
+- Break blocks in Plan Day were changed to fine green diagonal lines (replaced in 0.77.5).
+
+---
+
+## [0.77.3] — 2026-11-18
+
+### Changed
+- Break blocks in Plan Day were changed to dotted green (replaced in 0.77.4).
+
+---
+
+## [0.77.2] — 2026-11-18
+
+### Fixed
+- Settings > Leave: the inputs now line up. A label that wrapped onto two lines ("Hours per leave day (if no working hours)") pushed its box lower than its neighbours; boxes now sit on one line with equal height, and number boxes are no longer taller than text boxes.
+- Settings > Reminders: every row is now the same height. Rows with a time box were taller than rows without, so the list looked uneven.
+
+---
+
 ## [0.77.1] — 2026-11-18
 
 ### Changed
