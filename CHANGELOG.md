@@ -5,6 +5,28 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.77.10] — 2026-11-18
+
+### Changed
+- The "Clear notes on imported meetings" tidy-up in Settings > Import Calendar now only appears while some imported meeting still has notes. Once you have cleared them (or if there never were any) it is hidden, so it does not sit in Settings as a permanent control. It is a one-off and will be removed from the code in a later version.
+
+---
+
+## [0.77.9] — 2026-11-18
+
+### Added
+- Settings > Import Calendar has a "Clear notes on imported meetings" button for tidying meetings imported before 0.77.8. It tells you how many meetings it will change and asks first. Only meetings that came from a calendar file are touched, so meetings you created yourself keep their notes; notes you typed on an imported meeting are cleared with the rest. An Undo button appears straight afterwards.
+
+---
+
+## [0.77.8] — 2026-11-18
+
+### Changed
+- Meetings imported from a calendar file no longer bring in notes. The location and description of an invite are mostly the Microsoft Teams joining block, which came through scrambled and is not useful here, so imported meetings now start with empty notes. You can still type your own notes on any meeting.
+- Re-importing a calendar file no longer touches notes on meetings you already have (yours, or ones imported earlier), and a meeting is no longer shown as "changed" just because its notes differ from the invite.
+
+---
+
 ## [0.77.7] — 2026-11-18
 
 ### Changed
