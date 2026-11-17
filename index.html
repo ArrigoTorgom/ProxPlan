@@ -256,6 +256,8 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .dp-main{display:flex;align-items:stretch;}.dp-body{display:flex;flex:1;min-width:0;max-height:56vh;overflow-y:auto;}
 .dp-hours{width:44px;flex-shrink:0;position:relative;border-right:1px solid var(--border);}
 .dp-hour-label{position:absolute;right:6px;font-size:10px;color:var(--muted);transform:translateY(-6px);}
+.dp-hour-label.first{transform:none;}
+.dp-hour-label.last{transform:translateY(-12px);}
 .dp-grid{position:relative;flex:1;cursor:crosshair;user-select:none;}
 .dp-gridline{position:absolute;left:0;right:0;border-top:1px solid var(--border);}
 .dp-gridline.half{border-top-style:dashed;opacity:.6;}
@@ -2023,14 +2025,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.71.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.72.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.71.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.72.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3238,7 +3240,7 @@ var dpDate=null,dpBlocks=[],dpSelectedBlock=null,dpNewRange=null,dpResizing=null
 // what a block says about itself: its own goal, or the linked task's title when no goal is set
 function dpBlockNote(b){if(b.goal)return b.goal;var t=b.taskId?tkTask(b.taskId):null;return t?t.title:'';}
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
-function dpFmtTime(min){var h=Math.floor(min/60),m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
+function dpFmtTime(min){var h=Math.floor(min/60)%24,m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
 function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&m?' ':'')+(m?m+'m':'');}
 function dpPersist(){setBlocksForDate(dpDate,dpBlocks);renderUpNext();if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();}
 
@@ -3296,12 +3298,15 @@ function dpWeekStats(ds){
   }
   return{cap:cap,planned:pl};
 }
-// the grid always covers the working day, and any planned item that sits outside it
-function dpSetRange(ds){
-  var sc=wcSched(wcDow(ds)),a=7*60,b=19*60,iv=dpDayIvs(ds,dpBlocks,true);
-  if(sc.blocks.length){a=Math.min(a,Math.floor(sc.blocks[0][0]/60)*60);b=Math.max(b,Math.ceil(sc.blocks[sc.blocks.length-1][1]/60)*60);}
-  iv.blocks.concat(iv.meetings).forEach(function(p){a=Math.min(a,Math.floor(p[0]/60)*60);b=Math.max(b,Math.ceil(p[1]/60)*60);});
-  DP_GRID_START=Math.max(0,a);DP_GRID_END=Math.min(24*60,b);
+// the grid covers the whole day (00:00 to 24:00) and scrolls; the view opens on the working hours
+function dpSetRange(ds){DP_GRID_START=0;DP_GRID_END=24*60;}
+function dpScrollToWork(focus){
+  var body=document.querySelector('#dayPlanOverlay .dp-body');
+  if(!body)return;
+  var bl=wcSched(wcDow(dpDate)).blocks,s=bl.length?bl[0][0]:DP_WORK_START;
+  var top=s-60,view=body.clientHeight/DP_PX_PER_MIN;
+  if(typeof focus==='number'&&(focus<top||focus>top+view-30))top=focus-60;
+  body.scrollTop=Math.max(0,(top-DP_GRID_START)*DP_PX_PER_MIN);
 }
 // shading behind the grid: hatched = outside working hours, amber band = break
 function dpOffHtml(ds){
@@ -3311,9 +3316,9 @@ function dpOffHtml(ds){
     if(b<=a)return;
     h+='<div class="dp-wk '+cls+'" style="top:'+((a-G0)*DP_PX_PER_MIN)+'px;height:'+((b-a)*DP_PX_PER_MIN)+'px">'+(label?'<span>'+label+'</span>':'')+'</div>';
   }
-  if(lv&&lv.len!=='half'){seg(G0,G1,'off','On leave');return h;}
+  if(lv&&lv.len!=='half'){seg(G0,G1,'off','');seg(DP_WORK_START,DP_WORK_END,'','On leave');return h;}
   var bl=sc.blocks;
-  if(!bl.length){seg(G0,G1,'off','Not a working day');return h;}
+  if(!bl.length){seg(G0,G1,'off','');seg(DP_WORK_START,DP_WORK_END,'','Not a working day');return h;}
   seg(G0,bl[0][0],'off','');
   for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;seg(bl[i-1][1],bl[i][0],'brk',mid>=690&&mid<=840?'Lunch':'Break');}
   seg(bl[bl.length-1][1],G1,'off','');
@@ -3712,6 +3717,8 @@ function openDayPlan(ds,blockId){
   dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   document.getElementById('dayPlanOverlay').classList.add('open');
   renderDayPlan();
+  var _fb=blockId?dpBlocks.filter(function(x){return x.id===blockId;})[0]:null;
+  dpScrollToWork(_fb?_fb.start:undefined);
 }
 function closeDayPlan(){
   if(!dpDate)return;
@@ -3729,6 +3736,7 @@ function dpShiftDay(delta){
   dpDate=d.toLocaleDateString('en-CA',{timeZone:TZ});
   dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderDayPlan();
+  dpScrollToWork();
 }
 
 function renderDayPlan(keepEd){
@@ -3741,7 +3749,7 @@ function renderDayPlan(keepEd){
   var hoursEl=document.getElementById('dpHours');
   var hrsHtml='';
   for(var h=DP_GRID_START;h<=DP_GRID_END;h+=60){
-    hrsHtml+='<div class="dp-hour-label" style="top:'+((h-DP_GRID_START)*DP_PX_PER_MIN)+'px">'+dpFmtTime(h)+'</div>';
+    hrsHtml+='<div class="dp-hour-label'+(h===DP_GRID_START?' first':(h+60>DP_GRID_END?' last':''))+'" style="top:'+((h-DP_GRID_START)*DP_PX_PER_MIN)+'px">'+dpFmtTime(h)+'</div>';
   }
   hoursEl.innerHTML=hrsHtml;
   var totalPx=(DP_GRID_END-DP_GRID_START)*DP_PX_PER_MIN;
@@ -5323,7 +5331,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.71.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.72.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{

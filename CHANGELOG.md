@@ -5,6 +5,16 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.72.0] — 2026-11-17
+
+### Changed
+- The Plan Day timeline now covers the whole day, 12AM to 12AM, instead of stopping at 7AM and 7PM. It opens scrolled to your working hours (starting an hour before your day begins), and you scroll up or down to plan earlier or later work. Blocks and meetings can be placed, moved and resized anywhere in the day, and opening a block that sits outside the usual view scrolls to it. The "On leave" and "Not a working day" labels now sit inside the working hours so they stay in view.
+
+### Fixed
+- The last time label on the timeline read "12PM" for midnight; it now reads "12AM".
+
+---
+
 ## [0.71.0] — 2026-11-16
 
 ### Added
