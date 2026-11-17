@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.78.0] — 2026-11-18
+
+### Added
+- Log History, Week view: a new "Overtime separate" switch. When it is on, each day's hours beyond that day's working hours (all of a non-working day, such as a weekend) come out of the weekly grid and are listed in their own "Overtime: outside working hours, not for Replicon" block underneath, with its own total. The grid above then totals only the hours within working hours, so it stays within what Replicon allows. The overtime on a day is one total rather than belonging to a project, so it is shared out across that day's projects and activities in proportion to the hours you logged on each; the two blocks always add up to what you logged.
+- The By Week Replicon CSV export follows the same switch: with it on, each week gets the same separate Overtime block below its normal rows, and the export dialog says so. The Full period list export is unchanged.
+- The switch is remembered and is off by default. It is part of the Overtime feature, so it disappears (and the Week view goes back to showing everything) when Overtime is switched off in Settings > Features. Nothing you logged is changed.
+
+### Changed
+- In Week view the Activity switch is hidden (it only applies to the List view) so the new switch sits in its place.
+
+---
+
 ## [0.77.10] — 2026-11-18
 
 ### Changed

@@ -319,6 +319,7 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .hist-repl-table th:first-child,.hist-repl-table td:first-child{padding-left:8px;}
 .hist-repl-table th:last-child,.hist-repl-table td:last-child{padding-right:8px;}
 .hist-repl-table .hist-repl-day{text-align:center;}
+.hist-repl-table tr.hist-repl-ot-head td{padding-top:16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-bottom:1px solid var(--border);}
 #historyReplicon{container-type:inline-size;}
 .hist-repl-table .d-short{display:none;}
 @container (max-width:520px){.hist-repl-table .d-full{display:none;}.hist-repl-table .d-short{display:inline;}.hist-repl-table th.hist-repl-day{font-size:11px;padding-left:1px;padding-right:1px;}.hist-repl-table th:last-child{font-size:11px;padding-right:4px;}.hist-repl-table td:last-child{padding-right:4px;}}
@@ -1883,7 +1884,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
         <button id="histViewList" class="active" onclick="setHistoryView('list')">List</button>
         <button id="histViewReplicon" onclick="setHistoryView('replicon')">Week</button>
       </div>
-      <button id="actToggleBtn" onclick="toggleActivityBadges()" class="btn secondary-btn sm act-toggle-btn" title="Show/hide activity in badges">Activity<span class="act-toggle-pill"><span class="act-toggle-knob"></span></span></button><button class="btn secondary-btn sm" onclick="openExportModal()">Export</button>
+      <button id="actToggleBtn" onclick="toggleActivityBadges()" class="btn secondary-btn sm act-toggle-btn" title="Show/hide activity in badges">Activity<span class="act-toggle-pill"><span class="act-toggle-knob"></span></span></button><button id="otSplitBtn" onclick="toggleOtSplit()" class="btn secondary-btn sm act-toggle-btn ft-overtime" style="display:none" title="Take hours beyond each day's working hours out of the weekly grid and list them separately as overtime, so the grid stays within what Replicon allows">Overtime separate<span class="act-toggle-pill"><span class="act-toggle-knob"></span></span></button><button class="btn secondary-btn sm" onclick="openExportModal()">Export</button>
     </div>
     <div class="ot-bar" id="otBar" style="display:none"></div><div class="ot-panel" id="otPanel" style="display:none"></div>
     <table class="log-table" id="historyListTable">
@@ -2089,14 +2090,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.77.10</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.78.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.77.10%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.78.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2108,7 +2109,7 @@ var TZ='Africa/Johannesburg';
 var FEAT_KEY='plannerFeatures';
 var FEATURES=[
   {id:'timesheet',group:'Time tracking',label:'Timesheet',desc:'Log hours by project, with history and summaries. Includes the Timesheet tab, the daily and weekly timesheet reminders, and booked hours in Plan Day.',deps:[]},
-  {id:'overtime',group:'Time tracking',label:'Overtime',desc:'The overtime balance and badges, and breaks or time out of office counting against it.',deps:['timesheet']},
+  {id:'overtime',group:'Time tracking',label:'Overtime',desc:'The overtime balance and badges, the Week view overtime split, and breaks or time out of office counting against it.',deps:['timesheet']},
   {id:'leave',group:'Time tracking',label:'Leave and public holidays',desc:'Leave days, the leave balance and public holidays, which reduce your working hours on those days.',deps:[]},
   {id:'reminders',group:'Planning',label:'Reminders',desc:'Reminders, the bell in the header and the reminder banner on This Week.',deps:[]},
   {id:'planday',group:'Planning',label:'Plan Day',desc:'The day timeline: blocks of time against projects, breaks and time out of office, and the planned time shown on This Week and on tasks.',deps:[]},
@@ -5705,7 +5706,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.77.10';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.78.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5740,6 +5741,9 @@ function toggleSimpleLog(){
 function toggleActivityBadges(){  _showActivity=!_showActivity;  localStorage.setItem('plannerShowActivity',_showActivity?'1':'0');  var btn=document.getElementById('actToggleBtn');  if(btn){btn.className='btn '+ (_showActivity?'primary-btn':'secondary-btn') +' sm act-toggle-btn';}  renderHistory();}
 var _historyView=(function(){try{return localStorage.getItem('plannerHistoryView')||'list';}catch(e){return'list';}})();
 var _historyViewWeek=null;
+var _otSplit=(function(){try{return localStorage.getItem('plannerOtSplit')==='1';}catch(e){return false;}})();
+function otSplitOn(){return _otSplit&&featOn('overtime');}
+function toggleOtSplit(){_otSplit=!_otSplit;try{localStorage.setItem('plannerOtSplit',_otSplit?'1':'0');}catch(e){}renderHistory();}
 function currentExportWeekKey(dateStr){var wk=isoWeekNum(dateStr||todayStr());return wk[0]+'-W'+String(wk[1]).padStart(2,'0');}
 function setHistoryView(v){
   _historyView=v;
@@ -5759,12 +5763,12 @@ function historyViewShiftWeek(delta){
 }
 function renderHistoryReplicon(){
   if(!_historyViewWeek)_historyViewWeek=currentExportWeekKey();
-  var weeks=computeExportWeeks();
+  var weeks=computeExportWeeks(otSplitOn());
   var key=_historyViewWeek;
   var parts=key.split('-W');
   var yr=parseInt(parts[0]),wn=parseInt(parts[1]);
   var b=weekBounds(wn,yr);
-  var w=weeks[key]||{num:wn,year:yr,bounds:b,rows:{}};
+  var w=weeks[key]||{num:wn,year:yr,bounds:b,rows:{},otRows:{}};
   var lbl=document.getElementById('histReplWeekLabel');
   if(lbl)lbl.textContent='Week '+wn+': '+fmtShort(b.mon)+' - '+fmtShort(b.fri);
   var DN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -5781,19 +5785,28 @@ function renderHistoryReplicon(){
     var l2=g.length>1?(days[5].getDate()+'/'+days[6].getDate()):String(days[g[0]].getDate());
     return'<th class="hist-repl-day'+(notes?' hist-repl-noted':'')+'" style="width:'+(g.length>1?8:6)+'%"'+(notes?' title="'+escH(notes)+'"':'')+'>'+l1+'<br>'+l2+'</th>';
   }).join('')+'<th style="width:10%;text-align:right">Total</th>';
-  var rows=Object.values(w.rows).sort(function(a,b){return a.proj.localeCompare(b.proj)||a.activity.localeCompare(b.activity);});
+  var _sp=otSplitOn();
+  var byName=function(a,b){return a.proj.localeCompare(b.proj)||a.activity.localeCompare(b.activity);};
+  var rows=Object.values(w.rows).sort(byName);
+  var otRows=_sp?Object.values(w.otRows||{}).sort(byName):[];
   var tbody=document.getElementById('historyReplBody');
   if(!tbody)return;
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="9"><div class="empty-state">No entries this week</div></td></tr>';return;}
-  var bodyHtml=rows.map(function(r){
-    var vals=groups.map(function(g){var v=grpSum(r,g);return'<td class="hist-repl-day">'+(v?v.toFixed(1):'')+'</td>';}).join('');
-    var total=Object.values(r.days).reduce(function(s,v){return s+v;},0);
-    return'<tr><td>'+escH(r.proj)+'</td><td style="color:var(--muted)">'+(r.activity?escH(r.activity):'-')+'</td>'+vals+'<td style="text-align:right;font-weight:600">'+total.toFixed(1)+'</td></tr>';
-  }).join('');
-  var grpTotals=groups.map(function(g){return rows.reduce(function(s,r){return s+grpSum(r,g);},0);});
-  var grandTotal=grpTotals.reduce(function(s,v){return s+v;},0);
-  var totalsRow='<tr class="hist-repl-totals"><td colspan="2">Total</td>'+grpTotals.map(function(t){return'<td class="hist-repl-day">'+(t?t.toFixed(1):'')+'</td>';}).join('')+'<td style="text-align:right">'+grandTotal.toFixed(1)+'</td></tr>';
-  tbody.innerHTML=bodyHtml+totalsRow;
+  if(!rows.length&&!otRows.length){tbody.innerHTML='<tr><td colspan="9"><div class="empty-state">No entries this week</div></td></tr>';return;}
+  var ft=function(v){return _sp?String(parseFloat(v.toFixed(2))):v.toFixed(1);};
+  var fh=function(v){return v>0.004?ft(v):'';};
+  function section(rs,label){
+    var bodyHtml=rs.map(function(r){
+      var vals=groups.map(function(g){return'<td class="hist-repl-day">'+fh(grpSum(r,g))+'</td>';}).join('');
+      var total=Object.values(r.days).reduce(function(s,v){return s+v;},0);
+      return'<tr><td>'+escH(r.proj)+'</td><td style="color:var(--muted)">'+(r.activity?escH(r.activity):'-')+'</td>'+vals+'<td style="text-align:right;font-weight:600">'+ft(total)+'</td></tr>';
+    }).join('');
+    var grpTotals=groups.map(function(g){return rs.reduce(function(s,r){return s+grpSum(r,g);},0);});
+    var grandTotal=grpTotals.reduce(function(s,v){return s+v;},0);
+    return bodyHtml+'<tr class="hist-repl-totals"><td colspan="2">'+label+'</td>'+grpTotals.map(function(t){return'<td class="hist-repl-day">'+fh(t)+'</td>';}).join('')+'<td style="text-align:right">'+ft(grandTotal)+'</td></tr>';
+  }
+  var out=section(rows,_sp?'Total, working hours':'Total');
+  if(otRows.length)out+='<tr class="hist-repl-ot-head"><td colspan="9">Overtime: outside working hours, not for Replicon</td></tr>'+section(otRows,'Total overtime');
+  tbody.innerHTML=out;
 }
 // -- Overtime balance: overtime logged on past days, less what has been recovered (time off or paid out) --
 var _otOpen=false;
@@ -5858,7 +5871,9 @@ function renderHistory(){
   if(rp)rp.style.display=_historyView==='replicon'?'':'none';
   if(hs)hs.style.display=_historyView==='list'?'':'none';
   if(hp)hp.style.display=_historyView==='list'?'':'none';
-  if(atb)atb.style.visibility=_historyView==='list'?'visible':'hidden';
+  if(atb)atb.style.display=_historyView==='list'?'':'none';
+  var _ob=document.getElementById('otSplitBtn');
+  if(_ob){_ob.style.display=_historyView==='replicon'?'':'none';_ob.className='btn '+(otSplitOn()?'primary-btn':'secondary-btn')+' sm act-toggle-btn ft-overtime';}
   if(hrn)hrn.style.display=_historyView==='replicon'?'flex':'none';
   if(_historyView==='replicon'){renderHistoryReplicon();return;}
   var btn=document.getElementById('actToggleBtn');if(btn)btn.className='btn '+(_showActivity?'primary-btn':'secondary-btn')+' sm act-toggle-btn';var search=(document.getElementById('historySearch').value||'').toLowerCase();var period=(document.getElementById('historyPeriod')?document.getElementById('historyPeriod').value:'all');var now=new Date();var cutoff=null;if(period!=='all'){cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-parseInt(period));}var logs=getLogs().filter(function(l){return l.date<=todayStr();});if(cutoff)logs=logs.filter(function(l){return new Date(l.date)>=cutoff;});if(search)logs=logs.filter(function(l){return Object.keys(l.allocs).some(function(p){return p.toLowerCase().includes(search);});});var _hGid=getActiveGroupId();if(_hGid){var _hVisNames=getVisibleProjects().map(function(p){return p.name;});logs=logs.map(function(l){var fa={};Object.keys(l.allocs).forEach(function(k){if(_hVisNames.indexOf(k)>=0)fa[k]=l.allocs[k];});return Object.assign({},l,{allocs:fa});}).filter(function(l){return Object.keys(l.allocs).length>0;});}var tbody=document.getElementById('historyBody');if(logs.length===0){tbody.innerHTML='<tr><td colspan="3"><div class="empty-state">No entries yet</div></td></tr>';return;}tbody.innerHTML=logs.map(function(l,i){var badges=Object.entries(l.allocs).map(function(e){
@@ -10664,38 +10679,46 @@ function initSpellcheckToggle(){
 }
 
 
-function openExportModal(){document.getElementById('exportModal').style.display='flex';populateExportWeekList();toggleExportWeekPicker();}
+function openExportModal(){document.getElementById('exportModal').style.display='flex';populateExportWeekList();toggleExportWeekPicker();var _on=document.getElementById('exportOtNote');if(_on)_on.style.display=otSplitOn()?'':'none';}
 function doExport(){var mode=document.querySelector('input[name="exportMode"]:checked').value;document.getElementById('exportModal').style.display='none';if(mode==='period')exportCSV();else exportByWeek();}
 function isoWeekNum(dateStr){var d=new Date(dateStr);d.setHours(0,0,0,0);d.setDate(d.getDate()+3-(d.getDay()+6)%7);var w1=new Date(d.getFullYear(),0,4);return[d.getFullYear(),1+Math.round(((d-w1)/864e5-3+(w1.getDay()+6)%7)/7)];}
 function weekBounds(wn,yr){var jan4=new Date(yr,0,4);var dow=(jan4.getDay()+6)%7;var mon=new Date(jan4);mon.setDate(jan4.getDate()-dow+(wn-1)*7);var fri=new Date(mon);fri.setDate(mon.getDate()+4);return{mon:mon,fri:fri};}
 function fmtShort(d){var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear();}
 function _fmtH(v){var s=parseFloat(v.toFixed(2));return s===0?'':String(s);}
 var _exportSelectedWeeks={};
-function computeExportWeeks(){
+// split=true moves each day's hours beyond its working hours into otRows, shared out across that day's lines in proportion (the overtime is a day total, not tied to a project)
+function computeExportWeeks(split){
   var logs=getLogs();
   var weeks={};
+  function add(W,store,proj,act,date,v){
+    if(!(v>0.004))return;
+    var rk=proj+'|||'+(act||'');
+    if(!W[store][rk])W[store][rk]={proj:proj,activity:act||'',days:{}};
+    W[store][rk].days[date]=(W[store][rk].days[date]||0)+v;
+  }
+  function r2(v){return Math.round(v*100)/100;}
   logs.forEach(function(l){
     var wk=isoWeekNum(l.date);
     var key=wk[0]+'-W'+String(wk[1]).padStart(2,'0');
-    if(!weeks[key]){var b=weekBounds(wk[1],wk[0]);weeks[key]={num:wk[1],year:wk[0],bounds:b,rows:{}};}
+    if(!weeks[key]){var b=weekBounds(wk[1],wk[0]);weeks[key]={num:wk[1],year:wk[0],bounds:b,rows:{},otRows:{}};}
     var W=weeks[key];
+    var lines=[];
     Object.keys(l.allocs).forEach(function(proj){
       var a=l.allocs[proj];
-      // Primary entry
-      if((a.hrs||0)>0){
-        var rk=proj+'|||'+(a.activity||'');
-        if(!W.rows[rk])W.rows[rk]={proj:proj,activity:a.activity||'',days:{}};
-        W.rows[rk].days[l.date]=(W.rows[rk].days[l.date]||0)+(a.hrs||0);
-      }
-      // Extra activity entries
-      (a.extras||[]).forEach(function(ex){
-        if((ex.hrs||0)>0){
-          var erk=proj+'|||'+(ex.activity||'');
-          if(!W.rows[erk])W.rows[erk]={proj:proj,activity:ex.activity||'',days:{}};
-          W.rows[erk].days[l.date]=(W.rows[erk].days[l.date]||0)+(ex.hrs||0);
-        }
-      });
+      if((a.hrs||0)>0)lines.push({p:proj,a:a.activity||'',h:a.hrs||0});
+      (a.extras||[]).forEach(function(ex){if((ex.hrs||0)>0)lines.push({p:proj,a:ex.activity||'',h:ex.hrs||0});});
     });
+    var tot=lines.reduce(function(s,x){return s+x.h;},0);
+    var norm=lines.map(function(x){return x.h;});
+    if(split&&tot>0){
+      var wh=Math.max(0,tsLogWh(l,l.date));
+      if(tot>wh+0.004){
+        norm=lines.map(function(x){return r2(x.h*wh/tot);});
+        var diff=r2(wh-norm.reduce(function(s,v){return s+v;},0));
+        if(diff!==0){var bi=0;lines.forEach(function(x,i){if(x.h>lines[bi].h)bi=i;});norm[bi]=Math.max(0,r2(norm[bi]+diff));}
+      }
+    }
+    lines.forEach(function(x,i){add(W,'rows',x.p,x.a,l.date,norm[i]);add(W,'otRows',x.p,x.a,l.date,r2(x.h-norm[i]));});
   });
   return weeks;
 }
@@ -10721,7 +10744,7 @@ function toggleExportWeekPicker(){
   document.getElementById('exportWeekPicker').style.display=mode==='week'?'block':'none';
 }
 function exportByWeek(){
-  var weeks=computeExportWeeks();
+  var weeks=computeExportWeeks(otSplitOn());
   var sortedKeys=Object.keys(weeks).sort().filter(function(k){return _exportSelectedWeeks[k];});
   if(!sortedKeys.length){alert('Select at least one week to export.');return;}
   var DN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -10729,7 +10752,7 @@ function exportByWeek(){
   var out=[];
   var _codes={};
   getAllProjects().forEach(function(p){var c=String(p.code||'').trim();if(c)_codes[p.name]=c;});
-  var hasCode=sortedKeys.some(function(k){return Object.values(weeks[k].rows).some(function(r){return _codes[r.proj];});});
+  var hasCode=sortedKeys.some(function(k){return Object.values(weeks[k].rows).concat(Object.values(weeks[k].otRows||{})).some(function(r){return _codes[r.proj];});});
   function lead(task,proj,billing,act,code){return hasCode?[task,proj,code,billing,act]:[task,proj,billing,act];}
   sortedKeys.forEach(function(key){
     var w=weeks[key];var b=w.bounds;
@@ -10745,6 +10768,15 @@ function exportByWeek(){
       var total=Object.values(r.days).reduce(function(s,v){return s+v;},0);
       out.push(lead('',r.proj,'',r.activity,_codes[r.proj]||'').concat(vals).concat([_fmtH(total)]));
     });
+    var _otr=Object.values(w.otRows||{}).sort(function(a,b){return a.proj.localeCompare(b.proj)||a.activity.localeCompare(b.activity);});
+    if(_otr.length){
+      out.push(lead('Overtime: outside working hours, not for Replicon','','','','').concat(dayHdrs).concat(['Total']));
+      _otr.forEach(function(r){
+        var ovals=days.map(function(d){var v=r.days[isoStr(d)]||0;return _fmtH(v);});
+        var ototal=Object.values(r.days).reduce(function(s,v){return s+v;},0);
+        out.push(lead('',r.proj,'',r.activity,_codes[r.proj]||'').concat(ovals).concat([_fmtH(ototal)]));
+      });
+    }
     out.push([]); // blank separator
   });
   var csv=out.map(function(r){return r.map(function(c){return'"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
@@ -10765,7 +10797,7 @@ function exportByWeek(){
       <label class="export-opt">
         <input type="radio" name="exportMode" value="week" onchange="toggleExportWeekPicker()">
         <div><div class="export-opt-title">By Week — Replicon</div>
-        <div class="export-opt-desc">One row per project entry, grouped by ISO week (e.g. Week 28: 6 Jul – 10 Jul 2026) — easy to copy into Replicon week by week. Includes a Code column when your projects have a Project / Tender Code</div></div>
+        <div class="export-opt-desc">One row per project entry, grouped by ISO week (e.g. Week 28: 6 Jul – 10 Jul 2026) — easy to copy into Replicon week by week. Includes a Code column when your projects have a Project / Tender Code</div><div class="export-opt-desc" id="exportOtNote" style="display:none;color:var(--primary);margin-top:4px">Overtime separate is on: hours beyond each day's working hours are listed in their own Overtime block under each week, not in the weekly rows.</div></div>
       </label>
     </div>
     <div id="exportWeekPicker" style="display:none;margin-top:4px">
