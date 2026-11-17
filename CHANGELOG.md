@@ -5,6 +5,74 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.77.1] — 2026-11-18
+
+### Changed
+- Out of office blocks in Plan Day now have their hatching slanted the other way from breaks, so the two stand apart even without the colour difference.
+
+---
+
+## [0.77.0] — 2026-11-18
+
+### Added
+- Three more switches in Settings > Features: Plan Day, Meetings and .ics import, and Photos.
+- Plan Day off: the day timeline cannot be opened (the Plan day action, the Ctrl+K "Plan today" action, Open day plan in Up Next, Plan and Plan today on tasks), planned blocks and planned hours disappear from This Week and from tasks, task drag-to-plan does nothing, and breaks and time out of office stop counting against overtime. Meetings stay available: opening one from Up Next or a meeting reminder shows the meeting dialog instead.
+- Meetings and .ics import off: meetings disappear from This Week, Plan Day, Up Next and notes (the meeting link on a note is hidden), the Add event action and the Meeting choice in Plan Day go, meeting reminders go silent and leave the reminder manager, and the Import Calendar section, the drop zone and pasting calendar files stop working. Log Time's import banner reads "Import from planned hours" or "Import from meeting hours" depending on what is on, and disappears when both are off.
+- Photos off: the Photos card on projects, the photos strip, thumbnails and photo counts on notes, pasting an image into a note, photos in note PDF and email exports, and the photo backup folder (setting and background sync) are all hidden or paused.
+- As before, turning a feature off only hides it. Your meetings, planned blocks and photos stay exactly as they were, and everything returns when you switch it back on; nothing is written to or removed from them while a switch is off.
+
+### Changed
+- The Time tracking starting point now also switches Plan Day off (Timesheet, overtime, leave and meetings stay on). If you chose Time tracking in the last version, ProxPlan shows it as a custom selection until you switch Plan Day off.
+- The To Do list button in the Up Next panel is hidden when To Do is switched off.
+- The guided tour skips the Plan your day step when Plan Day is off.
+
+---
+
+## [0.76.0] — 2026-11-18
+
+### Added
+- Settings > Features lets you switch parts of ProxPlan on or off, so it can be used lean: just planning and tasks, or just time tracking. Three starting points sit at the top (Everything, Planning and tasks, Time tracking), and you can then tick or untick individual features: Timesheet, Overtime, Leave and public holidays, Reminders, To Do and Notes. Turning a feature off only hides it and silences it; nothing is deleted, and turning it back on brings everything back. Overtime needs the Timesheet, so switching the Timesheet off switches Overtime off too (and says so), and switching Overtime on switches the Timesheet on.
+- What each switch hides: Timesheet (the tab, logged hours and "not logged" marks on This Week, booked hours in Plan Day, the daily and weekly timesheet reminders, hours on projects); Overtime (the balance, the OT badges, and the overtime figures in Plan Day); Leave and public holidays (leave and holidays on This Week and in Plan Day, the leave section and balance, and their effect on working hours); Reminders (the bell, the banner, reminder alerts and the Remind me option on meetings); To Do (the tab, tasks on This Week, suggested tasks and task links in Plan Day, tasks on projects); Notes (the tab, notes on days and projects, notes linked to tasks).
+- Tab shortcuts, the mouse-wheel on the tab bar, the Ctrl+K switcher, the day action panel, the shortcut list and the guided tour all follow whichever features are on, so Alt+1 to Alt+N always match the tabs you can see.
+- The first time ProxPlan opens on an empty copy, it asks how you want to use it and offers the three starting points. It can be skipped (Esc works too), is never shown once there is any data, and never appears again.
+- The choice is saved with your backups and sync, so a restored copy looks the same.
+
+---
+
+## [0.75.0] — 2026-11-18
+
+### Added
+- Meetings are now planned and edited right in Plan Day, with no dialog. Drag a time range on the timeline and choose Work, Meeting, Break or Out of office at the top of the editor. For a meeting you fill in the title, project, activity, notes and the reminder in place; the date and times come from the range you dragged. Clicking an existing meeting, on the timeline or in the side panel, opens the same editor, and it saves itself as you go like a work block does, including meetings imported from a calendar file. Switching between types while you fill in a new slot keeps what you have typed.
+- The meeting editor has an "All details" button that opens the full dialog, for changing the date.
+
+### Changed
+- The + Meeting, + Break and + Out of office buttons at the top of Plan Day are gone, replaced by the four choices in the editor. The + Meeting button on the week view still opens the full dialog.
+
+---
+
+## [0.74.0] — 2026-11-17
+
+### Added
+- Quick + Break and + Out of office buttons at the top of Plan Day. One click drops a 15-minute slot onto the day, at the first free quarter hour inside your working hours (from now on today), selected and ready for a note. Drag it to move it or pull its top or bottom edge to resize it. If the day has no free quarter hour the slot is placed at the start of your working day, beside what is already there.
+
+### Changed
+- Breaks now show as green hatched blocks and time out of office as red hatched blocks, instead of both being grey. The Break and Out of office choices in the block editor and the two quick buttons use the same colours.
+
+---
+
+## [0.73.0] — 2026-11-17
+
+### Added
+- Breaks and time out of office in Plan Day. When you add a block, choose Work, Break or Out of office (with an optional note such as coffee or dentist). Away slots show as grey hatched blocks, can be moved, resized and edited like any other block, and never count as planned work: they are left out of the hours imported into the timesheet and out of the planned-work totals, and the free time on the side panel works around them.
+- Away time counts against overtime, but only when you end up working less than the day requires. A 15-minute break on a day booked at 7h45 of 8h counts as -15m; on a day booked at the full 8h it counts for nothing, and unlogged gaps never count. Only the part of a slot inside your working hours counts, never lunch or time outside them, and never more than the shortfall.
+- The overtime balance on the Timesheet now takes away time off and can go below zero to show time owed. It shows how much has been counted as away next to the hours worked. Days only count once they are on your timesheet.
+- The Plan Day header shows how much away time is in the day, and once the day is booked, how much of it counts against overtime. The Timesheet shows a "-15m OT" badge on a day where it applies, in the same place as the "+1h OT" badge.
+
+### Changed
+- The overtime balance no longer stops at zero; away time beyond the overtime banked now shows as a negative balance.
+
+---
+
 ## [0.72.0] — 2026-11-17
 
 ### Changed

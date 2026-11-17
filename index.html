@@ -969,6 +969,61 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-wh .bar i{display:block;height:100%;}
 .dp-wh .bar .w{background:var(--primary);}
 .dp-wh .bar .m{background:#8b5cf6;}
+.dp-wh .bar .a{background:#9aa5ad;}
+.dp-wh .neg{color:var(--primary);font-weight:600;}
+.dp-block.away{--blk-color:var(--muted);border-left-color:var(--muted);background:repeating-linear-gradient(135deg,rgba(128,128,128,.22) 0 6px,rgba(128,128,128,.1) 6px 12px);}
+.dp-kinds{display:flex;gap:6px;flex-wrap:wrap;}
+.dp-kind{font-size:11.5px;padding:4px 11px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-weight:600;font-family:inherit;}
+.dp-kind:hover{border-color:var(--primary);color:var(--primary);}
+.dp-kind.on{background:var(--primary);border-color:var(--primary);color:#fff;}
+.dp-away-ed{display:flex;flex-direction:column;gap:6px;}
+.dp-away-ed input{width:100%;box-sizing:border-box;}
+.dp-away-help{font-size:11px;color:var(--muted);}
+.dp-block.away.brk{--blk-color:#16a34a;border-left-color:#16a34a;background:repeating-linear-gradient(135deg,rgba(34,197,94,.3) 0 6px,rgba(34,197,94,.13) 6px 12px);}
+.dp-block.away.ooo{--blk-color:#e24a4a;border-left-color:#e24a4a;background:repeating-linear-gradient(45deg,rgba(226,75,74,.3) 0 6px,rgba(226,75,74,.13) 6px 12px);}
+.dp-kind.k-meeting.on{background:#8b5cf6;border-color:#8b5cf6;}
+.dp-kind.k-meeting:hover{border-color:#8b5cf6;color:#8b5cf6;}
+.dp-mt-ed .dp-mt-wide{grid-column:1/-1;}
+.dp-mt-rem{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);cursor:pointer;}
+.dp-mt-rem input{width:auto!important;margin:0;cursor:pointer;}
+/* features switched off */
+body.feat-off-timesheet #tabTracker,body.feat-off-timesheet #panelTracker,
+body.feat-off-todo #tabTasks,body.feat-off-todo #panelTasks,
+body.feat-off-notes #tabNotes,body.feat-off-notes #panelNotes,
+body.feat-off-reminders #upNextBell,body.feat-off-reminders #remPop,body.feat-off-reminders #reminderZone,
+body.feat-off-reminders [data-nav="reminders"],body.feat-off-reminders [data-set="reminders"],
+body.feat-off-leave [data-nav="leave"],body.feat-off-leave [data-set="leave"],body.feat-off-leave #leaveChip,body.feat-off-leave #leaveDayRow,
+body.feat-off-todo [data-nav="todo"],body.feat-off-todo [data-set="todo"],
+body.feat-off-overtime #otBar,body.feat-off-overtime #otPanel,body.feat-off-overtime #otRow,
+body.feat-off-timesheet .ft-timesheet,body.feat-off-overtime .ft-overtime,body.feat-off-leave .ft-leave,body.feat-off-reminders .ft-reminders,body.feat-off-todo .ft-todo,body.feat-off-notes .ft-notes,
+body.feat-off-reminders label:has(#evRemind){display:none!important;}
+body.feat-off-planday .ft-planday,body.feat-off-meetings .ft-meetings,body.feat-off-photos .ft-photos,body.feat-off-meetings [data-nav="import"],body.feat-off-meetings [data-set="import"],body.feat-off-meetings #icsDrop,body.feat-off-meetings #evIcsRow{display:none!important;}
+/* Settings > Features */
+.feat-help{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.feat-presets{display:flex;flex-wrap:wrap;gap:8px;}
+.feat-preset{flex:1 1 180px;text-align:left;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:2px;}
+.feat-preset b{font-size:13px;}
+.feat-preset span{font-size:11.5px;color:var(--muted);line-height:1.4;}
+.feat-preset:hover{border-color:var(--primary);}
+.feat-preset.on{border-color:var(--primary);background:var(--primary-light);}
+.feat-custom{font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.04em;margin-top:8px;}
+.feat-grp{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:16px 0 4px;}
+.feat-row{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;border-bottom:1px solid var(--border);cursor:pointer;}
+.feat-row input{margin-top:2px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0;cursor:pointer;}
+.feat-t b{display:block;font-size:13px;color:var(--text);}
+.feat-t small{display:block;font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:1px;}
+.feat-msg{font-size:12px;color:var(--primary);min-height:16px;margin-top:10px;}
+.feat-box{width:min(620px,94vw);background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.35);padding:20px 22px;color:var(--text);max-height:80vh;overflow-y:auto;}
+.feat-box h2{font-size:17px;margin:0 0 6px;}
+.feat-box p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5;}
+.feat-first{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+.feat-first .feat-preset{flex:0 0 auto;}
+.feat-skip{display:flex;justify-content:flex-end;}
+.dp-kind.k-break.on{background:#16a34a;border-color:#16a34a;}
+.dp-kind.k-ooo.on{background:#e24a4a;border-color:#e24a4a;}
+.dp-kind.k-break:hover{border-color:#16a34a;color:#16a34a;}
+.dp-kind.k-ooo:hover{border-color:#e24a4a;color:#e24a4a;}
+.dp-kind.on:hover{color:#fff;}
 @media(max-width:760px){.dp-wh .wk{margin-left:0;}}
 .dp-side-leave{font-size:11.5px;background:rgba(34,197,94,.14);color:#16a34a;border-radius:6px;padding:4px 8px;margin-bottom:6px;}
 .dp-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:9px;margin-left:4px;vertical-align:1px;}
@@ -1575,10 +1630,10 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <button class="dp-nav-btn" onclick="dpShiftDay(-1)" title="Previous day">&#8249;</button>
       <div class="dp-title"><div class="n" id="dpDayName"></div><div class="d" id="dpDayDate"></div></div>
       <button class="dp-nav-btn" onclick="dpShiftDay(1)" title="Next day">&#8250;</button>
-      <button class="btn secondary-btn sm" onclick="openAddEvent(dpDate)">+ Meeting</button>
+      
       <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
     </div>
-    <div class="dp-hint"><span>Drag on the timeline to plan a block. Drag a block or meeting to move it, or drag its top or bottom edge to change the duration. Select an item and press Delete to remove it. Overlapping items sit side by side.</span></div>
+    <div class="dp-hint"><span>Drag on the timeline, then choose Work, Meeting, Break or Out of office. Drag a block or meeting to move it, or drag its top or bottom edge to change the duration. Select an item and press Delete to remove it. Overlapping items sit side by side.</span></div>
     <div class="dp-wh" id="dpWh"></div>
     <div class="dp-main">
       <div class="dp-body">
@@ -1894,6 +1949,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 <div class="set-layout">
 <nav class="set-nav" id="setNav" aria-label="Settings sections">
   <button type="button" class="set-nav-btn" data-nav="appearance" onclick="setSection('appearance')">Appearance</button>
+  <button type="button" class="set-nav-btn" data-nav="features" onclick="setSection('features')">Features</button>
   <button type="button" class="set-nav-btn" data-nav="import" onclick="setSection('import')">Import Calendar</button>
   <button type="button" class="set-nav-btn" data-nav="activity" onclick="setSection('activity')">Activity List</button>
   <button type="button" class="set-nav-btn" data-nav="backup" onclick="setSection('backup')">Backup &amp; Sync</button>
@@ -1918,6 +1974,10 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
     </div>
   </div>
     </div>
+  </div>
+  <div class="card set-sec" data-set="features">
+    <div class="set-sec-head"><span class="set-sec-title">Features</span></div>
+    <div class="set-sec-body"><div id="featBody"></div></div>
   </div>
   <div class="card set-sec" data-set="import">
     <div class="set-sec-head"><span class="set-sec-title">Import Calendar</span></div>
@@ -1957,8 +2017,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <div class="set-sub"><div class="set-sec-title" style="margin-bottom:8px">Sync</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Keep your data backed up to a file you choose - point it at a folder OneDrive (or similar) syncs to follow you across devices. Chrome or Edge only.</div>
     <div id="syncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px"></div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project and Note photos in sync, added and removed automatically as you add or delete photos.</div>
-    <div id="photoSyncStatusRow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
+    <div class="ft-photos" style="font-size:12px;color:var(--muted);margin-bottom:8px">Photo backup folder - keeps Project and Note photos in sync, added and removed automatically as you add or delete photos.</div>
+    <div id="photoSyncStatusRow" class="ft-photos" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
       </div>
     </div>
   </div>
@@ -2025,14 +2085,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.72.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.77.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.72.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.77.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2040,6 +2100,163 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 
 <script>
 var TZ='Africa/Johannesburg';
+// -- Features: parts of the app that can be switched on or off in Settings > Features. Off only hides and silences; nothing is deleted. --
+var FEAT_KEY='plannerFeatures';
+var FEATURES=[
+  {id:'timesheet',group:'Time tracking',label:'Timesheet',desc:'Log hours by project, with history and summaries. Includes the Timesheet tab, the daily and weekly timesheet reminders, and booked hours in Plan Day.',deps:[]},
+  {id:'overtime',group:'Time tracking',label:'Overtime',desc:'The overtime balance and badges, and breaks or time out of office counting against it.',deps:['timesheet']},
+  {id:'leave',group:'Time tracking',label:'Leave and public holidays',desc:'Leave days, the leave balance and public holidays, which reduce your working hours on those days.',deps:[]},
+  {id:'reminders',group:'Planning',label:'Reminders',desc:'Reminders, the bell in the header and the reminder banner on This Week.',deps:[]},
+  {id:'planday',group:'Planning',label:'Plan Day',desc:'The day timeline: blocks of time against projects, breaks and time out of office, and the planned time shown on This Week and on tasks.',deps:[]},
+  {id:'meetings',group:'Planning',label:'Meetings and .ics import',desc:'Meetings on This Week and in Plan Day, meeting reminders, and importing calendar (.ics) files.',deps:[]},
+  {id:'todo',group:'Tasks and notes',label:'To Do',desc:'The To Do tab, and tasks shown on This Week, in Plan Day and on projects.',deps:[]},
+  {id:'notes',group:'Tasks and notes',label:'Notes',desc:'The Notes tab, notes on days and projects, and notes linked to tasks.',deps:[]},
+  {id:'photos',group:'Tasks and notes',label:'Photos',desc:'Photos on projects and notes, and the photo backup folder.',deps:[]}
+];
+var FEAT_PRESETS=[
+  {id:'full',label:'Everything',desc:'Planning, tasks and time tracking',off:[]},
+  {id:'planning',label:'Planning and tasks',desc:'No timesheet, overtime or leave',off:['timesheet','overtime','leave']},
+  {id:'timetracking',label:'Time tracking',desc:'Timesheet, overtime, leave and meetings, without Plan Day, To Do and Notes',off:['todo','notes','planday']}
+];
+var FEAT_TAB={tracker:'timesheet',tasks:'todo',notes:'notes'};
+var DAM_FEAT={log:'timesheet',task:'todo',reminder:'reminders',leave:'leave',event:'meetings',plan:'planday'};
+var _featRaw,_featOff,_featNote='';
+function featLoad(){
+  var raw=null;
+  try{raw=localStorage.getItem(FEAT_KEY);}catch(e){}
+  if(raw===_featRaw&&_featOff)return;
+  _featRaw=raw;_featOff={};
+  try{var o=JSON.parse(raw||'{}')||{};Object.keys(o).forEach(function(k){if(o[k]===false)_featOff[k]=true;});}catch(e){}
+}
+// a feature is on unless it was switched off (or a feature it needs is off)
+function featOn(id){
+  featLoad();
+  if(_featOff[id])return false;
+  var deps={overtime:['timesheet']}[id]||[];
+  for(var i=0;i<deps.length;i++)if(_featOff[deps[i]])return false;
+  return true;
+}
+function featTabOk(t){return featOn(FEAT_TAB[t]||'');}
+function featSetOk(k){return featOn({reminders:'reminders',leave:'leave',todo:'todo',import:'meetings'}[k]||'');}
+// a reminder is silent when the feature behind it is off
+function remFeatOff(r){
+  if(!featOn('reminders'))return true;
+  var s=(typeof remSys==='function')?remSys(r):'';
+  if((s==='log-hours'||s==='submit-timesheet')&&!featOn('timesheet'))return true;
+  if(s==='leave-low'&&!featOn('leave'))return true;
+  if(r&&(r.isEventReminder||(r.link&&r.link.type==='event'))&&!featOn('meetings'))return true;
+  if(r&&r.link&&r.link.type==='task'&&!featOn('todo'))return true;
+  return false;
+}
+function featSave(off){
+  var o={};
+  Object.keys(off).forEach(function(k){if(off[k])o[k]=false;});
+  try{localStorage.setItem(FEAT_KEY,JSON.stringify(o));}catch(e){}
+}
+function featLabel(id){var f=FEATURES.filter(function(x){return x.id===id;})[0];return f?f.label:id;}
+function featToggle(id,on){
+  featLoad();
+  var off={};
+  Object.keys(_featOff).forEach(function(k){off[k]=true;});
+  var f=FEATURES.filter(function(x){return x.id===id;})[0];
+  if(!f)return;
+  var notes=[];
+  if(on){
+    delete off[id];
+    f.deps.forEach(function(d){if(off[d]){delete off[d];notes.push(featLabel(d)+' was switched on too, because '+f.label+' needs it.');}});
+  }else{
+    off[id]=true;
+    FEATURES.forEach(function(x){if(x.deps.indexOf(id)>=0&&!off[x.id]){off[x.id]=true;notes.push(x.label+' was switched off too, because it needs '+f.label+'.');}});
+  }
+  featSave(off);_featNote=notes.join(' ');
+  featChanged();
+}
+function featPresetOffSet(p){
+  var off={};
+  p.off.forEach(function(k){off[k]=1;});
+  FEATURES.forEach(function(f){f.deps.forEach(function(d){if(off[d])off[f.id]=1;});});
+  return off;
+}
+function featPreset(id){
+  var p=FEAT_PRESETS.filter(function(x){return x.id===id;})[0];
+  if(!p)return;
+  featSave(featPresetOffSet(p));_featNote='';
+  featChanged();
+}
+function featCurrentPreset(){
+  featLoad();
+  var cur=Object.keys(_featOff).sort().join(','),r='custom';
+  FEAT_PRESETS.forEach(function(p){if(Object.keys(featPresetOffSet(p)).sort().join(',')===cur)r=p.id;});
+  return r;
+}
+function applyFeatures(){
+  if(!document.body)return;
+  FEATURES.forEach(function(f){document.body.classList.toggle('feat-off-'+f.id,!featOn(f.id));});
+}
+function featChanged(){
+  function t(f){try{f();}catch(e){}}
+  applyFeatures();
+  if(!featTabOk(currentTab))t(function(){switchTab('planner');});
+  t(qsTitles);
+  t(renderCalendarShell);t(loadCalendarEvents);t(renderPlannerTasks);t(renderUpNext);t(renderReminderBanner);
+  t(function(){if(dpDate&&!featOn('planday'))closeDayPlan();});
+  t(function(){if(dpNewRange&&dpNewRange.kind==='meeting'&&!featOn('meetings'))dpNewRange.kind='';});
+  t(function(){if(dpDate)renderDayPlan();});
+  t(renderFeaturesSettings);
+}
+function renderFeaturesSettings(){
+  var el=document.getElementById('featBody');
+  if(!el)return;
+  var cur=featCurrentPreset();
+  var h='<div class="feat-help">Choose what ProxPlan shows. Turning a feature off only hides it and stops its reminders and badges: your data is kept and comes back when you turn it on again.</div>';
+  h+='<div class="feat-presets">'+FEAT_PRESETS.map(function(p){
+    return'<button type="button" class="feat-preset'+(cur===p.id?' on':'')+'" onclick="featPreset(\''+p.id+'\')"><b>'+p.label+'</b><span>'+p.desc+'</span></button>';
+  }).join('')+'</div>';
+  if(cur==='custom')h+='<div class="feat-custom">Custom selection</div>';
+  var groups=[];
+  FEATURES.forEach(function(f){if(groups.indexOf(f.group)<0)groups.push(f.group);});
+  groups.forEach(function(g){
+    h+='<div class="feat-grp">'+g+'</div>';
+    FEATURES.filter(function(f){return f.group===g;}).forEach(function(f){
+      var needs=f.deps.length?' Needs '+f.deps.map(featLabel).join(' and ')+'.':'';
+      h+='<label class="feat-row"><input type="checkbox"'+(featOn(f.id)?' checked':'')+' onchange="featToggle(\''+f.id+'\',this.checked)"><span class="feat-t"><b>'+f.label+'</b><small>'+f.desc+needs+'</small></span></label>';
+    });
+  });
+  h+='<div class="feat-msg" id="featMsg" aria-live="polite">'+escH(_featNote)+'</div>';
+  el.innerHTML=h;
+}
+// first run: offer the starting points once, only on an empty copy of the app
+function featNoData(){
+  try{
+    var t=getTrackerData();
+    if((t.projects||[]).some(function(p){return p&&typeof p==='object'&&!p.isLeave;})||(t.logs||[]).length)return false;
+    if(getTasks().length||getNotes().length||getManualEventsRaw().length)return false;
+    if(Object.keys(getTimeBlocksRaw()).length)return false;
+  }catch(e){return false;}
+  return true;
+}
+function featFirstRun(){
+  if(document.getElementById('featFirst'))return;
+  var raw=null,asked=null;
+  try{raw=localStorage.getItem(FEAT_KEY);asked=localStorage.getItem('plannerFeaturesAsked');}catch(e){return;}
+  if(raw!==null||asked!==null||!featNoData())return;
+  var el=document.createElement('div');
+  el.className='qs-ov';el.id='featFirst';
+  el.innerHTML='<div class="feat-box" role="dialog" aria-label="Choose how to use ProxPlan"><h2>How do you want to use ProxPlan?</h2><p>Pick a starting point. You can change it any time in Settings, under Features, and nothing is lost when you switch something off.</p><div class="feat-first">'
+    +FEAT_PRESETS.map(function(p){return'<button type="button" class="feat-preset" onclick="featFirstPick(\''+p.id+'\')"><b>'+p.label+'</b><span>'+p.desc+'</span></button>';}).join('')
+    +'</div><div class="feat-skip"><button type="button" class="btn secondary-btn sm" onclick="featFirstPick(\'\')">Skip for now</button></div></div>';
+  document.body.appendChild(el);
+}
+function featFirstPick(id){
+  try{localStorage.setItem('plannerFeaturesAsked','1');}catch(e){}
+  var el=document.getElementById('featFirst');
+  if(el&&el.parentNode)el.parentNode.removeChild(el);
+  if(id)featPreset(id);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('featFirst')){e.preventDefault();e.stopPropagation();featFirstPick('');}
+},true);
+applyFeatures();
 var DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday'];
 var PLAN_SECTIONS=['lastWeek','priority','thisWeek','horizon','notes'];
 var COLORS=['#f7921e','#00525a','#00a995','#00598d','#6AD1E3','#233b46','#ceaa8a','#807f83','#00a995','#f7921e'];
@@ -2064,6 +2281,7 @@ var selectedPriority='medium';
 var taskFilters={};
 
 function switchTab(tab){
+  if(!featTabOk(tab))tab='planner';
   var prevTab=currentTab;
   if(prevTab==='tracker')saveDraft();
   if(prevTab==='tasks'&&tab!=='tasks'){var tgc=document.getElementById('taskGroupsContainer');if(tgc)tgc.innerHTML='';}
@@ -2093,11 +2311,13 @@ function switchTab(tab){
   if(tab==='settings'){initSettings();}
 }
 // -- Moving around: Alt+1 to Alt+6 and Alt+Page Up/Down for tabs, the wheel over the tab bar, Ctrl+K quick switcher, ? for the list --
-var QS_TABS=[['planner','This Week'],['tracker','Timesheet'],['tasks','To Do'],['projects','Projects'],['notes','Notes'],['settings','Settings']];
-function qsTabIdx(){for(var i=0;i<QS_TABS.length;i++)if(QS_TABS[i][0]===currentTab)return i;return 0;}
-function qsGoTab(i){i=Math.max(0,Math.min(QS_TABS.length-1,i));if(QS_TABS[i][0]!==currentTab)switchTab(QS_TABS[i][0]);}
+var QS_ALL=[['planner','This Week'],['tracker','Timesheet'],['tasks','To Do'],['projects','Projects'],['notes','Notes'],['settings','Settings']];
+function qsTabs(){return QS_ALL.filter(function(t){return featTabOk(t[0]);});}
+function qsTabIdx(){var T=qsTabs();for(var i=0;i<T.length;i++)if(T[i][0]===currentTab)return i;return 0;}
+function qsGoTab(i){var T=qsTabs();i=Math.max(0,Math.min(T.length-1,i));if(T[i][0]!==currentTab)switchTab(T[i][0]);}
+function qsTitles(){qsTabs().forEach(function(t,i){var b=document.getElementById('tab'+t[0].charAt(0).toUpperCase()+t[0].slice(1));if(b)b.title=t[1]+' (Alt+'+(i+1)+')';});}
 (function(){
-  QS_TABS.forEach(function(t,i){var b=document.getElementById('tab'+t[0].charAt(0).toUpperCase()+t[0].slice(1));if(b)b.title=t[1]+' (Alt+'+(i+1)+')';});
+  qsTitles();
   var bar=document.querySelector('.header .tabs');
   if(bar)bar.addEventListener('wheel',function(e){
     if(e.ctrlKey||!e.deltaY)return;
@@ -2109,7 +2329,7 @@ document.addEventListener('keydown',function(e){
   var t=e.target,typing=!!(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||'')));
   if(e.altKey&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey){
     var m=/^Digit([1-6])$/.exec(e.code||'');
-    if(m){e.preventDefault();qsGoTab(+m[1]-1);return;}
+    if(m){e.preventDefault();if(+m[1]<=qsTabs().length)qsGoTab(+m[1]-1);return;}
     if(e.key==='PageDown'||e.key==='PageUp'){e.preventDefault();qsGoTab(qsTabIdx()+(e.key==='PageDown'?1:-1));return;}
   }
   if((e.ctrlKey||e.metaKey)&&!e.altKey&&!e.shiftKey&&(e.key==='k'||e.key==='K')){
@@ -2123,17 +2343,17 @@ document.addEventListener('keydown',function(e){
 var _qs=null;
 function qsItems(){
   var out=[],today=todayStr();
-  QS_TABS.forEach(function(t,i){out.push({k:'Tab',label:t[1],hint:'Alt+'+(i+1),go:function(){switchTab(t[0]);}});});
-  out.push({k:'Action',label:'New task',go:function(){switchTab('tasks');setTimeout(function(){var i=document.getElementById('newTaskTitle');if(i)i.focus();},60);}});
-  out.push({k:'Action',label:'New note',go:function(){switchTab('notes');var i=document.getElementById('ntQuick');if(i)i.value='';ntAddQuick();}});
-  out.push({k:'Action',label:'Plan today',go:function(){openDayPlan(today);}});
-  out.push({k:'Action',label:'Add a meeting today',go:function(){openAddEvent(today);}});
-  out.push({k:'Action',label:'Log hours for today',go:function(){openTimeLogForDay(today);}});
+  qsTabs().forEach(function(t,i){out.push({k:'Tab',label:t[1],hint:'Alt+'+(i+1),go:function(){switchTab(t[0]);}});});
+  if(featOn('todo'))out.push({k:'Action',label:'New task',go:function(){switchTab('tasks');setTimeout(function(){var i=document.getElementById('newTaskTitle');if(i)i.focus();},60);}});
+  if(featOn('notes'))out.push({k:'Action',label:'New note',go:function(){switchTab('notes');var i=document.getElementById('ntQuick');if(i)i.value='';ntAddQuick();}});
+  if(featOn('planday'))out.push({k:'Action',label:'Plan today',go:function(){openDayPlan(today);}});
+  if(featOn('meetings'))out.push({k:'Action',label:'Add a meeting today',go:function(){openAddEvent(today);}});
+  if(featOn('timesheet'))out.push({k:'Action',label:'Log hours for today',go:function(){openTimeLogForDay(today);}});
   out.push({k:'Action',label:'Keyboard shortcuts',hint:'?',go:function(){qsHelp();}});
   getActiveProjects().forEach(function(p){out.push({k:'Project',label:p.name,go:function(){switchTab('projects');selectProject(p.name);}});});
   getProjects().forEach(function(p){if(p.archived)out.push({k:'Project',tag:'archived',label:p.name,go:function(){_archivedExpanded=true;switchTab('projects');selectProject(p.name);}});});
-  getNotes().forEach(function(n){out.push({k:'Note',label:n.title||ntText(n.body).slice(0,70)||'Untitled note',sub:n.project||'',go:function(){switchTab('notes');ntSelect(n.id);}});});
-  getTasks().forEach(function(t){if(!t.done)out.push({k:'Task',label:t.title||'Untitled task',sub:t.project||'',go:function(){switchTab('tasks');tkSelect(t.id);}});});
+  (featOn('notes')?getNotes():[]).forEach(function(n){out.push({k:'Note',label:n.title||ntText(n.body).slice(0,70)||'Untitled note',sub:n.project||'',go:function(){switchTab('notes');ntSelect(n.id);}});});
+  (featOn('todo')?getTasks():[]).forEach(function(t){if(!t.done)out.push({k:'Task',label:t.title||'Untitled task',sub:t.project||'',go:function(){switchTab('tasks');tkSelect(t.id);}});});
   return out;
 }
 function qsScore(it,toks){
@@ -2203,7 +2423,7 @@ function qsHelpKey(e){if(e.key==='Escape'||e.key==='?'||e.key==='Enter'){e.preve
 function qsHelpClose(){var el=document.getElementById('kbHelp');if(el)el.remove();document.removeEventListener('keydown',qsHelpKey,true);}
 function qsHelp(){
   qsClose();qsHelpClose();
-  var rows=[['Ctrl+K','Quick switcher: jump to a tab, project, note or task, or run an action'],['Alt+1 to Alt+6','This Week, Timesheet, To Do, Projects, Notes, Settings'],['Alt+Page Down / Page Up','Next or previous tab'],['Mouse wheel over the tab bar','Next or previous tab'],['?','Show this list'],['Esc','Close a dialog, a menu or the switcher'],['Ctrl+K in a note or summary','Insert a link'],['Tab / Shift+Tab in a list','Indent or outdent a list item'],['- or * then Space','Start a bulleted list in a note or summary (Backspace undoes it)'],['1. then Space','Start a numbered list'],['Ctrl+Shift+8 / Ctrl+Shift+7','Bulleted / numbered list in a note or summary'],['Ctrl+click on a link','Open it']];
+  var rows=[['Ctrl+K','Quick switcher: jump to a tab, project, note or task, or run an action'],['Alt+1 to Alt+'+qsTabs().length,qsTabs().map(function(t){return t[1];}).join(', ')],['Alt+Page Down / Page Up','Next or previous tab'],['Mouse wheel over the tab bar','Next or previous tab'],['?','Show this list'],['Esc','Close a dialog, a menu or the switcher'],['Ctrl+K in a note or summary','Insert a link'],['Tab / Shift+Tab in a list','Indent or outdent a list item'],['- or * then Space','Start a bulleted list in a note or summary (Backspace undoes it)'],['1. then Space','Start a numbered list'],['Ctrl+Shift+8 / Ctrl+Shift+7','Bulleted / numbered list in a note or summary'],['Ctrl+click on a link','Open it']];
   var el=document.createElement('div');
   el.className='qs-ov';el.id='kbHelp';
   el.innerHTML='<div class="qs-box qs-help" role="dialog" aria-label="Keyboard shortcuts"><div class="qs-ht">Keyboard shortcuts</div>'+rows.map(function(r){return'<div class="qs-hr"><span class="qs-kbd">'+escH(r[0])+'</span><span>'+escH(r[1])+'</span></div>';}).join('')+'<div class="qs-foot"><span>Esc or ? to close</span></div></div>';
@@ -2230,10 +2450,10 @@ function toggleSetSec(k){
 }
 function getSetSection(){
   var s='';try{s=localStorage.getItem('_setSec')||'';}catch(e){}
-  return document.querySelector('#panelSettings .set-sec[data-set="'+s+'"]')?s:'appearance';
+  return(document.querySelector('#panelSettings .set-sec[data-set="'+s+'"]')&&featSetOk(s))?s:'appearance';
 }
 function setSection(k,noSave){
-  if(!document.querySelector('#panelSettings .set-sec[data-set="'+k+'"]'))k='appearance';
+  if(!document.querySelector('#panelSettings .set-sec[data-set="'+k+'"]')||!featSetOk(k))k='appearance';
   var secs=document.querySelectorAll('#panelSettings .set-sec'),bs=document.querySelectorAll('#setNav .set-nav-btn'),i;
   for(i=0;i<secs.length;i++)secs[i].classList.toggle('set-on',secs[i].dataset.set===k);
   for(i=0;i<bs.length;i++){
@@ -2589,13 +2809,13 @@ function autoFillLastWeek(){
   var today=todayStr();
   var parts=[];
   // Overdue deliverables — tasks past due date still open
-  var overdue=getTasks().filter(function(t){return!t.done&&t.dueDate&&t.dueDate<today;});
+  var overdue=(featOn('todo')?getTasks():[]).filter(function(t){return!t.done&&t.dueDate&&t.dueDate<today;});
   if(overdue.length>0){
     parts.push('⚠ Overdue deliverables:');
     overdue.forEach(function(t){parts.push('  • '+t.title+(t.project&&t.project!=='General'?' ['+t.project+']':'')+(t.dueDate?' (due '+formatDate(t.dueDate)+')':''));});
   }
   // Completed high-priority tasks last week
-  var highDone=getTasks().filter(function(t){
+  var highDone=(featOn('todo')?getTasks():[]).filter(function(t){
     if(!t.done||t.priority!=='high')return false;
     if(t.doneAt){var ds=localIsoDate(new Date(t.doneAt));return ds>=wStart&&ds<=wEnd;}
     return t.dueDate&&t.dueDate>=wStart&&t.dueDate<=wEnd;
@@ -2620,6 +2840,7 @@ function autoFillLastWeek(){
 }
 
 function renderPlannerTasks(){
+  if(!featOn('todo')){['lastWeek','priority','thisWeek','horizon'].forEach(function(s){var e=document.getElementById('stasks-'+s);if(e)e.innerHTML='';});return;}
   var tasks=getTasks();
   var today=todayStr();
   var wStart=localIsoDate(currentMonday);
@@ -2671,7 +2892,7 @@ var DAM_ITEMS=[
 ];
 var _dayPanel=null;
 function dayPanelHtml(ds,hasLog,hasLeave){
-  return DAM_ITEMS.map(function(it){
+  return DAM_ITEMS.filter(function(it){return featOn(DAM_FEAT[it.id]||'');}).map(function(it){
     var nm=(it.id==='log'&&hasLog)?it.editName:(it.id==='leave'&&hasLeave)?it.editName:it.name;
     return'<button type="button" class="dp-act" title="'+escH(nm)+'" aria-label="'+escH(nm)+'" onclick="event.stopPropagation();dayPanelRun(\''+it.id+'\',\''+ds+'\')"><svg viewBox="0 0 24 24" style="stroke:'+it.c+'" aria-hidden="true">'+it.svg+'</svg><span>'+escH(nm)+'</span></button>';
   }).join('');
@@ -2706,14 +2927,14 @@ function renderCalendarShell(){
     var isT=ds===today;
     var isPast=ds<today;
     var dayNum=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:TZ});
-    var log=getLogsForDate(ds);
+    var log=featOn('timesheet')?getLogsForDate(ds):null;
     var totalH=log?Object.values(log.allocs).reduce(function(s,v){return s+(v.hrs||0)+(v.extras||[]).reduce(function(ss,x){return ss+(x.hrs||0);},0);},0):0;
     var hasLog=!!log;
     var _lvInfo=leaveDayInfo(ds);
-    var unlogged=isPast&&!hasLog;
+    var unlogged=featOn('timesheet')&&isPast&&!hasLog;
     var metaHtml=hasLog
       ?'<div class="day-logged">⏱ '+totalH.toFixed(1)+'h</div>'
-      :(isPast?'<div class="day-unlogged">Not logged</div>':'');
+      :(isPast&&featOn('timesheet')?'<div class="day-unlogged">Not logged</div>':'');
     var editBtn='<button class="log-edit-btn'+(hasLog?' has-log':'')+'" onclick="event.stopPropagation();openTimeLogForDay(\''+ds+'\')">'+(hasLog?'Edit':'+ Log')+'</button>';
     var addEvBtn='<button class="add-ev-btn" style="color:#7c3aed;border-color:#ddd6fe" onclick="event.stopPropagation();openAddEvent(\''+ds+'\')" title="Add event">+ Event</button>';
     var addTaskBtn='<button class="add-ev-btn" style="color:#22c55e;border-color:#bbf7d0" onclick="event.stopPropagation();openQuickTask(\''+ds+'\')" title="Add task due this day">+ Task</button>';
@@ -2788,8 +3009,8 @@ function renderCalendarEvents(events){
     var _dc=_cc[date]||{};
     var _lv=leaveDayInfo(date);
     if(_lv)parts.push(leavePillHtml(date,_lv));
-    var _blks=getBlocksForDate(date);
-    var _logForBlks=getLogsForDate(date);
+    var _blks=getBlocksForDate(date).filter(function(b){return!b.away;});
+    var _logForBlks=featOn('timesheet')?getLogsForDate(date):null;
     var _hasLoggedHrs=_logForBlks&&Object.keys(_logForBlks.allocs).length>0;
     if(_blks.length>0&&!_hasLoggedHrs){
       parts.push(calCatHead('planned','Planned',_blks.length,date));
@@ -2809,7 +3030,7 @@ function renderCalendarEvents(events){
       });
     }
 
-    var _dn=getNotes().filter(function(n){return n.date===date;});
+    var _dn=(featOn('notes')?getNotes():[]).filter(function(n){return n.date===date;});
     if(_dn.length>0){
       parts.push(calCatHead('notes','Notes',_dn.length,date));
       var _mev=getManualEvents();
@@ -2818,13 +3039,13 @@ function renderCalendarEvents(events){
         parts.push('<div class="event-pill ntpill" title="'+escH((n.title||'Untitled')+(_e?' - '+_e.title:''))+'" onclick="ntOpenAnywhere(\''+n.id+'\')"><span class="ev-title">'+(n.title?escH(n.title):'<em>Untitled</em>')+(_e?' <em>re '+escH(_e.title)+'</em>':'')+'</span></div>');
       });
     }
-    var log=getLogsForDate(date);
+    var log=featOn('timesheet')?getLogsForDate(date):null;
     if(log&&Object.keys(log.allocs).length>0){
       var totalH=Object.values(log.allocs).reduce(function(s,v){return s+(v.hrs||0)+(v.extras||[]).reduce(function(ss,x){return ss+(x.hrs||0);},0);},0);
       var projNames=Object.keys(log.allocs).join(' · ');
       parts.push('<div class="time-compact" onclick="openTimeLogForDay(\''+date+'\')" title="Click to edit"><strong>'+totalH.toFixed(1)+'h</strong> <span class="tc-proj">'+escH(projNames)+'</span></div>');
     }
-    var due=getTasksForDate(date);
+    var due=featOn('todo')?getTasksForDate(date):[];
     if(due.length>0){
       parts.push(calCatHead('tasks','Tasks',due.length,date));
       if(!_dc.tasks)due.forEach(function(t){
@@ -2979,6 +3200,7 @@ function leaveDatesInRange(from,to,type){
   return{dates:out,skipped:skipped};
 }
 function leaveHrsForDate(date){
+  if(!featOn('leave'))return 0;
   var lp=getLeaveProject(),l=date?getLogsForDate(date):null;
   if(!lp||!l||!getLeaveDays()[date])return 0;
   var a=l.allocs[lp.name];
@@ -2994,6 +3216,7 @@ function renderLeaveDayRow(date){
   el.innerHTML='<div class="leave-day-row"><span><strong>'+escH(t.label)+'</strong> '+(h?h.toFixed(1)+'h':'')+(lv.len==='half'?' (half day)':'')+' - booked as leave</span><button class="btn secondary-btn sm" onclick="openLeaveModal(\''+date+'\')">Edit leave</button></div>';
 }
 function leaveDayInfo(ds){
+  if(!featOn('leave'))return null;
   var lv=getLeaveDays()[ds];
   if(lv)return lv;
   if(LEAVE_HOLIDAYS[ds])return{type:'holiday',len:'full',unbooked:true};
@@ -3212,10 +3435,11 @@ function bookHolidays(){
 }
 
 // -- Time Blocking (Day Plan) --
-function getTimeBlocksData(){try{return JSON.parse(localStorage.getItem('plannerTimeBlocks')||'{}');}catch(e){return{};}}
+function getTimeBlocksRaw(){try{return JSON.parse(localStorage.getItem('plannerTimeBlocks')||'{}');}catch(e){return{};}}
+function getTimeBlocksData(){return featOn('planday')?getTimeBlocksRaw():{};}
 function saveTimeBlocksData(obj){localStorage.setItem('plannerTimeBlocks',JSON.stringify(obj));}
 function getBlocksForDate(ds){return(getTimeBlocksData()[ds]||[]).slice();}
-function setBlocksForDate(ds,arr){var all=getTimeBlocksData();if(arr.length)all[ds]=arr;else delete all[ds];saveTimeBlocksData(all);}
+function setBlocksForDate(ds,arr){var all=getTimeBlocksRaw();if(arr.length)all[ds]=arr;else delete all[ds];saveTimeBlocksData(all);}
 function projColorForName(name){var ps=getProjects();var idx=ps.findIndex(function(p){return p.name===name;});return projColor(idx>=0?ps[idx]:null,idx<0?0:idx);}
 function dpHexToRgba(hex,a){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return'rgba('+r+','+g+','+b+','+a+')';}
 function evMinFromTime(hhmm){var p=(hhmm||'').split(':');return(parseInt(p[0])||0)*60+(parseInt(p[1])||0);}
@@ -3226,7 +3450,7 @@ function dpBlockTotalsForDate(ds){
     totals[proj].hours+=hrs;
     if(!totals[proj].activity&&activity)totals[proj].activity=activity;
   }
-  getBlocksForDate(ds).forEach(function(b){add(b.proj,b.activity,b.dur/60);});
+  getBlocksForDate(ds).forEach(function(b){if(!b.away)add(b.proj,b.activity,b.dur/60);});
   getManualEvents().filter(function(e){return e.date===ds&&e.proj&&e.startTime&&e.endTime;}).forEach(function(e){
     var s=evMinFromTime(e.startTime),en=evMinFromTime(e.endTime);
     if(en>s)add(e.proj,e.activity,(en-s)/60);
@@ -3260,7 +3484,7 @@ function dpOverlapMin(iv,bl){
 }
 function dpDayIvs(ds,blocks,live){
   var bi=[],mi=[];
-  (blocks||[]).forEach(function(b){if(b.dur>0)bi.push([b.start,b.start+b.dur]);});
+  (blocks||[]).forEach(function(b){if(b.dur>0&&!b.away)bi.push([b.start,b.start+b.dur]);});
   getManualEvents().forEach(function(e){
     if(e.date!==ds||!e.startTime)return;
     var a=evMinFromTime(e.startTime),b=a+60;
@@ -3276,10 +3500,11 @@ function dpWorkStats(ds,blocks,live){
   var inAll=dpOverlapMin(all,sc.blocks),inMeet=dpOverlapMin(mt,sc.blocks),tot=0;
   all.forEach(function(p){tot+=p[1]-p[0];});
   var mtAll=0;mt.forEach(function(p){mtAll+=p[1]-p[0];});
-  return{sc:sc,lv:leaveDayInfo(ds),cap:tkCap(ds),inside:inAll/60,meet:inMeet/60,work:(inAll-inMeet)/60,outside:(tot-inAll)/60,planned:tot/60,meetAll:mtAll/60,workAll:(tot-mtAll)/60};
+  return{sc:sc,away:dpAwayMin(ds,blocks)/60,lv:leaveDayInfo(ds),cap:tkCap(ds),inside:inAll/60,meet:inMeet/60,work:(inAll-inMeet)/60,outside:(tot-inAll)/60,planned:tot/60,meetAll:mtAll/60,workAll:(tot-mtAll)/60};
 }
 // Booked work on a day (from the saved timesheet), leave hours left out, against that day's working hours. null when nothing is booked.
 function dpBooked(ds){
+  if(!featOn('timesheet'))return null;
   var l=getLogsForDate(ds);
   if(!l||!l.allocs)return null;
   var t=0;
@@ -3297,6 +3522,126 @@ function dpWeekStats(ds){
     cap+=st.cap;pl+=bk?bk.hrs:st.planned;
   }
   return{cap:cap,planned:pl};
+}
+// -- Break and out-of-office slots: time away inside the working day. They are not work. When you end up working less than the day requires, the away time counts as negative overtime. --
+// -- Meetings in the Plan Day editor: drag out a time range, choose Meeting, and fill in the details in place (no dialog) --
+function dpMeetingBody(m){
+  return'<div class="dp-editor-grid dp-mt-ed">'
+    +'<input type="text" id="dpMtTitle" class="dp-mt-wide" placeholder="Meeting title" aria-label="Meeting title" value="'+escH(m.title||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
+    +'<input type="text" id="dpMtProj" class="cb-input" data-cb="proj" placeholder="Project (optional)..." autocomplete="off" value="'+escH(m.proj||'')+'" data-valid="'+escH(m.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
+    +'<input type="text" id="dpMtActivity" class="cb-input" data-cb="act" placeholder="Activity (optional)..." autocomplete="off" value="'+escH(m.activity||'')+'" data-valid="'+escH(m.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
+    +'<input type="text" id="dpMtNotes" class="dp-mt-wide" placeholder="Notes, location, dial-in (optional)" aria-label="Meeting notes" value="'+escH(m.notes||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
+    +'<label class="dp-mt-rem dp-mt-wide ft-reminders"><input type="checkbox" id="dpMtRemind"'+(m.remind?' checked':'')+' onchange="dpCommit()"> Remind me on this day</label>'
+    +'</div>'
+    +'<div class="dp-away-help">Assign a project to include this meeting in the hours imported into Log Time.</div>';
+}
+// an existing meeting saves itself, like a block: title, project, activity, notes and the reminder
+function dpMeetAutoSave(id){
+  var te=document.getElementById('dpMtTitle');
+  if(!te)return false;
+  var evs=getManualEventsRaw(),ev=evs.find(function(x){return x.id===id;});
+  if(!ev)return false;
+  var pe=document.getElementById('dpMtProj'),ae=document.getElementById('dpMtActivity'),ne=document.getElementById('dpMtNotes'),re=document.getElementById('dpMtRemind');
+  var title=te.value.trim();
+  if(!title){title=ev.title||'';te.value=title;} // a meeting always keeps a title
+  var proj=(pe&&pe.dataset.valid)||null,act=(ae&&ae.dataset.valid)||null,notes=ne?ne.value.trim():(ev.notes||''),rem=re?re.checked:!!ev.remind;
+  if(title===(ev.title||'')&&proj===(ev.proj||null)&&act===(ev.activity||null)&&notes===(ev.notes||'')&&rem===!!ev.remind)return false;
+  ev.title=title;ev.proj=proj;ev.activity=act;ev.notes=notes;ev.remind=rem;
+  saveManualEvents(evs);
+  syncEventReminder(ev);
+  renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();renderUpNext();
+  var ed=document.getElementById('entryDate');if(ed&&ed.value===ev.date)renderImportRow(ed.value);
+  return true;
+}
+function dpMeetDone(){dpAutoSave();dpSelectedMeeting=null;renderDayPlan();}
+// a new meeting: the date and times come from the range dragged out on the timeline
+function dpSaveNewMeeting(){
+  if(!dpNewRange)return;
+  var te=document.getElementById('dpMtTitle'),title=te?te.value.trim():'';
+  if(!title){if(te)te.focus();return;}
+  var pe=document.getElementById('dpMtProj'),ae=document.getElementById('dpMtActivity');
+  if(pe)cbResolve(pe);if(ae)cbResolve(ae);
+  var ne=document.getElementById('dpMtNotes'),re=document.getElementById('dpMtRemind');
+  var ev={id:Date.now().toString()+'_'+Math.random().toString(36).slice(2,8),date:dpDate,title:title,startTime:dpHM(dpNewRange.start),endTime:dpHM(dpNewRange.start+dpNewRange.dur),notes:ne?ne.value.trim():'',remind:!!(re&&re.checked),proj:(pe&&pe.dataset.valid)||null,activity:(ae&&ae.dataset.valid)||null,icsUid:null};
+  var evs=getManualEventsRaw();evs.push(ev);saveManualEvents(evs);
+  syncEventReminder(ev);
+  dpSelectedBlock=null;dpNewRange=null;
+  renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();renderUpNext();
+  var ed=document.getElementById('entryDate');if(ed&&ed.value===dpDate)renderImportRow(ed.value);
+  renderDayPlan();
+}
+// keep what has been typed for a new slot while its type is switched
+function dpNewKeep(){
+  if(!dpNewRange)return;
+  var ne=document.getElementById('dpAwayNote');if(ne)dpNewRange.note=ne.value;
+  var te=document.getElementById('dpMtTitle');
+  if(te){
+    var pe=document.getElementById('dpMtProj'),ae=document.getElementById('dpMtActivity'),no=document.getElementById('dpMtNotes'),re=document.getElementById('dpMtRemind');
+    dpNewRange.mt={title:te.value,proj:pe?(pe.dataset.valid||''):'',activity:ae?(ae.dataset.valid||''):'',notes:no?no.value:'',remind:!!(re&&re.checked)};
+  }
+}
+function dpAwayLabel(b){return b.away==='ooo'?'Out of office':'Break';}
+function dpAwayNote(b){return b.note||'';}
+function dpAwayIvsOf(blocks){var a=[];(blocks||[]).forEach(function(b){if(b.away&&b.dur>0)a.push([b.start,b.start+b.dur]);});return dpMerge(a);}
+// minutes of away time that fall inside that day's working hours (a day of leave has none)
+function dpAwayMin(ds,blocks){
+  var lv=leaveDayInfo(ds);
+  if(lv&&lv.len!=='half')return 0;
+  var iv=dpAwayIvsOf(blocks);
+  if(!iv.length)return 0;
+  return dpOverlapMin(iv,wcSched(wcDow(ds)).blocks);
+}
+// hours of declared away time that count against overtime: only up to what you fell short of the working day by
+function otAwayHrs(ds,worked,wh,blocks){
+  if(!ds||!(worked>0)||!(wh>0))return 0;
+  var aw=dpAwayMin(ds,blocks||getBlocksForDate(ds))/60;
+  return aw>0?Math.min(aw,Math.max(0,wh-worked)):0;
+}
+function otAwayOfLog(l){
+  var t=0;
+  Object.values(l.allocs||{}).forEach(function(a){t+=(parseFloat(a.hrs)||0);(a.extras||[]).forEach(function(x){t+=parseFloat(x.hrs)||0;});});
+  return t>0?otAwayHrs(l.date,t,tsLogWh(l,l.date)):0;
+}
+function otAway(){var s=0,td=todayStr();getLogs().forEach(function(l){if(l.date<=td)s+=otAwayOfLog(l);});return Math.round(s*100)/100;}
+function dpAwayHtml(b,lanes){
+  var top=(b.start-DP_GRID_START)*DP_PX_PER_MIN,h=b.dur*DP_PX_PER_MIN,sel=dpSelectedBlock===b.id?' selected':'',hh=Math.max(3,Math.min(8,Math.floor(h/3)));
+  return'<div class="dp-block away'+(b.away==='ooo'?' ooo':' brk')+sel+dpLaneCls(lanes,b.id)+(h<30?' s1':h<50?' s2':'')+'" title="'+escH(dpAwayLabel(b))+' ('+dpFmtDur(b.dur)+')'+(b.note?escH(' - '+b.note):'')+'" style="top:'+top+'px;height:'+h+'px;'+dpLaneStyle(lanes,b.id)+'--hh:'+hh+'px" onmousedown="dpStartMove(event,\''+b.id+'\')">'
+    +'<div class="dp-resize-top'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='top'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'top\')"></div>'
+    +'<div class="t">'+escH(dpAwayLabel(b))+'</div>'
+    +(b.note?'<div class="g">'+escH(b.note)+'</div>':'')
+    +'<div class="rt">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</div>'
+    +'<div class="dp-resize'+(dpResizing&&dpResizing.id===b.id&&dpResizing.edge==='bottom'?' on':'')+'" onmousedown="dpStartResize(event,\''+b.id+'\',\'bottom\')"></div>'
+  +'</div>';
+}
+function dpKindChips(isNew,b,ak){
+  var ex=isNew?[['work','Work'],['meeting','Meeting'],['break','Break'],['ooo','Out of office']].filter(function(k){return k[0]!=='meeting'||featOn('meetings');}):(b.away?[['break','Break'],['ooo','Out of office']]:[]);
+  if(!ex.length)return'';
+  var cur=ak||'work';
+  return'<div class="dp-kinds">'+ex.map(function(k){return'<button type="button" class="dp-kind k-'+k[0]+(cur===k[0]?' on':'')+'" onclick="dpSetKind(\''+k[0]+'\')">'+k[1]+'</button>';}).join('')+'</div>';
+}
+function dpAwayBody(b,ak){
+  return'<div class="dp-away-ed"><input type="text" id="dpAwayNote" placeholder="'+(ak==='ooo'?'What for? (optional, for example dentist)':'What for? (optional, for example coffee)')+'" value="'+escH(b.note||'')+'" onchange="dpAwaySaveNote()" onkeydown="if(event.key===\'Enter\')this.blur()"><div class="dp-away-help">Not counted as work.'+(featOn('overtime')?' If you end up working less than the day requires, this time counts against your overtime balance.':'')+'</div></div>';
+}
+function dpSetKind(k){
+  if(dpSelectedBlock==='new'){
+    if(!dpNewRange)return;
+    dpNewKeep();
+    dpNewRange.kind=k==='work'?'':k;
+    renderDayPlan();
+    return;
+  }
+  var b=dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  if(!b||!b.away||(k!=='break'&&k!=='ooo'))return;
+  b.away=k;dpPersist();renderDayPlan();dpFlashSaved();
+}
+function dpAwaySaveNote(){
+  var ne=document.getElementById('dpAwayNote');if(!ne)return;
+  if(dpSelectedBlock==='new'){if(dpNewRange)dpNewRange.note=ne.value;return;}
+  var b=dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  if(!b||!b.away)return;
+  var v=ne.value.trim();
+  if((b.note||'')===v)return;
+  b.note=v;dpPersist();renderDayPlan(true);dpFlashSaved();
 }
 // the grid covers the whole day (00:00 to 24:00) and scrolls; the view opens on the working hours
 function dpSetRange(ds){DP_GRID_START=0;DP_GRID_END=24*60;}
@@ -3347,18 +3692,23 @@ function dpWhRender(){
     var ot=bk.hrs-bk.wh;
     if(bk.wh>0)h+='<span class="bar" title="Booked hours against your working hours"><i class="w" style="width:'+Math.min(100,bk.hrs/bk.wh*100)+'%"></i></span>';
     h+='<span title="Hours booked on your timesheet. Planned in this view: '+dpHf(st.planned)+'">Booked '+dpHf(bk.hrs)+(bk.wh>0?' of '+dpHf(bk.wh):'')+'</span>';
-    if(ot>0.004)h+='<span class="warn" title="Booked beyond your working hours for the day">'+dpHf(ot)+' overtime</span>';
+    if(ot>0.004&&featOn('overtime'))h+='<span class="warn" title="Booked beyond your working hours for the day">'+dpHf(ot)+' overtime</span>';
     else if(ot<-0.004)h+='<span class="mut">'+dpHf(-ot)+' not booked</span>';
     else h+='<span class="mut">fully booked</span>';
   }else if(st.cap>0){
-    var open=st.cap-st.planned,wp=Math.min(100,st.workAll/st.cap*100),mp=Math.min(100-wp,st.meetAll/st.cap*100);
-    h+='<span class="bar" title="Orange: planned blocks. Purple: meetings."><i class="w" style="width:'+wp+'%"></i><i class="m" style="width:'+mp+'%"></i></span>';
+    var open=st.cap-st.planned,wp=Math.min(100,st.workAll/st.cap*100),mp=Math.min(100-wp,st.meetAll/st.cap*100),ap=Math.max(0,Math.min(100-wp-mp,st.away/st.cap*100));
+    h+='<span class="bar" title="Orange: planned blocks. Purple: meetings. Grey: breaks and time out of office."><i class="w" style="width:'+wp+'%"></i><i class="m" style="width:'+mp+'%"></i><i class="a" style="width:'+ap+'%"></i></span>';
     h+='<span>'+dpHf(st.planned)+' planned of '+dpHf(st.cap)+'</span>';
-    if(open>0.004)h+='<span class="mut">'+dpHf(open)+' open</span>';
-    else if(open<-0.004)h+='<span class="warn" title="Planned beyond your working hours for the day">'+dpHf(-open)+' overtime</span>';
+    if(open>0.004){var _o2=open-st.away;h+=_o2>0.004?'<span class="mut">'+dpHf(_o2)+' open</span>':'<span class="mut">fully planned</span>';}
+    else if(open<-0.004&&featOn('overtime'))h+='<span class="warn" title="Planned beyond your working hours for the day">'+dpHf(-open)+' overtime</span>';
     else h+='<span class="mut">fully planned</span>';
   }else if(st.planned>0.004){
-    h+='<span>'+dpHf(st.planned)+' planned</span><span class="warn" title="Planned on a day with no working hours">'+dpHf(st.planned)+' overtime</span>';
+    h+='<span>'+dpHf(st.planned)+' planned</span>'+(featOn('overtime')?'<span class="warn" title="Planned on a day with no working hours">'+dpHf(st.planned)+' overtime</span>':'');
+  }
+  if(st.away>0.004){
+    h+='<span class="mut" title="Break and out-of-office time inside your working hours. Not counted as work.'+(featOn('overtime')?' If you end up working less than the day requires, it counts against your overtime balance.':'')+'">'+dpHf(st.away)+' away</span>';
+    var _ng=bk?otAwayHrs(dpDate,bk.hrs,bk.wh,dpBlocks):0;
+    if(_ng>0.004&&featOn('overtime'))h+='<span class="neg" title="You worked less than the day requires, so this away time counts against your overtime balance once the day is on your timesheet">-'+dpHf(_ng)+' overtime</span>';
   }
   var wk=dpWeekStats(dpDate);
   if(wk.cap>0)h+='<span class="mut wk" title="This week (Mon to Sun): booked hours where a day is booked, planned hours for the rest, against your working hours">Week: '+dpHf(wk.planned)+' of '+dpHf(wk.cap)+'</span>';
@@ -3395,7 +3745,7 @@ function dpLaneCls(lanes,id){
   return' lane'+(l.cols>=3?' l3':'');
 }
 function dpItemsForDate(ds,blocks){
-  var out=(blocks||getBlocksForDate(ds)).map(function(b){return{kind:'block',id:b.id,start:b.start,end:b.start+b.dur,title:b.proj,sub:dpBlockNote(b),date:ds};});
+  var out=(blocks||getBlocksForDate(ds)).map(function(b){return{kind:'block',id:b.id,start:b.start,end:b.start+b.dur,title:b.away?dpAwayLabel(b):b.proj,sub:b.away?dpAwayNote(b):dpBlockNote(b),date:ds};});
   getManualEvents().forEach(function(mt){
     if(mt.date!==ds||!mt.startTime||!mt.endTime)return;
     var _tt=dpMeetTimes(mt),s=_tt.s,en=_tt.en;
@@ -3426,6 +3776,7 @@ function dpFreeGaps(ds,items){
   return gaps;
 }
 function upNextSuggestions(ds,blocks,max){
+  if(!featOn('todo'))return[];
   var planned={};(blocks||[]).forEach(function(b){if(b.taskId)planned[b.taskId]=1;});
   var base=new Date(ds+'T12:00:00'),today=todayStr(),out=[];
   var DNS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -3453,6 +3804,7 @@ function upNextSuggestions(ds,blocks,max){
 }
 function dpSideOpen(kind,id){
   if(kind==='block'){dpSelectedBlock=id;dpNewRange=null;renderDayPlan();}
+  else if(kind==='meeting'){dpSelectedMeeting=id;dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
   else openEditEvent(id);
 }
 function dpPlanTask(taskId){
@@ -3496,8 +3848,8 @@ function renderDpSide(){
       h+='<div class="dp-side-sec">Free time</div>'+gaps.map(function(g){return'<div class="dp-side-gap">'+dpFmtTime(g.start)+' - '+dpFmtTime(g.end)+' ('+dpFmtDur(g.end-g.start)+')</div>';}).join('');
     }
     var sug=upNextSuggestions(dpDate,dpBlocks,5);
-    h+='<div class="dp-side-sec">'+(gaps.length?'Suggested for '+dpFmtTime(gaps[0].start):'Suggested tasks')+'</div>';
-    if(!sug.length)h+='<div class="dp-side-note">No due or high-priority tasks. Nice.</div>';
+    if(featOn('todo'))h+='<div class="dp-side-sec">'+(gaps.length?'Suggested for '+dpFmtTime(gaps[0].start):'Suggested tasks')+'</div>';
+    if(!featOn('todo')){}else if(!sug.length)h+='<div class="dp-side-note">No due or high-priority tasks. Nice.</div>';
     else h+=sug.map(function(s){
       var t=s.task;
       return'<div class="dp-side-row" style="cursor:default"><div class="bd"><span class="nm">'+escH(t.title)+'</span>'+(s.tag?'<span class="dp-tag '+s.cls+'">'+escH(s.tag)+'</span>':'')+(t.project?'<span class="sb">'+escH(t.project)+'</span>':'')+'</div>'+(gaps.length?'<button class="dp-plan-btn" onclick="dpPlanTask(\''+escA(t.id)+'\')" title="Add a block for this task in the next free slot">+ Plan</button>':'')+'</div>';
@@ -3571,7 +3923,7 @@ function renderUpNextPop(s){
       return'<div class="dp-side-row" onclick="closeUpNext();switchTab(\'tasks\')"><div class="bd"><div class="ln"><span class="nm tr">'+escH(t.title)+'</span>'+(x.tag?'<span class="dp-tag '+x.cls+'">'+escH(x.tag)+'</span>':'')+'</div>'+(t.project?'<span class="sb tr">'+escH(t.project)+'</span>':'')+'</div></div>';
     }).join('');
   }
-  h+='<div class="upnext-foot"><button class="btn secondary-btn sm rq" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button><button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button></div>';
+  h+='<div class="upnext-foot">'+(featOn('todo')?'<button class="btn secondary-btn sm rq" onclick="closeUpNext();switchTab(\'tasks\')">To Do list</button>':'')+(featOn('planday')?'<button class="btn primary-btn sm" onclick="closeUpNext();openDayPlan(todayStr())">Open day plan</button>':'')+'</div>';
   pop.innerHTML=h;
 }
 function remPopRow(r){
@@ -3596,6 +3948,7 @@ function renderRemPop(s){
 function upNextOpenItem(ds,kind,id){
   closeUpNext();
   if(kind==='reminder'){remOpen(id);return;}
+  if(!featOn('planday')){if(kind==='meeting')openEditEvent(id);return;}
   openDayPlan(ds,kind==='block'?id:null);
 }
 function toggleUpNext(e){
@@ -3714,6 +4067,7 @@ setInterval(function(){remNotifyTick();if(!document.hidden){renderUpNext();if(cu
 document.addEventListener('visibilitychange',function(){if(!document.hidden)renderUpNext();});
 
 function openDayPlan(ds,blockId){
+  if(!featOn('planday'))return;
   dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   document.getElementById('dayPlanOverlay').classList.add('open');
   renderDayPlan();
@@ -3772,6 +4126,7 @@ function renderDayPlan(keepEd){
 
   var lanes=dpComputeLanes(dpBlocks,dpDate);
   var blocksHtml=dpBlocks.map(function(b){
+    if(b.away)return dpAwayHtml(b,lanes);
     var c=projColorForName(b.proj);
     var top=(b.start-DP_GRID_START)*DP_PX_PER_MIN,h=b.dur*DP_PX_PER_MIN;
     var sel=dpSelectedBlock===b.id?' selected':'';
@@ -3893,7 +4248,7 @@ function dpHM(min){return String(Math.floor(min/60)).padStart(2,'0')+':'+String(
 function dpCommitMeeting(){
   var ov=dpMeetOverride;dpMeetOverride=null;
   if(!ov)return;
-  var evs=getManualEvents(),ev=evs.find(function(x){return x.id===ov.id;});
+  var evs=getManualEventsRaw(),ev=evs.find(function(x){return x.id===ov.id;});
   if(!ev)return;
   ev.startTime=dpHM(ov.s);ev.endTime=dpHM(ov.en);
   saveManualEvents(evs);
@@ -4004,7 +4359,7 @@ function cbRender(inp,showAll){
 function cbClose(){var d=document.getElementById('cbDrop');if(d)d.classList.remove('open');_cb=null;}
 function cbFocus(inp){cbRender(inp,true);}
 function cbInput(inp){cbRender(inp,false);}
-function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity')dpCommit();}
+function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();}
 function cbResolve(inp){
   if(!inp)return;
   var txt=inp.value.trim();
@@ -4016,7 +4371,7 @@ function cbResolve(inp){
   if(f.length===1){inp.value=f[0];inp.dataset.valid=f[0];return;}
   inp.value=inp.dataset.valid||'';
 }
-function cbBlur(inp){cbResolve(inp);cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity')dpCommit();}
+function cbBlur(inp){cbResolve(inp);cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();}
 function cbKey(e,inp){
   var open=_cb&&_cb.inp===inp;
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
@@ -4041,17 +4396,16 @@ function renderDpEditor(){
     if(_mt){
       var _tt=dpMeetTimes(_mt);
       el.classList.add('open');el.dataset.for='m:'+_mt.id;
-      el.innerHTML='<div class="dp-editor-title">Meeting</div>'
-        +'<div style="font-size:12.5px;font-weight:600;color:var(--text)">'+escH(_mt.title||'Meeting')+'</div>'
-        +'<div class="dp-editor-time" style="white-space:normal">'+dpFmtTime(_tt.s)+' - '+dpFmtTime(_tt.en)+' ('+dpFmtDur(_tt.en-_tt.s)+')'+(_mt.proj?' - '+escH(_mt.proj):'')+'</div>'
-        +'<div class="dp-editor-actions"><button class="dp-btn danger" onclick="dpDeleteMeeting()">Delete</button><button class="dp-btn" onclick="dpSelectedMeeting=null;renderDayPlan()">Close</button><button class="dp-btn primary" onclick="openEditEvent(\''+escA(_mt.id)+'\')">Edit details</button></div>';
+      el.innerHTML='<div class="dp-editor-title">Edit meeting<span class="dp-editor-time">'+dpFmtTime(_tt.s)+' - '+dpFmtTime(_tt.en)+' ('+dpFmtDur(_tt.en-_tt.s)+')</span><span class="dp-saved" id="dpSaved" aria-live="polite"></span></div>'
+        +dpMeetingBody(_mt)
+        +'<div class="dp-editor-actions"><button class="dp-btn danger" onclick="dpDeleteMeeting()">Delete</button><button class="dp-btn" onclick="openEditEvent(\''+escA(_mt.id)+'\')" title="Change the date, or see every field">All details</button><button class="dp-btn primary" onclick="dpMeetDone()">Done</button></div>';
       return;
     }
     dpSelectedMeeting=null;
   }
   if(!dpSelectedBlock){el.classList.remove('open');el.innerHTML='';return;}
   var isNew=dpSelectedBlock==='new';
-  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',taskId:dpNewRange.taskId||'',start:dpNewRange.start,dur:dpNewRange.dur}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',taskId:dpNewRange.taskId||'',start:dpNewRange.start,dur:dpNewRange.dur,note:dpNewRange.note||''}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
   if(!b){dpSelectedBlock=null;el.classList.remove('open');el.innerHTML='';return;}
   el.classList.add('open');
   var projects=getActiveProjects();
@@ -4062,21 +4416,23 @@ function renderDpEditor(){
     return'<option value="'+escA(a)+'"'+(a===b.activity?' selected':'')+'>'+escH(a)+'</option>';
   }).join('');
   var keep=(el.dataset.for===String(dpSelectedBlock)&&document.getElementById('dpProj'))?{p:document.getElementById('dpProj').value,a:document.getElementById('dpActivity').value,g:document.getElementById('dpGoal').value}:null;
-  el.innerHTML='<div class="dp-editor-title">'+(isNew?'New block':'Edit block')+'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'+(isNew?'':'<span class="dp-saved" id="dpSaved" aria-live="polite"></span>')+'</div>'
-    +'<div class="dp-editor-grid"><input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
+  var _ak=isNew?((dpNewRange&&dpNewRange.kind)||''):(b.away||''),_aw=_ak==='break'||_ak==='ooo',_an=_ak==='ooo'?'out of office':'break';
+  el.innerHTML='<div class="dp-editor-title">'+(_ak==='meeting'?'New meeting':(_aw?(isNew?'New ':'Edit ')+_an:(isNew?'New block':'Edit block')))+'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'+(isNew?'':'<span class="dp-saved" id="dpSaved" aria-live="polite"></span>')+'</div>'
+    +dpKindChips(isNew,b,_ak)+(_ak==='meeting'?dpMeetingBody((dpNewRange&&dpNewRange.mt)||{}):_aw?dpAwayBody(b,_ak):'<div class="dp-editor-grid"><input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<input type="text" id="dpActivity" class="cb-input" data-cb="act" placeholder="Type to search activities..." autocomplete="off" value="'+escH(b.activity||'')+'" data-valid="'+escH(b.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
     +dpTaskSel(b)
-    +'</div>'
+    +'</div>')
     +'<div class="dp-editor-actions">'
     +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
-    +(isNew?'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button><button class="dp-btn primary" onclick="dpSaveEdit()">Add block</button>':'<button class="dp-btn primary" onclick="dpDone()">Done</button>')
+    +(isNew?'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button><button class="dp-btn primary" onclick="dpSaveEdit()">'+(_ak==='meeting'?'Add meeting':_aw?'Add '+_an:'Add block')+'</button>':'<button class="dp-btn primary" onclick="dpDone()">Done</button>')
     +'</div>';
   el.dataset.for=String(dpSelectedBlock);
-  if(keep){document.getElementById('dpProj').value=keep.p;document.getElementById('dpActivity').value=keep.a;document.getElementById('dpGoal').value=keep.g;}
+  if(keep&&document.getElementById('dpProj')){document.getElementById('dpProj').value=keep.p;document.getElementById('dpActivity').value=keep.a;document.getElementById('dpGoal').value=keep.g;}
 }
 // -- Link a planned block to any open task (not only ones picked from Up next) --
 function dpTaskSel(b){
+  if(!featOn('todo'))return'';
   var cur=b.taskId||'',proj=b.proj||'';
   var list=getTasks().filter(function(t){return t.id===cur||(!t.done&&!t.someday&&!(t.waiting&&!tkChaseDue(t)));});
   list.sort(function(a,c){
@@ -4109,7 +4465,8 @@ function dpCancelEdit(){dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 // Existing blocks save themselves: project and activity when picked or left, goal when you leave the field.
 function dpAutoSave(){
   var el=document.getElementById('dpEditor'),id=el&&el.dataset.for;
-  if(!id||id==='new'||id.indexOf('m:')===0||!dpDate)return false;
+  if(id&&id.indexOf('m:')===0&&dpDate)return dpMeetAutoSave(id.slice(2));
+  if(!id||id==='new'||!dpDate)return false;
   var pe=document.getElementById('dpProj'),ae=document.getElementById('dpActivity'),ge=document.getElementById('dpGoal');
   if(!pe||!ae||!ge)return false;
   var b=dpBlocks.find(function(x){return x.id===id;});
@@ -4132,6 +4489,15 @@ function dpFlashSaved(){
 function dpCommit(){if(dpAutoSave()){renderDayPlan(true);dpFlashSaved();}}
 function dpDone(){dpAutoSave();dpSelectedBlock=null;dpNewRange=null;renderDayPlan();}
 function dpSaveEdit(){
+  if(dpSelectedBlock==='new'&&dpNewRange&&dpNewRange.kind==='meeting'){dpSaveNewMeeting();return;}
+  var _k=dpSelectedBlock==='new'&&dpNewRange?dpNewRange.kind:'';
+  if(_k==='break'||_k==='ooo'){
+    var _ne=document.getElementById('dpAwayNote');
+    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),away:_k,note:_ne?_ne.value.trim():'',proj:'',activity:'',start:dpNewRange.start,dur:dpNewRange.dur});
+    dpPersist();dpSelectedBlock=null;dpNewRange=null;
+    renderDayPlan();renderCalendarShell();
+    return;
+  }
   cbResolve(document.getElementById('dpProj'));cbResolve(document.getElementById('dpActivity'));
   var proj=document.getElementById('dpProj').value;
   if(!proj){document.getElementById('dpProj').focus();return;}
@@ -4164,14 +4530,16 @@ function dpDelete(){
 function renderImportRow(date){
   var el=document.getElementById('importPlannedRow');
   if(!el)return;
+  if(!featOn('planday')&&!featOn('meetings')){el.innerHTML='';return;}
+  var lbl=featOn('planday')?'planned hours':'meeting hours';
   var totals=dpBlockTotalsForDate(date);
   var hrs=Object.values(totals).reduce(function(s,t){return s+t.hours;},0);
   var count=Object.keys(totals).length;
   if(hrs<=0){
-    el.innerHTML='<div class="import-row disabled"><span class="import-text">No planned hours for this day yet</span></div>';
+    el.innerHTML='<div class="import-row disabled"><span class="import-text">No '+lbl+' for this day yet</span></div>';
     return;
   }
-  el.innerHTML='<div class="import-row"><span class="import-text">Import from planned hours - <b>'+hrs.toFixed(1)+'h</b> across '+count+' project'+(count===1?'':'s')+'</span><button class="btn primary-btn sm" onclick="importPlannedIntoLog()">Import</button></div>';
+  el.innerHTML='<div class="import-row"><span class="import-text">Import from '+lbl+' - <b>'+hrs.toFixed(1)+'h</b> across '+count+' project'+(count===1?'':'s')+'</span><button class="btn primary-btn sm" onclick="importPlannedIntoLog()">Import</button></div>';
 }
 function importPlannedIntoLog(){
   var date=document.getElementById('entryDate').value;
@@ -4529,7 +4897,8 @@ function updateTotal(){
     num.textContent=grandTotal.toFixed(1);
     if(unit)unit.textContent='h';
     var otRow=document.getElementById('otRow');
-    if(otRow){if(ot>0){otRow.style.display='';otRow.textContent='+'+dpHf(ot)+' OT';}else{otRow.style.display='none';}}
+    var _ng=(ot>0||!featOn('overtime'))?0:otAwayHrs((document.getElementById('entryDate')||{}).value,grandTotal,wh);
+    if(otRow){otRow.title='';if(ot>0){otRow.style.display='';otRow.textContent='+'+dpHf(ot)+' OT';}else if(_ng>0.004){otRow.style.display='';otRow.textContent='-'+dpHf(_ng)+' OT';otRow.title='Break or out-of-office time, counted against overtime because you worked less than the day requires';}else{otRow.style.display='none';}}
     num.className='total-num ok';
   }
 }
@@ -4538,7 +4907,7 @@ function tsWhVal(){var v=parseFloat((document.getElementById('totalHoursInput')|
 function tsBasis(){var v=tsWhVal();if(v>0)return v;var d=(document.getElementById('entryDate')||{}).value;return d?lvDayHrs(d):8;}
 function tsLogWh(l,ds){var v=(l&&l.totalHrs!=null&&l.totalHrs!=='')?Number(l.totalHrs):NaN;return isNaN(v)?workNet(ds):v;}
 function tsApplyWork(ds){var ti=document.getElementById('totalHoursInput');if(ti)ti.value=workNet(ds);tsWhText();}
-function tsWhText(){var e=document.getElementById('totalHrsText');if(!e)return;var v=tsWhVal();e.textContent=v>0?'Working hours '+dpHf(v):'Not a working day: all hours count as overtime';}
+function tsWhText(){var e=document.getElementById('totalHrsText');if(!e)return;var v=tsWhVal();e.textContent=v>0?'Working hours '+dpHf(v):(featOn('overtime')?'Not a working day: all hours count as overtime':'Not a working day');}
 function syncHours(){updateTotal();}
 // ── Timesheet draft autosave ──
 function getDraft(){try{return JSON.parse(localStorage.getItem('plannerTimeDraft')||'null');}catch(e){return null;}}
@@ -4791,8 +5160,8 @@ function renderProjectDetail(name){
           +(proj.archived?'<span class="proj-badge" style="background:#f3f4f6;color:var(--muted)">Archived</span>':'')
           +(proj.code?'<span class="proj-badge code">'+escH(proj.code)+'</span>':'')
           +(proj.activityType?proj.activityType.split(',').map(function(t){t=t.trim();return t?'<span class="proj-badge">'+escH(t)+'</span>':'';}).join(''):'')
-          +'<span class="proj-badge">'+openTasks.length+' open · '+doneTasks.length+' done</span>'
-          +(totalHrs>0?'<span class="proj-badge" style="background:var(--primary-light);color:var(--primary);border-color:var(--primary)">'+totalHrs.toFixed(1)+'h logged</span>':'')
+          +(featOn('todo')?'<span class="proj-badge">'+openTasks.length+' open · '+doneTasks.length+' done</span>':'')
+          +(totalHrs>0&&featOn('timesheet')?'<span class="proj-badge" style="background:var(--primary-light);color:var(--primary);border-color:var(--primary)">'+totalHrs.toFixed(1)+'h logged</span>':'')
         +'</div></div>'
         +'<div style="display:flex;gap:6px">'
         +'<button class="btn secondary-btn sm" onclick="openProjectEdit(\''+escA(name)+'\')">Edit</button>'
@@ -4822,7 +5191,7 @@ function renderProjectDetail(name){
       +'</div>'
       +'</div>'
     +'</div>'
-        +'<div class="proj-card'+(pc.photos?' collapsed':'')+'">'
+        +'<div class="proj-card ft-photos'+(pc.photos?' collapsed':'')+'">'
       +'<div class="proj-links-hdr"><button class="proj-card-toggle" onclick="toggleProjCard('+"'photos','"+escA(name)+"'"+')" title="'+(pc.photos?'Expand':'Collapse')+'">'+(pc.photos?'▸':'▾')+'</button><span class="proj-card-title" style="margin-bottom:0;cursor:pointer" onclick="toggleProjCard('+"'photos','"+escA(name)+"'"+')">Photos</span>'+'<button class="btn secondary-btn sm" style="margin-left:auto" onclick="document.getElementById(\'projPhotoInput_'+escH(name)+'\').click()">+ Add</button></div>'
       +'<div class="proj-card-body">'
       +'<input type="file" accept="image/*" multiple id="projPhotoInput_'+escH(name)+'" style="display:none" onchange="addProjectImages(\''+escA(name)+'\',this.files);this.value=\'\'">'
@@ -4836,8 +5205,8 @@ function renderProjectDetail(name){
       +linksHtml
       +'</div>'
     +'</div>'
-    +ntProjCardHtml(name,pc)
-    +renderProjectTaskGroupHtml(name,true)
+    +(featOn('notes')?ntProjCardHtml(name,pc):'')
+    +(featOn('todo')?renderProjectTaskGroupHtml(name,true):'')
     +'<div style="text-align:center;margin:6px 0 10px"><a href="#" style="font-size:12px;color:var(--primary)" onclick="event.preventDefault();switchTab(\'tasks\')">View all in To Do →</a></div>';
   renderProjectImages(name);
   document.documentElement.style.setProperty('--link-label-w',_linkLabelW+'px');
@@ -5089,7 +5458,7 @@ function deleteProjectImage(id,uid,projectName){
 var _projImgUrls=[];
 function renderProjectImages(projectName){
   var el=document.getElementById('projImages_'+projectName);
-  if(!el)return;
+  if(!el||!featOn('photos'))return;
   getProjectImages(projectName).then(function(records){
     _projImgUrls.forEach(function(u){URL.revokeObjectURL(u);});
     _projImgUrls=[];
@@ -5247,7 +5616,7 @@ async function photoSyncTombstoneRecord(uid){
 }
 var _photoSyncRunning=false;
 async function reconcilePhotoSync(){
-  if(_photoSyncRunning)return;
+  if(_photoSyncRunning||!featOn('photos'))return;
   _photoSyncRunning=true;
   try{
     var dirHandle=await getPhotoDirHandle();if(!dirHandle){_photoSyncRunning=false;return;}
@@ -5331,7 +5700,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.72.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.77.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5432,7 +5801,7 @@ function otOfLog(l){
 }
 function otAccrued(){var s=0,td=todayStr();getLogs().forEach(function(l){if(l.date<=td)s+=otOfLog(l);});return Math.round(s*100)/100;}
 function otRecovered(){var s=0;getOtRec().forEach(function(x){s+=Number(x.hrs)||0;});return Math.round(s*100)/100;}
-function otBalance(){return Math.max(0,Math.round((otAccrued()-otRecovered())*100)/100);}
+function otBalance(){return Math.round((otAccrued()-otAway()-otRecovered())*100)/100;}
 function otToggle(){_otOpen=!_otOpen;renderOtBar();}
 function otRecord(all){
   var bal=otBalance(),h=all?bal:parseFloat((document.getElementById('otHrs')||{}).value),dt=(document.getElementById('otDate')||{}).value||todayStr(),note=((document.getElementById('otNote')||{}).value||'').trim();
@@ -5451,11 +5820,11 @@ function otRemove(id){
 function renderOtBar(){
   var bar=document.getElementById('otBar'),pan=document.getElementById('otPanel');
   if(!bar||!pan)return;
-  var acc=otAccrued(),rec=otRecovered(),bal=otBalance(),list=getOtRec();
-  if(!acc&&!list.length){bar.style.display='none';pan.style.display='none';return;}
+  var acc=otAccrued(),aw=otAway(),rec=otRecovered(),bal=otBalance(),list=getOtRec();
+  if(!acc&&!aw&&!list.length){bar.style.display='none';pan.style.display='none';return;}
   bar.style.display='flex';
-  bar.innerHTML='<span class="ot-bal">Overtime balance <b>'+(bal>0?'+':'')+dpHf(bal)+'</b></span>'
-    +'<span class="ot-sub">'+dpHf(acc)+' worked'+(rec>0?', '+dpHf(rec)+' recovered':'')+'</span>'
+  bar.innerHTML='<span class="ot-bal">Overtime balance <b>'+(bal>0.004?'+':bal<-0.004?'-':'')+dpHf(Math.abs(bal))+'</b></span>'
+    +'<span class="ot-sub">'+dpHf(acc)+' worked'+(aw>0?', '+dpHf(aw)+' away':'')+(rec>0?', '+dpHf(rec)+' recovered':'')+'</span>'
     +'<button class="btn secondary-btn sm" onclick="otToggle()">'+(_otOpen?'Close':(bal>0?'Clear or recover':'Recoveries'))+'</button>';
   if(!_otOpen){pan.style.display='none';return;}
   pan.style.display='flex';
@@ -5661,7 +6030,7 @@ function tkFreeRestore(){
   var f=_tkFreed;
   tkFreeToastClose();
   if(!f)return;
-  var data=getTimeBlocksData();
+  var data=getTimeBlocksRaw();
   f.trimmed.forEach(function(x){(data[x.ds]||[]).forEach(function(b){if(b.id===x.id)b.dur=x.dur;});});
   f.removed.forEach(function(x){var a=data[x.ds]||(data[x.ds]=[]);if(!a.some(function(b){return b.id===x.b.id;}))a.push(x.b);});
   saveTimeBlocksData(data);
@@ -5994,7 +6363,7 @@ function tkCyclePri(id){var t=tkTask(id);if(!t)return;var n={high:'medium',mediu
 // -- Time spent on a task, worked out from the planner: blocks linked to the task that have happened (or are under way) --
 var _tkSpC={raw:null,min:-1,map:{}};
 function tkSpentMap(){
-  var raw=localStorage.getItem('plannerTimeBlocks')||'{}',min=Math.floor(Date.now()/60000);
+  var raw=featOn('planday')?(localStorage.getItem('plannerTimeBlocks')||'{}'):'{}',min=Math.floor(Date.now()/60000);
   if(_tkSpC.raw===raw&&_tkSpC.min===min)return _tkSpC.map;
   var data={},map={},today=todayStr(),nowM=dpMinNow();
   try{data=JSON.parse(raw)||{};}catch(e){}
@@ -6083,7 +6452,7 @@ function tkPlanHrs(ds){
 // Where a task's planned time sits: hours still ahead (for the unscheduled part), and which days it is planned on
 var _tkPiC={raw:null,min:-1,v:null};
 function tkPlanIndex(){
-  var raw=localStorage.getItem('plannerTimeBlocks')||'{}',min=Math.floor(Date.now()/60000);
+  var raw=featOn('planday')?(localStorage.getItem('plannerTimeBlocks')||'{}'):'{}',min=Math.floor(Date.now()/60000);
   if(_tkPiC.raw===raw&&_tkPiC.min===min)return _tkPiC.v;
   var data={},today=todayStr(),nowM=dpMinNow(),ahead={},days={};
   try{data=JSON.parse(raw)||{};}catch(e){}
@@ -6103,6 +6472,7 @@ function tkPlanIndex(){
 function tkShortD(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric'});}
 // Plan time for a task on a day: a block in the first free gap inside working hours (the Planner stays the one place that holds when)
 function tkPlanOnDay(id,ds){
+  if(!featOn('planday'))return;
   var t=tkTask(id);
   if(!t||t.done)return;
   var blocks=getBlocksForDate(ds),gaps=dpFreeGaps(ds,dpItemsForDate(ds,blocks));
@@ -6130,6 +6500,7 @@ function tkPlanOnDay(id,ds){
   }
 }
 function tkOpenPlanMenu(e,id){
+  if(!featOn('planday'))return;
   var t=tkTask(id);if(!t)return;
   var today=todayStr(),items=[],ds=today,n=0;
   while(items.length<5&&n<21){
@@ -6262,7 +6633,7 @@ function tkSetWait(id){
   w=w.trim();
   tkUpdate(id,{waiting:w?{who:w,follow:d}:undefined});
 }
-function tkPlanTask(id){openDayPlan(todayStr());setTimeout(function(){dpPlanTask(id);},150);}
+function tkPlanTask(id){if(!featOn('planday'))return;openDayPlan(todayStr());setTimeout(function(){dpPlanTask(id);},150);}
 function tkSubs(id,fn,focusAdd){
   saveTasks(getTasks().map(function(t){
     if(t.id!==id)return t;
@@ -6313,7 +6684,7 @@ function tkDetailHtml(t){
     +'<div class="tk-l" style="margin-top:8px">Notes</div><textarea id="tkNotes" rows="4" placeholder="Context, links, details&hellip;" onchange="tkSetNotes(\''+id+'\',this.value)">'+escH(t.notes||'')+'</textarea>'
     +tkNotesHtml(id)
     +'<div class="tk-ft"><button class="pri" onclick="toggleTaskDone(\''+id+'\')">'+(t.done?'Reopen':'Mark done')+'</button><div class="tk-ft2"><button onclick="openTaskRemindMenu(event,\''+id+'\')">Remind</button>'
-    +(t.done?'':'<button onclick="tkPlanTask(\''+id+'\')">Plan today</button>')
+    +(t.done?'':'<button class="ft-planday" onclick="tkPlanTask(\''+id+'\')">Plan today</button>')
     +'<button onclick="tkSetMode(\''+id+'\',\''+(t.someday?'off':'someday')+'\')">'+(t.someday?'Unpark':'Park')+'</button>'
     +'<button class="del" onclick="deleteTaskItem(\''+id+'\')">Delete</button></div></div>'
     +(t.created?'<div class="tk-meta">Added '+escH(tkShort(localIsoDate(new Date(t.created))))+'</div>':'')
@@ -6793,7 +7164,7 @@ function ntChips(n){
   if(n.project)f.push('<span class="tk-proj" title="'+escH(n.project)+'"><i style="background:'+projColorForName(n.project)+'"></i><span class="nt-pn">'+escH(n.project)+'</span></span>');
   (n.tags||[]).forEach(function(t){f.push('<span class="nt-tag">#'+escH(t)+'</span>');});
   if(n.date)f.push('<span class="nt-dt">'+escH(tkShort(n.date))+'</span>');
-  if(n.taskId){var t=tkTask(n.taskId);if(t)f.push('<span class="nt-dt" title="Linked task">Task: '+escH(t.title.length>24?t.title.slice(0,24)+'...':t.title)+'</span>');}
+  if(n.taskId&&featOn('todo')){var t=tkTask(n.taskId);if(t)f.push('<span class="nt-dt" title="Linked task">Task: '+escH(t.title.length>24?t.title.slice(0,24)+'...':t.title)+'</span>');}
   return f.join('');
 }
 function ntCardHtml(n){
@@ -7152,7 +7523,7 @@ function tblMenu(e){
 document.addEventListener('contextmenu',tblMenu);
 function ntPaste(e){
   var pf=[].filter.call((e.clipboardData&&e.clipboardData.files)||[],function(f){return/^image\//.test(f.type);});
-  if(pf.length&&_ntSel){e.preventDefault();ntAddPhotos(_ntSel,pf);return;}
+  if(pf.length&&_ntSel&&featOn('photos')){e.preventDefault();ntAddPhotos(_ntSel,pf);return;}
   if(lkPasteUrl(e)||rtRichPaste(e))return;
   e.preventDefault();
   var t=(e.clipboardData||window.clipboardData).getData('text/plain');
@@ -7202,8 +7573,8 @@ function ntEditorHtml(n,inline){
     +(items.length?'<div class="tk-pb"><div style="width:'+Math.round(done/items.length*100)+'%"></div></div>':'')
     +itHtml
     +'<input type="text" id="ntItemAdd" class="tk-subadd" placeholder="+ Add checklist item" onkeydown="if(event.key===\'Enter\')ntItemAdd(\''+id+'\')">';
-  var links='<div class="tk-g2" style="margin-top:10px"><label>Project<select onchange="ntUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Task<select onchange="ntUpdate(\''+id+'\',{taskId:this.value})">'+tOpts+'</select></label></div>'
-    +'<div class="tk-g2"><label>Date<input type="date" value="'+escH(n.date||'')+'" onchange="ntUpdate(\''+id+'\',{date:this.value,eventId:\'\'})"></label><label>Meeting<select onchange="ntUpdate(\''+id+'\',{eventId:this.value})"'+(n.date?'':' disabled')+'>'+eOpts+'</select></label></div>'
+  var links='<div class="tk-g2" style="margin-top:10px"><label>Project<select onchange="ntUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label class="ft-todo">Task<select onchange="ntUpdate(\''+id+'\',{taskId:this.value})">'+tOpts+'</select></label></div>'
+    +'<div class="tk-g2"><label>Date<input type="date" value="'+escH(n.date||'')+'" onchange="ntUpdate(\''+id+'\',{date:this.value,eventId:\'\'})"></label>'+(featOn('meetings')?'<label>Meeting<select onchange="ntUpdate(\''+id+'\',{eventId:this.value})"'+(n.date?'':' disabled')+'>'+eOpts+'</select></label>':'')+'</div>'
     +'<div class="tk-l">Tags</div><div class="nt-tagrow">'+tags+'<input type="text" id="ntTagIn" class="nt-tagin" placeholder="+ tag" onkeydown="if(event.key===\'Enter\'||event.key===\',\'){event.preventDefault();ntTagAdd(\''+id+'\');}" onblur="ntTagAdd(\''+id+'\')"></div>'
     +'<div class="tk-l" style="margin-top:8px">Colour</div><div class="nt-sws">'+sw+'</div>'
     +'<div class="tk-l" style="margin-top:8px">Size on the board</div><div class="nt-szs">'+ntSizeBtns(id,n.size)+'</div>';
@@ -7539,7 +7910,7 @@ function ntExportPdf(id){
   if(!n)return;
   ntExpClose();
   var fname=(String(n.title||'Note').replace(/[\\\/:*?"<>|]+/g,'').trim().slice(0,60)||'Note')+'.pdf';
-  getProjectImages(ntPhotoKey(id)).catch(function(){return[];}).then(function(recs){
+  (featOn('photos')?getProjectImages(ntPhotoKey(id)):Promise.resolve([])).catch(function(){return[];}).then(function(recs){
     recs=(recs||[]).slice().sort(function(a,b){return(a.id||0)-(b.id||0);});
     return ntPdfBlob(n,recs).then(function(blob){
       var a=document.createElement('a');
@@ -7632,7 +8003,7 @@ function ntCopyEmail(id){
   if(!n)return;
   ntExpClose();
   if(!(navigator.clipboard&&window.ClipboardItem)){alert('This browser cannot copy a formatted note. Use the PDF export instead.');return;}
-  var build=getProjectImages(ntPhotoKey(id)).catch(function(){return[];}).then(function(recs){
+  var build=(featOn('photos')?getProjectImages(ntPhotoKey(id)):Promise.resolve([])).catch(function(){return[];}).then(function(recs){
     recs=(recs||[]).slice().sort(function(a,b){return(a.id||0)-(b.id||0);});
     return Promise.all(recs.map(function(r){return r.blob.arrayBuffer();})).then(function(bufs){
       var imgs=bufs.map(function(b){var u=new Uint8Array(b),j=(typeof pdfJpeg==='function'&&pdfJpeg(u))||{w:560,h:420};return{src:'data:image/jpeg;base64,'+ntB64(u),w:j.w,h:j.h};});
@@ -7706,6 +8077,7 @@ function ntNewForTask(taskId){
   ntFocusTitle();
 }
 function tkNotesHtml(id){
+  if(!featOn('notes'))return'';
   var ls=getNotes().filter(function(n){return n.taskId===id;});
   return'<div class="tk-l" style="margin-top:8px">Linked notes<button class="nt-addbtn" onclick="ntNewForTask(\''+id+'\')">+ Note</button></div>'
     +ls.map(function(n){return'<div class="tk-ln" onclick="ntOpenAnywhere(\''+n.id+'\')">'+(n.title?escH(n.title):'<em>Untitled</em>')+'</div>';}).join('');
@@ -7714,6 +8086,7 @@ function tkNotesHtml(id){
 var _ntImgUrls=[];
 function ntPhotoKey(id){return'note:'+id;}
 function ntPhotosHtml(id){
+  if(!featOn('photos'))return'';
   return'<div class="tk-l" style="margin-top:10px">Photos<button type="button" class="nt-addbtn" onclick="document.getElementById(\'ntPhotoIn\').click()">+ Add</button></div>'
     +'<input type="file" accept="image/*" multiple id="ntPhotoIn" style="display:none" onchange="ntAddPhotos(\''+id+'\',this.files);this.value=\'\'">'
     +'<div class="nt-photos" id="ntPhotos" data-nid="'+id+'"></div>'
@@ -7856,7 +8229,7 @@ function ntThumbOpen(e,id,i){
   openPhotoLightbox(_ntLbUrls[i]||_ntLbUrls[0],_ntLbUrls);
 }
 function ntThumbsHtml(n){
-  return n.photos?'<div class="nt-th" data-nid="'+n.id+'" data-c="'+n.photos+'"></div>':'';
+  return n.photos&&featOn('photos')?'<div class="nt-th" data-nid="'+n.id+'" data-c="'+n.photos+'"></div>':'';
 }
 (function(){
   var b=document.getElementById('ntBoard');
@@ -7925,7 +8298,7 @@ function ntProjListHtml(name){
     if(snip.length>120)snip=snip.slice(0,120)+'...';
     return'<div class="nt-mini'+(n.color?' c-'+n.color:'')+(_ntSel===n.id?' sel':'')+'" onclick="ntSelect(\''+n.id+'\')"><div class="nt-mt">'+(n.pinned?'<span class="nt-pin on">'+NT_PIN+'</span>':'')+'<span>'+(n.title?escH(n.title):'<em>Untitled</em>')+'</span></div>'
       +(snip?'<div class="nt-ms">'+escH(snip)+'</div>':'')
-      +'<div class="nt-cf">'+(items.length?'<span class="nt-dt">'+done+'/'+items.length+' done</span>':'')+(n.tags||[]).map(function(t){return'<span class="nt-tag">#'+escH(t)+'</span>';}).join('')+(n.date?'<span class="nt-dt">'+escH(tkShort(n.date))+'</span>':'')+(n.photos?'<span class="nt-dt">'+n.photos+(n.photos===1?' photo':' photos')+'</span>':'')+'</div></div>';
+      +'<div class="nt-cf">'+(items.length?'<span class="nt-dt">'+done+'/'+items.length+' done</span>':'')+(n.tags||[]).map(function(t){return'<span class="nt-tag">#'+escH(t)+'</span>';}).join('')+(n.date?'<span class="nt-dt">'+escH(tkShort(n.date))+'</span>':'')+(n.photos&&featOn('photos')?'<span class="nt-dt">'+n.photos+(n.photos===1?' photo':' photos')+'</span>':'')+'</div></div>';
   }).join('')+'</div>';
 }
 function ntProjCardHtml(name,pc){
@@ -8127,11 +8500,11 @@ function makeFlatTaskRow(t,hideProj){
         +'</div></div>';
   }
   var acts;
-  if(compact)acts=isDone?'':'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button><button class="task-act-btn" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>';
+  if(compact)acts=isDone?'':'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button><button class="task-act-btn ft-planday" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>';
   else acts=isDone
     ?'<button class="task-act-btn" onclick="openTaskEditModal(\''+id+'\')" title="Edit">Edit</button><button class="task-act-btn del" onclick="deleteTaskItem(\''+id+'\')" title="Delete">Delete</button>'
     :'<button class="task-act-btn" onclick="tkOpenTodayMenu(event,\''+id+'\')" title="Do today, keep on Today, or park">&#9733; Today</button>'
-      +'<button class="task-act-btn" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>'
+      +'<button class="task-act-btn ft-planday" onclick="tkOpenPlanMenu(event,\''+id+'\')" title="Plan time for this task in the day planner">Plan</button>'
       +'<button class="task-act-btn" onclick="tkOpenWaitMenu(event,\''+id+'\')" title="Waiting on someone">Wait</button>'
       +'<button class="task-act-btn" onclick="openTaskEditModal(\''+id+'\')" title="Edit">Edit</button><button class="task-act-btn" onclick="openTaskRemindMenu(event,\''+id+'\')" title="Remind me">Remind</button>'
       +'<button class="task-act-btn" onclick="openSubtaskAdd(\''+id+'\')" title="Add subtask">Sub</button>'
@@ -8395,6 +8768,7 @@ function remSnoozeElapsedToday(r){
   return!!sn&&String(sn).length>10&&String(sn).slice(0,10)===todayStr()&&Date.now()>=new Date(sn).getTime();
 }
 function remGate(r){
+  if(remFeatOff(r))return false;
   var today=todayStr();
   if(r.snoozedUntil){
     if(String(r.snoozedUntil).length>10){if(Date.now()<new Date(r.snoozedUntil).getTime())return false;}
@@ -8550,7 +8924,7 @@ function remDelete(id){
   var r=getReminders().find(function(x){return x.id===id;});
   if(!r)return;
   if(r.isEventReminder&&r.link&&r.link.id){
-    var evs=getManualEvents();
+    var evs=getManualEventsRaw();
     evs.forEach(function(e){if(e.id===r.link.id)e.remind=false;});
     saveManualEvents(evs);
   }
@@ -8571,7 +8945,7 @@ function remOpen(id){
     },80);
   }
   else if(l&&l.type==='project'){switchTab('projects');selectProject(l.name);}
-  else if(l&&l.type==='event'){openDayPlan(l.date||r.date||todayStr());}
+  else if(l&&l.type==='event'){if(featOn('planday'))openDayPlan(l.date||r.date||todayStr());else openEditEvent(l.id);}
   else openRemEditor(id);
 }
 
@@ -8599,7 +8973,7 @@ function renderRemMgr(){
   var user=all.filter(function(r){return!r.isSystem&&!r.isEventReminder;});
   var rec=user.filter(function(r){return r.recur!=='none';});
   var one=user.filter(function(r){return r.recur==='none';}).sort(function(a,b){return(a.date||'').localeCompare(b.date||'');});
-  var meet=all.filter(function(r){return r.isEventReminder;});
+  var meet=featOn('meetings')?all.filter(function(r){return r.isEventReminder;}):[];
   var sys=all.filter(function(r){return r.isSystem;});
   var html=group('Repeating',rec)+group('One-off',one)+group('Meetings',meet)+group('Built-in',sys);
   el.innerHTML=html||'<div style="font-size:12px;color:var(--muted);font-style:italic;padding:8px 0">No reminders yet. Use + New reminder, and try typing something like "every Friday 3pm submit timesheet".</div>';
@@ -8865,6 +9239,7 @@ function openTaskRemindMenu(e,taskId){
 
 // -- Day plan markers --
 function remMarkerOn(r,ds){
+  if(remFeatOff(r))return false;
   if(!r.time||!remOccursOn(r,ds))return false;
   if(r.dismissedDates&&r.dismissedDates.indexOf(ds)>=0)return false;
   if(r.link&&r.link.type==='task'){
@@ -8883,7 +9258,7 @@ function remMarkersHtml(ds){
 
 // -- Browser notifications (only while the app is open in a tab) --
 function remNotifySupported(){return typeof Notification!=='undefined';}
-function remNotifyOn(){return localStorage.getItem('plannerRemNotify')==='1'&&remNotifySupported()&&Notification.permission==='granted';}
+function remNotifyOn(){return featOn('reminders')&&localStorage.getItem('plannerRemNotify')==='1'&&remNotifySupported()&&Notification.permission==='granted';}
 function remNotifyToggle(on){
   if(!remNotifySupported())return;
   if(!on){localStorage.setItem('plannerRemNotify','0');renderRemSettings();return;}
@@ -9171,7 +9546,8 @@ function toggleSettings(){switchTab('settings');}
 
 // ── Manual events ──
 var currentEventDate=null;
-function getManualEvents(){try{return JSON.parse(localStorage.getItem('plannerManualEvents')||'[]');}catch(e){return[];}}
+function getManualEventsRaw(){try{return JSON.parse(localStorage.getItem('plannerManualEvents')||'[]');}catch(e){return[];}}
+function getManualEvents(){return featOn('meetings')?getManualEventsRaw():[];}
 function saveManualEvents(evs){localStorage.setItem('plannerManualEvents',JSON.stringify(evs));}
 function openAddEvent(date){
   currentEventDate=date;
@@ -9242,7 +9618,7 @@ function saveManualEvent(){
   if(_evp)cbResolve(_evp);if(_eva)cbResolve(_eva);
   var proj=document.getElementById('evProj')?(document.getElementById('evProj').value||null):null;
   var activity=document.getElementById('evActivity')?(document.getElementById('evActivity').value||null):null;
-  var evs=getManualEvents();
+  var evs=getManualEventsRaw();
   var savedEv;
   if(!editingEventId&&evIcsUid){var _dup=evs.find(function(e){return e.icsUid===evIcsUid;});if(_dup)editingEventId=_dup.id;}
   if(editingEventId){
@@ -9260,7 +9636,7 @@ function saveManualEvent(){
 }
 function deleteManualEvent(id){
   var _ev=getManualEvents().find(function(e){return e.id===id;});
-  saveManualEvents(getManualEvents().filter(function(e){return e.id!==id;}));
+  saveManualEvents(getManualEventsRaw().filter(function(e){return e.id!==id;}));
   removeEventReminder(id);
   renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();
   if(_ev){
@@ -9649,7 +10025,7 @@ function icsSuggestProj(title){
 }
 // -- applying the import --
 function icsApply(items){
-  var evs=getManualEvents(),byId={},res={added:0,updated:0,removed:0},dates={},resync=[],removeIds={};
+  var evs=getManualEventsRaw(),byId={},res={added:0,updated:0,removed:0},dates={},resync=[],removeIds={};
   evs.forEach(function(e){byId[e.id]=e;});
   var snap={ev:localStorage.getItem('plannerManualEvents'),rem:JSON.stringify(getReminders())};
   items.forEach(function(it){
@@ -9834,6 +10210,7 @@ function icsOpenTexts(list){
   icsRebuild();icsShow();
 }
 function icsOpenFiles(files){
+  if(!featOn('meetings'))return;
   icsReadFiles(files,function(list,total){
     if(!list.length){icsToast(total?'That is not a calendar (.ics) file.':'No file received.');return;}
     icsOpenTexts(list);
@@ -9888,9 +10265,9 @@ document.addEventListener('paste',function(e){
   if(icsEditable(e.target))return;
   var cd=e.clipboardData;if(!cd)return;
   var files=[].slice.call(cd.files||[]).filter(function(f){return/\.(ics|ical|ifb)$/i.test(f.name)||/calendar/i.test(f.type);});
-  if(files.length){e.preventDefault();icsOpenFiles(files);return;}
+  if(files.length&&featOn('meetings')){e.preventDefault();icsOpenFiles(files);return;}
   var txt=cd.getData('text/plain')||'';
-  if(/BEGIN:VCALENDAR/i.test(txt)&&/BEGIN:VEVENT/i.test(txt)){e.preventDefault();icsOpenTexts([{name:'pasted text',text:txt}]);}
+  if(featOn('meetings')&&/BEGIN:VCALENDAR/i.test(txt)&&/BEGIN:VEVENT/i.test(txt)){e.preventDefault();icsOpenTexts([{name:'pasted text',text:txt}]);}
 });
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){var m=document.getElementById('icsPreviewModal');if(m&&m.classList.contains('open')){e.stopPropagation();icsClose();}}
@@ -9967,6 +10344,7 @@ function attachDraftListeners(){
 attachDraftListeners();
 // Restore any draft for today on load
 (function(){applyDraftOrLog(todayStr());})();
+applyFeatures();renderFeaturesSettings();setTimeout(featFirstRun,700);
 document.getElementById('newTaskTitle').addEventListener('keydown',function(e){if(e.key==='Enter')addTask();});
 
 document.getElementById('eventModal').addEventListener('click',function(e){if(e.target===this)closeEventModal();});
@@ -10010,10 +10388,10 @@ document.addEventListener('keydown',function(e){
 })();
 
 // ── Dark mode ──
-var TOUR_STEPS=[
+var TOUR_ALL=[
   {tab:null,target:null,title:"Welcome to Planner",text:"A quick tour of what's here - about a minute. Skip anytime, and you can restart this later from Settings."},
   {tab:'planner',target:'.calendar-card',title:"This week at a glance",text:"Each day shows logged hours, meetings, tasks due, and any planned time. Click a day's heading to open its action panel: log or edit time, add an event or task, plan the day, or log leave. Days with leave or a public holiday turn green. Use the arrows either side of the days to change week, or the week number in the top right to jump to any date."},
-  {tab:'planner',target:'.calendar-card',title:"Plan your day",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
+  {tab:'planner',target:'.calendar-card',title:"Plan your day",feat:"planday",text:"+ Plan opens a day timeline: drag to block out time against a project, drag a block or meeting to move it, drag its top or bottom edge to resize it, and press Delete to remove the selected item. Overlapping blocks and meetings sit side by side so each can be moved on its own. Project and activity pickers let you type to search. The Up Next panel beside the timeline lists what's coming, your free time, and suggested tasks - hit + Plan to drop one into the next free slot."},
   {tab:'tracker',target:'#upNextPill',title:"Up Next",text:"This pill in the header shows what's on now or next - a planned block, a meeting, or the next task due. Click it for the full list and suggested tasks, or to jump into your day plan. Long names scroll when you hover over them. The bell beside it holds your reminders - tick them off or snooze them for an hour, the afternoon, tomorrow or next week, and use Manage there to add, edit or remove repeating and one-off reminders. You can type them in plain words, like 'every Friday 3pm submit timesheet'."},
   {tab:'tracker',target:'#tourLogTimeCard',title:"Log Time and Import",text:"Log hours by percent or by hours, per project. Planned time and project meetings can be pulled in with the Import banner - it never overwrites what you've already logged. Leave days show a green line, and the chip at the top shows your leave balance."},
   {tab:'tracker',target:'.history-controls',title:"Log History",text:"Switch between List and Week view - Week gives a grid by project and activity that's easy to copy into Replicon. Export either one as a CSV; project and tender codes are included when your projects have them."},
@@ -10024,9 +10402,11 @@ var TOUR_STEPS=[
   {tab:'settings',sec:'leave',target:'#lvSection .lv-grid',title:"Leave",text:"Enter your leave cost code, current balance and accrual here. Leave and public holidays are booked to that code in your timesheet without showing up as a project, and your balance is worked out from there."},
   {tab:null,target:null,title:"You're all set",text:"That's everything - explore at your own pace. Look for Take the tour in Settings if you want to run through this again.",isLast:true}
 ];
+var TOUR_STEPS=TOUR_ALL;
 var _tourStep=0;
 var _tourActive=false;
 function startTour(){
+  TOUR_STEPS=TOUR_ALL.filter(function(s){return(!s.tab||featTabOk(s.tab))&&(s.sec!=='leave'||featOn('leave'))&&(!s.feat||featOn(s.feat));});
   _tourStep=0;_tourActive=true;
   document.getElementById('tourOverlay').classList.add('open');
   renderTourStep();
