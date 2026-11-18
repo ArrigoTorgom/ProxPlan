@@ -771,6 +771,10 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .project-group-name{font-size:14px;font-weight:600;flex:1;}
 .task-count{font-size:11px;background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:12px;font-weight:600;}
 .task-count.overdue{background:var(--high-bg);color:var(--high);}
+.tk-psub{display:flex;align-items:center;gap:8px;padding:9px 16px 7px;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.tk-psub:first-child{border-top:none;}
+.tk-psub .tk-pdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tk-psub .tk-pname{font-size:12px;font-weight:700;flex:1;}
 .task-filter{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
 .task-filter button{padding:4px 10px;border:none;background:none;cursor:pointer;font-size:11px;font-weight:500;color:var(--muted);transition:background .1s;}
 .task-filter button.active{background:var(--primary);color:#fff;}
@@ -798,6 +802,9 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .subtask-edit{background:none;border:none;cursor:pointer;color:transparent;font-size:12px;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
 .subtask-row:hover .subtask-edit{color:#bbb;}
 .subtask-edit:hover{color:var(--primary)!important;}
+.subtask-promote{background:none;border:none;cursor:pointer;color:transparent;font-size:12px;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
+.subtask-row:hover .subtask-promote{color:#bbb;}
+.subtask-promote:hover{color:var(--primary)!important;}
 .subtask-edit-input{font-size:12px;padding:2px 5px;border:1px solid var(--primary);border-radius:4px;background:var(--bg);color:var(--text);outline:none;flex:1;min-width:0;}
 .subtask-add-row{display:flex;gap:4px;margin-top:4px;align-items:center;}
 .subtask-add-row input{flex:1;font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text);outline:none;}
@@ -1159,6 +1166,26 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-subdel{background:none;border:none;color:transparent;font-size:15px;cursor:pointer;padding:0 3px;line-height:1;}
 .tk-sub:hover .tk-subdel{color:var(--muted);}
 .tk-subdel:hover{color:var(--high)!important;}
+.tk-subup{background:none;border:none;color:transparent;font-size:13px;cursor:pointer;padding:0 3px;line-height:1;}
+.tk-sub:hover .tk-subup{color:var(--muted);}
+.tk-subup:hover{color:var(--primary)!important;}
+.tk-sub.tk-rel .tk-rel-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--primary);cursor:pointer;}
+.tk-sub.tk-rel .tk-rel-t:hover{text-decoration:underline;}
+.tk-sub.tk-rel .tk-rel-t.done{text-decoration:line-through;color:var(--muted);}
+.tk-rel-p{font-size:10px;color:var(--muted);white-space:nowrap;}
+.tk-side button.tk-lmbtn{background:none;border:1px dashed var(--border);border-radius:6px;color:var(--muted);font-family:inherit;font-size:11px;padding:4px 7px;margin-top:4px;width:100%;cursor:pointer;text-align:left;box-sizing:border-box;}
+.tk-side button.tk-lmbtn:hover{border-color:var(--primary);color:var(--primary);}
+.tk-lm{margin-top:6px;}
+.tk-side button.tk-lm-row{display:flex;align-items:center;gap:6px;width:100%;box-sizing:border-box;background:none;border:none;border-bottom:1px solid var(--border);padding:5px 4px;font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;text-align:left;}
+.tk-side button.tk-lm-row:hover{background:var(--primary-light);}
+.tk-lm-row b{flex:1;min-width:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tk-lm-row span{font-size:10px;color:var(--muted);white-space:nowrap;}
+.tk-lm-pick{margin-top:6px;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);}
+.tk-lm-t{font-weight:600;margin-bottom:2px;}
+.tk-lm-ck{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text);margin:8px 0 4px;}
+.tk-lm-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center;}
+.tk-lm-h{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.4;}
+.tk-lm-empty{font-size:11px;color:var(--muted);padding:6px 2px;}
 .tk-side input.tk-subadd{margin-top:4px;border-style:dashed;}
 .tk-ft{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
 .tk-ft2{display:flex;gap:6px;}
@@ -2090,14 +2117,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.78.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.79.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.78.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.79.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -5706,7 +5733,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.78.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.79.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5990,7 +6017,7 @@ function getTasks(){try{return JSON.parse(localStorage.getItem('plannerTasks')||
 function saveTasks(t){var _old=getTasks();localStorage.setItem('plannerTasks',JSON.stringify(t));tkSyncWait(t);tkFreePlanned(_old,t);}
 function createTask(proj,title,pri,due,notes,extra){var t=getTasks();var nt={id:'t_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),project:proj,title:title,priority:pri,dueDate:due||'',notes:notes||'',done:false,created:Date.now()};if(extra)Object.keys(extra).forEach(function(k){nt[k]=extra[k];});t.push(nt);saveTasks(t);return nt;}
 function toggleDone(id){saveTasks(getTasks().map(function(t){if(t.id!==id)return t;var nd=!t.done;return Object.assign({},t,{done:nd,doneAt:nd?Date.now():null,actual:nd?t.actual:undefined});}));}
-function deleteTask(id){saveTasks(getTasks().filter(function(t){return t.id!==id;}));}
+function deleteTask(id){saveTasks(getTasks().filter(function(t){return t.id!==id;}).map(function(t){return(t.rel&&t.rel.indexOf(id)>=0)?Object.assign({},t,{rel:t.rel.filter(function(r){return r!==id;})}):t;}));}
 // -- Freeing planned time: a task that is parked, done, waiting or deleted gives its upcoming blocks back --
 var _tkFreed=null;
 function tkPlanRefresh(){
@@ -6607,6 +6634,7 @@ function renderTaskUrgency(){
 // -- To Do side column: outlook calendars / task detail --
 var _tkSel='';
 var TK_SVG_CHECK='<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M4 12l5 5L20 6"/></svg>';
+var TK_SVG_LINK='<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
 var TK_SVG_NOTE='<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-1px"><path d="M4 6h16M4 12h16M4 18h10"/></svg>';
 function tkCommit(){var a=document.activeElement;if(a&&a.closest&&a.closest('#taskSide')&&a.blur)a.blur();}
 function tkRowDown(e,id){
@@ -6617,7 +6645,7 @@ function tkRowDown(e,id){
 function tkSelect(id){
   tkCommit();
   if(!tkTask(id))return;
-  _tkSel=id;_ntSel='';
+  _tkSel=id;_ntSel='';_tkLmOpen='';_tkLmPick='';
   var old=document.querySelectorAll('.task-row.tk-sel');
   for(var i=0;i<old.length;i++)old[i].classList.remove('tk-sel');
   var r=document.getElementById('tr_'+id);
@@ -6677,6 +6705,155 @@ function tkSubRename(id,sid,v){
   if(!v){tkSubDel(id,sid);return;}
   tkSubs(id,function(c){c.subtasks.forEach(function(s){if(s.id===sid)s.title=v;});});
 }
+// -- Promote a subtask, link and merge tasks --
+var _tkUndo=null,_tkLmOpen='',_tkLmPick='';
+function tkSnap(){return{tasks:localStorage.getItem('plannerTasks'),blocks:localStorage.getItem('plannerTimeBlocks'),rem:localStorage.getItem('plannerReminders'),notes:localStorage.getItem('plannerNotes')};}
+function tkShortT(s){s=String(s||'');return s.length>40?s.slice(0,39)+'...':s;}
+function tkUndoToastClose(){var el=document.getElementById('tkUndoToast');if(el)el.remove();}
+function tkUndoToast(msg){
+  tkUndoToastClose();
+  var el=document.createElement('div');
+  el.id='tkUndoToast';el.className='tk-toast';el.style.bottom='72px';
+  el.innerHTML='<span>'+escH(msg)+'</span><button onclick="tkUndo()">Undo</button><button class="x" onclick="tkUndoToastClose()" aria-label="Dismiss">&times;</button>';
+  document.body.appendChild(el);
+  setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},12000);
+}
+function tkUndo(){
+  var s=_tkUndo;tkUndoToastClose();
+  if(!s)return;
+  _tkUndo=null;
+  var keys={tasks:'plannerTasks',blocks:'plannerTimeBlocks',rem:'plannerReminders',notes:'plannerNotes'};
+  Object.keys(keys).forEach(function(k){try{if(s[k]==null)localStorage.removeItem(keys[k]);else localStorage.setItem(keys[k],s[k]);}catch(e){}});
+  tkSyncWait(getTasks());
+  tkPlanRefresh();tkRefresh();
+  if(typeof remRefresh==='function')remRefresh();
+}
+function tkPromote(id,sid){
+  var t=tkTask(id);if(!t)return;
+  var s=(t.subtasks||[]).filter(function(x){return x.id===sid;})[0];if(!s)return;
+  _tkUndo=tkSnap();
+  var nid='t_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
+  var nt={id:nid,project:t.project,title:s.title,priority:t.priority,dueDate:t.dueDate||'',notes:'',done:!!s.done,created:Date.now(),rel:[id]};
+  if(s.done)nt.doneAt=Date.now();
+  var out=[];
+  getTasks().forEach(function(x){
+    if(x.id!==id){out.push(x);return;}
+    out.push(Object.assign({},x,{subtasks:(x.subtasks||[]).filter(function(y){return y.id!==sid;}),rel:(x.rel||[]).concat([nid])}));
+    out.push(nt);
+  });
+  saveTasks(out);
+  tkRefresh();
+  tkUndoToast('Promoted "'+tkShortT(s.title)+'" to a task. It keeps the project, priority and due date, and is linked back.');
+}
+function tkRelAdd(a,b){
+  saveTasks(getTasks().map(function(t){
+    if(t.id===a&&(t.rel||[]).indexOf(b)<0)return Object.assign({},t,{rel:(t.rel||[]).concat([b])});
+    if(t.id===b&&(t.rel||[]).indexOf(a)<0)return Object.assign({},t,{rel:(t.rel||[]).concat([a])});
+    return t;
+  }));
+}
+function tkRelRemove(a,b){
+  saveTasks(getTasks().map(function(t){
+    var o=t.id===a?b:(t.id===b?a:'');
+    if(!o||(t.rel||[]).indexOf(o)<0)return t;
+    var r=t.rel.filter(function(x){return x!==o;});
+    var c=Object.assign({},t);if(r.length)c.rel=r;else delete c.rel;
+    return c;
+  }));
+  tkRefresh();
+}
+function tkLink(a,b){tkRelAdd(a,b);_tkLmOpen='';_tkLmPick='';tkRefresh();}
+function tkOpenRel(oid){
+  var o=tkTask(oid);if(!o)return;
+  _tkLmOpen='';_tkLmPick='';
+  if(currentTab==='projects'&&o.project!==_selectedProject)selectProject(o.project);
+  tkSelect(oid);
+}
+function tkLmToggle(id){
+  _tkLmOpen=_tkLmOpen===id?'':id;_tkLmPick='';
+  renderTaskSide();
+  if(_tkLmOpen)setTimeout(function(){var q=document.getElementById('tkLmQ');if(q)q.focus();},30);
+}
+function tkLmCands(id){
+  var me=tkTask(id);if(!me)return[];
+  var q=String((document.getElementById('tkLmQ')||{}).value||'').trim().toLowerCase();
+  var words=q.split(/\s+/).filter(Boolean);
+  return tkVisibleTasks().filter(function(t){
+    if(t.id===id)return false;
+    if(words.length){var hay=(t.title+' '+t.project).toLowerCase();return words.every(function(w){return hay.indexOf(w)>=0;});}
+    return !t.done&&t.project===me.project;
+  }).sort(function(a,b){
+    var sa=a.project===me.project?0:1,sb=b.project===me.project?0:1;
+    if(sa!==sb)return sa-sb;
+    if(a.done!==b.done)return a.done?1:-1;
+    return a.title.localeCompare(b.title);
+  }).slice(0,8);
+}
+function tkLmListHtml(id){
+  var me=tkTask(id);if(!me)return'';
+  var o=_tkLmPick?tkTask(_tkLmPick):null;
+  if(o){
+    var linked=(me.rel||[]).indexOf(o.id)>=0,blocked=me.done&&!o.done;
+    return'<div class="tk-lm-pick"><div class="tk-lm-t">'+escH(o.title)+'</div><div class="tk-rel-p">'+escH(o.project)+(o.done?' &middot; done':'')+'</div>'
+      +'<label class="tk-lm-ck"><input type="checkbox" id="tkLmSub" checked> Keep its title as a subtask when merging</label>'
+      +'<div class="tk-lm-acts">'+(linked?'<span class="tk-rel-p">Already linked</span>':'<button class="btn secondary-btn sm" onclick="tkLink(\''+id+'\',\''+o.id+'\')">Link as related</button>')
+      +(blocked?'':'<button class="btn primary-btn sm" onclick="tkMerge(\''+id+'\',\''+o.id+'\')">Merge into this task</button>')
+      +'<button class="btn secondary-btn sm" onclick="_tkLmPick=\'\';tkLmRefresh(\''+id+'\')">Back</button></div>'
+      +'<div class="tk-lm-h">'+(blocked?'This task is done, so an open task cannot be merged into it. Reopen it first.':'Link keeps both tasks and lets you jump between them. Merge brings over its subtasks, notes, planned time, reminders and links, then removes it; this task keeps its project, takes the higher priority and the earlier due date. You can undo a merge straight afterwards.')+'</div></div>';
+  }
+  var c=tkLmCands(id);
+  if(!c.length)return'<div class="tk-lm-empty">No matching tasks.</div>';
+  return c.map(function(x){var ln=(me.rel||[]).indexOf(x.id)>=0;return'<button class="tk-lm-row" onclick="tkLmPickTask(\''+id+'\',\''+x.id+'\')"><b>'+escH(x.title)+'</b><span>'+escH(x.project)+(x.done?' &middot; done':'')+(ln?' &middot; linked':'')+'</span></button>';}).join('');
+}
+function tkLmRefresh(id){var el=document.getElementById('tkLmList');if(el)el.innerHTML=tkLmListHtml(id);}
+function tkLmPickTask(id,oid){_tkLmPick=oid;tkLmRefresh(id);}
+function tkRelHtml(t){
+  var id=t.id,live=(t.rel||[]).map(tkTask).filter(Boolean);
+  var h='<div class="tk-l" style="margin-top:8px">Related tasks'+(live.length?'<span style="float:right">'+live.length+'</span>':'')+'</div>';
+  h+=live.map(function(o){return'<div class="tk-sub tk-rel"><span class="tk-rel-t'+(o.done?' done':'')+'" onclick="tkOpenRel(\''+o.id+'\')" title="'+escH(o.title)+'">'+escH(o.title)+'</span><span class="tk-rel-p">'+escH(o.project)+'</span><button class="tk-subdel" onclick="tkRelRemove(\''+id+'\',\''+o.id+'\')" title="Remove link">&times;</button></div>';}).join('');
+  h+='<button class="tk-lmbtn" onclick="tkLmToggle(\''+id+'\')">'+(_tkLmOpen===id?'Close':'+ Link or merge a task')+'</button>';
+  if(_tkLmOpen===id)h+='<div class="tk-lm"><input type="text" id="tkLmQ" placeholder="Find a task by name or project" autocomplete="off" oninput="_tkLmPick=\'\';tkLmRefresh(\''+id+'\')"><div id="tkLmList">'+tkLmListHtml(id)+'</div></div>';
+  return h;
+}
+function tkMerge(id,oid){
+  var a=tkTask(id),b=tkTask(oid);
+  if(!a||!b||id===oid)return;
+  if(a.done&&!b.done)return;
+  var keepSub=!!(document.getElementById('tkLmSub')||{}).checked;
+  _tkUndo=tkSnap();
+  var PO={high:0,medium:1,low:2},today=todayStr();
+  var m=Object.assign({},a);
+  if((PO[b.priority]!=null?PO[b.priority]:1)<(PO[a.priority]!=null?PO[a.priority]:1))m.priority=b.priority;
+  if(b.dueDate&&(!a.dueDate||b.dueDate<a.dueDate))m.dueDate=b.dueDate;
+  if(!(a.est>0)&&b.est>0)m.est=b.est;
+  if(!a.waiting&&b.waiting)m.waiting=b.waiting;
+  if(!a.persist&&!a.someday&&a.today!==today&&!b.someday){if(b.persist){m.persist=true;m.today=b.today||today;}else if(b.today===today)m.today=today;}
+  var subs=(a.subtasks||[]).map(function(s){return Object.assign({},s);});
+  (b.subtasks||[]).forEach(function(s){subs.push(Object.assign({},s));});
+  if(keepSub)subs.push({id:'st_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),title:b.title,done:!!b.done});
+  if(subs.length)m.subtasks=subs;
+  if(b.notes&&String(b.notes).trim())m.notes=(a.notes?a.notes+'\n\n':'')+'Merged from "'+b.title+'":\n'+String(b.notes).trim();
+  var rel=(a.rel||[]).concat(b.rel||[]).filter(function(r,i,arr){return r!==id&&r!==oid&&arr.indexOf(r)===i;});
+  if(rel.length)m.rel=rel;else delete m.rel;
+  var tasks=getTasks().filter(function(t){return t.id!==oid;}).map(function(t){
+    if(t.id===id)return m;
+    if((t.rel||[]).indexOf(oid)>=0){var r2=t.rel.filter(function(x){return x!==oid;});if(r2.indexOf(id)<0)r2.push(id);return Object.assign({},t,{rel:r2});}
+    return t;
+  });
+  var bl=getTimeBlocksRaw(),bc=false;
+  Object.keys(bl).forEach(function(ds){(bl[ds]||[]).forEach(function(x){if(x.taskId===oid){x.taskId=id;bc=true;}});});
+  if(bc)saveTimeBlocksData(bl);
+  var rm=getReminders(),rc=false;
+  rm.forEach(function(r){if(r.link&&r.link.type==='task'&&r.link.id===oid){r.link.id=id;rc=true;}});
+  if(rc)saveReminders(rm);
+  var nn=getNotes(),nc=false;
+  nn.forEach(function(n){if(n.taskId===oid){n.taskId=id;n.updated=Date.now();nc=true;}});
+  if(nc)saveNotes(nn);
+  saveTasks(tasks);
+  _tkLmOpen='';_tkLmPick='';
+  tkPlanRefresh();tkRefresh();
+  tkUndoToast('Merged "'+tkShortT(b.title)+'" into this task.');
+}
 function tkDetailHtml(t){
   var id=t.id,today=todayStr(),mode=t.persist?'keep':(t.today===today?'today':'off');
   var projs=getActiveProjects().map(function(p){return p.name;});
@@ -6686,7 +6863,7 @@ function tkDetailHtml(t){
   var prOpts=['high','medium','low'].map(function(p){return'<option value="'+p+'"'+(t.priority===p?' selected':'')+'>'+(p==='medium'?'Medium':p.charAt(0).toUpperCase()+p.slice(1))+'</option>';}).join('');
   var subs=t.subtasks||[],sd=subs.filter(function(s){return s.done;}).length;
   var subHtml=subs.map(function(s){
-    return'<div class="tk-sub"><span class="subtask-cb'+(s.done?' done':'')+'" onclick="tkSubToggle(\''+id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</span><input type="text" class="tk-subin'+(s.done?' done':'')+'" value="'+escH(s.title)+'" onchange="tkSubRename(\''+id+'\',\''+s.id+'\',this.value)"><button class="tk-subdel" onclick="tkSubDel(\''+id+'\',\''+s.id+'\')" title="Remove">&times;</button></div>';
+    return'<div class="tk-sub"><span class="subtask-cb'+(s.done?' done':'')+'" onclick="tkSubToggle(\''+id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</span><input type="text" class="tk-subin'+(s.done?' done':'')+'" value="'+escH(s.title)+'" onchange="tkSubRename(\''+id+'\',\''+s.id+'\',this.value)"><button class="tk-subup" onclick="tkPromote(\''+id+'\',\''+s.id+'\')" title="Promote to a task of its own">&#8593;</button><button class="tk-subdel" onclick="tkSubDel(\''+id+'\',\''+s.id+'\')" title="Remove">&times;</button></div>';
   }).join('');
   var seg=[['off','Off'],['today','Today'],['keep','Keep']].map(function(m){return'<button class="'+(mode===m[0]&&!t.someday?'on':'')+'" onclick="tkSetMode(\''+id+'\',\''+m[0]+'\')">'+m[1]+'</button>';}).join('');
   var w=t.waiting||{who:'',follow:''};
@@ -6701,6 +6878,7 @@ function tkDetailHtml(t){
     +(subs.length?'<div class="tk-pb"><div style="width:'+Math.round(sd/subs.length*100)+'%"></div></div>':'')
     +subHtml
     +'<input type="text" id="tkSubAdd" class="tk-subadd" placeholder="+ Add subtask" onkeydown="if(event.key===\'Enter\')tkSubAdd(\''+id+'\')">'
+    +tkRelHtml(t)
     +'<div class="tk-l" style="margin-top:8px">Notes</div><textarea id="tkNotes" rows="4" placeholder="Context, links, details&hellip;" onchange="tkSetNotes(\''+id+'\',this.value)">'+escH(t.notes||'')+'</textarea>'
     +tkNotesHtml(id)
     +'<div class="tk-ft"><button class="pri" onclick="toggleTaskDone(\''+id+'\')">'+(t.done?'Reopen':'Mark done')+'</button><div class="tk-ft2"><button onclick="openTaskRemindMenu(event,\''+id+'\')">Remind</button>'
@@ -8475,6 +8653,8 @@ function makeFlatTaskRow(t,hideProj){
   var subsDone=subs.filter(function(s){return s.done;}).length;
   var subCount=subs.length?(compact?'':'<span class="subtask-count">'+subsDone+'/'+subs.length+' subtasks</span>'):'';
   var subIco=(compact&&subs.length)?'<span class="tk-ico" title="Subtasks done">'+TK_SVG_CHECK+' '+subsDone+'/'+subs.length+'</span>':'';
+  var relIco='';
+  if(t.rel&&t.rel.length){var _rl=t.rel.map(tkTask).filter(Boolean);if(_rl.length)relIco='<span class="tk-ico" title="Related: '+escH(_rl.map(function(x){return x.title;}).join('; '))+'">'+TK_SVG_LINK+' '+_rl.length+'</span>';}
   var priLabel=t.priority==='medium'?'Med':t.priority.charAt(0).toUpperCase()+t.priority.slice(1);
   var today=todayStr();
   var dueHtml=isDone?(due?'<span class="task-due">'+due.text+'</span>':''):(due?'<span class="task-due '+due.cls+'" title="Change the due date in the task details">'+due.text+'</span>':'');
@@ -8508,6 +8688,7 @@ function makeFlatTaskRow(t,hideProj){
       }
       return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</div>'
         +'<span class="subtask-title tr'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span>'
+        +'<button class="subtask-promote" onclick="tkPromote(\''+t.id+'\',\''+s.id+'\')" title="Promote to a task of its own">&#8593;</button>'
         +'<button class="subtask-edit" onclick="openSubtaskEdit(\''+s.id+'\')" title="Edit">&#9998;</button>'
         +'<button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')" title="Delete">&#215;</button></div>';
     }).join('')+'</div>':'';
@@ -8535,7 +8716,7 @@ function makeFlatTaskRow(t,hideProj){
     +'<span class="pri-badge '+t.priority+(isDone?'':' tk-click')+'"'+(isDone?'':' onclick="tkCyclePri(\''+id+'\')" title="Click to change priority"')+'>'+priLabel+'</span>'
     +'<div class="task-body">'
       +'<div class="task-title">'+escH(t.title)+subCount+(hideProj?'':tkProjHtml(t.project))+'</div>'
-      +'<div class="task-meta">'+pinHtml+waitHtml+dueHtml+estHtml+plHtml+subIco+notesHtml+'</div>'
+      +'<div class="task-meta">'+pinHtml+waitHtml+dueHtml+estHtml+plHtml+subIco+relIco+notesHtml+'</div>'
       +quickHtml+subHtml+subAddHtml
     +'</div>'
     +'<div class="task-actions">'+acts+'</div>'
@@ -8619,9 +8800,20 @@ function renderTasksPanel(){
       +'</div><div class="project-group-body">'+flatRows+'</div></div>';
     return;
   }
-  // 'project' mode: stable order, no jumps
-
-  container.innerHTML=displayProjects.map(function(project){return renderProjectTaskGroupHtml(project);}).join('');
+  // 'project' mode: one list, a subheading per project. Projects with no open tasks are left out; tasks are added from the main input bar.
+  var _pj='',_any=false,_doneAll=[];
+  displayProjects.forEach(function(project){
+    var all=allTasks.filter(function(t){return t.project===project;});
+    var pt=all.filter(function(t){return!t.done;}).sort(tkSort);
+    all.forEach(function(t){if(t.done)_doneAll.push(t);});
+    if(!pt.length)return;
+    _any=true;
+    var od=pt.filter(function(t){return!t.someday&&t.dueDate&&t.dueDate<today;}).length;
+    _pj+='<div class="tk-psub"><span class="tk-pdot" style="background:'+projColorForName(project)+'"></span><span class="tk-pname">'+escH(project)+'</span><span class="task-count'+(od?' overdue':'')+'">'+pt.length+' open'+(od?' &middot; '+od+' overdue':'')+'</span></div>'+pt.map(function(t){return makeFlatTaskRow(tkRowT(t),true);}).join('');
+  });
+  _doneAll.sort(function(a,b){return(b.doneAt||0)-(a.doneAt||0);});
+  container.innerHTML='<div class="project-group"><div class="project-group-header"><span class="project-group-name">Grouped by Project</span></div><div class="project-group-body">'+(_any?_pj:'<div class="project-empty">No open tasks.</div>')+'</div></div>'
+    +(_doneAll.length?tkSecHtml('done','Completed',_doneAll.slice(0,30),'','','',_doneAll.length):'');
 }
 
 // ── Project suggestion ──

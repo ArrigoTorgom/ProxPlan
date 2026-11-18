@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.79.0] — 2026-11-18
+
+### Added
+- Promote a subtask to a task: each subtask has a small up-arrow button (on hover) in the task details and in the This Week list. The subtask becomes a task of its own in the same project, with the same priority and due date (and stays done if it was done), and it is linked back to the task it came from. An Undo button appears straight afterwards.
+- Link tasks: a new "Related tasks" section in the task details. "+ Link or merge a task" lets you search by name or project (tasks from the same project are suggested first) and link two tasks as related. Links work both ways, show as a small link count on the task row, and clicking a related task opens it (switching project on the Projects tab if needed). The x removes a link. Deleting a task removes it from other tasks' links.
+- Merge tasks: from the same search, "Merge into this task" absorbs the other task into the one you have open. This task keeps its project and takes the higher priority and the earlier due date (and the estimate, waiting or Today pin if it had none). The other task's subtasks, notes, planned time in Plan Day, linked reminders and linked notes move across, and its links are carried over; its title can be kept as a subtask (ticked by default). The other task is then removed. Undo restores both tasks and everything that moved. An open task cannot be merged into a task that is done; link them instead, or reopen it first.
+
+### Changed
+- To Do, Project view: now one list with a subheading per project (colour dot, name, open and overdue counts), tasks sorted by priority then due date, and completed tasks in a Completed section at the bottom. Projects with no open tasks no longer take up space, and the per-project quick-add boxes are gone from this view, so tasks are added from the main input bar. The Tasks card on each project's tab is unchanged.
+
+---
+
 ## [0.78.0] — 2026-11-18
 
 ### Added
