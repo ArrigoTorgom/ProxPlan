@@ -5,6 +5,31 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.80.2] — 2026-11-19
+
+### Changed
+- Plan Day: breaks (including lunch) are now a plain light grey block with no stripes, the quietest item in the day. Out of office keeps the dark slate colour with wider stripes, like the shading for hours outside your working day.
+
+---
+
+## [0.80.1] — 2026-11-19
+
+### Changed
+- Plan Day colours now match the rest of the app. Breaks (including lunch) use a soft grey hatch instead of green, so green stays for leave. Out of office uses the app's dark slate instead of red, so red stays for priority and overdue. Both use the same thin 135° stripes as the leave hatching, and the Break / Out of office buttons in the editor match.
+
+---
+
+## [0.80.0] — 2026-11-19
+
+### Added
+- Plan Day: lunch (and any other break set in Settings > Working hours) now shows as a break block you can drag, resize or remove for that day only, instead of a fixed shaded band. Each day starts with your usual break; select it and choose "Back to usual time" to undo a change.
+- The day's required hours never change. A longer break than usual counts as away time (and against overtime only if you end up short of the day, as other breaks do). Moving or removing the break changes where free time, meetings and suggested slots fall that day.
+
+### Changed
+- This Week: leave days now colour only the content area of the day (green for a full day, hatched for a half day). The day header keeps its normal grey, or orange for today.
+
+---
+
 ## [0.79.6] — 2026-11-19
 
 ### Changed

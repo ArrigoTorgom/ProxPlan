@@ -854,9 +854,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .empty-state{text-align:center;color:var(--muted);font-size:14px;padding:28px 0;}
 .no-projects{text-align:center;color:var(--muted);font-size:14px;padding:20px 0;}
 }
-.day-col.leave-day{background:rgba(34,197,94,.05);}
-.day-col.leave-day .day-head{background:rgba(34,197,94,.16)!important;border-bottom-color:rgba(34,197,94,.45)!important;}
-.day-col.leave-day .day-head:hover{background:rgba(34,197,94,.24)!important;}
+.day-col.leave-day .day-events{background:rgba(34,197,94,.08);}
 .lv-chip{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;cursor:pointer;white-space:nowrap;}
 .lv-chip:hover{opacity:.85;}
 .lv-chip.neg{background:#fef2f2;border-color:#fecaca;color:#b91c1c;}
@@ -876,8 +874,6 @@ body.app-dark .lv-stat.main b{color:#4ade80;}
 body.app-dark .lv-stat.neg b{color:#f87171;}
 @media(prefers-color-scheme:dark){.lv-stat.main:not(body.app-light *){background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.3);}.lv-stat.main:not(body.app-light *) b{color:#4ade80;}.lv-stat.neg:not(body.app-light *) b{color:#f87171;}}
 .lv-bal-note{font-size:11px;color:var(--muted);margin:4px 0 10px;}
-body.app-dark .day-col.leave-day .day-head,body.app-dark .day-col.today.leave-day .day-head{background:rgba(34,197,94,.16)!important;}
-body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!important;}
 .dp-block.selected{z-index:4;}
 .dp-block.lane,.dp-meeting.lane{right:auto;}
 .dp-block.l3 .g,.dp-block.l3 .rt,.dp-meeting.l3 .g,.dp-meeting.l3 .rt{display:none;}
@@ -909,7 +905,6 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-wk{position:absolute;left:0;right:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;}
 .dp-wk span{font-size:10px;color:var(--muted);padding:0 8px;opacity:.9;}
 .dp-wk.off{background:repeating-linear-gradient(135deg,rgba(128,128,128,.13) 0 6px,rgba(128,128,128,.05) 6px 12px);}
-.dp-wk.brk{background:repeating-linear-gradient(135deg,rgba(128,128,128,.13) 0 6px,rgba(128,128,128,.05) 6px 12px);}
 .dp-wh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:7px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text);}
 .dp-wh:empty{display:none;}
 .dp-wh .sched{font-weight:600;}
@@ -932,8 +927,12 @@ body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!impor
 .dp-away-ed{display:flex;flex-direction:column;gap:6px;}
 .dp-away-ed input{width:100%;box-sizing:border-box;}
 .dp-away-help{font-size:11px;color:var(--muted);}
-.dp-block.away.brk{--blk-color:#16a34a;border-left-color:#16a34a;background:repeating-linear-gradient(45deg,rgba(34,197,94,.3) 0 6px,rgba(34,197,94,.13) 6px 12px);}
-.dp-block.away.ooo{--blk-color:#e24a4a;border-left-color:#e24a4a;background:repeating-linear-gradient(45deg,rgba(226,75,74,.3) 0 6px,rgba(226,75,74,.13) 6px 12px);}
+.dp-block.away.brk{--blk-color:#b4bcc2;border-left-color:#b4bcc2;background:#f1f3f5;}
+.dp-block.away.brk .t{color:var(--muted);}
+.dp-block.away.ooo{--blk-color:#233b46;border-left-color:#233b46;background:repeating-linear-gradient(135deg,rgba(35,59,70,.2) 0 6px,rgba(35,59,70,.06) 6px 12px);}
+body.app-dark .dp-block.away.brk{--blk-color:#5f7884;border-left-color:#5f7884;background:rgba(154,174,184,.1);}
+body.app-dark .dp-block.away.ooo{--blk-color:#9fb6c2;border-left-color:#9fb6c2;background:repeating-linear-gradient(135deg,rgba(159,182,194,.26) 0 6px,rgba(159,182,194,.07) 6px 12px);}
+@media(prefers-color-scheme:dark){.dp-block.away.brk:not(body.app-light *){--blk-color:#5f7884;border-left-color:#5f7884;background:rgba(154,174,184,.1);}.dp-block.away.ooo:not(body.app-light *){--blk-color:#9fb6c2;border-left-color:#9fb6c2;background:repeating-linear-gradient(135deg,rgba(159,182,194,.26) 0 6px,rgba(159,182,194,.07) 6px 12px);}}
 .dp-kind.k-meeting.on{background:#8b5cf6;border-color:#8b5cf6;}
 .dp-kind.k-meeting:hover{border-color:#8b5cf6;color:#8b5cf6;}
 .dp-mt-ed .dp-mt-wide{grid-column:1/-1;}
@@ -972,10 +971,14 @@ body.feat-off-planday .ft-planday,body.feat-off-meetings .ft-meetings,body.feat-
 .feat-first{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
 .feat-first .feat-preset{flex:0 0 auto;}
 .feat-skip{display:flex;justify-content:flex-end;}
-.dp-kind.k-break.on{background:#16a34a;border-color:#16a34a;}
-.dp-kind.k-ooo.on{background:#e24a4a;border-color:#e24a4a;}
-.dp-kind.k-break:hover{border-color:#16a34a;color:#16a34a;}
-.dp-kind.k-ooo:hover{border-color:#e24a4a;color:#e24a4a;}
+.dp-kind.k-break.on{background:#9aa5ad;border-color:#9aa5ad;}
+.dp-kind.k-ooo.on{background:#233b46;border-color:#233b46;}
+.dp-kind.k-break:hover{border-color:var(--muted);color:var(--muted);}
+.dp-kind.k-ooo:hover{border-color:#233b46;color:#233b46;}
+body.app-dark .dp-kind.k-break.on{background:#5f7884;border-color:#5f7884;}
+body.app-dark .dp-kind.k-ooo.on{background:#4f6b79;border-color:#9fb6c2;}
+body.app-dark .dp-kind.k-ooo:hover{border-color:#9fb6c2;color:#9fb6c2;}
+@media(prefers-color-scheme:dark){.dp-kind.k-break.on:not(body.app-light *){background:#5f7884;border-color:#5f7884;}.dp-kind.k-ooo.on:not(body.app-light *){background:#4f6b79;border-color:#9fb6c2;}.dp-kind.k-ooo:not(body.app-light *):hover{border-color:#9fb6c2;color:#9fb6c2;}}
 .dp-kind.on:hover{color:#fff;}
 @media(max-width:760px){.dp-wh .wk{margin-left:0;}}
 .dp-side-leave{font-size:11.5px;background:rgba(34,197,94,.14);color:#16a34a;border-radius:6px;padding:4px 8px;margin-bottom:6px;}
@@ -1156,11 +1159,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-d.live:hover{background:rgba(0,0,0,.07);}
 .tk-d.l{background:rgba(34,197,94,.24);}
 .tk-day.leave-half{position:relative;}
-.tk-d.lh::before,.tk-day.leave-half::before,.day-col.leave-half .day-head::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(34,197,94,.26) 0 2px,rgba(34,197,94,.04) 2px 6px);}
-.day-col.leave-half .day-head::before{border-radius:0;}
-.tk-day.leave-half::before,.day-col.leave-half .day-head::before{background:repeating-linear-gradient(135deg,rgba(34,197,94,.22) 0 2px,rgba(34,197,94,.03) 2px 8px);}
-.day-col.leave-half .day-head{border-bottom-color:rgba(34,197,94,.45)!important;}
-.day-col.leave-half{background:rgba(34,197,94,.025);}
+.tk-d.lh::before,.tk-day.leave-half::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(34,197,94,.26) 0 2px,rgba(34,197,94,.04) 2px 6px);}
+.tk-day.leave-half::before,.day-col.leave-half .day-events{background:repeating-linear-gradient(135deg,rgba(34,197,94,.22) 0 2px,rgba(34,197,94,.03) 2px 8px);}
 .tk-d.h1{background:rgba(245,158,11,.28);}
 .tk-d.h2{background:rgba(239,68,68,.30);}
 .tk-d.t{box-shadow:inset 0 0 0 1.5px var(--today-text);font-weight:700;}
@@ -2068,14 +2068,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.79.6</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.80.2</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.79.6%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.80.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2494,10 +2494,47 @@ function wcSched(dow){
   return wcCalc(o?{on:o.on!==false,start:o.start,end:o.end,breaks:o.breaks||[]}:{on:c.days.indexOf(dow)>=0,start:c.start,end:c.end,breaks:c.breaks||[]});
 }
 function workNet(ds){return wcSched(wcDow(ds)).net;}
+// -- A day's breaks (lunch etc.): the usual ones from the working hours, or that day's own times when moved in Plan Day (plannerDayBreaks keeps only days that differ). The day's required hours never change; a longer break than usual counts as away time. --
+function wcCfgDay(dow){var c=getWorkCfg(),o=c.perDay?c.custom[dow]:null;return o?{start:o.start,end:o.end,breaks:o.breaks||[]}:{start:c.start,end:c.end,breaks:c.breaks||[]};}
+function wcCfgBreaks(ds){
+  if(!wcSched(wcDow(ds)).blocks.length)return[];
+  var out=[];
+  wcCfgDay(wcDow(ds)).breaks.forEach(function(br){var x=wcMin(br.s),y=wcMin(br.e);if(x!=null&&y!=null&&y>x)out.push([x,y]);});
+  return out.sort(function(a,b){return a[0]-b[0];});
+}
+function getDayBreaksRaw(){try{return JSON.parse(localStorage.getItem('plannerDayBreaks')||'{}')||{};}catch(e){return{};}}
+function wcDayBreaks(ds,stored){
+  if(!wcSched(wcDow(ds)).blocks.length)return[];
+  if(!stored&&typeof dpDate!=='undefined'&&dpDate===ds)return dpBlocks.filter(function(b){return b.sched&&b.dur>0;}).map(function(b){return[b.start,b.start+b.dur];}).sort(function(a,b){return a[0]-b[0];});
+  if(featOn('planday')){var o=getDayBreaksRaw()[ds];if(Array.isArray(o))return o.map(function(p){return[p[0],p[1]];});}
+  return wcCfgBreaks(ds);
+}
+// a day's working time with its breaks where they actually are that day (the required hours stay the usual ones)
+function wcDaySched(ds){
+  var sc=wcSched(wcDow(ds));
+  if(!sc.blocks.length)return sc;
+  var cd=wcCfgDay(wcDow(ds)),bl=[[wcMin(cd.start),wcMin(cd.end)]];
+  wcDayBreaks(ds).forEach(function(br){
+    var out=[];
+    bl.forEach(function(p){
+      if(br[1]<=p[0]||br[0]>=p[1]){out.push(p);return;}
+      if(br[0]>p[0])out.push([p[0],br[0]]);
+      if(br[1]<p[1])out.push([br[1],p[1]]);
+    });
+    bl=out;
+  });
+  return{ok:sc.ok,on:sc.on,blocks:bl,net:sc.net};
+}
+// minutes of break taken beyond the usual on a day (inside the working hours); counted as away time
+function wcBreakExtraMin(ds){
+  if(!wcSched(wcDow(ds)).blocks.length)return 0;
+  var cd=wcCfgDay(wcDow(ds)),win=[[wcMin(cd.start),wcMin(cd.end)]];
+  return Math.max(0,dpOverlapMin(dpMerge(wcDayBreaks(ds)),win)-dpOverlapMin(dpMerge(wcCfgBreaks(ds)),win));
+}
 function lvDayHrs(ds){var h=workNet(ds);if(h>0)return h;var d=Number(getLeaveCfg().dayHrs);return d>0?d:8;}
 // meeting time that falls inside working time (overlaps counted once; a meeting with no end is taken as 1 hour; all-day events are ignored)
 function wcMeetHrs(ds){
-  var bl=wcSched(wcDow(ds)).blocks;
+  var bl=wcDaySched(ds).blocks;
   if(!bl.length)return 0;
   var iv=[];
   getManualEvents().forEach(function(e){
@@ -3449,7 +3486,31 @@ function dpBlockNote(b){if(b.goal)return b.goal;var t=b.taskId?tkTask(b.taskId):
 function dpSnap(min){return Math.round(min/DP_SNAP)*DP_SNAP;}
 function dpFmtTime(min){var h=Math.floor(min/60)%24,m=min%60;var ap=h>=12?'PM':'AM';var h12=h%12;if(h12===0)h12=12;return h12+(m?':'+String(m).padStart(2,'0'):'')+ap;}
 function dpFmtDur(min){var h=Math.floor(min/60),m=min%60;return(h?h+'h':'')+(h&&m?' ':'')+(m?m+'m':'');}
-function dpPersist(){setBlocksForDate(dpDate,dpBlocks);renderUpNext();if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();}
+function dpPersist(){setBlocksForDate(dpDate,dpBlocks.filter(function(b){return!b.sched;}));dpSaveBreaks();renderUpNext();if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();}
+// the day's breaks show as break blocks (sched:1) that can be moved, resized or removed for that day only; they are never stored with the blocks
+function dpSchedBlk(p,i){return{id:'sbk_'+i,away:'break',sched:1,proj:'',activity:'',note:'',start:p[0],dur:p[1]-p[0]};}
+function dpLoadBlocks(ds){
+  var a=getBlocksForDate(ds).filter(function(b){return!b.sched;}),lv=leaveDayInfo(ds);
+  if(!(lv&&lv.len!=='half'))wcDayBreaks(ds,true).forEach(function(p,i){a.push(dpSchedBlk(p,i));});
+  return a;
+}
+function dpSaveBreaks(){
+  if(!dpDate||!featOn('planday')||!wcSched(wcDow(dpDate)).blocks.length)return;
+  var lv=leaveDayInfo(dpDate);if(lv&&lv.len!=='half')return;
+  var cur=wcDayBreaks(dpDate),all=getDayBreaksRaw(),was=JSON.stringify(all[dpDate]||null);
+  if(JSON.stringify(cur)===JSON.stringify(wcCfgBreaks(dpDate)))delete all[dpDate];else all[dpDate]=cur;
+  if(JSON.stringify(all[dpDate]||null)!==was)localStorage.setItem('plannerDayBreaks',JSON.stringify(all));
+}
+function dpBreakMoved(){return!!dpDate&&Array.isArray(getDayBreaksRaw()[dpDate]);}
+function dpBreakReset(){
+  dpBlocks=dpBlocks.filter(function(b){return!b.sched;});
+  wcCfgBreaks(dpDate).forEach(function(p,i){dpBlocks.push(dpSchedBlk(p,i));});
+  dpSelectedBlock=null;dpPersist();renderDayPlan();renderCalendarShell();
+}
+function dpSchedBody(b){
+  var n=dpAwayLabel(b).toLowerCase();
+  return'<div class="dp-away-help">Your usual '+n+' from Settings &gt; Working hours. Drag or resize it to change it for this day only. Taking longer than usual counts as away time; removing it leaves the day the same length.'+(dpBreakMoved()?' <button type="button" class="dp-btn" onclick="dpBreakReset()">Back to usual time</button>':'')+'</div>';
+}
 
 var DP_WORK_START=8*60,DP_WORK_END=17*60;
 // -- Day planner: working hours shown as an indication only (nothing is blocked) --
@@ -3478,7 +3539,7 @@ function dpDayIvs(ds,blocks,live){
 }
 // how a day's plan sits against the working hours: inside, outside, open
 function dpWorkStats(ds,blocks,live){
-  var sc=wcSched(wcDow(ds)),iv=dpDayIvs(ds,blocks,live);
+  var sc=wcDaySched(ds),iv=dpDayIvs(ds,blocks,live);
   var all=dpMerge(iv.blocks.concat(iv.meetings)),mt=dpMerge(iv.meetings.slice());
   var inAll=dpOverlapMin(all,sc.blocks),inMeet=dpOverlapMin(mt,sc.blocks),tot=0;
   all.forEach(function(p){tot+=p[1]-p[0];});
@@ -3563,16 +3624,15 @@ function dpNewKeep(){
     dpNewRange.mt={title:te.value,proj:pe?(pe.dataset.valid||''):'',activity:ae?(ae.dataset.valid||''):'',notes:no?no.value:'',remind:!!(re&&re.checked)};
   }
 }
-function dpAwayLabel(b){return b.away==='ooo'?'Out of office':'Break';}
+function dpAwayLabel(b){if(b.sched){var m=b.start+b.dur/2;return m>=690&&m<=840?'Lunch':'Break';}return b.away==='ooo'?'Out of office':'Break';}
 function dpAwayNote(b){return b.note||'';}
-function dpAwayIvsOf(blocks){var a=[];(blocks||[]).forEach(function(b){if(b.away&&b.dur>0)a.push([b.start,b.start+b.dur]);});return dpMerge(a);}
+function dpAwayIvsOf(blocks){var a=[];(blocks||[]).forEach(function(b){if(b.away&&!b.sched&&b.dur>0)a.push([b.start,b.start+b.dur]);});return dpMerge(a);}
 // minutes of away time that fall inside that day's working hours (a day of leave has none)
 function dpAwayMin(ds,blocks){
   var lv=leaveDayInfo(ds);
   if(lv&&lv.len!=='half')return 0;
   var iv=dpAwayIvsOf(blocks);
-  if(!iv.length)return 0;
-  return dpOverlapMin(iv,wcSched(wcDow(ds)).blocks);
+  return(iv.length?dpOverlapMin(iv,wcDaySched(ds).blocks):0)+wcBreakExtraMin(ds);
 }
 // hours of declared away time that count against overtime: only up to what you fell short of the working day by
 function otAwayHrs(ds,worked,wh,blocks){
@@ -3597,7 +3657,7 @@ function dpAwayHtml(b,lanes){
   +'</div>';
 }
 function dpKindChips(isNew,b,ak){
-  var ex=isNew?[['work','Work'],['meeting','Meeting'],['break','Break'],['ooo','Out of office']].filter(function(k){return k[0]!=='meeting'||featOn('meetings');}):(b.away?[['break','Break'],['ooo','Out of office']]:[]);
+  var ex=isNew?[['work','Work'],['meeting','Meeting'],['break','Break'],['ooo','Out of office']].filter(function(k){return k[0]!=='meeting'||featOn('meetings');}):(b.away&&!b.sched?[['break','Break'],['ooo','Out of office']]:[]);
   if(!ex.length)return'';
   var cur=ak||'work';
   return'<div class="dp-kinds">'+ex.map(function(k){return'<button type="button" class="dp-kind k-'+k[0]+(cur===k[0]?' on':'')+'" onclick="dpSetKind(\''+k[0]+'\')">'+k[1]+'</button>';}).join('')+'</div>';
@@ -3636,7 +3696,7 @@ function dpScrollToWork(focus){
   if(typeof focus==='number'&&(focus<top||focus>top+view-30))top=focus-60;
   body.scrollTop=Math.max(0,(top-DP_GRID_START)*DP_PX_PER_MIN);
 }
-// shading behind the grid: hatched = outside working hours, amber band = break
+// shading behind the grid: hatched = outside working hours (breaks are break blocks of their own, see dpLoadBlocks)
 function dpOffHtml(ds){
   var sc=wcSched(wcDow(ds)),lv=leaveDayInfo(ds),G0=DP_GRID_START,G1=DP_GRID_END,h='';
   function seg(a,b,cls,label){
@@ -3647,9 +3707,9 @@ function dpOffHtml(ds){
   if(lv&&lv.len!=='half'){seg(G0,G1,'off','');seg(DP_WORK_START,DP_WORK_END,'','On leave');return h;}
   var bl=sc.blocks;
   if(!bl.length){seg(G0,G1,'off','');seg(DP_WORK_START,DP_WORK_END,'','Not a working day');return h;}
-  seg(G0,bl[0][0],'off','');
-  for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;seg(bl[i-1][1],bl[i][0],'brk',mid>=690&&mid<=840?'Lunch':'Break');}
-  seg(bl[bl.length-1][1],G1,'off','');
+  var cd=wcCfgDay(wcDow(ds));
+  seg(G0,wcMin(cd.start),'off','');
+  seg(wcMin(cd.end),G1,'off','');
   return h;
 }
 function dpWorkRangeText(ds){
@@ -3743,7 +3803,7 @@ function dpFreeGaps(ds,items){
   var lv=leaveDayInfo(ds);
   if(lv&&lv.len!=='half')return[];
   // free time is looked for inside the working hours (lunch and other breaks left out); a day with no working hours falls back to 8-5
-  var sc=wcSched(wcDow(ds)),bl=sc.blocks.length?sc.blocks:[[DP_WORK_START,DP_WORK_END]];
+  var sc=wcDaySched(ds),bl=sc.blocks.length?sc.blocks:[[DP_WORK_START,DP_WORK_END]];
   var its=items.slice().sort(function(a,b){return a.start-b.start;}),gaps=[];
   bl.forEach(function(p){
     var s=p[0],e=p[1];
@@ -4051,7 +4111,7 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)rend
 
 function openDayPlan(ds,blockId){
   if(!featOn('planday'))return;
-  dpDate=ds;dpBlocks=getBlocksForDate(ds);dpSelectedBlock=blockId||null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
+  dpDate=ds;dpBlocks=dpLoadBlocks(ds);dpSelectedBlock=blockId||null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   document.getElementById('dayPlanOverlay').classList.add('open');
   renderDayPlan();
   var _fb=blockId?dpBlocks.filter(function(x){return x.id===blockId;})[0]:null;
@@ -4071,7 +4131,7 @@ function dpShiftDay(delta){
   dpAutoSave();
   var d=new Date(dpDate+'T00:00:00');d.setDate(d.getDate()+delta);
   dpDate=d.toLocaleDateString('en-CA',{timeZone:TZ});
-  dpBlocks=getBlocksForDate(dpDate);dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
+  dpBlocks=dpLoadBlocks(dpDate);dpSelectedBlock=null;dpNewRange=null;dpSelectedMeeting=null;dpMeetOverride=null;
   renderDayPlan();
   dpScrollToWork();
 }
@@ -4399,15 +4459,15 @@ function renderDpEditor(){
     return'<option value="'+escA(a)+'"'+(a===b.activity?' selected':'')+'>'+escH(a)+'</option>';
   }).join('');
   var keep=(el.dataset.for===String(dpSelectedBlock)&&document.getElementById('dpProj'))?{p:document.getElementById('dpProj').value,a:document.getElementById('dpActivity').value,g:document.getElementById('dpGoal').value}:null;
-  var _ak=isNew?((dpNewRange&&dpNewRange.kind)||''):(b.away||''),_aw=_ak==='break'||_ak==='ooo',_an=_ak==='ooo'?'out of office':'break';
+  var _ak=isNew?((dpNewRange&&dpNewRange.kind)||''):(b.away||''),_aw=_ak==='break'||_ak==='ooo',_an=_ak==='ooo'?'out of office':(b.sched?dpAwayLabel(b).toLowerCase():'break');
   el.innerHTML='<div class="dp-editor-title">'+(_ak==='meeting'?'New meeting':(_aw?(isNew?'New ':'Edit ')+_an:(isNew?'New block':'Edit block')))+'<span class="dp-editor-time">'+dpFmtTime(b.start)+' - '+dpFmtTime(b.start+b.dur)+' ('+dpFmtDur(b.dur)+')</span>'+(isNew?'':'<span class="dp-saved" id="dpSaved" aria-live="polite"></span>')+'</div>'
-    +dpKindChips(isNew,b,_ak)+(_ak==='meeting'?dpMeetingBody((dpNewRange&&dpNewRange.mt)||{}):_aw?dpAwayBody(b,_ak):'<div class="dp-editor-grid"><input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
+    +dpKindChips(isNew,b,_ak)+(_ak==='meeting'?dpMeetingBody((dpNewRange&&dpNewRange.mt)||{}):_aw?(b.sched?dpSchedBody(b):dpAwayBody(b,_ak)):'<div class="dp-editor-grid"><input type="text" id="dpProj" class="cb-input" data-cb="proj" placeholder="Type to search projects..." autocomplete="off" value="'+escH(b.proj||'')+'" data-valid="'+escH(b.proj||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<input type="text" id="dpActivity" class="cb-input" data-cb="act" placeholder="Type to search activities..." autocomplete="off" value="'+escH(b.activity||'')+'" data-valid="'+escH(b.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)">'
     +'<input type="text" id="dpGoal" placeholder="Goal for this block (optional)" value="'+escH(b.goal||'')+'" onchange="dpCommit()" onkeydown="if(event.key===\'Enter\')this.blur()">'
     +dpTaskSel(b)
     +'</div>')
     +'<div class="dp-editor-actions">'
-    +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">Delete</button>')
+    +(isNew?'':'<button class="dp-btn danger" onclick="dpDelete()">'+(b.sched?'Remove for this day':'Delete')+'</button>')
     +(isNew?'<button class="dp-btn" onclick="dpCancelEdit()">Cancel</button><button class="dp-btn primary" onclick="dpSaveEdit()">'+(_ak==='meeting'?'Add meeting':_aw?'Add '+_an:'Add block')+'</button>':'<button class="dp-btn primary" onclick="dpDone()">Done</button>')
     +'</div>';
   el.dataset.for=String(dpSelectedBlock);
@@ -5683,7 +5743,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.79.6';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.80.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -5971,7 +6031,7 @@ function deleteTask(id){saveTasks(getTasks().filter(function(t){return t.id!==id
 // -- Freeing planned time: a task that is parked, done, waiting or deleted gives its upcoming blocks back --
 var _tkFreed=null;
 function tkPlanRefresh(){
-  if(typeof dpDate!=='undefined'&&dpDate)dpBlocks=getBlocksForDate(dpDate);
+  if(typeof dpDate!=='undefined'&&dpDate)dpBlocks=dpLoadBlocks(dpDate);
   if(typeof renderUpNext==='function')renderUpNext();
   if(typeof renderTaskWeekStrip==='function')renderTaskWeekStrip();
   if(typeof renderCalendarShell==='function')renderCalendarShell();
