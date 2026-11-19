@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.79.6] — 2026-11-19
+
+### Changed
+- Softer half-day leave hatching: thinner, paler stripes on the This Week day header, the To Do week strip and the To Do calendar, so it sits more quietly alongside today's orange highlight.
+
+---
+
 ## [0.79.5] — 2026-11-19
 
 ### Changed
