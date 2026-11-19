@@ -5,6 +5,48 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.79.5] — 2026-11-19
+
+### Changed
+- To Do calendar: the task rings now sit concentrically around the date number instead of in a row underneath. One ring per task due, in its priority colour, with the most urgent innermost; up to three rings, and days with more than three tasks show "+n" in the corner.
+
+---
+
+## [0.79.4] — 2026-11-19
+
+### Changed
+- To Do calendar (also on the Projects tab): the grey "No estimate" dot is replaced by small rings under the date, one for each task due (or on Today) that day, in its priority colour: red for high, orange for medium, grey for low, most urgent first. Days with more than four tasks show three rings and "+n". Hovering a day now also gives the count by priority, for example "3 tasks (1 high, 2 low)". The Busy and Over capacity shading is unchanged, and the legend shows the rings instead of "No estimate".
+
+---
+
+## [0.79.3] — 2026-11-19
+
+### Changed
+- Half-day leave hatching now runs at 135 degrees instead of 45.
+
+### Removed
+- The one-off "Clear notes on imported meetings" tidy-up from Settings > Import Calendar (added in 0.77.9) and its code. Imports still bring no notes, and Undo after an import still works.
+
+---
+
+## [0.79.2] — 2026-11-19
+
+### Changed
+- Half-day leave on the calendars is now hatched green at 45 degrees (matching the break hatch in Plan Day) instead of a diagonal half block. Full days stay solid green. The To Do calendar legend swatch matches.
+
+### Removed
+- Old month calendar code that was no longer shown anywhere (its JavaScript and about 50 lines of styling). Nothing visible changes.
+
+---
+
+## [0.79.1] — 2026-11-19
+
+### Changed
+- Promoting a subtask now uses the same "+ Task" button as note checklists (it appears when you hover the subtask), instead of the up-arrow.
+- Half-day leave now shows as a diagonal half in green on the calendars (the This Week day header, the To Do week strip and the To Do calendar), while a full day of leave stays fully green. The To Do calendar legend has a "Half day" entry.
+
+---
+
 ## [0.79.0] — 2026-11-18
 
 ### Added

@@ -476,9 +476,6 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   .tasks-wrap{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start;max-width:100%;}
   .tasks-col-left{min-width:0;}
   .tasks-col-right{position:sticky;top:80px;}
-  .tmc-combined-inner{display:flex;flex-direction:column;}
-  .tmc-month{width:100%;box-sizing:border-box;flex:none;}
-  .tmc-vdivider{width:100%;height:1px;margin:0;}
 }
 
 /* \u2500\u2500 Dark mode \u2500\u2500 */
@@ -499,7 +496,6 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   .btn:hover{background:rgba(255,255,255,.07) !important;}
   .project-group-header{background:#1c2e3a !important;}
   .task-add-card{background:#1a2c35 !important;border-color:var(--border) !important;}
-  .tmc-cell.heavy-week{background:rgba(255,248,225,.06) !important;}
   .pri-btn{background:#1c2e3a;border-color:var(--border);color:var(--muted);}
   .pri-btn.active-high{background:var(--high-bg);color:var(--high);}
   .pri-btn.active-medium{background:var(--med-bg);color:#f7921e;}
@@ -523,7 +519,6 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   .save-badge.saving{background:var(--card) !important;color:var(--muted) !important;}
   .stask-chip.medium{color:#f59e0b !important;}
   .stask-chip.low{color:#9ab5be !important;}
-  .tmc-cell.today{background:rgba(247,146,30,.12) !important;}
   .history-controls input[type=text]{background:#162029 !important;}
   .task-form-row input,.task-form-row select{background:#162029 !important;}
   .group-quick-add input{background:#162029 !important;color:var(--text) !important;}
@@ -536,7 +531,6 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
   .total-hrs-row input{background:#162029 !important;}
   .sum-period select{background:#162029 !important;}
   .sum-val{color:var(--muted);}
-  .tmc-dow{color:var(--muted);}
   .overdue-chip{border-color:var(--high) !important;}
   /* Task row hover */
   .task-row:hover{background:rgba(255,255,255,.04) !important;}.app-dark .task-row:hover .task-actions{visibility:visible!important;}
@@ -561,15 +555,6 @@ body.app-dark .proj-add-link input{background:var(--bg);color:var(--text);}
 }
 .event-pill.manual{background:rgba(124,58,237,.18)!important;border-left-color:#a78bfa!important;color:var(--text)!important;}
 
-.tmc-cell:not(.other-month):hover{background:rgba(0,0,0,.06);border-radius:4px;}
-#taskMonthCal2 .tmc-cell:not(.other-month):hover{background:rgba(0,0,0,.04);}
-/* Next month \u2014 grey text only */
-#taskMonthCal2 .tmc-dn{color:var(--muted);}
-#taskMonthCal2 .tmc-title{color:var(--muted);}
-#taskMonthCal2 .tmc-dow{color:var(--muted);}
-#taskMonthCal2 .tmc-nav{color:var(--muted);border-color:var(--border);}
-#taskMonthCal2 .tmc-cell.today .tmc-dn{color:var(--today-text);font-weight:700;}
-#taskMonthCal2 .tmc-cell.today{background:var(--today-bg);}
 
 /* palette classes */
 /* manual dark */
@@ -580,7 +565,6 @@ body.app-dark .day-col.today .day-head{background:rgba(247,146,30,.1)!important;
 body.app-dark input,body.app-dark select,body.app-dark textarea{background:#162029!important;color:var(--text)!important;border-color:var(--border)!important;color-scheme:dark;}
 body.app-dark .btn.secondary-btn{background:#1c2e3a!important;border-color:var(--border)!important;color:var(--text)!important;}
 body.app-dark .project-group-header{background:#1c2e3a!important;}
-body.app-dark .tmc-cell.heavy-week{background:rgba(255,248,225,.06)!important;}
 body.app-dark .ev-modal{background:#1a2c35!important;border-color:var(--border)!important;}
 body.app-dark .section-card{background:var(--card)!important;}
 body.app-dark .etf-strip{border-top:1px solid var(--border);}
@@ -588,7 +572,6 @@ body.app-dark .badge{background:rgba(247,146,30,.1)!important;border-color:rgba(
 body.app-dark .sum-bar-wrap{background:#243b48!important;}
 body.app-dark .log-table tr:hover td{background:rgba(255,255,255,.04)!important;}
 body.app-dark .stask-chip.medium{color:#f59e0b!important;}body.app-dark .stask-chip.low{color:#9ab5be!important;}
-body.app-dark .tmc-cell.today{background:rgba(247,146,30,.12)!important;}
 body.app-dark .task-row:hover{background:rgba(255,255,255,.04)!important;}
 body.app-dark .time-compact{background:rgba(34,197,94,.12)!important;color:#4ade80!important;}
 body.app-dark .group-quick-add{border-top-color:var(--border)!important;}
@@ -599,7 +582,6 @@ body.app-dark .day-head:hover{background:rgba(255,255,255,.05)!important;}
 body.app-dark .pri-btn{background:#1c2e3a!important;border-color:var(--border)!important;color:var(--muted)!important;}body.app-dark .pri-btn.active-high{background:var(--high-bg)!important;color:var(--high)!important;}body.app-dark .pri-btn.active-medium{background:var(--med-bg)!important;color:#f7921e!important;}body.app-dark .pri-btn.active-low{background:var(--low-bg)!important;color:var(--low)!important;}
 body.app-dark .project-group-header{background:#1c2e3a!important;}
 body.app-dark .task-add-card{background:#1a2c35!important;}
-body.app-dark .tmc-wrap,body.app-dark .tmc-combined{background:var(--card)!important;}
 body.app-dark .log-table th{background:#1c2e3a!important;}
 body.app-dark .event-pill.manual{background:rgba(124,58,237,.18)!important;border-left-color:#a78bfa!important;color:var(--text)!important;}
 body.app-dark .rem-stack-peek{background:#1e2c22!important;border-color:rgba(247,146,30,.25)!important;}body.app-dark .rem-stack-peek.p2{background:#1a2820!important;}
@@ -724,32 +706,6 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 
 /* Tasks */
 .tasks-wrap{max-width:820px;}
-.tmc-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
-.tmc-combined{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px;}
-.tmc-combined-inner{display:grid;grid-template-columns:1fr 1px 1fr;align-items:start;}
-.tmc-month{flex:1;padding:14px 12px;min-width:0;}
-.tmc-vdivider{background:var(--border);align-self:stretch;}
-.tmc-shared-legend{display:flex;gap:10px;flex-wrap:wrap;padding:8px 12px 10px;border-top:1px solid var(--border);}
-.tmc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.tmc-title{font-size:13px;font-weight:700;color:var(--text);}
-.tmc-nav{background:none;border:1px solid var(--border);border-radius:5px;cursor:pointer;padding:1px 8px;font-size:14px;color:var(--muted);line-height:1.5;}
-.tmc-nav:hover{background:var(--primary-light);color:var(--primary);}
-.tmc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
-.tmc-dow{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);text-align:center;padding:2px 0 4px;}
-.tmc-cell{min-height:34px;padding:3px 2px 2px;border-radius:5px;text-align:center;}
-.tmc-cell.heavy-week{background:#fff8e1;}
-.tmc-cell.today{background:var(--today-bg);}
-.tmc-cell.today .tmc-dn{font-weight:700;color:var(--today-text);}
-.tmc-cell.other-month .tmc-dn{color:var(--border);}
-.tmc-dn{font-size:10px;color:var(--text);line-height:1.4;}
-.tmc-dots{display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin-top:2px;}
-.tmc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.tmc-dot.high{background:var(--high);}
-.tmc-dot.medium{background:#f59e0b;}
-.tmc-dot.low{background:var(--low);}
-.tmc-legend{display:flex;gap:12px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
-.tmc-leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);}
-.tmc-heavy-swatch{width:10px;height:10px;border-radius:2px;background:#fff8e1;border:1px solid #f0e68c;}
 .task-add-card{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:12px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .task-form-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
 .task-form-row select,.task-form-row input[type=text],.task-form-row input[type=date]{border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:13px;outline:none;background:var(--card);color:var(--text);}
@@ -802,9 +758,7 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .subtask-edit{background:none;border:none;cursor:pointer;color:transparent;font-size:12px;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
 .subtask-row:hover .subtask-edit{color:#bbb;}
 .subtask-edit:hover{color:var(--primary)!important;}
-.subtask-promote{background:none;border:none;cursor:pointer;color:transparent;font-size:12px;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
-.subtask-row:hover .subtask-promote{color:#bbb;}
-.subtask-promote:hover{color:var(--primary)!important;}
+.subtask-row:hover .nt-mk{color:var(--muted);}
 .subtask-edit-input{font-size:12px;padding:2px 5px;border:1px solid var(--primary);border-radius:4px;background:var(--bg);color:var(--text);outline:none;flex:1;min-width:0;}
 .subtask-add-row{display:flex;gap:4px;margin-top:4px;align-items:center;}
 .subtask-add-row input{flex:1;font-size:12px;padding:3px 7px;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text);outline:none;}
@@ -850,9 +804,6 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   .tasks-wrap{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start;max-width:100%;}
   .tasks-col-left{min-width:0;}
   .tasks-col-right{position:sticky;top:80px;}
-  .tmc-combined-inner{display:flex;flex-direction:column;}
-  .tmc-month{width:100%;box-sizing:border-box;flex:none;}
-  .tmc-vdivider{width:100%;height:1px;margin:0;}
 }
 
 /* \u2500\u2500 Dark mode \u2500\u2500 */
@@ -873,7 +824,6 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
   .btn:hover{background:rgba(255,255,255,.07) !important;}
   .project-group-header{background:#1c2e3a !important;}
   .task-add-card{background:#1a2c35 !important;border-color:var(--border) !important;}
-  .tmc-cell.heavy-week{background:rgba(255,248,225,.06) !important;}
   .pri-btn{background:#1c2e3a;border-color:var(--border);color:var(--muted);}
 .total-row-tr{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:10px;border-top:1px solid #f0f0f5;}.subtotal-label{font-size:13px;color:var(--muted);margin-right:2px;}
 .total-num{font-weight:600;font-size:14px;}.total-num.ok{color:#22c55e;}.total-num.warn{color:#c0392b;}
@@ -907,9 +857,6 @@ body.app-dark .user-reminder{background:#1f2d1a!important;border-color:rgba(247,
 .day-col.leave-day{background:rgba(34,197,94,.05);}
 .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!important;border-bottom-color:rgba(34,197,94,.45)!important;}
 .day-col.leave-day .day-head:hover{background:rgba(34,197,94,.24)!important;}
-.tmc-cell.leave-day{background:rgba(34,197,94,.22)!important;}
-.tmc-cell.leave-day.today{box-shadow:inset 0 0 0 1.5px var(--today-text);}
-.tmc-cell.leave-day:not(.other-month):hover{background:rgba(34,197,94,.34)!important;}
 .lv-chip{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;cursor:pointer;white-space:nowrap;}
 .lv-chip:hover{opacity:.85;}
 .lv-chip.neg{background:#fef2f2;border-color:#fecaca;color:#b91c1c;}
@@ -929,8 +876,6 @@ body.app-dark .lv-stat.main b{color:#4ade80;}
 body.app-dark .lv-stat.neg b{color:#f87171;}
 @media(prefers-color-scheme:dark){.lv-stat.main:not(body.app-light *){background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.3);}.lv-stat.main:not(body.app-light *) b{color:#4ade80;}.lv-stat.neg:not(body.app-light *) b{color:#f87171;}}
 .lv-bal-note{font-size:11px;color:var(--muted);margin:4px 0 10px;}
-body.app-dark .tmc-cell.leave-day,body.app-dark .tmc-cell.leave-day.today,body.app-dark .tmc-cell.leave-day.heavy-week{background:rgba(34,197,94,.22)!important;}
-body.app-dark .tmc-cell.leave-day:not(.other-month):hover{background:rgba(34,197,94,.34)!important;}
 body.app-dark .day-col.leave-day .day-head,body.app-dark .day-col.today.leave-day .day-head{background:rgba(34,197,94,.16)!important;}
 body.app-light .day-col.leave-day .day-head{background:rgba(34,197,94,.16)!important;}
 .dp-block.selected{z-index:4;}
@@ -1166,9 +1111,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-subdel{background:none;border:none;color:transparent;font-size:15px;cursor:pointer;padding:0 3px;line-height:1;}
 .tk-sub:hover .tk-subdel{color:var(--muted);}
 .tk-subdel:hover{color:var(--high)!important;}
-.tk-subup{background:none;border:none;color:transparent;font-size:13px;cursor:pointer;padding:0 3px;line-height:1;}
-.tk-sub:hover .tk-subup{color:var(--muted);}
-.tk-subup:hover{color:var(--primary)!important;}
+
 .tk-sub.tk-rel .tk-rel-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--primary);cursor:pointer;}
 .tk-sub.tk-rel .tk-rel-t:hover{text-decoration:underline;}
 .tk-sub.tk-rel .tk-rel-t.done{text-decoration:line-through;color:var(--muted);}
@@ -1212,15 +1155,27 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-d.live{cursor:pointer;}
 .tk-d.live:hover{background:rgba(0,0,0,.07);}
 .tk-d.l{background:rgba(34,197,94,.24);}
+.tk-day.leave-half{position:relative;}
+.tk-d.lh::before,.tk-day.leave-half::before,.day-col.leave-half .day-head::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(34,197,94,.34) 0 3px,rgba(34,197,94,.08) 3px 7px);}
+.day-col.leave-half .day-head::before{border-radius:0;}
+.tk-day.leave-half::before,.day-col.leave-half .day-head::before{background:repeating-linear-gradient(135deg,rgba(34,197,94,.3) 0 4px,rgba(34,197,94,.07) 4px 10px);}
+.day-col.leave-half .day-head{border-bottom-color:rgba(34,197,94,.45)!important;}
+.day-col.leave-half{background:rgba(34,197,94,.025);}
 .tk-d.h1{background:rgba(245,158,11,.28);}
 .tk-d.h2{background:rgba(239,68,68,.30);}
 .tk-d.t{box-shadow:inset 0 0 0 1.5px var(--today-text);font-weight:700;}
 .tk-d.on{box-shadow:inset 0 0 0 1.5px var(--primary);}
 .tk-d.drop{background:var(--primary-light);box-shadow:inset 0 0 0 1.5px var(--primary);}
-.tk-d i{position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--muted);}
+.tk-rgs{position:absolute;inset:0;pointer-events:none;}
+.tk-rg{position:absolute;left:50%;top:50%;width:19px;height:19px;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--muted);box-sizing:border-box;background:transparent;}
+.tk-rg.r1{width:25px;height:25px;}.tk-rg.r2{width:31px;height:31px;}
+.tk-rg.hi{border-color:var(--high);}.tk-rg.md{border-color:var(--med);}.tk-rg.lo{border-color:var(--low);}
+.tk-rgs em{position:absolute;top:1px;right:2px;font-style:normal;font-size:8px;font-weight:700;line-height:1;color:var(--muted);}
+.tk-lg .tk-rg{position:static;transform:none;display:inline-block;width:8px;height:8px;margin-right:2px;vertical-align:-1px;}
+.tk-lg .tk-rg.lo{margin-right:4px;}
 .tk-lg{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
 .tk-lg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px;}
-.tk-lg i.g{background:rgba(34,197,94,.45);}.tk-lg i.a{background:rgba(245,158,11,.5);}.tk-lg i.r{background:rgba(239,68,68,.5);}.tk-lg i.dot{width:5px;height:5px;border-radius:50%;background:var(--muted);margin:0 6px 0 2px;vertical-align:1px;}
+.tk-lg i.g{background:rgba(34,197,94,.45);}.tk-lg i.gh{background:repeating-linear-gradient(135deg,rgba(34,197,94,.65) 0 2px,rgba(34,197,94,.12) 2px 4px);}.tk-lg i.a{background:rgba(245,158,11,.5);}.tk-lg i.r{background:rgba(239,68,68,.5);}
 .tk-bal{font-size:11px;color:var(--muted);margin-top:8px;}
 .tk-bal b{color:var(--text);}
 .tk-bal a{color:var(--primary);margin-left:6px;text-decoration:none;font-weight:500;}
@@ -2016,10 +1971,6 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <input type="file" id="icsFileInput" accept=".ics" multiple style="display:none" onchange="importICSFile(this)">
       <span id="icsImportMsg" style="font-size:12px;color:#22c55e;display:none"></span>
     </div>
-    <div id="icsTidy" style="display:none;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
-      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Some meetings you imported earlier still carry notes, mostly the Teams joining block. New imports no longer bring notes. This clears them from the imported meetings only, and you can undo it straight after. The button goes away once there is nothing left to clear.</div>
-      <button class="btn secondary-btn sm" onclick="icsClearNotes()" title="Blanks the notes on meetings that came from a calendar file; meetings you created yourself are not touched">Clear notes on imported meetings</button>
-    </div>
     </div>
   </div>
   <div class="card set-sec" data-set="activity">
@@ -2117,14 +2068,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.79.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.79.5</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.79.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.79.5%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2497,7 +2448,6 @@ function setSection(k,noSave){
   if(ab&&nv.clientWidth&&nv.scrollWidth>nv.clientWidth){var nr=nv.getBoundingClientRect(),br=ab.getBoundingClientRect();nv.scrollLeft+=br.left-nr.left-(nv.clientWidth-br.width)/2;}
   if(k==='pwa')pwaRefresh();
   if(k==='hours')renderWorkSettings();
-  if(k==='import')icsTidyShow();
   if(!noSave){try{localStorage.setItem('_setSec',k);}catch(e){}}
 }
 // ===== Working hours: a week schedule or one per day, with breaks. Feeds Log Time, To Do capacity and leave hours =====
@@ -2973,7 +2923,7 @@ function renderCalendarShell(){
     var addTaskBtn='<button class="add-ev-btn" style="color:#22c55e;border-color:#bbf7d0" onclick="event.stopPropagation();openQuickTask(\''+ds+'\')" title="Add task due this day">+ Task</button>';
     var planBtn='<button class="add-ev-btn" onclick="event.stopPropagation();openDayPlan(\''+ds+'\')" title="Plan time blocks">+ Plan</button>';
     var leaveBtn='<button class="add-ev-btn" style="color:#16a34a;border-color:#bbf7d0" onclick="event.stopPropagation();openLeaveModal(\''+ds+'\')" title="Log leave or a public holiday">'+(getLeaveDays()[ds]?'Leave':'+ Leave')+'</button>';
-    return'<div class="day-col'+(isT?' today':'')+(unlogged?' unlogged':'')+(_lvInfo?' leave-day':'')+(_dayPanel===ds?' dp-open':'')+'" data-date="'+ds+'">'
+    return'<div class="day-col'+(isT?' today':'')+(unlogged?' unlogged':'')+(_lvInfo?(_lvInfo.len==='half'?' leave-half':' leave-day'):'')+(_dayPanel===ds?' dp-open':'')+'" data-date="'+ds+'">'
       +'<div class="day-head" role="button" tabindex="0" aria-expanded="'+(_dayPanel===ds?'true':'false')+'" aria-controls="dpn-'+ds+'" onclick="toggleDayPanel(\''+ds+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleDayPanel(\''+ds+'\')}" title="Show actions for this day">'
       +'<div class="day-name"><span class="dn-full">'+name+'</span><span class="dn-short">'+name.slice(0,3)+'</span></div>'
       +'<div class="day-num">'+dayNum+'</div>'
@@ -5733,7 +5683,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.79.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.79.5';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6584,7 +6534,7 @@ function renderTaskWeekStrip(){
     if(mt)lbl=(lbl?lbl+' &middot; ':'')+tkFmtH(mt)+' mtg';
     if(pl>0.004)lbl=(lbl?lbl+' &middot; ':'')+'<span class="tk-pl">'+tkFmtH(pl)+' planned</span>';
     var cnt=items.length+' task'+(items.length===1?'':'s')+(th?' &middot; '+tkFmtH(th):'');
-    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?' leave':'')+(over?' over':'')+'" onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')" title="'+escH((lv?leaveDayLabel(ds,lv):'Click to show this day. Drop a task here to plan time for it.')+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':'')+(pl>0.004?' Planned work: '+tkFmtH(pl)+'.':''))+'">'
+    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?(lv.len==='half'?' leave-half':' leave'):'')+(over?' over':'')+'" onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')" title="'+escH((lv?leaveDayLabel(ds,lv):'Click to show this day. Drop a task here to plan time for it.')+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':'')+(pl>0.004?' Planned work: '+tkFmtH(pl)+'.':''))+'">'
       +'<b>'+new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})+'</b>'
       +'<span class="tk-sub">'+(lbl||'&nbsp;')+'</span>'
       +'<span class="tk-cnt">'+cnt+'</span>'
@@ -6863,7 +6813,7 @@ function tkDetailHtml(t){
   var prOpts=['high','medium','low'].map(function(p){return'<option value="'+p+'"'+(t.priority===p?' selected':'')+'>'+(p==='medium'?'Medium':p.charAt(0).toUpperCase()+p.slice(1))+'</option>';}).join('');
   var subs=t.subtasks||[],sd=subs.filter(function(s){return s.done;}).length;
   var subHtml=subs.map(function(s){
-    return'<div class="tk-sub"><span class="subtask-cb'+(s.done?' done':'')+'" onclick="tkSubToggle(\''+id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</span><input type="text" class="tk-subin'+(s.done?' done':'')+'" value="'+escH(s.title)+'" onchange="tkSubRename(\''+id+'\',\''+s.id+'\',this.value)"><button class="tk-subup" onclick="tkPromote(\''+id+'\',\''+s.id+'\')" title="Promote to a task of its own">&#8593;</button><button class="tk-subdel" onclick="tkSubDel(\''+id+'\',\''+s.id+'\')" title="Remove">&times;</button></div>';
+    return'<div class="tk-sub"><span class="subtask-cb'+(s.done?' done':'')+'" onclick="tkSubToggle(\''+id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</span><input type="text" class="tk-subin'+(s.done?' done':'')+'" value="'+escH(s.title)+'" onchange="tkSubRename(\''+id+'\',\''+s.id+'\',this.value)"><button class="nt-mk" onclick="tkPromote(\''+id+'\',\''+s.id+'\')" title="Make this subtask a task of its own">+ Task</button><button class="tk-subdel" onclick="tkSubDel(\''+id+'\',\''+s.id+'\')" title="Remove">&times;</button></div>';
   }).join('');
   var seg=[['off','Off'],['today','Today'],['keep','Keep']].map(function(m){return'<button class="'+(mode===m[0]&&!t.someday?'on':'')+'" onclick="tkSetMode(\''+id+'\',\''+m[0]+'\')">'+m[1]+'</button>';}).join('');
   var w=t.waiting||{who:'',follow:''};
@@ -8513,6 +8463,19 @@ function ntRefreshProjCard(keepOpen){
 function tkOutNav(d){tmcMonth+=d;if(tmcMonth<0){tmcMonth=11;tmcYear--;}if(tmcMonth>11){tmcMonth=0;tmcYear++;}renderTaskSide();}
 function tkOutToday(){var n=new Date();tmcYear=n.getFullYear();tmcMonth=n.getMonth();renderTaskSide();}
 function tkOutToggle(){var cur=localStorage.getItem('plannerTaskOutlookCol');if(cur===null)cur=(window.innerWidth<=920)?'1':'0';localStorage.setItem('plannerTaskOutlookCol',cur==='1'?'0':'1');renderTaskSide();}
+// concentric rings around the date, one per task due that day in its priority colour (most urgent innermost); more than three shows three rings and +n
+var TK_PO={high:0,medium:1,low:2};
+function tkPriSort(p){return p.slice().sort(function(a,b){return(TK_PO[a]!=null?TK_PO[a]:1)-(TK_PO[b]!=null?TK_PO[b]:1);});}
+function tkRings(p){
+  if(!p||!p.length)return'';
+  var s=tkPriSort(p),more=s.length>3;
+  if(more)s=s.slice(0,3);
+  return'<span class="tk-rgs">'+s.map(function(x,i){return'<b class="tk-rg r'+i+' '+(x==='high'?'hi':x==='low'?'lo':'md')+'"></b>';}).join('')+(more?'<em>+'+(p.length-3)+'</em>':'')+'</span>';
+}
+function tkPriSum(p){
+  var c={};p.forEach(function(x){c[x]=(c[x]||0)+1;});
+  return['high','medium','low'].filter(function(k){return c[k];}).map(function(k){return c[k]+' '+k;}).join(', ');
+}
 function tkMonthHtml(y,m,map,today,showYear){
   var first=new Date(y,m,1),dim=new Date(y,m+1,0).getDate();
   var sd=_firstDow===0?first.getDay():(first.getDay()+6)%7;
@@ -8525,11 +8488,11 @@ function tkMonthHtml(y,m,map,today,showYear){
     var lv=leaveDayInfo(ds),info=map[ds]||{h:0,n:0},cap=tkAvail(ds),mt=tkMeet(ds);
     var load=info.h>0?((cap>0&&info.h>cap)||(cap===0&&!lv)?' h2':(cap>0&&info.h>=cap*0.6?' h1':'')):'';
     var tip=lv?leaveDayLabel(ds,lv):'';
-    if(info.n)tip+=(tip?' - ':'')+info.n+' task'+(info.n===1?'':'s')+(info.h?', '+tkFmtH(info.h)+(cap?' of '+tkFmtH(cap):''):'');
+    if(info.n)tip+=(tip?' - ':'')+info.n+' task'+(info.n===1?'':'s')+(info.p?' ('+tkPriSum(info.p)+')':'')+(info.h?', '+tkFmtH(info.h)+(cap?' of '+tkFmtH(cap):''):'');
     if(mt)tip+=(tip?' - ':'')+tkFmtH(mt)+' in meetings';
     var live=ds>=today;
-    h+='<span class="tk-d'+(we?' we':'')+(lv?' l':'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':'')+'"'+(tip?' title="'+escH(tip)+'"':'')
-      +(live?' onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+(info.n&&!info.h&&!info.est?'<i></i>':'')+'</span>';
+    h+='<span class="tk-d'+(we?' we':'')+(lv?(lv.len==='half'?' lh':' l'):'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':'')+'"'+(tip?' title="'+escH(tip)+'"':'')
+      +(live?' onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+tkRings(info.p)+'</span>';
   }
   return h+'</div>';
 }
@@ -8547,11 +8510,11 @@ function tkOutlookHtml(){
       var b=tkBucket(t),ds=b==='today'?today:((t.waiting||!t.dueDate)?'':t.dueDate);
       if(!ds)return;
       var e=map[ds]||(map[ds]={h:0,n:0});
-      e.n++;if(t.est>0){e.h+=tkLeft(t);e.est=1;}
+      e.n++;(e.p||(e.p=[])).push(t.priority||'medium');if(t.est>0){e.h+=tkLeft(t);e.est=1;}
     });
     var ny=tmcYear,nm=tmcMonth+1;if(nm>11){nm=0;ny++;}
     h+='<div class="tk-mos"><div class="tk-mo">'+tkMonthHtml(tmcYear,tmcMonth,map,today,true)+'</div><div class="tk-mo">'+tkMonthHtml(ny,nm,map,today,ny!==tmcYear)+'</div></div>';
-    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><i class="dot"></i>No estimate</span></div>';
+    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="gh"></i>Half day</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><b class="tk-rg hi"></b><b class="tk-rg md"></b><b class="tk-rg lo"></b>Tasks due (high, medium, low)</span></div>';
     var info=(typeof lvBalanceInfo==='function')?lvBalanceInfo():null;
     h+='<div class="tk-bal">'+(info?'Leave balance <b>'+lvFmt(info.cur.bal)+'</b> days'+(info.proj?' &middot; '+lvFmt(info.proj.bal)+' after booked':''):'Leave balance not set up')+' <a href="#" onclick="openLeaveModal(todayStr());return false;">Book leave</a></div>';
     h+='</div>';
@@ -8579,72 +8542,6 @@ function renderTaskSide(){
 var _tmcNow=new Date();
 var tmcYear=_tmcNow.getFullYear();
 var tmcMonth=_tmcNow.getMonth();
-function tmcPrev(){tmcMonth--;if(tmcMonth<0){tmcMonth=11;tmcYear--;}renderTaskMonthCal();}
-function tmcNext(){tmcMonth++;if(tmcMonth>11){tmcMonth=0;tmcYear++;}renderTaskMonthCal();}
-function renderTaskMonthCal(){
-  var el=document.getElementById('taskMonthCal');if(!el)return;
-  var cells=renderTmcInto(el,tmcYear,tmcMonth);
-  var el2=document.getElementById('taskMonthCal2');
-  if(el2){var nm=tmcMonth+1,ny=tmcYear;if(nm>11){nm=0;ny++;}renderTmcInto(el2,ny,nm,true,cells);}
-  var leg=document.getElementById('taskCalLegend');
-  if(leg)leg.innerHTML='<span class="tmc-leg-item"><span class="tmc-dot high" style="display:inline-block"></span> High</span>'
-    +'<span class="tmc-leg-item"><span class="tmc-dot medium" style="display:inline-block"></span> Med</span>'
-    +'<span class="tmc-leg-item"><span class="tmc-dot low" style="display:inline-block"></span> Low</span>'
-    +'<span class="tmc-leg-item"><span class="tmc-dot" style="display:inline-block;background:#22c55e"></span> Leave</span>';
-}
-function renderTmcInto(el,yr,mo,readOnly,fixedCells){
-  if(readOnly===undefined)readOnly=false;
-  if(fixedCells===undefined)fixedCells=0;
-  var tasks=getTasks().filter(function(t){return!t.done&&t.dueDate;});
-  var today=todayStr();
-  var y=yr,m=mo;
-  var firstDay=new Date(y,m,1);
-  var daysInMonth=new Date(y,m+1,0).getDate();
-  var startDow=_firstDow===0?firstDay.getDay():(firstDay.getDay()+6)%7;
-  var monthName=firstDay.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-  // Build day→tasks map
-  var dayTasks={};
-  tasks.forEach(function(t){
-    var d=new Date(t.dueDate+'T12:00:00');
-    if(d.getFullYear()===y&&d.getMonth()===m){
-      var dn=d.getDate();
-      if(!dayTasks[dn])dayTasks[dn]=[];
-      dayTasks[dn].push(t);
-    }
-  });
-  // Count tasks per week row for heavy detection (≥3)
-  var naturalCells=Math.ceil((startDow+daysInMonth)/7)*7;
-  var totalCells=(fixedCells>=naturalCells)?fixedCells:naturalCells;
-  // Find which week row contains today
-  var currentWeekIdx=-1;
-  for(var ii=0;ii<totalCells;ii++){var dii=ii-startDow+1;if(dii>=1&&dii<=daysInMonth){var dsii=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dii).padStart(2,'0');if(dsii===today)currentWeekIdx=Math.floor(ii/7);}}
-  var DOW=_firstDow===0?['S','M','T','W','T','F','S']:['M','T','W','T','F','S','S'];
-  var cells='';
-  for(var i=0;i<totalCells;i++){
-    var dn=i-startDow+1;
-    var wi=Math.floor(i/7);
-    var isOther=dn<1||dn>daysInMonth;
-    var ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dn).padStart(2,'0');
-    var isToday=(!isOther&&ds===today);
-    var isHeavy=(!isOther&&currentWeekIdx>=0&&Math.floor(i/7)===currentWeekIdx);
-    var _lvd=isOther?null:leaveDayInfo(ds);
-    var cls='tmc-cell'+(isHeavy?' heavy-week':'')+(isToday?' today':'')+(isOther?' other-month':'')+(_lvd?' leave-day':'');
-    var dots='';
-    if(!isOther&&dayTasks[dn]){
-      dots='<div class="tmc-dots">'+dayTasks[dn].slice(0,5).map(function(t){return'<span class="tmc-dot '+t.priority+'"></span>';}).join('')+'</div>';
-    }
-    var click=isOther?'':' onclick="goToPlannerDay('+y+','+m+','+dn+')" style="cursor:pointer"';
-    cells+='<div class="'+cls+'"'+(_lvd?' title="'+escH(leaveDayLabel(ds,_lvd))+'"':'')+click+'>'+(isOther?'':'<div class="tmc-dn">'+dn+'</div>'+dots)+'</div>';
-  }
-  var hdr=readOnly
-    ?'<span class="tmc-title">'+monthName+'</span>'
-    :'<button class="tmc-nav" onclick="tmcPrev()">‹</button><span class="tmc-title">'+monthName+'</span><button class="tmc-nav" onclick="tmcNext()">›</button>';
-  el.innerHTML=
-    '<div class="tmc-header">'+hdr+'</div>'
-    +'<div class="tmc-grid">'+DOW.map(function(d){return'<div class="tmc-dow">'+d+'</div>';}).join('')+cells+'</div>'
-    +'</div>';// legend rendered once by renderTaskMonthCal
-  return totalCells;
-}
 
 function makeFlatTaskRow(t,hideProj){
   var isDone=t.done,id=t.id,compact=(currentTab==='tasks'||currentTab==='projects');
@@ -8688,7 +8585,7 @@ function makeFlatTaskRow(t,hideProj){
       }
       return'<div class="subtask-row"><div class="subtask-cb'+(s.done?' done':'')+'" onclick="toggleSubtask(\''+t.id+'\',\''+s.id+'\')">'+(s.done?'&#10003;':'')+'</div>'
         +'<span class="subtask-title tr'+(s.done?' done-txt':'')+'">'+escH(s.title)+'</span>'
-        +'<button class="subtask-promote" onclick="tkPromote(\''+t.id+'\',\''+s.id+'\')" title="Promote to a task of its own">&#8593;</button>'
+        +'<button class="nt-mk" onclick="tkPromote(\''+t.id+'\',\''+s.id+'\')" title="Make this subtask a task of its own">+ Task</button>'
         +'<button class="subtask-edit" onclick="openSubtaskEdit(\''+s.id+'\')" title="Edit">&#9998;</button>'
         +'<button class="subtask-del" onclick="deleteSubtask(\''+t.id+'\',\''+s.id+'\')" title="Delete">&#215;</button></div>';
     }).join('')+'</div>':'';
@@ -10284,24 +10181,7 @@ function icsUndo(){
   }catch(e){}
   _icsUndo=null;
   renderCalendarShell();loadCalendarEvents();renderReminderBanner();renderTasksSummary();renderUpNext();
-  icsTidyShow();icsToast('Undone.');
-}
-function icsTidyShow(){
-  var el=document.getElementById('icsTidy');if(!el)return;
-  el.style.display=getManualEventsRaw().some(function(e){return e.icsUid&&String(e.notes||'').trim();})?'':'none';
-}
-function icsClearNotes(){
-  var raw=localStorage.getItem('plannerManualEvents'),evs=getManualEventsRaw();
-  var n=evs.filter(function(e){return e.icsUid&&String(e.notes||'').trim();}).length;
-  if(!n){icsToast('No imported meetings have notes.');return;}
-  if(!confirm('Clear the notes on '+n+' imported meeting'+(n===1?'':'s')+'?\n\nMeetings you created yourself are not touched, but any notes you typed on an imported meeting are cleared too. You can undo it straight after.'))return;
-  _icsUndo={ev:raw,rem:JSON.stringify(getReminders())};
-  evs.forEach(function(e){if(e.icsUid&&String(e.notes||'').trim())e.notes='';});
-  saveManualEvents(evs);
-  renderCalendarShell();loadCalendarEvents();renderUpNext();
-  if(typeof dpDate!=='undefined'&&dpDate)renderDayPlan();
-  icsTidyShow();
-  icsToast('Cleared notes on '+n+' meeting'+(n===1?'':'s')+'.',true);
+  icsToast('Undone.');
 }
 function icsToastClose(){clearTimeout(_icsToastT);var el=document.getElementById('icsToast');if(el)el.remove();}
 function icsToast(msg,undo){
@@ -10544,11 +10424,7 @@ function renderEtfRule(){
   if(el)el.textContent=ETF_RULES[getEtfRuleIndex()];
 }
 
-function goToPlannerDay(yr,mo,day){
-  currentMonday=getMonday(new Date(yr,mo,day));
-  switchTab('planner');
-  renderPlanner();
-}
+
 var _ru=document.getElementById('redirectUriDisplay');
 if(_ru)_ru.textContent=window.location.protocol==='file:'?'http://localhost':window.location.origin;
 // ── Boot ──
