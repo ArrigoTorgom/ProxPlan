@@ -1163,16 +1163,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-day.leave-half::before,.day-col.leave-half .day-events{background:repeating-linear-gradient(135deg,rgba(34,197,94,.22) 0 2px,rgba(34,197,94,.03) 2px 8px);}
 .tk-d.h1{background:rgba(245,158,11,.28);}
 .tk-d.h2{background:rgba(239,68,68,.30);}
-.tk-d.t{box-shadow:inset 0 0 0 1.5px var(--today-text);font-weight:700;}
+.tk-d.t{color:var(--today-text);font-weight:800;font-size:12px;}
 .tk-d.on{box-shadow:inset 0 0 0 1.5px var(--primary);}
 .tk-d.drop{background:var(--primary-light);box-shadow:inset 0 0 0 1.5px var(--primary);}
-.tk-rgs{position:absolute;inset:0;pointer-events:none;}
-.tk-rg{position:absolute;left:50%;top:50%;width:19px;height:19px;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--muted);box-sizing:border-box;background:transparent;}
-.tk-rg.r1{width:25px;height:25px;}.tk-rg.r2{width:31px;height:31px;}
-.tk-rg.hi{border-color:var(--high);}.tk-rg.md{border-color:var(--med);}.tk-rg.lo{border-color:var(--low);}
-.tk-rgs em{position:absolute;top:1px;right:2px;font-style:normal;font-size:8px;font-weight:700;line-height:1;color:var(--muted);}
-.tk-lg .tk-rg{position:static;transform:none;display:inline-block;width:8px;height:8px;margin-right:2px;vertical-align:-1px;}
-.tk-lg .tk-rg.lo{margin-right:4px;}
+.tk-bd,.tk-mg .tk-bd{position:absolute;top:1px;right:1px;display:flex;align-items:center;justify-content:center;min-width:13px;height:13px;padding:0 3px;box-sizing:border-box;border-radius:7px;font-size:9px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;text-align:center;color:#fff;pointer-events:none;}
+.tk-bd.hi{background:var(--high);}.tk-bd.md{background:var(--med);}
+.tk-bd.lo,.tk-mg .tk-bd.lo{background:var(--card);border:1px solid var(--low);color:var(--muted);}
+.tk-lg .tk-bd{position:static;display:inline-flex;vertical-align:-2px;margin-right:2px;}
+.tk-lg .tk-bd.lo{margin-right:4px;}
 .tk-lg{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
 .tk-lg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px;}
 .tk-lg i.g{background:rgba(34,197,94,.45);}.tk-lg i.gh{background:repeating-linear-gradient(135deg,rgba(34,197,94,.55) 0 1.5px,rgba(34,197,94,.08) 1.5px 4px);}.tk-lg i.a{background:rgba(245,158,11,.5);}.tk-lg i.r{background:rgba(239,68,68,.5);}
@@ -2068,14 +2066,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.81.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.82.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.81.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.82.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -5775,7 +5773,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.81.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.82.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -8558,11 +8556,11 @@ function tkOutToggle(){var cur=localStorage.getItem('plannerTaskOutlookCol');if(
 // concentric rings around the date, one per task due that day in its priority colour (most urgent innermost); more than three shows three rings and +n
 var TK_PO={high:0,medium:1,low:2};
 function tkPriSort(p){return p.slice().sort(function(a,b){return(TK_PO[a]!=null?TK_PO[a]:1)-(TK_PO[b]!=null?TK_PO[b]:1);});}
+// tasks-due badge: the number of tasks due, coloured by the most urgent one
 function tkRings(p){
   if(!p||!p.length)return'';
-  var s=tkPriSort(p),more=s.length>3;
-  if(more)s=s.slice(0,3);
-  return'<span class="tk-rgs">'+s.map(function(x,i){return'<b class="tk-rg r'+i+' '+(x==='high'?'hi':x==='low'?'lo':'md')+'"></b>';}).join('')+(more?'<em>+'+(p.length-3)+'</em>':'')+'</span>';
+  var x=tkPriSort(p)[0];
+  return'<b class="tk-bd '+(x==='high'?'hi':x==='low'?'lo':'md')+'">'+(p.length>9?'9+':p.length)+'</b>';
 }
 function tkPriSum(p){
   var c={};p.forEach(function(x){c[x]=(c[x]||0)+1;});
@@ -8606,7 +8604,7 @@ function tkOutlookHtml(){
     });
     var ny=tmcYear,nm=tmcMonth+1;if(nm>11){nm=0;ny++;}
     h+='<div class="tk-mos"><div class="tk-mo">'+tkMonthHtml(tmcYear,tmcMonth,map,today,true)+'</div><div class="tk-mo">'+tkMonthHtml(ny,nm,map,today,ny!==tmcYear)+'</div></div>';
-    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="gh"></i>Half day</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><b class="tk-rg hi"></b><b class="tk-rg md"></b><b class="tk-rg lo"></b>Tasks due (high, medium, low)</span></div>';
+    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="gh"></i>Half day</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><b class="tk-bd hi">2</b><b class="tk-bd md">1</b><b class="tk-bd lo">1</b>Tasks due, coloured by the most urgent (high, medium, low)</span></div>';
     var info=(typeof lvBalanceInfo==='function')?lvBalanceInfo():null;
     h+='<div class="tk-bal">'+(info?'Leave balance <b>'+lvFmt(info.cur.bal)+'</b> days'+(info.proj?' &middot; '+lvFmt(info.proj.bal)+' after booked':''):'Leave balance not set up')+' <a href="#" onclick="openLeaveModal(todayStr());return false;">Book leave</a></div>';
     h+='</div>';

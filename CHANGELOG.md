@@ -5,6 +5,27 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.82.1] — 2026-11-20
+
+### Fixed
+- To Do calendar: the number in a tasks-due badge is now centred exactly, both across and up and down, including on outlined low-priority badges and in the legend.
+
+---
+
+## [0.82.0] — 2026-11-20
+
+### Changed
+- To Do calendar: tasks due on a day now show as a small count badge in the corner of the day, filled red when a high-priority task is due, orange for medium, and outlined grey when only low-priority tasks are due. This replaces the coloured rings, where medium and high were hard to tell apart. Ten or more tasks show as "9+". The legend is updated to match.
+
+---
+
+## [0.81.1] — 2026-11-20
+
+### Changed
+- To Do calendar: today is shown as a bold orange day number instead of an orange outline, so it no longer competes with the task-due rings.
+
+---
+
 ## [0.81.0] — 2026-11-20
 
 ### Changed
