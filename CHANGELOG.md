@@ -5,6 +5,15 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.81.0] — 2026-11-20
+
+### Changed
+- Half-day leave is now a morning or an afternoon off. Log Leave offers Full day, Morning off (until after lunch) or Afternoon off (from lunch). The leave hours booked are the working hours in that half, and the day asks for the hours of the other half. For example, an afternoon off on an 8:00–15:45 Friday with a 45-minute lunch books 3h of leave and asks for 4h of work, instead of 3h 30m each.
+- Plan Day on a morning or afternoon off shows that half as leave. It also shows only the working half's hours and breaks, and looks for free time only in that half. Leave labels say "(morning)" or "(afternoon)".
+- Half days booked before this version keep working as before (half the day's hours). Open one and choose morning or afternoon to rebook it.
+
+---
+
 ## [0.80.2] — 2026-11-19
 
 ### Changed

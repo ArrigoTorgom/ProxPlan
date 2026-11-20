@@ -1655,8 +1655,8 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
       <div><div class="ev-field-label">To</div><input id="lvTo" class="ev-input" type="date" style="margin-bottom:0"></div>
     </div>
     <div class="ev-field-label" style="margin-top:10px">Length</div>
-    <select id="lvLen" class="ev-input"><option value="full">Full day</option><option value="half">Half day</option></select>
-    <div style="font-size:10.5px;color:var(--muted);margin:-6px 0 10px;line-height:1.4">Booked to your Leave cost code in the timesheet. When you pick a range, weekends and public holidays are skipped.</div>
+    <select id="lvLen" class="ev-input"><option value="full">Full day</option><option value="am">Morning off (until after lunch)</option><option value="pm">Afternoon off (from lunch)</option></select>
+    <div style="font-size:10.5px;color:var(--muted);margin:-6px 0 10px;line-height:1.4">Booked to your Leave cost code in the timesheet. A morning off runs to the end of lunch and an afternoon off from the start of lunch; the leave hours are the working hours in that half. When you pick a range, weekends and public holidays are skipped.</div>
     <div class="ev-modal-actions">
       <button class="btn secondary-btn" id="lvRemoveBtn" style="margin-right:auto;color:var(--high);display:none" onclick="removeLeaveFromModal()">Remove</button>
       <button class="btn secondary-btn" onclick="closeLeaveModal()">Cancel</button>
@@ -2068,14 +2068,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.80.2</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.81.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.80.2%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.81.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2496,7 +2496,9 @@ function wcSched(dow){
 function workNet(ds){return wcSched(wcDow(ds)).net;}
 // -- A day's breaks (lunch etc.): the usual ones from the working hours, or that day's own times when moved in Plan Day (plannerDayBreaks keeps only days that differ). The day's required hours never change; a longer break than usual counts as away time. --
 function wcCfgDay(dow){var c=getWorkCfg(),o=c.perDay?c.custom[dow]:null;return o?{start:o.start,end:o.end,breaks:o.breaks||[]}:{start:c.start,end:c.end,breaks:c.breaks||[]};}
-function wcCfgBreaks(ds){
+// the usual breaks, leaving out any that fall in the half of a morning or afternoon off
+function wcCfgBreaks(ds){var a=wcCfgBreaksRaw(ds),r=lvHalfRanges(ds,leaveDayInfo(ds));return r?a.filter(function(p){return p[0]>=r.work[0]&&p[1]<=r.work[1];}):a;}
+function wcCfgBreaksRaw(ds){
   if(!wcSched(wcDow(ds)).blocks.length)return[];
   var out=[];
   wcCfgDay(wcDow(ds)).breaks.forEach(function(br){var x=wcMin(br.s),y=wcMin(br.e);if(x!=null&&y!=null&&y>x)out.push([x,y]);});
@@ -2506,7 +2508,7 @@ function getDayBreaksRaw(){try{return JSON.parse(localStorage.getItem('plannerDa
 function wcDayBreaks(ds,stored){
   if(!wcSched(wcDow(ds)).blocks.length)return[];
   if(!stored&&typeof dpDate!=='undefined'&&dpDate===ds)return dpBlocks.filter(function(b){return b.sched&&b.dur>0;}).map(function(b){return[b.start,b.start+b.dur];}).sort(function(a,b){return a[0]-b[0];});
-  if(featOn('planday')){var o=getDayBreaksRaw()[ds];if(Array.isArray(o))return o.map(function(p){return[p[0],p[1]];});}
+  if(featOn('planday')){var o=getDayBreaksRaw()[ds];if(Array.isArray(o)){var r=lvHalfRanges(ds,leaveDayInfo(ds));return o.filter(function(p){return!r||(p[0]>=r.work[0]&&p[1]<=r.work[1]);}).map(function(p){return[p[0],p[1]];});}}
   return wcCfgBreaks(ds);
 }
 // a day's working time with its breaks where they actually are that day (the required hours stay the usual ones)
@@ -2523,6 +2525,8 @@ function wcDaySched(ds){
     });
     bl=out;
   });
+  var r=lvHalfRanges(ds,leaveDayInfo(ds));
+  if(r)bl=bl.map(function(p){return[Math.max(p[0],r.work[0]),Math.min(p[1],r.work[1])];}).filter(function(p){return p[1]>p[0];});
   return{ok:sc.ok,on:sc.on,blocks:bl,net:sc.net};
 }
 // minutes of break taken beyond the usual on a day (inside the working hours); counted as away time
@@ -3160,7 +3164,7 @@ function applyLeaveToLog(date,type,len,keepOthers){
   var cfg=getLeaveCfg(),lp=ensureLeaveProject();
   var t=leaveTypeById(type)||leaveTypeById('vacation');
   var dh=lvDayHrs(date);
-  var entry={hrs:len==='half'?dh/2:dh,pct:null,activity:t.activity};
+  var entry={hrs:len==='half'?lvHalfHrs(date,getLeaveDays()[date],'off'):dh,pct:null,activity:t.activity};
   var logs=getLogs();
   var idx=logs.findIndex(function(l){return l.date===date;});
   if(idx>=0&&keepOthers){
@@ -3192,14 +3196,39 @@ function removeLeaveFromLog(date){
   saveLogs(logs);
   var dr=getDraft();if(dr&&dr.date===date)clearDraft();
 }
+// len: 'full', 'am' (morning off), 'pm' (afternoon off) or 'half' (older half days: half the day's hours)
 function setLeaveDay(date,type,len,replaceOther){
-  if(len!=='half'&&leaveOtherHrs(date)>0&&!replaceOther)return false;
-  applyLeaveToLog(date,type,len,len==='half');
+  var part=(len==='am'||len==='pm')?len:null,half=len==='half'||!!part;
+  if(!half&&leaveOtherHrs(date)>0&&!replaceOther)return false;
   var days=getLeaveDays();
-  days[date]={type:type,len:len==='half'?'half':'full'};
+  days[date]=half?(part?{type:type,len:'half',part:part}:{type:type,len:'half'}):{type:type,len:'full'};
   saveLeaveDays(days);
+  applyLeaveToLog(date,type,half?'half':'full',half);
   return true;
 }
+// -- Half-day leave as a morning (to the end of lunch) or an afternoon (from the start of lunch). Lunch is the break around midday in the working hours; with none the day is split in the middle of its working time. --
+function lvHalfSplit(ds){
+  var sc=wcSched(wcDow(ds));if(!sc.blocks.length)return null;
+  var cd=wcCfgDay(wcDow(ds)),w0=wcMin(cd.start),w1=wcMin(cd.end),L=null;
+  wcCfgBreaksRaw(ds).forEach(function(p){var m=(p[0]+p[1])/2;if(!L&&m>=690&&m<=840&&p[0]>w0&&p[1]<w1)L=p;});
+  if(!L){
+    var hm=sc.net*30,acc=0,at=w0;
+    sc.blocks.some(function(p){var n=p[1]-p[0];if(acc+n>=hm){at=p[0]+(hm-acc);return true;}acc+=n;return false;});
+    L=[at,at];
+  }
+  return{w0:w0,w1:w1,ls:L[0],le:L[1]};
+}
+function lvHalfRanges(ds,lv){
+  if(!lv||lv.len!=='half'||(lv.part!=='am'&&lv.part!=='pm'))return null;
+  var s=lvHalfSplit(ds);if(!s)return null;
+  return lv.part==='am'?{off:[s.w0,s.le],work:[s.le,s.w1]}:{off:[s.ls,s.w1],work:[s.w0,s.ls]};
+}
+function lvHalfHrs(ds,lv,which){
+  var r=lvHalfRanges(ds,lv);
+  if(!r)return(which==='off'?lvDayHrs(ds):workNet(ds))/2;
+  return Math.round(dpOverlapMin([r[which]],wcSched(wcDow(ds)).blocks)/60*100)/100;
+}
+function lvHalfTxt(lv){return lv.len!=='half'?'':lv.part==='am'?' (morning)':lv.part==='pm'?' (afternoon)':' (half day)';}
 function removeLeaveDay(date){
   var days=getLeaveDays();
   delete days[date];
@@ -3233,7 +3262,7 @@ function renderLeaveDayRow(date){
   if(!lv){el.innerHTML='';return;}
   var t=leaveTypeById(lv.type)||{label:'Leave'};
   var h=leaveHrsForDate(date);
-  el.innerHTML='<div class="leave-day-row"><span><strong>'+escH(t.label)+'</strong> '+(h?h.toFixed(1)+'h':'')+(lv.len==='half'?' (half day)':'')+' - booked as leave</span><button class="btn secondary-btn sm" onclick="openLeaveModal(\''+date+'\')">Edit leave</button></div>';
+  el.innerHTML='<div class="leave-day-row"><span><strong>'+escH(t.label)+'</strong> '+(h?h.toFixed(1)+'h':'')+lvHalfTxt(lv)+' - booked as leave</span><button class="btn secondary-btn sm" onclick="openLeaveModal(\''+date+'\')">Edit leave</button></div>';
 }
 function leaveDayInfo(ds){
   if(!featOn('leave'))return null;
@@ -3245,11 +3274,11 @@ function leaveDayInfo(ds){
 function leaveDayLabel(ds,lv){
   var t=leaveTypeById(lv.type)||{label:'Leave'};
   if(lv.type==='holiday'&&LEAVE_HOLIDAYS[ds])return t.label+' - '+LEAVE_HOLIDAYS[ds];
-  return t.label+(lv.len==='half'?' (half day)':'');
+  return t.label+lvHalfTxt(lv);
 }
 function leavePillHtml(date,lv){
   var t=leaveTypeById(lv.type)||{label:'Leave'};
-  var extra=lv.type==='holiday'&&LEAVE_HOLIDAYS[date]?(' - '+LEAVE_HOLIDAYS[date]):(lv.len==='half'?' (half day)':'');
+  var extra=lv.type==='holiday'&&LEAVE_HOLIDAYS[date]?(' - '+LEAVE_HOLIDAYS[date]):lvHalfTxt(lv);
   return'<div class="leave-pill" onclick="openLeaveModal(\''+date+'\')" title="'+(lv.unbooked?'Public holiday - click to book it to the leave code':'Click to edit or remove')+'"><strong>'+escH(t.label)+'</strong>'+escH(extra)+'</div>';
 }
 function leaveRefreshViews(){
@@ -3271,7 +3300,9 @@ function openLeaveModal(date){
   document.getElementById('lvFrom').value=d;
   document.getElementById('lvTo').value=d;
   document.getElementById('lvTo').disabled=!!ex;
-  document.getElementById('lvLen').value=ex?ex.len:'full';
+  var _ls=document.getElementById('lvLen'),_lo=_ls.querySelector('option[value="half"]');
+  if(ex&&ex.len==='half'&&!ex.part){if(!_lo){_lo=document.createElement('option');_lo.value='half';_lo.textContent='Half day (half the hours)';_ls.appendChild(_lo);}}else if(_lo)_lo.remove();
+  _ls.value=ex?(ex.len==='half'?(ex.part||'half'):'full'):'full';
   document.getElementById('leaveModalTitle').textContent=ex?'Edit Leave - '+formatDate(date):'Log Leave';
   document.getElementById('lvRemoveBtn').style.display=ex?'':'none';
   document.getElementById('leaveModal').style.display='flex';
@@ -3293,7 +3324,7 @@ function saveLeaveModal(){
   var done=0,skipped=[],single=rng.dates.length===1;
   rng.dates.forEach(function(ds){
     var other=leaveOtherHrs(ds),replace=false;
-    if(len!=='half'&&other>0&&single)replace=confirm(other+'h of time is already logged on '+formatDate(ds)+'. Replace it with leave?');
+    if(len==='full'&&other>0&&single)replace=confirm(other+'h of time is already logged on '+formatDate(ds)+'. Replace it with leave?');
     if(setLeaveDay(ds,type,len,replace))done++;else skipped.push(ds);
   });
   closeLeaveModal();
@@ -3710,10 +3741,11 @@ function dpOffHtml(ds){
   var cd=wcCfgDay(wcDow(ds));
   seg(G0,wcMin(cd.start),'off','');
   seg(wcMin(cd.end),G1,'off','');
+  var _hr=lvHalfRanges(ds,lv);if(_hr)seg(_hr.off[0],_hr.off[1],'off',escH(leaveDayLabel(ds,lv)));
   return h;
 }
 function dpWorkRangeText(ds){
-  var bl=wcSched(wcDow(ds)).blocks;
+  var bl=wcDaySched(ds).blocks;
   return bl.length?'between '+dpFmtTime(bl[0][0])+' and '+dpFmtTime(bl[bl.length-1][1]):'between '+dpFmtTime(DP_WORK_START)+' and '+dpFmtTime(DP_WORK_END);
 }
 function dpWhRender(){
@@ -3728,7 +3760,7 @@ function dpWhRender(){
     var t='Working '+dpFmtTime(bl[0][0])+' &ndash; '+dpFmtTime(bl[bl.length-1][1]);
     for(var i=1;i<bl.length;i++){var mid=(bl[i-1][1]+bl[i][0])/2;t+=' &middot; '+(mid>=690&&mid<=840?'lunch':'break')+' '+dpFmtTime(bl[i-1][1])+' &ndash; '+dpFmtTime(bl[i][0]);}
     h+='<span class="sched">'+t+'</span>';
-    if(lv)h+='<span class="mut">half-day leave</span>';
+    if(lv)h+='<span class="mut">'+(lv.part==='am'?'morning leave':lv.part==='pm'?'afternoon leave':'half-day leave')+'</span>';
   }
   // Overtime goes by how long you work, not by when: only hours beyond the working day count. Booked hours replace planned ones once a day is booked.
   if(bk){
@@ -5743,7 +5775,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.80.2';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.81.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6194,7 +6226,7 @@ function tkVisibleTasks(){
 }
 function tkCap(ds){
   var dayH=workNet(ds),lv=leaveDayInfo(ds);
-  return lv?(lv.len==='half'?dayH/2:0):dayH;
+  return lv?(lv.len==='half'?lvHalfHrs(ds,lv,'work'):0):dayH;
 }
 function tkSumH(list){var h=0,miss=0;list.forEach(function(t){if(t.est>0)h+=tkLeft(t);else miss++;});return{h:h,miss:miss};}
 function tkHdrH(list){var s=tkSumH(list);return s.h?tkFmtH(s.h):'';}
