@@ -1157,6 +1157,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .tk-d.we{color:var(--muted);}
 .tk-d.live{cursor:pointer;}
 .tk-d.live:hover{background:rgba(0,0,0,.07);}
+.tk-d.past{cursor:pointer;}.tk-d.past:hover{background:rgba(0,0,0,.07);}
 .tk-d.l{background:rgba(34,197,94,.24);}
 .tk-day.leave-half{position:relative;}
 .tk-d.lh::before,.tk-day.leave-half::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(34,197,94,.26) 0 2px,rgba(34,197,94,.04) 2px 6px);}
@@ -1341,7 +1342,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 .nt-open .nt-body{min-height:190px;max-height:60vh;}
 .tk-side.nt-open .tk-sh input.tk-title{font-size:16px;}
 .nt-open.nt-stack .nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open.nt-stack .nt-body{min-height:140px;}
-.proj-side .tk-d.live{cursor:default;}
+.proj-side .tk-d.live,.proj-side .tk-d.past{cursor:default;}
 .rt-pop{position:fixed;z-index:950;display:none;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,.22);}
 .rt-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;}
 .rt-row{display:flex;gap:7px;}
@@ -2086,7 +2087,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.85.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.86.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
@@ -2094,7 +2095,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.85.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.86.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -5809,7 +5810,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.85.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.86.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6662,6 +6663,12 @@ function renderTaskWeekStrip(){
   var tasks=tkVisibleTasks().filter(function(t){return!t.done&&!t.someday;});
   var today=todayStr(),days=[],d=new Date(today+'T12:00:00');
   while(days.length<5){var dw=d.getDay();if(dw>=1&&dw<=5)days.push(localIsoDate(d));d.setDate(d.getDate()+1);}
+  if(_tkDayFilter&&days.indexOf(_tkDayFilter)<0){
+    // the picked day is outside the next five working days: show its own week (Mon-Fri); a picked weekend day takes Monday's place
+    var pk=new Date(_tkDayFilter+'T12:00:00'),pw=pk.getDay(),mon=new Date(pk);mon.setDate(pk.getDate()-((pw+6)%7));
+    days=[];for(var i=0;i<5;i++){var x=new Date(mon);x.setDate(mon.getDate()+i);days.push(localIsoDate(x));}
+    if(pw===0||pw===6){days.shift();days.push(_tkDayFilter);}
+  }
   el.innerHTML=days.map(function(ds){
     var items=tasks.filter(function(t){return ds===today?tkBucket(t)==='today':(t.dueDate===ds&&!t.waiting);});
     var pm=tkPlanIndex().ahead,hrs=tkSumHPl(items,pm).h,th=tkSumH(items).h,pl=tkPlanHrs(ds),cap=tkCap(ds),mt=tkMeet(ds),av=Math.max(0,cap-mt),lv=leaveDayInfo(ds);
@@ -6675,7 +6682,7 @@ function renderTaskWeekStrip(){
     if(mt)lbl=(lbl?lbl+' &middot; ':'')+tkFmtH(mt)+' mtg';
     if(pl>0.004)lbl=(lbl?lbl+' &middot; ':'')+'<span class="tk-pl">'+tkFmtH(pl)+' planned</span>';
     var cnt=items.length+' task'+(items.length===1?'':'s')+(th?' &middot; '+tkFmtH(th):'');
-    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?(lv.len==='half'?' leave-half':' leave'):'')+(over?' over':'')+'" onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')" title="'+escH((lv?leaveDayLabel(ds,lv):'Click to show this day. Drop a task here to plan time for it.')+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':'')+(pl>0.004?' Planned work: '+tkFmtH(pl)+'.':''))+'">'
+    return'<div class="tk-day'+(ds===today?' today':'')+(_tkDayFilter===ds?' on':'')+(lv?(lv.len==='half'?' leave-half':' leave'):'')+(over?' over':'')+(ds<today?' past':'')+'" onclick="tkPickDay(\''+ds+'\')"'+(ds<today?'':' ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"')+' title="'+escH((lv?leaveDayLabel(ds,lv):(ds<today?'Past day: click to see the open tasks that were due.':'Click to show this day. Drop a task here to plan time for it.'))+(mt?' Meetings take '+tkFmtH(mt)+', leaving '+tkFmtH(av)+' for tasks.':'')+(pl>0.004?' Planned work: '+tkFmtH(pl)+'.':''))+'">'
       +'<b>'+new Date(ds+'T12:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})+'</b>'
       +'<span class="tk-sub">'+(lbl||'&nbsp;')+'</span>'
       +'<span class="tk-cnt">'+cnt+'</span>'
@@ -6688,7 +6695,7 @@ function tkSecState(){var o={later:true,someday:true,done:true};try{var s=JSON.p
 function tkToggleSec(k){var s=tkSecState();s[k]=!s[k];localStorage.setItem('plannerTaskSec',JSON.stringify(s));renderTasksPanel();}
 function tkRowT(t){return Object.assign({},t,{quickNoteOpen:!!_quickNoteStates[t.id],subtaskAddOpen:!!_subtaskAddOpen[t.id]});}
 function tkSecHtml(k,title,list,hdr,empty,cls,total){
-  var col=!!tkSecState()[k],n=(total!=null?total:list.length);
+  var col=!(_tkDayFilter&&_taskSortMode==='urgency')&&!!tkSecState()[k],n=(total!=null?total:list.length);
   var h='<div class="project-group tk-sec"><div class="project-group-header tk-sec-h" onclick="tkToggleSec(\''+k+'\')"><span class="tk-chev'+(col?' c':'')+'">&#9662;</span><span class="project-group-name">'+title+'</span><span class="task-count'+(cls?' '+cls:'')+'">'+n+'</span>'+(hdr?'<span class="tk-hdr">'+hdr+'</span>':'')+'</div>';
   if(!col)h+='<div class="project-group-body">'+(list.length?list.map(function(t){return makeFlatTaskRow(tkRowT(t));}).join(''):'<div class="project-empty">'+empty+'</div>')+'</div>';
   return h+'</div>';
@@ -6699,7 +6706,7 @@ function renderTaskUrgency(){
   renderTaskWeekStrip();
   var tasks=tkVisibleTasks(),today=todayStr();
   if(!tasks.length){box.innerHTML='<div class="card"><div class="empty-state">No tasks yet. Type one above, e.g. &quot;Send RFI response @Project fri !high ~2h&quot;.</div></div>';return;}
-  if(_tkDayFilter&&_tkDayFilter<today)_tkDayFilter='';
+  // a past day can be picked too: a quick view of what fell due that day
   var banner='';
   if(_tkDayFilter){
     var fd=_tkDayFilter;
@@ -6714,7 +6721,7 @@ function renderTaskUrgency(){
   var tHdr=(th.h?(tkFmtH(th.h)+(cap?' of '+tkFmtH(cap):'')+(th.miss?' &middot; '+th.miss+' without estimate':'')):'')+(mtT?(th.h?' &middot; ':'')+tkFmtH(mtT)+' in meetings':'');
   var h=banner;
   if(B.overdue.length)h+=tkSecHtml('overdue','Overdue',B.overdue,tkHdrH(B.overdue),'','overdue');
-  h+=tkSecHtml('today','Today',B.today,tHdr,'Nothing on Today yet. Use the &#9733; Today button on a task, or add one with !today.');
+  if(!_tkDayFilter||B.today.length)h+=tkSecHtml('today','Today',B.today,tHdr,'Nothing on Today yet. Use the &#9733; Today button on a task, or add one with !today.');
   if(B.waiting.length)h+=tkSecHtml('waiting','Waiting on',B.waiting,'','');
   if(B.week.length)h+=tkSecHtml('week','This week',B.week,tkHdrH(B.week),'');
   if(B.later.length)h+=tkSecHtml('later','Later',B.later,tkHdrH(B.later),'');
@@ -8632,8 +8639,8 @@ function tkMonthHtml(y,m,map,today,showYear){
     if(info.n)tip+=(tip?' - ':'')+info.n+' task'+(info.n===1?'':'s')+(info.p?' ('+tkPriSum(info.p)+')':'')+(info.h?', '+tkFmtH(info.h)+(cap?' of '+tkFmtH(cap):''):'');
     if(mt)tip+=(tip?' - ':'')+tkFmtH(mt)+' in meetings';
     var live=ds>=today;
-    h+='<span class="tk-d'+(we?' we':'')+(lv?(lv.len==='half'?' lh':' l'):'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':'')+'"'+(tip?' title="'+escH(tip)+'"':'')
-      +(live?' onclick="tkPickDay(\''+ds+'\')" ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+tkRings(info.p)+'</span>';
+    h+='<span class="tk-d'+(we?' we':'')+(lv?(lv.len==='half'?' lh':' l'):'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':' past')+'"'+(tip?' title="'+escH(tip)+'"':'')
+      +' onclick="tkPickDay(\''+ds+'\')"'+(live?' ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+tkRings(info.p)+'</span>';
   }
   return h+'</div>';
 }

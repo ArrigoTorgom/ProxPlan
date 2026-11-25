@@ -5,6 +5,17 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.86.0] — 2026-11-25
+
+### Added
+- Past days in the To Do calendar can now be clicked too, for a quick look at the open tasks that fell due that day. Tasks can't be dropped onto a past day.
+
+### Changed
+- When you pick a day outside the five days at the top of To Do, that strip jumps to the picked day's week, so the selected day stays in view. "Show all" brings it back to the coming days.
+- While a day is picked, the task sections open up so its tasks are never hidden inside a closed section (such as Later). The empty Today box is hidden in that view. Your saved open/closed choices are not changed.
+
+---
+
 ## [0.85.1] — 2026-11-25
 
 ### Changed
