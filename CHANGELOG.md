@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.85.1] — 2026-11-25
+
+### Changed
+- Quick fill on "Last week & follow ups" now writes its section headings (Overdue deliverables, High-priority completed, New projects) in bold, so the summary is quicker to scan.
+
+---
+
 ## [0.85.0] — 2026-11-25
 
 ### Changed
