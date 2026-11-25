@@ -5,6 +5,13 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.85.0] — 2026-11-25
+
+### Changed
+- The type labels in the quick switcher (Ctrl+K) now each have their own colour, so results are easier to scan: Tab in slate, Action in orange, Project in blue, Note in teal and Task in green. Works in light and dark mode.
+
+---
+
 ## [0.84.1] — 2026-11-25
 
 ### Added
