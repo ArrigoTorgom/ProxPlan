@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.83.1] — 2026-11-25
+
+### Fixed
+- The "new version ready" message now shows its "Reload now" button as an orange button. In light mode it used the header's button style (white text, no fill), so it was invisible on the white message and only the Later button showed.
+
+---
+
+## [0.83.0] — 2026-11-25
+
+### Added
+- Settings > To Do: "Book General tasks to" picks the project that General tasks (tasks with no project) are booked to when you plan them from the To Do list or Plan Day's task list. The block is then saved straight away, like any other task, and the confirmation says which project it was booked to. "Ask each time" (the default) keeps the old behaviour: Plan Day opens the block so you pick the project. The setting follows a renamed project. If the chosen project is archived, the app goes back to asking, and the setting shows it as archived. Hidden when Plan Day is switched off.
+
+---
+
 ## [0.82.1] — 2026-11-20
 
 ### Fixed

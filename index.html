@@ -2060,20 +2060,22 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
     <div class="set-sec-body">
       <div class="rs-row"><label>Keep my open tasks to</label><input type="number" id="taskCapInput" min="1" max="500" step="1" onchange="setTaskCap(this.value)"><span style="font-size:11px;color:var(--muted)">tasks</span></div>
       <div class="rs-note">A guide, not a hard stop. The meter on the To Do tab turns amber as you near this number and red once you pass it. Parked (Someday) and finished tasks don't count.</div>
+      <div class="rs-row ft-planday"><label for="genProjSel">Book General tasks to</label><select id="genProjSel" class="ev-input" style="max-width:240px;height:30px;font-size:12px" onchange="setGenProj(this.value)"></select></div>
+      <div class="rs-note ft-planday">When you plan a General task (one with no project) from the To Do list or Plan Day, its block is booked to this project and saved straight away. On "Ask each time", Plan Day opens the block so you can pick the project.</div>
     </div>
   </div>
 </div>
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.82.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.83.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.82.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.83.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2688,7 +2690,7 @@ function pwaShowUpdate(v){
   if(v===_pwaDismissed||document.getElementById('pwaUpd'))return;
   var d=document.createElement('div');
   d.id='pwaUpd';d.className='pwa-upd';d.setAttribute('role','status');
-  d.innerHTML='<span>A new version of Planner is ready ('+v+').</span><button class="btn sm" type="button" id="pwaUpdGo">Reload now</button><button class="btn secondary-btn sm" type="button" id="pwaUpdLater">Later</button>';
+  d.innerHTML='<span>A new version of Planner is ready ('+v+').</span><button class="btn primary-btn sm" type="button" id="pwaUpdGo">Reload now</button><button class="btn secondary-btn sm" type="button" id="pwaUpdLater">Later</button>';
   document.body.appendChild(d);
   document.getElementById('pwaUpdGo').onclick=function(){location.reload();};
   document.getElementById('pwaUpdLater').onclick=function(){_pwaDismissed=v;d.parentNode.removeChild(d);};
@@ -2734,6 +2736,7 @@ function initSettings(){
   renderLeaveSettings();
   renderRemSettings();
   var _tcap=document.getElementById('taskCapInput');if(_tcap)_tcap.value=tkCapVal();
+  renderGenProjSel();
   renderWorkSettings();
 }
 
@@ -3886,9 +3889,9 @@ function dpPlanTask(taskId){
   var gaps=dpFreeGaps(dpDate,dpItemsForDate(dpDate,dpBlocks));
   if(!gaps.length)return;
   var g=gaps[0],want=60,dur=Math.min(want,g.end-g.start);
-  var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
+  var bp=tkBlockProj(t),projOk=!!bp;
   if(projOk){
-    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:g.start,dur:dur,goal:'',taskId:t.id});
+    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:'',start:g.start,dur:dur,goal:'',taskId:t.id});
     dpPersist();dpSelectedBlock=null;dpNewRange=null;
     renderDayPlan();renderCalendarShell();
     var ed=document.getElementById('entryDate');if(ed)renderImportRow(ed.value);
@@ -4813,7 +4816,7 @@ function restoreProject(name){
 function openProjectEdit(name){var p=getProjects();var proj=p.find(function(x){return x.name===name;});if(!proj)return;document.getElementById('peOrigName').value=proj.name;document.getElementById('peName').value=proj.name;document.getElementById('peCode').value=proj.code||'';document.getElementById('peActivity').value=proj.activityType||'';document.getElementById('peGroup').innerHTML=groupAssignOptionsHtml(proj.groupId||'');document.getElementById('peColor').value=proj.color||'';renderColorSwatches(proj.color||'');var t=document.getElementById('projModalTitle');if(t)t.textContent='Edit Project';document.getElementById('projectEditModal').style.display='flex';}
 function openAddProjectModal(){document.getElementById('peOrigName').value='';document.getElementById('peName').value='';document.getElementById('peCode').value='';document.getElementById('peActivity').value='';document.getElementById('peGroup').innerHTML=groupAssignOptionsHtml(getActiveGroupId());document.getElementById('peColor').value='';renderColorSwatches('');var t=document.getElementById('projModalTitle');if(t)t.textContent='Add Project';document.getElementById('projectEditModal').style.display='flex';}
 function closeProjectEdit(){document.getElementById('projectEditModal').style.display='none';}
-function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(getAllProjects().find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color,added:Date.now()});saveProjects(p);closeProjectEdit();_selectedProject=newName;tsDraftNow();renderProjects();tsRefreshGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);ntRenameProject(origName,newName);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();tsDraftNow();if(origName!==newName)tsDraftRename(origName,newName);renderProjects();tsRefreshGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
+function saveProjectEdit(){var origName=document.getElementById('peOrigName').value;var newName=document.getElementById('peName').value.trim();var code=document.getElementById('peCode').value.trim();var activity=document.getElementById('peActivity').value.trim();var groupId=document.getElementById('peGroup').value||undefined;var color=document.getElementById('peColor').value||undefined;if(!newName)return;var p=getProjects();if(!origName){if(getAllProjects().find(function(x){return x.name===newName;})){alert('A project with this name already exists.');return;}p.push({name:newName,code:code,activityType:activity,groupId:groupId,color:color,added:Date.now()});saveProjects(p);closeProjectEdit();_selectedProject=newName;tsDraftNow();renderProjects();tsRefreshGrid();renderSummary();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}renderProjectsTab();renderGroupFilters();return;}var idx=p.findIndex(function(x){return x.name===origName;});if(idx<0)return;p[idx]=Object.assign({},p[idx],{name:newName,code:code,activityType:activity,groupId:groupId,color:color});saveProjects(p);if(origName!==newName){var logs=getLogs();logs.forEach(function(l){if(l.allocs&&l.allocs[origName]!==undefined){l.allocs[newName]=l.allocs[origName];delete l.allocs[origName];}});saveLogs(logs);var tasks=getTasks();var changed=false;tasks.forEach(function(t){if(t.project===origName){t.project=newName;changed=true;}});if(changed)saveTasks(tasks);ntRenameProject(origName,newName);genProjRename(origName,newName);}if(origName!==newName&&_selectedProject===origName)_selectedProject=newName;closeProjectEdit();tsDraftNow();if(origName!==newName)tsDraftRename(origName,newName);renderProjects();tsRefreshGrid();renderSummary();renderHistory();if(currentTab==='tasks'){populateTaskProjectSelect();renderTasksPanel();}if(currentTab==='projects'){renderProjectsTab();}}
 function renderColorSwatches(selected){var el=document.getElementById('peColorSwatches');if(!el)return;var html='<div class="palette-swatch'+(!selected?' active':'')+'" style="background:repeating-linear-gradient(45deg,#ccc,#ccc 3px,#fff 3px,#fff 6px)" title="Auto" onclick="selectPeColor(\'\')"></div>';html+=UNIQUE_COLORS.map(function(c){return'<div class="palette-swatch'+(selected===c?' active':'')+'" style="background:'+c+'" title="'+c+'" onclick="selectPeColor(\''+c+'\')"></div>';}).join('');el.innerHTML=html;}
 function selectPeColor(c){document.getElementById('peColor').value=c;renderColorSwatches(c);}
 function renderProjects(){var p=getVisibleProjects();var el=document.getElementById('projectList');if(p.length===0){el.innerHTML='<span style="color:var(--muted);font-size:13px">No projects yet</span>';return;}el.innerHTML=p.map(function(proj,i){var pc=projColor(proj,i);return'<div class="project-tag" style="border-color:'+pc+'40;background:'+pc+'12;cursor:pointer" onclick="openProjectEdit(\''+escA(proj.name)+'\')" title="'+escH(proj.name)+'"><span style="color:'+pc+';font-weight:700;font-size:11px">●</span><span class="project-tag-name">'+escH(proj.name)+'</span></div>';}).join('');}
@@ -5773,7 +5776,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.82.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.83.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6180,6 +6183,21 @@ function renderTasksSummary(){
 // -- To Do workflow: urgency view, smart input, estimates, waiting on --
 var TASK_SOFT_CAP=20;
 function tkCapVal(){var n=parseInt(localStorage.getItem('plannerTaskCap'),10);return n>=1?n:TASK_SOFT_CAP;}
+// -- Project that General tasks (no project) are booked to when planned from a list (key plannerGeneralProj, a project name) --
+function tkGenProj(){var n=localStorage.getItem('plannerGeneralProj')||'';return n&&getActiveProjects().some(function(p){return p.name===n;})?n:'';}
+function tkBlockProj(t){
+  if(getActiveProjects().some(function(p){return p.name===t.project;}))return t.project;
+  return(!t.project||t.project==='General')?tkGenProj():'';
+}
+function renderGenProjSel(){
+  var el=document.getElementById('genProjSel');if(!el)return;
+  var cur=localStorage.getItem('plannerGeneralProj')||'',ps=getActiveProjects();
+  var h='<option value="">Ask each time</option>'+ps.map(function(p){return'<option value="'+escA(p.name)+'"'+(p.name===cur?' selected':'')+'>'+escH(p.name)+(p.code?' ('+escH(p.code)+')':'')+'</option>';}).join('');
+  if(cur&&!ps.some(function(p){return p.name===cur;}))h+='<option value="'+escA(cur)+'" selected disabled>'+escH(cur)+' (archived or removed)</option>';
+  el.innerHTML=h;
+}
+function setGenProj(v){try{if(v)localStorage.setItem('plannerGeneralProj',v);else localStorage.removeItem('plannerGeneralProj');}catch(e){}}
+function genProjRename(a,b){try{if(localStorage.getItem('plannerGeneralProj')===a)localStorage.setItem('plannerGeneralProj',b);}catch(e){}}
 function setTaskCap(v){
   var n=parseInt(v,10);
   if(!(n>=1))n=tkCapVal();
@@ -6570,13 +6588,13 @@ function tkPlanOnDay(id,ds){
   var want=unp>0?Math.min(120,Math.max(30,Math.round(unp*4)*15)):60;
   var g=gaps.filter(function(x){return x.end-x.start>=want;})[0]||gaps[0];
   var dur=Math.min(want,g.end-g.start),start=g.start;
-  var projOk=getActiveProjects().some(function(p){return p.name===t.project;});
+  var bp=tkBlockProj(t),projOk=!!bp;
   if(projOk){
-    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:t.project,activity:'',start:start,dur:dur,goal:'',taskId:t.id});
+    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:'',start:start,dur:dur,goal:'',taskId:t.id});
     setBlocksForDate(ds,blocks);
     tkRefresh();
     renderTaskWeekStrip();
-    remToast('Planned '+tkShort(ds)+', '+dpFmtTime(start)+' to '+dpFmtTime(start+dur)+(wasParked?'. Moved back to your list.':''));
+    remToast('Planned '+tkShort(ds)+', '+dpFmtTime(start)+' to '+dpFmtTime(start+dur)+(bp!==t.project?', booked to '+bp:'')+(wasParked?'. Moved back to your list.':''));
   }else{
     // no project to book the time to yet: open the day with a new block ready, the project is picked there
     if(wasParked)_refreshTaskViews();
