@@ -14,6 +14,8 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 - When you pick a day outside the five days at the top of To Do, that strip jumps to the picked day's week, so the selected day stays in view. "Show all" brings it back to the coming days.
 - While a day is picked, the task sections open up so its tasks are never hidden inside a closed section (such as Later). The empty Today box is hidden in that view. Your saved open/closed choices are not changed.
 
+_Note: published a second time after GitHub's hosting step failed on the first attempt. No app changes._
+
 ---
 
 ## [0.85.1] — 2026-11-25
