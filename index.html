@@ -2068,14 +2068,14 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.83.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.84.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.83.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.84.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4139,7 +4139,7 @@ document.addEventListener('mouseout',function(e){
   if(to&&_mq.el.contains(to))return;
   mqStop();
 });
-setInterval(function(){remNotifyTick();if(!document.hidden){renderUpNext();if(currentTab==='planner')renderReminderBanner();}},30000);setTimeout(remNotifyTick,2500);
+setInterval(function(){remNotifyTick();planNotifyTick();if(!document.hidden){renderUpNext();if(currentTab==='planner')renderReminderBanner();}},30000);setTimeout(function(){remNotifyTick();planNotifyTick();},2500);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)renderUpNext();});
 
 function openDayPlan(ds,blockId){
@@ -5776,7 +5776,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.83.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.84.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -9496,12 +9496,57 @@ function remNotifyTick(){
     if(tm===null||nowM-tm>15)return;
     var key=r.id+'|'+today+'|'+r.time;
     if(sent[key])return;
-    try{new Notification('Reminder',{body:r.title+' \u00b7 '+remFmtTime(r.time)});}catch(e){}
+    appNotify('Reminder',r.title+' \u00b7 '+remFmtTime(r.time),'rem-'+r.id,function(){remOpen(r.id);});
     sent[key]=1;changed=true;
   });
   if(changed){
     Object.keys(sent).forEach(function(k){if(k.split('|')[1]!==today)delete sent[k];});
     localStorage.setItem('plannerRemNotified',JSON.stringify(sent));
+  }
+}
+
+// one browser notification; clicking it brings Planner to the front and runs go()
+function appNotify(title,body,tag,go){
+  try{
+    var n=new Notification(title,{body:body,tag:tag,icon:'icons/icon-192.png'});
+    n.onclick=function(){try{window.focus();}catch(e){}try{if(go)go();}catch(e){}n.close();};
+  }catch(e){}
+}
+function appNotifyTest(){appNotify('Planner','Notifications are working. You will see them like this while Planner is open.','test');}
+// -- Browser notifications for planned time: when a work block or meeting starts, with an optional heads-up before --
+function planNotifyOn(){return(featOn('planday')||featOn('meetings'))&&localStorage.getItem('plannerPlanNotify')==='1'&&remNotifySupported()&&Notification.permission==='granted';}
+function planLead(){var n=parseInt(localStorage.getItem('plannerPlanNotifyLead'),10);return(n===5||n===10||n===15)?n:0;}
+function planNotifyLead(v){localStorage.setItem('plannerPlanNotifyLead',String(parseInt(v,10)||0));planNotifyTick();}
+function planNotifyToggle(on){
+  if(!remNotifySupported())return;
+  if(!on){localStorage.setItem('plannerPlanNotify','0');renderRemSettings();return;}
+  Notification.requestPermission().then(function(p){
+    localStorage.setItem('plannerPlanNotify',p==='granted'?'1':'0');
+    renderRemSettings();
+    planNotifyTick();
+  });
+}
+function planNotifyTick(){
+  if(!planNotifyOn())return;
+  var today=todayStr(),nowM=dpMinNow(),lead=planLead(),sent={},changed=false;
+  try{sent=JSON.parse(localStorage.getItem('plannerPlanNotified')||'{}');}catch(e){}
+  // work blocks and meetings only: lunch, breaks and out-of-office blocks stay quiet
+  var blocks=getBlocksForDate(today).filter(function(b){return!b.away;});
+  dpItemsForDate(today,blocks).forEach(function(it){
+    var key=it.kind+'|'+it.id+'|'+today+'|'+it.start,d=it.start-nowM,mk;
+    if(d<=0&&d>-5&&nowM<it.end)mk='s';
+    else if(lead&&d>0&&d<=lead)mk='h';
+    else return;
+    if(sent[key+'|'+mk]||(mk==='h'&&sent[key+'|s']))return;
+    var meet=it.kind==='meeting',sub=it.sub?' \u00b7 '+it.sub:'';
+    var go=function(){if(featOn('planday'))openDayPlan(today);};
+    if(mk==='s')appNotify((meet?'Meeting now: ':'Now: ')+it.title,'Until '+dpFmtTime(it.end)+sub,'plan-'+it.id,go);
+    else appNotify((meet?'Meeting in ':'Next in ')+d+' min: '+it.title,dpFmtTime(it.start)+' to '+dpFmtTime(it.end)+sub,'plan-'+it.id,go);
+    sent[key+'|'+mk]=1;changed=true;
+  });
+  if(changed){
+    Object.keys(sent).forEach(function(k){if(k.split('|')[2]!==today)delete sent[k];});
+    localStorage.setItem('plannerPlanNotified',JSON.stringify(sent));
   }
 }
 
@@ -9541,9 +9586,15 @@ function renderRemSettings(){
     +sysRow('submit-timesheet','Remind me to submit my timesheet (Fridays)')
     +sysRow('leave-low','Warn me when my leave balance is low (Mondays)','<span style="font-size:11px;color:var(--muted)">at or below</span><input type="number" min="0" step="0.5" value="'+th+'" onchange="remLeaveThreshold(this.value)"><span style="font-size:11px;color:var(--muted)">days</span>');
   if(remNotifySupported()){
-    var denied=Notification.permission==='denied';
-    h+='<div class="rs-row"><label><input type="checkbox" '+(remNotifyOn()?'checked ':'')+(denied?'disabled ':'')+'onchange="remNotifyToggle(this.checked)">Browser notification at a reminder\'s time</label></div>'
-      +'<div class="rs-note">'+(denied?'Notifications are blocked for this site in your browser settings. ':'')+'Notifications only appear while the app is open in a browser tab.</div>';
+    var denied=Notification.permission==='denied',granted=Notification.permission==='granted';
+    h+='<div class="rs-row"><label><input type="checkbox" '+(remNotifyOn()?'checked ':'')+(denied?'disabled ':'')+'onchange="remNotifyToggle(this.checked)">Browser notification at a reminder\'s time</label></div>';
+    if(featOn('planday')||featOn('meetings')){
+      var pOn=planNotifyOn(),ld=planLead();
+      h+='<div class="rs-row"><label><input type="checkbox" '+(pOn?'checked ':'')+(denied?'disabled ':'')+'onchange="planNotifyToggle(this.checked)">Browser notification when a planned work block or meeting starts</label>'
+        +(pOn?'<select class="ev-input" style="height:30px;font-size:12px;width:auto" onchange="planNotifyLead(this.value)" title="Heads-up before it starts">'+[[0,'At the start only'],[5,'Also 5 min before'],[10,'Also 10 min before'],[15,'Also 15 min before']].map(function(o){return'<option value="'+o[0]+'"'+(ld===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>':'')+'</div>';
+    }
+    h+='<div class="rs-note">'+(denied?'Notifications are blocked for this site in your browser settings. ':'')+'Notifications only appear while Planner is open, in a tab or the app window (minimised is fine). Lunch, breaks and out-of-office blocks stay quiet. If nothing shows, check Windows Settings &gt; System &gt; Notifications: your browser must be allowed and Do not disturb off.'
+      +(granted&&(remNotifyOn()||planNotifyOn())?' <a href="#" style="color:var(--primary)" onclick="event.preventDefault();appNotifyTest()">Send a test notification</a>':'')+'</div>';
   }
   el.innerHTML=h;
 }

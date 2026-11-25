@@ -5,6 +5,18 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.84.0] — 2026-11-25
+
+### Added
+- Browser notifications for planned time (Settings > Reminders): "Browser notification when a planned work block or meeting starts" sends a notification as each work block or meeting in today's plan starts ("Now: Tender X - until 10:00", with the block's task or goal). An optional heads-up 5, 10 or 15 minutes before can be added. Lunch, breaks and out-of-office blocks stay quiet, and each item notifies once.
+- "Send a test notification" link in Settings > Reminders, to check that Windows and the browser let notifications through.
+
+### Changed
+- Clicking a notification brings Planner to the front: a planned-time notification opens today's Plan Day, and a reminder notification opens the reminder.
+- The notification note in Settings > Reminders now says notifications work while Planner is open in a tab or the app window (minimised is fine), and points to the Windows notification settings if none show.
+
+---
+
 ## [0.83.1] — 2026-11-25
 
 ### Fixed
