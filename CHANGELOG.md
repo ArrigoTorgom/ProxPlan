@@ -5,6 +5,17 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.87.0] — 2026-11-25
+
+### Added
+- The calendar on the Projects tab now works like the one in To Do. Click any day, past days included, to filter the open project's task list to the tasks due that day. The list scrolls into view if it is off screen. "Show all" clears the day, and "All projects that day" opens To Do with that day picked.
+
+### Changed
+- On the Projects tab, the calendar's task badges now count only the open project's tasks. Leave and busy shading still reflect your whole workload.
+- Picking a different project clears the picked day.
+
+---
+
 ## [0.86.0] — 2026-11-25
 
 ### Added

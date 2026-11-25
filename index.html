@@ -1342,7 +1342,8 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 .nt-open .nt-body{min-height:190px;max-height:60vh;}
 .tk-side.nt-open .tk-sh input.tk-title{font-size:16px;}
 .nt-open.nt-stack .nt-ex{grid-template-columns:minmax(0,1fr);gap:4px;}.nt-open.nt-stack .nt-body{min-height:140px;}
-.proj-side .tk-d.live,.proj-side .tk-d.past{cursor:default;}
+.proj-side .tk-d.live,.proj-side .tk-d.past{cursor:pointer;}
+.project-group-body>.tk-filter{padding:8px 16px 2px;margin:0;}
 .rt-pop{position:fixed;z-index:950;display:none;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,.22);}
 .rt-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;}
 .rt-row{display:flex;gap:7px;}
@@ -2087,7 +2088,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.86.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.87.0</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
@@ -2095,7 +2096,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.86.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.87.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -5243,7 +5244,7 @@ function renderProjectsTab(){
 }
 
 
-function selectProject(name){if(name!==_selectedProject){_tkSel='';_ntSel='';}_selectedProject=name;var _pw=document.getElementById('projectsWrap');if(_pw)_pw.classList.remove('proj-nav-open');renderProjectsTab();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}
+function selectProject(name){if(name!==_selectedProject){_tkSel='';_ntSel='';_pjDayFilter='';}_selectedProject=name;var _pw=document.getElementById('projectsWrap');if(_pw)_pw.classList.remove('proj-nav-open');renderProjectsTab();if(window.innerWidth<=700&&_projSidebarOpen)toggleProjSidebar();}
 function renderProjectDetail(name){
   var projects=getProjects();
   var proj=projects.find(function(p){return p.name===name;});
@@ -5810,7 +5811,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.86.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.87.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6565,7 +6566,20 @@ function tkInsight(){
 }
 
 // -- Week strip --
-function tkPickDay(ds){if(currentTab!=='tasks')return;_tkDayFilter=(_tkDayFilter===ds)?'':ds;renderTasksPanel();}
+function tkPickDay(ds){
+  if(currentTab==='projects'){
+    if(!_selectedProject)return;_pjDayFilter=(_pjDayFilter===ds)?'':ds;_refreshTaskViews();
+    // bring the project's task list into view when it is off screen
+    var bar=_pjDayFilter&&document.querySelector('#projectsWrap .tk-filter'),g=bar&&bar.closest('.project-group');
+    if(g){var top=g.getBoundingClientRect().top,low=bar.getBoundingClientRect().bottom+90;if(top<72||low>window.innerHeight)window.scrollTo({top:Math.max(0,window.scrollY+top-80),behavior:'smooth'});}
+    return;
+  }
+  if(currentTab!=='tasks')return;_tkDayFilter=(_tkDayFilter===ds)?'':ds;renderTasksPanel();
+}
+// Projects tab: the day picked in its calendar (filters the open project's task list)
+var _pjDayFilter='';
+// from a day picked on the Projects tab, see every project's tasks for that day in To Do
+function pjDayToTodo(ds){_pjDayFilter='';_tkDayFilter=ds;_tkSel='';switchTab('tasks');if(_taskSortMode!=='urgency')setTaskSort('urgency');}
 function tkDragStart(e,id){_tkDragId=id;try{e.dataTransfer.setData('text/plain',id);e.dataTransfer.effectAllowed='move';}catch(x){}}
 function tkDragEnd(){_tkDragId='';var c=document.querySelectorAll('.tk-day.drop');for(var i=0;i<c.length;i++)c[i].classList.remove('drop');}
 function tkDropOnDay(e,ds){
@@ -8639,7 +8653,7 @@ function tkMonthHtml(y,m,map,today,showYear){
     if(info.n)tip+=(tip?' - ':'')+info.n+' task'+(info.n===1?'':'s')+(info.p?' ('+tkPriSum(info.p)+')':'')+(info.h?', '+tkFmtH(info.h)+(cap?' of '+tkFmtH(cap):''):'');
     if(mt)tip+=(tip?' - ':'')+tkFmtH(mt)+' in meetings';
     var live=ds>=today;
-    h+='<span class="tk-d'+(we?' we':'')+(lv?(lv.len==='half'?' lh':' l'):'')+load+(ds===today?' t':'')+(_tkDayFilter===ds&&currentTab==='tasks'?' on':'')+(live?' live':' past')+'"'+(tip?' title="'+escH(tip)+'"':'')
+    h+='<span class="tk-d'+(we?' we':'')+(lv?(lv.len==='half'?' lh':' l'):'')+load+(ds===today?' t':'')+((currentTab==='tasks'?_tkDayFilter:currentTab==='projects'?_pjDayFilter:'')===ds?' on':'')+(live?' live':' past')+'"'+(tip?' title="'+escH(tip)+'"':'')
       +' onclick="tkPickDay(\''+ds+'\')"'+(live?' ondragover="event.preventDefault();this.classList.add(\'drop\')" ondragleave="this.classList.remove(\'drop\')" ondrop="tkDropOnDay(event,\''+ds+'\')"':'')+'>'+d+tkRings(info.p)+'</span>';
   }
   return h+'</div>';
@@ -8653,8 +8667,9 @@ function tkOutlookHtml(){
   if(col!=='1'){
     h+='<div class="project-group-body tk-cal-body">';
     var today=todayStr(),map={};
-    tkVisibleTasks().forEach(function(t){
-      if(t.done||t.someday)return;
+    var pjOnly=(currentTab==='projects'&&_selectedProject)?_selectedProject:'';
+    (pjOnly?getTasks():tkVisibleTasks()).forEach(function(t){
+      if(t.done||t.someday||(pjOnly&&t.project!==pjOnly))return;
       var b=tkBucket(t),ds=b==='today'?today:((t.waiting||!t.dueDate)?'':t.dueDate);
       if(!ds)return;
       var e=map[ds]||(map[ds]={h:0,n:0});
@@ -8662,7 +8677,7 @@ function tkOutlookHtml(){
     });
     var ny=tmcYear,nm=tmcMonth+1;if(nm>11){nm=0;ny++;}
     h+='<div class="tk-mos"><div class="tk-mo">'+tkMonthHtml(tmcYear,tmcMonth,map,today,true)+'</div><div class="tk-mo">'+tkMonthHtml(ny,nm,map,today,ny!==tmcYear)+'</div></div>';
-    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="gh"></i>Half day</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><b class="tk-bd hi">2</b><b class="tk-bd md">1</b><b class="tk-bd lo">1</b>Tasks due, coloured by the most urgent (high, medium, low)</span></div>';
+    h+='<div class="tk-lg"><span><i class="g"></i>Leave / holiday</span><span><i class="gh"></i>Half day</span><span><i class="a"></i>Busy</span><span><i class="r"></i>Over capacity</span><span><b class="tk-bd hi">2</b><b class="tk-bd md">1</b><b class="tk-bd lo">1</b>Tasks due'+(pjOnly?' on this project':'')+', coloured by the most urgent (high, medium, low)</span></div>';
     var info=(typeof lvBalanceInfo==='function')?lvBalanceInfo():null;
     h+='<div class="tk-bal">'+(info?'Leave balance <b>'+lvFmt(info.cur.bal)+'</b> days'+(info.proj?' &middot; '+lvFmt(info.proj.bal)+' after booked':''):'Leave balance not set up')+' <a href="#" onclick="openLeaveModal(todayStr());return false;">Book leave</a></div>';
     h+='</div>';
@@ -8782,11 +8797,17 @@ function renderProjectTaskGroupHtml(project,hideName){
     var countCls=overdueCount>0?'task-count overdue':'task-count';
     var countLabel=overdueCount>0?openCount+' open · '+overdueCount+' overdue':openCount+' open';
     var qaId='qa_'+project.replace(/\W/g,'_');
+    var dayBar='';
+    if(_pjDayFilter&&project===_selectedProject){
+      var fd=_pjDayFilter;
+      visible=pt.filter(function(t){if(t.done||t.someday)return false;return fd===today?tkBucket(t)==='today':(t.dueDate===fd&&!t.waiting);}).sort(tkSort);
+      dayBar='<div class="tk-filter">Showing '+tkShort(fd)+' <button class="task-act-btn" onclick="tkPickDay(\''+fd+'\')">Show all</button> <button class="task-act-btn" onclick="pjDayToTodo(\''+fd+'\')">All projects that day</button></div>';
+    }
     visible=visible.map(function(t){return Object.assign({},t,{quickNoteOpen:!!_quickNoteStates[t.id],subtaskAddOpen:!!_subtaskAddOpen[t.id]});});
     var taskRows=visible.length===0
       ?'<div class="project-empty">'+(filter==='done'?'No completed tasks':'No open tasks')+'</div>'
       :visible.map(function(t){return makeFlatTaskRow(t,true);}).join('');
-    return'<div class="project-group"><div class="project-group-header"><span class="'+(hideName?'proj-card-title' : 'project-group-name')+'" style="'+(hideName?'margin-bottom:0;flex:1':'')+'">'+(hideName?'Tasks':escH(project))+'</span><span class="'+countCls+'">'+countLabel+'</span><div class="task-filter"><button class="'+(filter==='active'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'active\')">Active</button><button class="'+(filter==='all'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'all\')">All</button><button class="'+(filter==='done'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'done\')">Done</button></div></div><div class="project-group-body">'+taskRows+'</div><div class="group-quick-add"><input type="text" id="'+qaId+'" placeholder="+ Quick add to '+escH(project)+' - try: fri !high ~2h" oninput="tkQuickPreview(\''+escA(project)+'\',\''+qaId+'\')" onkeydown="if(event.key===\'Enter\') quickAddTask(\''+escA(project)+'\',\''+qaId+'\')"><button class="btn sm secondary-btn" onclick="quickAddTask(\''+escA(project)+'\',\''+qaId+'\')">Add</button></div><div class="tk-prev tk-qprev" id="qp_'+qaId+'"></div></div>';
+    return'<div class="project-group"><div class="project-group-header"><span class="'+(hideName?'proj-card-title' : 'project-group-name')+'" style="'+(hideName?'margin-bottom:0;flex:1':'')+'">'+(hideName?'Tasks':escH(project))+'</span><span class="'+countCls+'">'+countLabel+'</span><div class="task-filter"><button class="'+(filter==='active'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'active\')">Active</button><button class="'+(filter==='all'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'all\')">All</button><button class="'+(filter==='done'?'active':'')+'" onclick="setTaskFilter(\''+escA(project)+'\',\'done\')">Done</button></div></div><div class="project-group-body">'+dayBar+taskRows+'</div><div class="group-quick-add"><input type="text" id="'+qaId+'" placeholder="+ Quick add to '+escH(project)+' - try: fri !high ~2h" oninput="tkQuickPreview(\''+escA(project)+'\',\''+qaId+'\')" onkeydown="if(event.key===\'Enter\') quickAddTask(\''+escA(project)+'\',\''+qaId+'\')"><button class="btn sm secondary-btn" onclick="quickAddTask(\''+escA(project)+'\',\''+qaId+'\')">Add</button></div><div class="tk-prev tk-qprev" id="qp_'+qaId+'"></div></div>';
 }
 function renderTasksPanel(){
   renderTasksSummary();
