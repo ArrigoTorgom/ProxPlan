@@ -5,6 +5,20 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.84.1] — 2026-11-25
+
+### Added
+- "Check for updates" link next to the version number at the bottom of Settings. It shows the "new version ready" message if there is one, or confirms you have the latest version.
+
+### Changed
+- Planner now checks for a new version every 5 minutes (was every 30) and whenever you switch back to it (at most once every 2 minutes), so the "new version ready" message shows soon after a release.
+- The update check always asks the server, never the offline copy kept by the service worker (sw.js now leaves `?vcheck` requests to the network).
+
+### Fixed
+- Settings rows with a drop-down ("Browser notification when a planned work block or meeting starts", "Book General tasks to") were taller than the other rows. Every row is the same height again.
+
+---
+
 ## [0.84.0] — 2026-11-25
 
 ### Added

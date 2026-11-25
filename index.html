@@ -1393,6 +1393,7 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 .rs-row label{display:flex;align-items:center;gap:7px;cursor:pointer;flex:1;min-width:150px;}
 .rs-row input[type=time],.rs-row input[type=number]{height:30px;box-sizing:border-box;font-size:12px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:inherit;}
 .rs-row input[type=number]{width:64px;}
+.rs-row select.ev-input{margin:0;height:30px;font-size:12px;}
 .rs-note{font-size:11px;color:var(--muted);margin:2px 0 8px;line-height:1.4;}
 .week-label .wl-extra,.week-label .wl-word{display:none;}
 .week-label{min-width:0!important;font-size:12px;}
@@ -2068,14 +2069,15 @@ button.tk-chip:hover{border-color:var(--primary);color:var(--primary);}
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.84.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.84.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
+      <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.84.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.84.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2698,14 +2700,27 @@ function pwaShowUpdate(v){
 function pwaCheckUpdate(force){
   var now=Date.now();
   if(!pwaSWok()||navigator.onLine===false)return;
-  if(!force&&now-_pwaLastCheck<30*60*1000)return;
+  if(!force&&now-_pwaLastCheck<2*60*1000)return;
   _pwaLastCheck=now;
   var cur=document.getElementById('appVerBadge');
   if(!cur)return;
-  fetch(location.pathname,{cache:'no-cache'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
+  pwaFetchVer().then(function(v){if(v&&v!==cur.textContent.trim())pwaShowUpdate(v);}).catch(function(){});
+}
+// the version of the live app (?vcheck makes the service worker leave it to the network, never the offline copy)
+function pwaFetchVer(){
+  return fetch(location.pathname+'?vcheck=1',{cache:'no-cache'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
     var m=/id="appVerBadge"[^>]*>(V\d+\.\d+\.\d+)</.exec(t);
-    if(m&&m[1]!==cur.textContent.trim())pwaShowUpdate(m[1]);
-  }).catch(function(){});
+    return m?m[1]:'';
+  });
+}
+function pwaManualCheck(){
+  var cur=((document.getElementById('appVerBadge')||{}).textContent||'').trim();
+  _pwaLastCheck=Date.now();
+  pwaFetchVer().then(function(v){
+    if(!v){remToast('Could not check for updates from here.');return;}
+    if(v!==cur){_pwaDismissed='';pwaShowUpdate(v);}
+    else remToast('You have the latest version ('+cur+').');
+  }).catch(function(){remToast('Could not check for updates. Check your connection.');});
 }
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_pwaPrompt=e;pwaRefresh();});
 window.addEventListener('appinstalled',function(){_pwaPrompt=null;pwaAutoPersist();pwaRefresh();});
@@ -2718,7 +2733,8 @@ if(pwaSWok()){
     pwaTheme();
     pwaAutoPersist();
     setTimeout(function(){pwaCheckUpdate(true);},8000);
-    setInterval(function(){pwaCheckUpdate(false);},30*60*1000+5000);
+    setInterval(function(){pwaCheckUpdate(false);},5*60*1000);
+    window.addEventListener('focus',function(){pwaCheckUpdate(false);});
     document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')pwaCheckUpdate(false);});
   });
 }
@@ -5776,7 +5792,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.84.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.84.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{

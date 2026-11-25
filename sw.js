@@ -89,6 +89,8 @@ self.addEventListener('fetch', function (e) {
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  /* The app's "is there a new version?" check always goes straight to the network, never the offline copy. */
+  if (url.searchParams.has('vcheck')) return;
   if (req.mode === 'navigate' || isApp(url)) {
     e.respondWith(appFetch(req));
     return;
