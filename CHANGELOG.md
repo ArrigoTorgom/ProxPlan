@@ -5,6 +5,23 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.89.1] — 2026-11-26
+
+### Changed
+- "Log Hours" in Plan Day now opens the Timesheet with the planned hours and activities already filled in, and the cursor in Notes. You only need to add notes, make any edits and press Save Entry. Nothing is filled in if the day is already logged or you have unsaved edits for it. The Import button is still there to refill from the plan.
+
+### Fixed
+- Opening the Timesheet on a different day (from Plan Day, the calendar "+ Log" or history) could briefly load the unsaved draft from the previously shown day, then leave that day's hours on the new day. The draft or saved log now only fills the form if the date hasn't changed.
+
+---
+
+## [0.89.0] — 2026-11-26
+
+### Added
+- Plan Day has a "Log Hours" button, to the left of "Open Tasks". It saves the plan, closes Plan Day and opens the Timesheet on that day, where the Import banner can pull in the planned time. It is hidden when the Timesheet feature is switched off.
+
+---
+
 ## [0.88.1] — 2026-11-26
 
 ### Changed
