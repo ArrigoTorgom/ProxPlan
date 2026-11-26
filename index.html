@@ -252,6 +252,8 @@ body.app-dark .leave-pill{background:rgba(34,197,94,.12);color:#4ade80;}
 .dp-title .d{font-size:12px;color:var(--muted);}
 .dp-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:2px 4px;}
 .dp-close:hover{color:var(--text);}
+.dp-todo-btn{background:none;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;height:26px;padding:0 10px;margin:0;cursor:pointer;color:var(--muted);font-size:12px;font-weight:600;font-family:inherit;line-height:1;white-space:nowrap;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.dp-todo-btn:hover{color:var(--primary);border-color:var(--primary);}
 .dp-hint{font-size:11px;color:var(--muted);padding:8px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-style:italic;}
 .dp-main{display:flex;align-items:stretch;}.dp-body{display:flex;flex:1;min-width:0;max-height:56vh;overflow-y:auto;}
 .dp-hours{width:44px;flex-shrink:0;position:relative;border-right:1px solid var(--border);}
@@ -1631,6 +1633,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
       <button class="dp-nav-btn" onclick="dpShiftDay(-1)" title="Previous day">&#8249;</button>
       <div class="dp-title"><div class="n" id="dpDayName"></div><div class="d" id="dpDayDate"></div></div>
       <button class="dp-nav-btn" onclick="dpShiftDay(1)" title="Next day">&#8250;</button>
+      <button class="dp-todo-btn ft-todo" onclick="dpToTodo()" title="Open the To Do list for this day">Open Tasks</button>
       
       <button class="dp-close" onclick="closeDayPlan()" title="Close">&#215;</button>
     </div>
@@ -2088,7 +2091,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.87.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.88.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
@@ -2096,7 +2099,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.87.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.88.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -4197,6 +4200,12 @@ function closeDayPlan(){
   var ed=document.getElementById('entryDate');
   if(ed)renderImportRow(ed.value);
 }
+function dpToTodo(){
+  var ds=dpDate;if(!ds||!featOn('todo'))return;
+  closeDayPlan();
+  _pjDayFilter='';_tkDayFilter=(ds===todayStr())?'':ds;_tkSel='';
+  switchTab('tasks');if(_taskSortMode!=='urgency')setTaskSort('urgency');
+}
 function dpShiftDay(delta){
   dpAutoSave();
   var d=new Date(dpDate+'T00:00:00');d.setDate(d.getDate()+delta);
@@ -5813,7 +5822,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.87.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.88.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6349,9 +6358,10 @@ function tkParse(raw){
   o.title=t?t.charAt(0).toUpperCase()+t.slice(1):raw.trim();
   return o;
 }
-function tkDismiss(k){_tkOff[k]=true;renderTaskPreview();var i=document.getElementById('newTaskTitle');if(i)i.focus();}
+function tkDismiss(k){if(k==='auto'){var i0=document.getElementById('newTaskTitle');_tkOff.auto=i0?(suggestProject(tkParse(i0.value).title)||''):'';}else _tkOff[k]=true;renderTaskPreview();var i=document.getElementById('newTaskTitle');if(i)i.focus();}
 function tkTogToday(){_tkToday=!_tkToday;if(!_tkToday)_tkKeep=false;renderTaskPreview();}
 function tkTogKeep(){_tkKeep=!_tkKeep;if(_tkKeep)_tkToday=true;renderTaskPreview();}
+function tkAutoProj(title){var s=suggestProject(title)||'';return(s&&_tkOff.auto===s)?'':s;}
 function tkChip(k,label,cls){return'<span class="tk-chip on'+(cls?' '+cls:'')+'">'+label+(k?'<b class="x" onclick="tkDismiss(\''+k+'\')" title="Ignore this">&times;</b>':'')+'</span>';}
 function tkProjHtml(name){var c=(typeof projColorForName==='function')?projColorForName(name):'#888';return'<span class="tk-proj"><i style="background:'+c+'"></i>'+escH(name)+'</span>';}
 function renderTaskPreview(){
@@ -6359,8 +6369,8 @@ function renderTaskPreview(){
   if(!el||!inp)return;
   if(!inp.value.trim()){el.classList.remove('show');el.innerHTML='';return;}
   var p=tkParse(inp.value),h='<span class="tk-lbl">Understood:</span>';
-  var proj=p.project||suggestProject(p.title)||'General';
-  h+=tkChip(p.project?'proj':'',tkProjHtml(proj)+(p.project?'':' <em>auto</em>'));
+  var auto=p.project?'':tkAutoProj(p.title),proj=p.project||auto||'General';
+  h+=tkChip(p.project?'proj':(auto?'auto':''),tkProjHtml(proj)+(auto?' <em>auto</em>':''));
   if(p.waiting){h+=tkChip('wait','Waiting on '+escH(p.waiting),'wt');if(p.date)h+=tkChip('date','Chase '+tkShort(p.date),'dt');}
   else if(p.date)h+=tkChip('date','Due '+tkShort(p.date),'dt');
   if(p.pri)h+=tkChip('pri',p.pri==='medium'?'Medium':p.pri.charAt(0).toUpperCase()+p.pri.slice(1),'pr '+p.pri);
@@ -6389,7 +6399,7 @@ function addTask(){
   var raw=inp.value.trim();
   if(!raw){inp.focus();return;}
   var p=tkParse(raw);
-  var project=p.project||suggestProject(p.title)||'General';
+  var project=p.project||tkAutoProj(p.title)||'General';
   tkCreateParsed(p,project,p.today||_tkToday,p.persist||_tkKeep);
   inp.value='';_tkOff={};_tkToday=false;_tkKeep=false;
   renderTaskPreview();
@@ -8897,7 +8907,7 @@ function suggestProject(title){
   });
   return bestScore>0?best:null;
 }
-function onNewTaskTitleInput(){renderTaskPreview();}
+function onNewTaskTitleInput(){var i=document.getElementById('newTaskTitle');if(i&&!i.value.trim())_tkOff={};renderTaskPreview();}
 function onQtTitleInput(){
   var title=document.getElementById('qtTitle').value;
   var suggestion=suggestProject(title);

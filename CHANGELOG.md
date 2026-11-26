@@ -5,6 +5,21 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.88.1] — 2026-11-26
+
+### Changed
+- The Plan Day button is renamed "Open Tasks" and no longer has an icon. It is the same height as the day arrows and lines up with them.
+
+---
+
+## [0.88.0] — 2026-11-26
+
+### Added
+- Plan Day has a "To Do" button between the next-day arrow and the close button. It closes Plan Day and opens the To Do list. For any day other than today, the list is filtered to that day.
+- When you add a task, the auto-suggested project chip now has an ×. Clicking it drops the suggestion, so the task goes to General. The suggestion comes back when you clear the box and type a new task, or when the text suggests a different project. A project you name with @ still works as before.
+
+---
+
 ## [0.87.1] — 2026-11-26
 
 ### Fixed
