@@ -2088,7 +2088,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.87.0</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.87.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
@@ -2096,7 +2096,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.87.0%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.87.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -2855,9 +2855,11 @@ document.querySelectorAll('.editable[data-ph]').forEach(function(el){
     if(el.innerHTML==='<br>'||el.innerHTML==='<br/>'||el.innerHTML==='<div><br></div>'||el.innerHTML.trim()==='')el.innerHTML='';
   });
 });
-function savePlanner(){var k=plannerKey(currentMonday);var d={};PLAN_SECTIONS.forEach(function(s){d[s]=document.getElementById('sec-'+s).innerHTML;});localStorage.setItem(k,JSON.stringify(d));}
+// the week whose saved text is in the boxes now; empty until loadPlanner has filled them
+var _plannerLoadedKey='';
+function savePlanner(){var k=plannerKey(currentMonday);if(_plannerLoadedKey!==k)return;var d={};PLAN_SECTIONS.forEach(function(s){d[s]=document.getElementById('sec-'+s).innerHTML;});localStorage.setItem(k,JSON.stringify(d));}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(savePlanner,700);}
-function loadPlanner(){var raw=localStorage.getItem(plannerKey(currentMonday));var d=raw?JSON.parse(raw):{};PLAN_SECTIONS.forEach(function(s){document.getElementById('sec-'+s).innerHTML=d[s]||'';});}
+function loadPlanner(){_plannerLoadedKey='';var k=plannerKey(currentMonday),raw=localStorage.getItem(k);var d=raw?JSON.parse(raw):{};PLAN_SECTIONS.forEach(function(s){document.getElementById('sec-'+s).innerHTML=d[s]||'';});_plannerLoadedKey=k;}
 
 function autoFillLastWeek(){
   var el=document.getElementById('sec-lastWeek');
@@ -5811,7 +5813,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.87.0';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.87.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -9749,6 +9751,8 @@ function snapshotBeforeOverwrite(){
     });
   }).catch(function(){});
 }
+// resolves with the promise's value, or '__timeout' if it takes longer than ms
+function _syncWait(p,ms){return Promise.race([p,new Promise(function(r){setTimeout(function(){r('__timeout');},ms);})]);}
 var _syncNeedsReconnect=false;
 var _syncLastSyncedAt=null;
 async function connectSyncFile(){
@@ -9780,7 +9784,7 @@ async function disconnectSyncFile(){
 async function writeSyncFile(force){
   var handle=await getSyncHandle();if(!handle)return;
   try{
-    var perm=await handle.queryPermission({mode:'readwrite'});
+    var perm=await _syncWait(handle.queryPermission({mode:'readwrite'}),3000);
     if(perm!=='granted'&&force)perm=await handle.requestPermission({mode:'readwrite'});
     if(perm!=='granted'){_syncNeedsReconnect=true;renderSyncStatus();return;}
     var payload=buildSyncPayload();
@@ -9795,10 +9799,10 @@ async function writeSyncFile(force){
 async function readSyncFile(){
   var handle=await getSyncHandle();if(!handle)return false;
   try{
-    var perm=await handle.queryPermission({mode:'read'});
+    var perm=await _syncWait(handle.queryPermission({mode:'read'}),3000);
     if(perm!=='granted'){_syncNeedsReconnect=true;renderSyncStatus();return false;}
-    var file=await handle.getFile();
-    var text=await file.text();
+    var file=await _syncWait(handle.getFile(),6000);if(file==='__timeout')return false;
+    var text=await _syncWait(file.text(),6000);if(text==='__timeout')return false;
     var remote;try{remote=JSON.parse(text);}catch(e){return false;}
     var localStamp=Number(_origGetItem.call(localStorage,'_syncStamp')||0);
     if(!remote.savedAt||remote.savedAt<=localStamp)return false;
@@ -10696,8 +10700,9 @@ document.addEventListener('keydown',function(e){
 });
 (async function(){
   if(window.showSaveFilePicker){
-    var _bootHandle=await getSyncHandle();
-    if(_bootHandle){await readSyncFile();}
+    // a sync file that does not answer (permission or file stuck) must never stop the app from starting
+    var _bootHandle=await _syncWait(getSyncHandle(),3000);
+    if(_bootHandle&&_bootHandle!=='__timeout'){await _syncWait(readSyncFile(),15000);}
   }
   _syncBootDone=true;
   initAppearance();

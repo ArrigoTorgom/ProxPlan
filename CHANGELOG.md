@@ -5,6 +5,14 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.87.1] — 2026-11-26
+
+### Fixed
+- The app could stop half-way through starting up, leaving This Week without its day columns and with empty planning boxes. This happened when Chrome never answered its permission check for the sync file, so startup waited forever. Sync file checks now give up after a few seconds and the app carries on. Sync shows "Permission needed" in Settings instead.
+- The planning boxes on This Week can no longer save over a week whose notes were not loaded. Before, moving to another week from a half-loaded page saved the empty boxes over that week's notes.
+
+---
+
 ## [0.87.0] — 2026-11-25
 
 ### Added
