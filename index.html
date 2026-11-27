@@ -1018,6 +1018,7 @@ body.app-dark .dp-kind.k-ooo:hover{border-color:#9fb6c2;color:#9fb6c2;}
 .tasks-wrap{display:grid!important;grid-template-columns:minmax(0,1fr) 320px;gap:16px;max-width:none;align-items:start;}
 .tk-in{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:5px 7px 5px 5px;transition:border-color .12s;}.tk-in .btn{box-sizing:border-box;height:24px;padding:0 12px;font-size:12px;border-radius:7px;flex-shrink:0;}
 .tk-in:focus-within{border-color:var(--primary);}
+.tk-in input.tk-act-in{flex:0 0 180px;width:auto;height:24px;font-size:12px;border-left:1px solid var(--border);border-radius:0;}
 .tk-in input{box-sizing:border-box;height:28px;flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--text);font-size:14px;padding:0 8px;border-radius:6px;font-family:inherit;}
 .tk-prev{display:none;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 2px 0;font-size:11px;color:var(--muted);}
 .tk-prev.show{display:flex;}
@@ -1910,7 +1911,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 <div class="tasks-wrap">
   <div class="tasks-col-left">
   <div class="tasks-summary" id="tasksSummary"></div>
-  <div class="tk-in"><input type="text" id="newTaskTitle" placeholder="Add a task - try: Send RFI response @TenderX fri !high ~2h" maxlength="160" oninput="onNewTaskTitleInput()" autocomplete="off"><button class="btn primary-btn sm" onclick="addTask()">Add</button></div>
+  <div class="tk-in"><input type="text" id="newTaskTitle" placeholder="Add a task - try: Send RFI response @TenderX fri !high ~2h" maxlength="160" oninput="onNewTaskTitleInput()" autocomplete="off"><input type="text" id="newTaskAct" class="cb-input tk-act-in" data-cb="act" placeholder="Activity (optional)" autocomplete="off" title="Activity used when this task is planned into a block" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this);if(event.key==='Enter'&&!event.defaultPrevented)addTask();" onblur="cbBlur(this)"><button class="btn primary-btn sm" onclick="addTask()">Add</button></div>
   <div class="tk-prev" id="taskPreview"></div>
   <div class="tk-week" id="taskWeekStrip"></div>
   <div class="sort-bar" id="taskSortBar"><span style="font-size:11px;color:var(--muted);font-weight:600">View:</span><button id="tsort_urgency" class="sort-btn active" onclick="setTaskSort('urgency')">Urgency</button><button id="tsort_project" class="sort-btn" onclick="setTaskSort('project')">Project</button><button id="tsort_due" class="sort-btn" onclick="setTaskSort('due')">Due Date</button><button id="tsort_priority" class="sort-btn" onclick="setTaskSort('priority')">Priority</button><select id="groupFilterTasks" class="sm-select" style="margin-left:auto" onchange="handleGroupFilterChange(this)"></select></div>
@@ -2092,7 +2093,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
 </div>
   <div class="card" style="margin:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.89.1</span>
+      <span style="font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-light);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;letter-spacing:.04em" id="appVerBadge">V0.90.1</span>
       <span style="font-size:11px;color:var(--muted)">ProXPlan</span>
       <a href="#" onclick="event.preventDefault();pwaManualCheck()" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Check for updates</a>
       <a href="https://github.com/ArrigoTorgom/proxplan/blob/main/CHANGELOG.md" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--border)">Changelog ↗</a>
@@ -2100,7 +2101,7 @@ body.app-dark .qs-k.qs-task{color:#4ade80;background:rgba(34,197,94,.15);border-
     <div style="display:flex;gap:6px;align-items:center">
       <button class="btn secondary-btn sm" onclick="startTour()">&#x1F9ED; Take the tour</button>
       <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Feature%20Request" class="btn secondary-btn sm" style="text-decoration:none">💡 Request a feature</a>
-      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.89.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
+      <a href="mailto:AFadda@proxawater.com?subject=ProXPlan%20Bug%20Report&body=Version%3A%20V0.90.1%0ADescribe%20the%20bug%3A%0A" class="btn secondary-btn sm" style="text-decoration:none">🐛 Report a bug</a>
     </div>
   </div>
 </div>
@@ -3932,12 +3933,12 @@ function dpPlanTask(taskId){
   var g=gaps[0],want=60,dur=Math.min(want,g.end-g.start);
   var bp=tkBlockProj(t),projOk=!!bp;
   if(projOk){
-    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:'',start:g.start,dur:dur,goal:'',taskId:t.id});
+    dpBlocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:t.activity||'',start:g.start,dur:dur,goal:'',taskId:t.id});
     dpPersist();dpSelectedBlock=null;dpNewRange=null;
     renderDayPlan();renderCalendarShell();
     var ed=document.getElementById('entryDate');if(ed)renderImportRow(ed.value);
   }else{
-    dpNewRange={start:g.start,dur:dur,goal:'',taskId:t.id};
+    dpNewRange={start:g.start,dur:dur,goal:'',activity:t.activity||'',taskId:t.id};
     dpSelectedBlock='new';
     renderDayPlan();
   }
@@ -4201,19 +4202,24 @@ function closeDayPlan(){
   var ed=document.getElementById('entryDate');
   if(ed)renderImportRow(ed.value);
 }
+function tsDraftUsed(d){
+  if(!d)return false;
+  if(String(d.notes||'').trim())return true;
+  var a=d.allocs||{};
+  return Object.keys(a).some(function(k){var x=a[k]||{};return(parseFloat(x.hrs)||0)>0||(x.extras||[]).some(function(e){return(parseFloat(e.hrs)||0)>0;});});
+}
 function dpToLog(){
   var ds=dpDate;if(!ds||!featOn('timesheet'))return;
   closeDayPlan();
-  var dr=getDraft(),fresh=!getLogsForDate(ds)&&!(dr&&dr.date===ds);
-  openTimeLogForDay(ds);
+  switchTab('tracker');
+  var dr=getDraft(),tot=dpBlockTotalsForDate(ds);
+  var fresh=!getLogsForDate(ds)&&!(dr&&dr.date===ds&&tsDraftUsed(dr))&&Object.keys(tot).some(function(k){return tot[k].hours>0;});
+  if(fresh&&dr&&dr.date===ds)localStorage.removeItem('plannerTimeDraft');
+  document.getElementById('entryDate').value=ds;
+  applyDraftOrLog(ds);
   if(!fresh)return;
-  requestAnimationFrame(function(){setTimeout(function(){
-    if(currentTab!=='tracker'||document.getElementById('entryDate').value!==ds)return;
-    var tot=dpBlockTotalsForDate(ds);
-    if(!Object.keys(tot).some(function(k){return tot[k].hours>0;}))return;
-    importPlannedIntoLog();
-    var n=document.getElementById('entryNotes');if(n)n.focus({preventScroll:true});
-  },0);});
+  importPlannedIntoLog();
+  var n=document.getElementById('entryNotes');if(n)n.focus({preventScroll:true});
 }
 function dpToTodo(){
   var ds=dpDate;if(!ds||!featOn('todo'))return;
@@ -4496,7 +4502,7 @@ function cbRender(inp,showAll){
 function cbClose(){var d=document.getElementById('cbDrop');if(d)d.classList.remove('open');_cb=null;}
 function cbFocus(inp){cbRender(inp,true);}
 function cbInput(inp){cbRender(inp,false);}
-function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();}
+function cbPick(inp,val){inp.value=val;inp.dataset.valid=val;cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();if(inp.dataset.tk)tkSetAct(inp.dataset.tk,inp.value);if(inp.id==='dpProj')dpRefreshTaskSel();}
 function cbResolve(inp){
   if(!inp)return;
   var txt=inp.value.trim();
@@ -4508,7 +4514,7 @@ function cbResolve(inp){
   if(f.length===1){inp.value=f[0];inp.dataset.valid=f[0];return;}
   inp.value=inp.dataset.valid||'';
 }
-function cbBlur(inp){cbResolve(inp);cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();}
+function cbBlur(inp){cbResolve(inp);cbClose();if(inp.id==='dpProj'||inp.id==='dpActivity'||inp.id==='dpMtProj'||inp.id==='dpMtActivity')dpCommit();if(inp.dataset.tk)tkSetAct(inp.dataset.tk,inp.value);if(inp.id==='dpProj')dpRefreshTaskSel();}
 function cbKey(e,inp){
   var open=_cb&&_cb.inp===inp;
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
@@ -4542,7 +4548,7 @@ function renderDpEditor(){
   }
   if(!dpSelectedBlock){el.classList.remove('open');el.innerHTML='';return;}
   var isNew=dpSelectedBlock==='new';
-  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:'',taskId:dpNewRange.taskId||'',start:dpNewRange.start,dur:dpNewRange.dur,note:dpNewRange.note||''}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
+  var b=isNew?{proj:dpNewRange.proj||'',goal:dpNewRange.goal||'',activity:dpNewRange.activity||'',taskId:dpNewRange.taskId||'',start:dpNewRange.start,dur:dpNewRange.dur,note:dpNewRange.note||''}:dpBlocks.find(function(x){return x.id===dpSelectedBlock;});
   if(!b){dpSelectedBlock=null;el.classList.remove('open');el.innerHTML='';return;}
   el.classList.add('open');
   var projects=getActiveProjects();
@@ -4572,16 +4578,22 @@ function dpTaskSel(b){
   if(!featOn('todo'))return'';
   var cur=b.taskId||'',proj=b.proj||'';
   var list=getTasks().filter(function(t){return t.id===cur||(!t.done&&!t.someday&&!(t.waiting&&!tkChaseDue(t)));});
+  if(proj)list=list.filter(function(t){return t.id===cur||t.project===proj||tkBlockProj(t)===proj;});
   list.sort(function(a,c){
     var ap=(proj&&a.project===proj)?0:1,cp=(proj&&c.project===proj)?0:1;
     if(ap!==cp)return ap-cp;
     return(a.dueDate||'9').localeCompare(c.dueDate||'9')||String(a.title).localeCompare(String(c.title));
   });
-  var opts='<option value="">Link to a task (optional)</option>'+list.map(function(t){
+  var opts='<option value="">'+(proj&&!list.some(function(t){return t.id!==cur;})?'No open tasks on this project':'Link to a task (optional)')+'</option>'+list.map(function(t){
     var nm=String(t.title||'');
     return'<option value="'+escA(t.id)+'"'+(t.id===cur?' selected':'')+'>'+escH(nm.length>46?nm.slice(0,46)+'...':nm)+(t.project&&t.project!==proj&&t.project!=='General'?' ('+escH(t.project)+')':'')+(t.done?' - done':'')+'</option>';
   }).join('');
   return'<select id="dpTask" title="Time in this block counts towards the task" onchange="dpLinkTask(this.value)">'+opts+'</select>';
+}
+function dpRefreshTaskSel(){
+  var s=document.getElementById('dpTask'),pe=document.getElementById('dpProj');if(!s||!pe)return;
+  var w=document.createElement('div');w.innerHTML=dpTaskSel({taskId:s.value,proj:pe.dataset.valid||''});
+  if(w.firstChild)s.parentNode.replaceChild(w.firstChild,s);
 }
 function dpLinkTask(id){
   var t=id?tkTask(id):null,pe=document.getElementById('dpProj'),ge=document.getElementById('dpGoal');
@@ -5120,7 +5132,9 @@ function _loadExtras(allocsData,mode,totalHrs){
   saveDraft();
 }
 
+var _tsApplySeq=0;
 function applyDraftOrLog(date){
+  var seq=++_tsApplySeq;
   if(tsArchNames(date).join('|')!==(window._tsArchKey||''))renderAllocGrid(date);
   renderImportRow(date);
   renderLeaveDayRow(date);
@@ -5131,7 +5145,7 @@ function applyDraftOrLog(date){
     document.getElementById('totalHoursInput').value=tsLogWh(getLogsForDate(date),date);tsWhText();
     document.getElementById('entryNotes').value=draft.notes||'';
     requestAnimationFrame(function(){
-      if(document.getElementById('entryDate').value!==date)return;
+      if(document.getElementById('entryDate').value!==date||_tsApplySeq!==seq)return;
       document.querySelectorAll('.alloc-input').forEach(function(inp){
         var da=draft.allocs[inp.dataset.project];
         inp.value=da?da.hrs||0:0;
@@ -5152,7 +5166,7 @@ function applyDraftOrLog(date){
     document.getElementById('totalHoursInput').value=tsLogWh(log,date);tsWhText();
     document.getElementById('entryNotes').value=log.notes||'';
     requestAnimationFrame(function(){
-      if(document.getElementById('entryDate').value!==date)return;
+      if(document.getElementById('entryDate').value!==date||_tsApplySeq!==seq)return;
       document.querySelectorAll('.alloc-input').forEach(function(inp){
         var proj=inp.dataset.project;
         inp.value=log.allocs[proj]?(log.mode==='hrs'?log.allocs[proj].hrs:log.allocs[proj].pct):0;
@@ -5839,7 +5853,7 @@ if(window.showDirectoryPicker){
 }
 
 // Version-update one-time reminder
-(function(){var V='V0.89.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
+(function(){var V='V0.90.1';var sv=localStorage.getItem('plannerSeenVersion');if(sv!==V){var ra=JSON.parse(localStorage.getItem('plannerReminders')||'[]');if(!ra.find(function(r){return r.id==='version-update';})){ra.push({id:'version-update',title:'New features! Open Settings > Changelog to see what\'s new.',recur:'none',date:(function(){var d=new Date();return d.toLocaleDateString('en-CA',{timeZone:'Africa/Johannesburg'});})(),dismissedDates:[]});}localStorage.setItem('plannerReminders',JSON.stringify(ra));localStorage.setItem('plannerSeenVersion',V);}})();
 var _simpleLog=(function(){try{return localStorage.getItem('plannerSimpleLog')==='1';}catch(e){return false;}})();
 var _firstDow=(function(){
   try{
@@ -6401,8 +6415,9 @@ function renderTaskPreview(){
   }
   el.innerHTML=h;el.classList.add('show');
 }
-function tkCreateParsed(p,project,pin,keep){
+function tkCreateParsed(p,project,pin,keep,act){
   var extra={},due=p.date||'';
+  if(act)extra.activity=act;
   if(p.est)extra.est=p.est;
   if(pin||keep)extra.today=todayStr();
   if(keep)extra.persist=true;
@@ -6417,8 +6432,9 @@ function addTask(){
   if(!raw){inp.focus();return;}
   var p=tkParse(raw);
   var project=p.project||tkAutoProj(p.title)||'General';
-  tkCreateParsed(p,project,p.today||_tkToday,p.persist||_tkKeep);
-  inp.value='';_tkOff={};_tkToday=false;_tkKeep=false;
+  var ae=document.getElementById('newTaskAct');if(ae)cbResolve(ae);
+  tkCreateParsed(p,project,p.today||_tkToday,p.persist||_tkKeep,ae?ae.value.trim():'');
+  inp.value='';_tkOff={};_tkToday=false;_tkKeep=false;if(ae){ae.value='';ae.dataset.valid='';}
   renderTaskPreview();
   renderTasksPanel();renderCalendarShell();renderPlannerTasks();
   if(typeof renderUpNext==='function')renderUpNext();
@@ -6498,6 +6514,7 @@ function tkRefresh(){
   _refreshTaskViews();renderCalendarShell();renderPlannerTasks();
   if(typeof renderUpNext==='function')renderUpNext();
 }
+function tkSetAct(id,v){var t=tkTask(id);if(t&&(t.activity||'')!==v)tkUpdate(id,{activity:v});}
 function tkUpdate(id,patch){saveTasks(getTasks().map(function(t){return t.id===id?Object.assign({},t,patch):t;}));tkRefresh();}
 function tkOpenEstMenu(e,id){
   var t=tkTask(id);if(!t)return;
@@ -6667,7 +6684,7 @@ function tkPlanOnDay(id,ds){
   var dur=Math.min(want,g.end-g.start),start=g.start;
   var bp=tkBlockProj(t),projOk=!!bp;
   if(projOk){
-    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:'',start:start,dur:dur,goal:'',taskId:t.id});
+    blocks.push({id:'blk_'+Date.now().toString()+'_'+Math.random().toString(36).slice(2,6),proj:bp,activity:t.activity||'',start:start,dur:dur,goal:'',taskId:t.id});
     setBlocksForDate(ds,blocks);
     tkRefresh();
     renderTaskWeekStrip();
@@ -6676,7 +6693,7 @@ function tkPlanOnDay(id,ds){
     // no project to book the time to yet: open the day with a new block ready, the project is picked there
     if(wasParked)_refreshTaskViews();
     openDayPlan(ds);
-    dpNewRange={start:start,dur:dur,goal:'',taskId:t.id};
+    dpNewRange={start:start,dur:dur,goal:'',activity:t.activity||'',taskId:t.id};
     dpSelectedBlock='new';
     renderDayPlan();
   }
@@ -7010,6 +7027,7 @@ function tkDetailHtml(t){
   var w=t.waiting||{who:'',follow:''};
   return'<div class="tk-side detail"><div class="tk-sh"><input type="text" class="tk-title" value="'+escH(t.title)+'" onchange="tkSetTitle(\''+id+'\',this.value)" aria-label="Task title"><button class="tk-x" onclick="tkClose()" title="Close (Esc)" aria-label="Close">&times;</button></div>'
     +'<div class="tk-g2"><label>Project<select onchange="tkUpdate(\''+id+'\',{project:this.value})">'+pOpts+'</select></label><label>Priority<select onchange="tkUpdate(\''+id+'\',{priority:this.value})">'+prOpts+'</select></label></div>'
+    +'<div class="tk-g2"><label style="grid-column:1/-1">Activity<input type="text" class="cb-input" data-cb="act" data-tk="'+id+'" placeholder="Type to search activities..." autocomplete="off" value="'+escH(t.activity||'')+'" data-valid="'+escH(t.activity||'')+'" oninput="cbInput(this)" onfocus="cbFocus(this)" onkeydown="cbKey(event,this)" onblur="cbBlur(this)"></label></div>'
     +'<div class="tk-g2"><label>Due<input type="date" value="'+escH(t.dueDate||'')+'" onchange="tkUpdate(\''+id+'\',{dueDate:this.value})"></label><label>Estimate (h)<input type="number" min="0" step="0.25" value="'+(t.est>0?t.est:'')+'" onchange="tkSetNum(\''+id+'\',\'est\',this.value)"></label></div>'
     +(tkSpent(t.id).n?'<div class="tk-spent">'+tkSpentText(tkSpent(t.id))+(t.est>0&&!t.done?' &middot; '+tkFmtH(tkLeft(t))+' left':'')+'</div>':'')
     +(t.done?'<div class="tk-g2"><label>Took (h)<input type="number" min="0" step="0.25" placeholder="'+(tkSpent(t.id).h>0?Math.round(tkSpent(t.id).h*100)/100:'')+'" value="'+(t.actual>0?t.actual:'')+'" onchange="tkSetNum(\''+id+'\',\'actual\',this.value)"></label><span></span></div>':'')

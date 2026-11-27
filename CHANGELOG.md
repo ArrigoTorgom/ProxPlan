@@ -5,6 +5,24 @@ Versioning follows `MAJOR.MINOR.PATCH` — patches are bug fixes, minor versions
 
 ---
 
+## [0.90.1] — 2026-11-27
+
+### Changed
+- In Plan Day, once a block has a project, "Link to a task" lists only that project's open tasks. It also includes General tasks when that project is your "Book General tasks to" project. The list updates as soon as you pick or change the project, on new and existing blocks. A task already linked to the block stays in the list. With no project picked, all open tasks show as before. If the project has no open tasks, the list says so.
+
+---
+
+## [0.90.0] — 2026-11-27
+
+### Added
+- Tasks can carry an activity. The add-task bar has an "Activity (optional)" field: type to search, Enter to pick. The task detail pane has an Activity field to set or change it. When a task is planned (Plan, drag to a day, Plan today, or picked in Plan Day), the new block takes the task's activity, ready for logging hours.
+
+### Fixed
+- "Log Hours" from Plan Day did not fill in the planned hours when the Timesheet had a leftover empty draft for that day. That draft is left behind whenever you visit the Timesheet and move to another tab. A draft only counts now if it has hours or notes in it.
+- The fill-in now happens straight away, instead of waiting for the next screen repaint. Before, a busy or background window could leave the form empty.
+
+---
+
 ## [0.89.1] — 2026-11-26
 
 ### Changed
